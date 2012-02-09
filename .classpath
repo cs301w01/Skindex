@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Android 2.1 Platform"/>
+	<classpathentry kind="src" path="/MoleFinder/src"/>
+	<classpathentry kind="src" path="/MoleFinder/gen"/>
+	<classpathentry kind="output" path="/out/production/MoleFinder"/>
+</classpath>
