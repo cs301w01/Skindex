@@ -1,138 +1,374 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="885,874" id="com.cs301w01.meatload" metadata="uml2-1.0" initialized="true" tag="1000" key="32303037303533312D31303030204D6F6C6546696E6465722F426C616B65">
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0 //@children.11/@sourceConnections.0" name="Album" location="150,255" size="83,29" id="com.cs301w01.meatload/Album" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Tag@tag+com.cs301w01.meatload/Album@album" source="//@children.0" target="//@children.3" targetEnd="//@children.0/@sourceConnections.0/@children.1" label="//@children.0/@sourceConnections.0/@children.2" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" name="album" location="73,29" id="com.cs301w01.meatload/Tag@tag+com.cs301w01.meatload/Album@album|com.cs301w01.meatload/Album#album" attachSource="true" multiplicityLabel="//@children.0/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.0/@sourceConnections.0/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - album" location="178,291" size="38,14" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="230,291" size="4,14" anchorKind="FirstPart"/>
-      </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="tag" location="0,10" id="com.cs301w01.meatload/Tag@tag+com.cs301w01.meatload/Album@album|com.cs301w01.meatload/Tag#tag" multiplicityLabel="//@children.0/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.0/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - tag" location="268,392" size="25,14" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1..*" location="277,364" size="16,14" anchorKind="LastPart"/>
-      </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
-    </sourceConnections>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="MoleFinder" location="37,105" size="114,67" id="com.cs301w01.meatload/MoleFinder" runTimeClassModel="onCreate(Landroid.os.Bundle;)">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="74,18">
-      <children xsi:type="editmodel:MethodEditModel" name="onCreate" id="com.cs301w01.meatload/MoleFinder#onCreate(Landroid.os.Bundle;)"/>
+<editmodel:ClassDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" size="2574,1030" id="com.cs301w01.meatload" metadata="uml2-1.0" initialized="true" zoom="0.5" scrolledY="35" tag="1000" key="32303037303533312D31303030204D6561742D4C6F61662F646F776C696E67">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.2/@sourceConnections.0 //@children.10/@sourceConnections.0" name="Album" location="519,673" size="115,75" id="com.cs301w01.meatload/Album" runTimeClassModel="id,name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="id" id="com.cs301w01.meatload/Album#id"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="com.cs301w01.meatload/Album#name"/>
     </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/PictureDB@pictureDB+com.cs301w01.meatload/MoleFinder@moleFinder" source="//@children.1" target="//@children.11" targetEnd="//@children.1/@sourceConnections.0/@children.1" label="//@children.1/@sourceConnections.0/@children.2" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" name="moleFinder" location="114,63" id="com.cs301w01.meatload/PictureDB@pictureDB+com.cs301w01.meatload/MoleFinder@moleFinder|com.cs301w01.meatload/MoleFinder#moleFinder" attachSource="true" multiplicityLabel="//@children.1/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.1/@sourceConnections.0/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - moleFinder" location="158,147" size="62,14" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="158,175" size="6,14" anchorKind="FirstPart"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/Tag@tag" source="//@children.0" target="//@children.3" targetEnd="//@children.0/@sourceConnections.0/@children.1" label="//@children.0/@sourceConnections.0/@children.2" sourceEnd="//@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="album" location="10,75" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/Tag@tag|com.cs301w01.meatload/Album#album" attachSource="true" multiplicityLabel="//@children.0/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.0/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - album" location="535,755" size="47,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="515,755" size="6,13" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="pictureDB" location="0,3" id="com.cs301w01.meatload/PictureDB@pictureDB+com.cs301w01.meatload/MoleFinder@moleFinder|com.cs301w01.meatload/PictureDB#pictureDB" multiplicityLabel="//@children.1/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.1/@sourceConnections.0/@children.1/@children.0" aggregationKind="Composition" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - pictureDB" location="206,147" size="57,14" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="257,175" size="6,14" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="tag" location="115,10" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/Tag@tag|com.cs301w01.meatload/Tag#tag" multiplicityLabel="//@children.0/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.0/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + tag" location="515,857" size="35,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1..*" location="515,830" size="21,13" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" name="Picture" location="480,300" size="87,29" id="com.cs301w01.meatload/Picture" runTimeClassModel="">
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.7" name="Skindex" location="1145,521" size="105,29" id="com.cs301w01.meatload/Skindex" runTimeClassModel="onCreate(Landroid.os.Bundle;)">
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Picture@picture+com.cs301w01.meatload/Album@album" source="//@children.2" target="//@children.0" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="picture" location="10,0" id="com.cs301w01.meatload/Picture@picture+com.cs301w01.meatload/Album@album|com.cs301w01.meatload/Picture#picture" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - picture" location="497,279" size="43,14" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="465,279" size="18,14" anchorKind="FirstPart"/>
-      </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="album" location="83,19" id="com.cs301w01.meatload/Picture@picture+com.cs301w01.meatload/Album@album|com.cs301w01.meatload/Album#album" multiplicityLabel="//@children.2/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.2/@children.0" aggregationKind="Composition" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - album" location="240,253" size="38,14" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="240,281" size="6,14" anchorKind="LastPart"/>
-      </children>
-    </sourceConnections>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Tag@tag+com.cs301w01.meatload/Picture@picture" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.1/@children.1" label="//@children.2/@sourceConnections.1/@children.2" sourceEnd="//@children.2/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" name="picture" location="10,29" id="com.cs301w01.meatload/Tag@tag+com.cs301w01.meatload/Picture@picture|com.cs301w01.meatload/Picture#picture" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.0/@children.0" aggregationKind="Aggregration" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - picture" location="497,336" size="43,14" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1..*" location="467,336" size="16,14" anchorKind="FirstPart"/>
-      </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="tag" location="65,10" id="com.cs301w01.meatload/Tag@tag+com.cs301w01.meatload/Picture@picture|com.cs301w01.meatload/Tag#tag" multiplicityLabel="//@children.2/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.1/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - tag" location="372,392" size="25,14" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1..*" location="372,364" size="16,14" anchorKind="LastPart"/>
-      </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/Skindex" source="//@children.1" target="//@children.17" targetEnd="//@children.1/@sourceConnections.0/@children.1" sourceEnd="//@children.1/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="105,15" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,22"/>
+      <bendpoints secondRelativeDimension="-49,50" firstRelativeDimension="83,-15"/>
     </sourceConnections>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.2/@sourceConnections.1" name="Tag" location="300,375" size="65,29" id="com.cs301w01.meatload/Tag" runTimeClassModel="">
+  <children xsi:type="editmodel:ClassEditModel" name="Picture" location="634,831" size="115,93" id="com.cs301w01.meatload/Picture" runTimeClassModel="id,name,path">
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,54">
+      <children xsi:type="editmodel:AttributeEditModel" name="path" id="com.cs301w01.meatload/Picture#path"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="com.cs301w01.meatload/Picture#name"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="id" id="com.cs301w01.meatload/Picture#id"/>
+    </children>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
     <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="ViewGroupsActivity" location="195,49" size="165,29" id="com.cs301w01.meatload/ViewGroupsActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="ViewTagsActivity" location="195,105" size="149,29" id="com.cs301w01.meatload/ViewTagsActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="GalleryActivity" location="391,77" size="134,29" id="com.cs301w01.meatload/GalleryActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="TakePictureActivity" location="590,165" size="163,29" id="com.cs301w01.meatload/TakePictureActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="EditPictureActivity" location="593,30" size="157,29" id="com.cs301w01.meatload/EditPictureActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="EditAlbumActivity" location="590,77" size="153,29" id="com.cs301w01.meatload/EditAlbumActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" name="ComparePicturesActivity" location="588,124" size="197,29" id="com.cs301w01.meatload/ComparePicturesActivity" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
-  </children>
-  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.1/@sourceConnections.0" name="PictureDB" location="270,165" size="105,29" id="com.cs301w01.meatload/PictureDB" runTimeClassModel="">
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
-    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/PictureDB@pictureDB" source="//@children.11" target="//@children.0" targetEnd="//@children.11/@sourceConnections.0/@children.1" label="//@children.11/@sourceConnections.0/@children.2" sourceEnd="//@children.11/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
-      <children xsi:type="editmodel:AssociationEndEditModel" name="pictureDB" location="10,29" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/PictureDB@pictureDB|com.cs301w01.meatload/PictureDB#pictureDB" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.0/@children.0/@children.0" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - pictureDB" location="287,201" size="57,14" anchorKind="FirstPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="1" location="267,201" size="6,14" anchorKind="FirstPart"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/Picture@picture" source="//@children.2" target="//@children.0" targetEnd="//@children.2/@sourceConnections.0/@children.2" label="//@children.2/@sourceConnections.0/@children.0" sourceEnd="//@children.2/@sourceConnections.0/@children.1" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="picture" location="0,10" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/Picture@picture|com.cs301w01.meatload/Picture#picture" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.1/@children.0" aggregationKind="Composition" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + picture" location="571,847" size="56,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="621,820" size="6,13" anchorKind="FirstPart"/>
       </children>
-      <children xsi:type="editmodel:AssociationEndEditModel" name="album" location="83,10" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/PictureDB@pictureDB|com.cs301w01.meatload/Album#album" multiplicityLabel="//@children.11/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.0/@children.1/@children.0" aggregationKind="Composition" navigable="true">
-        <children xsi:type="editmodel:LabelEditModel" name=" - album" location="240,272" size="38,14" anchorKind="LastPart"/>
-        <children xsi:type="editmodel:LabelEditModel" name="*" location="240,244" size="4,14" anchorKind="LastPart"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="album" location="105,75" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/Picture@picture|com.cs301w01.meatload/Album#album" multiplicityLabel="//@children.2/@sourceConnections.0/@children.2/@children.1" roleLabel="//@children.2/@sourceConnections.0/@children.2/@children.0" aggregationKind="Composition" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - album" location="570,755" size="47,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="631,755" size="7,13" anchorKind="LastPart"/>
       </children>
-      <children xsi:type="editmodel:WireLabelEditModel" size="0,14" anchorKind="MiddlePart"/>
     </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Picture@picture+com.cs301w01.meatload/Tag@tag" source="//@children.2" target="//@children.3" targetEnd="//@children.2/@sourceConnections.1/@children.1" label="//@children.2/@sourceConnections.1/@children.2" sourceEnd="//@children.2/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="picture" location="0,47" id="com.cs301w01.meatload/Picture@picture+com.cs301w01.meatload/Tag@tag|com.cs301w01.meatload/Picture#picture" attachSource="true" multiplicityLabel="//@children.2/@sourceConnections.1/@children.0/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - picture" location="576,858" size="51,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="621,885" size="6,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="tag" location="115,37" id="com.cs301w01.meatload/Picture@picture+com.cs301w01.meatload/Tag@tag|com.cs301w01.meatload/Tag#tag" multiplicityLabel="//@children.2/@sourceConnections.1/@children.1/@children.1" roleLabel="//@children.2/@sourceConnections.1/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" + tag" location="515,858" size="35,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="515,885" size="6,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.0/@sourceConnections.0 //@children.2/@sourceConnections.1" name="Tag" location="393,841" size="115,75" id="com.cs301w01.meatload/Tag" runTimeClassModel="id,name">
+    <children xsi:type="editmodel:CompartmentEditModel" size="92,36">
+      <children xsi:type="editmodel:AttributeEditModel" name="id" id="com.cs301w01.meatload/Tag#id"/>
+      <children xsi:type="editmodel:AttributeEditModel" name="name" id="com.cs301w01.meatload/Tag#name"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.5" name="ViewTagsActivity" location="1149,299" size="177,29" id="com.cs301w01.meatload/ViewTagsActivity" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/ViewTagsActivity" source="//@children.4" target="//@children.17" targetEnd="//@children.4/@sourceConnections.0/@children.1" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="177,9" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="50,0"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.4" name="GalleryActivity" location="1148,377" size="159,29" id="com.cs301w01.meatload/GalleryActivity" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/GalleryActivity" source="//@children.5" target="//@children.17" targetEnd="//@children.5/@sourceConnections.0/@children.1" sourceEnd="//@children.5/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="158,11" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="16,0"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.16/@sourceConnections.0" name="TakePictureActivity" location="794,885" size="196,29" id="com.cs301w01.meatload/TakePictureActivity" runTimeClassModel="setCameraManager1,setCameraManager">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/TakePictureActivity@takePictureActivity+com.cs301w01.meatload/CameraPreview@cameraPreview" source="//@children.6" target="//@children.15" targetEnd="//@children.6/@sourceConnections.0/@children.1" label="//@children.6/@sourceConnections.0/@children.2" sourceEnd="//@children.6/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="takePictureActivity" location="137,0" id="com.cs301w01.meatload/TakePictureActivity@takePictureActivity+com.cs301w01.meatload/CameraPreview@cameraPreview|com.cs301w01.meatload/TakePictureActivity#takePictureActivity" attachSource="true" multiplicityLabel="//@children.6/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.6/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name="- takePictureActivity" location="811,865" size="113,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="938,865" size="7,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="cameraPreview" location="41,29" id="com.cs301w01.meatload/TakePictureActivity@takePictureActivity+com.cs301w01.meatload/CameraPreview@cameraPreview|com.cs301w01.meatload/CameraPreview#cameraPreview" multiplicityLabel="//@children.6/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.6/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - cameraPreview" location="1158,814" size="100,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1137,814" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="-48,31" firstRelativeDimension="62,-8"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/TakePictureActivity" source="//@children.6" target="//@children.17" targetEnd="//@children.6/@sourceConnections.1/@children.1" sourceEnd="//@children.6/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="120,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="64,28"/>
+      <bendpoints secondRelativeDimension="-317,124" firstRelativeDimension="7,-80"/>
+      <bendpoints secondRelativeDimension="6,137" firstRelativeDimension="330,-67"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.3" name="EditPictureActivity" location="1148,585" size="192,29" id="com.cs301w01.meatload/EditPictureActivity" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/EditPictureActivity" source="//@children.7" target="//@children.17" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="131,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="35,29"/>
+      <bendpoints secondRelativeDimension="-48,79" firstRelativeDimension="102,-12"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.2" name="EditAlbumActivity" location="1145,239" size="186,29" id="com.cs301w01.meatload/EditAlbumActivity" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/EditAlbumActivity" source="//@children.8" target="//@children.17" targetEnd="//@children.8/@sourceConnections.0/@children.1" sourceEnd="//@children.8/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="185,13" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="70,0"/>
+      <bendpoints secondRelativeDimension="1,-91" firstRelativeDimension="128,-1"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.6" name="ComparePicturesActivity" location="1148,445" size="239,29" id="com.cs301w01.meatload/ComparePicturesActivity" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/Skindactivity&lt;-com.cs301w01.meatload/ComparePicturesActivity" source="//@children.9" target="//@children.17" targetEnd="//@children.9/@sourceConnections.0/@children.1" sourceEnd="//@children.9/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="238,13" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,12" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.11/@sourceConnections.0" name="DBManager" location="483,347" size="158,139" id="com.cs301w01.meatload/DBManager" runTimeClassModel="executeRawQuery(),insertPhoto(),selectByID(),updateByID(),DBManager()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="135,90">
+      <children xsi:type="editmodel:MethodEditModel" name="DBManager" id="com.cs301w01.meatload/DBManager#DBManager()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="executeRawQuery" id="com.cs301w01.meatload/DBManager#executeRawQuery()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="selectByID" id="com.cs301w01.meatload/DBManager#selectByID()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="updateByID" id="com.cs301w01.meatload/DBManager#updateByID()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="insertPhoto" id="com.cs301w01.meatload/DBManager#insertPhoto()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/DBManager@pictureDB" source="//@children.10" target="//@children.0" targetEnd="//@children.10/@sourceConnections.0/@children.1" label="//@children.10/@sourceConnections.0/@children.2" sourceEnd="//@children.10/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="pictureDB" location="93,139" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/DBManager@pictureDB|com.cs301w01.meatload/DBManager#pictureDB" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="album" location="57,0" id="com.cs301w01.meatload/Album@album+com.cs301w01.meatload/DBManager@pictureDB|com.cs301w01.meatload/Album#album" multiplicityLabel="//@children.10/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.10/@sourceConnections.0/@children.1/@children.0" aggregationKind="Composition" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - album" location="583,652" size="47,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="*" location="563,652" size="6,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="com.cs301w01.meatload/FModel&lt;-com.cs301w01.meatload/DBManager" source="//@children.10" target="//@children.19" targetEnd="//@children.10/@sourceConnections.1/@children.1" sourceEnd="//@children.10/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="78,0" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="50,42"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="PhotoManager" location="794,402" size="158,121" id="com.cs301w01.meatload/PhotoManager" runTimeClassModel="getPhoto(),takePhoto(),storePhoto(),getPhotoGallery(),setCameraManager,PhotoManager()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="122,72">
+      <children xsi:type="editmodel:MethodEditModel" name="PhotoManager" id="com.cs301w01.meatload/PhotoManager#PhotoManager()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPhoto" id="com.cs301w01.meatload/PhotoManager#getPhoto()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getPhotoGallery" id="com.cs301w01.meatload/PhotoManager#getPhotoGallery()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="storePhoto" id="com.cs301w01.meatload/PhotoManager#storePhoto()"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/DBManager@dBManager" source="//@children.11" target="//@children.10" targetEnd="//@children.11/@sourceConnections.0/@children.1" label="//@children.11/@sourceConnections.0/@children.2" sourceEnd="//@children.11/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="0,41" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/DBManager@dBManager|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="694,422" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="780,449" size="7,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="dBManager" location="158,96" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/DBManager@dBManager|com.cs301w01.meatload/DBManager#dBManager" multiplicityLabel="//@children.11/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - dBManager" location="647,422" size="76,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="647,449" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/FController&lt;-com.cs301w01.meatload/PhotoManager" source="//@children.11" target="//@children.14" targetEnd="//@children.11/@sourceConnections.1/@children.1" sourceEnd="//@children.11/@sourceConnections.1/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,92" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="56,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/EditAlbumActivity@editAlbumActivity" source="//@children.11" target="//@children.8" targetEnd="//@children.11/@sourceConnections.2/@children.1" label="//@children.11/@sourceConnections.2/@children.2" sourceEnd="//@children.11/@sourceConnections.2/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="68,0" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/EditAlbumActivity@editAlbumActivity|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.2/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.2/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="762,382" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="883,382" size="22,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="editAlbumActivity" location="-1,13" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/EditAlbumActivity@editAlbumActivity|com.cs301w01.meatload/EditAlbumActivity#editAlbumActivity" multiplicityLabel="//@children.11/@sourceConnections.2/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.2/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - editAlbumActivity" location="1027,232" size="111,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1131,259" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="-107,-5" firstRelativeDimension="39,-64"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/EditPictureActivity@editPictureActivity" source="//@children.11" target="//@children.7" targetEnd="//@children.11/@sourceConnections.3/@children.1" label="//@children.11/@sourceConnections.3/@children.2" sourceEnd="//@children.11/@sourceConnections.3/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="52,120" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/EditPictureActivity@editPictureActivity|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.3/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.3/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="746,530" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="895,530" size="22,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="editPictureActivity" location="-1,11" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/EditPictureActivity@editPictureActivity|com.cs301w01.meatload/EditPictureActivity#editPictureActivity" multiplicityLabel="//@children.11/@sourceConnections.3/@children.1/@children.2" roleLabel="//@children.11/@sourceConnections.3/@children.1/@children.0" orderingLabel="//@children.11/@sourceConnections.3/@children.1/@children.1" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - editPictureActivity" location="1027,603" size="114,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="{order}" location="1044,563" size="45,13" automaticRelocationAllowed="false" distanceFromWire="18.0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1134,616" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="-90,0" firstRelativeDimension="61,37"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/GalleryActivity@galleryActivity" source="//@children.11" target="//@children.5" targetEnd="//@children.11/@sourceConnections.4/@children.1" label="//@children.11/@sourceConnections.4/@children.2" sourceEnd="//@children.11/@sourceConnections.4/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="158,38" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/GalleryActivity@galleryActivity|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.4/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.4/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="959,447" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="959,420" size="22,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="galleryActivity" location="-1,16" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/GalleryActivity@galleryActivity|com.cs301w01.meatload/GalleryActivity#galleryActivity" multiplicityLabel="//@children.11/@sourceConnections.4/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.4/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - galleryActivity" location="1048,373" size="93,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1134,400" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/ViewTagsActivity@viewTagsActivity" source="//@children.11" target="//@children.4" targetEnd="//@children.11/@sourceConnections.5/@children.1" label="//@children.11/@sourceConnections.5/@children.2" sourceEnd="//@children.11/@sourceConnections.5/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="146,0" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/ViewTagsActivity@viewTagsActivity|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.5/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.5/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="840,382" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="968,382" size="22,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="viewTagsActivity" location="-1,18" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/ViewTagsActivity@viewTagsActivity|com.cs301w01.meatload/ViewTagsActivity#viewTagsActivity" multiplicityLabel="//@children.11/@sourceConnections.5/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.5/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - viewTagsActivity" location="1037,297" size="105,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1135,324" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="-77,14" firstRelativeDimension="21,-38"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/ComparePicturesActivity@comparePicturesActivity" source="//@children.11" target="//@children.9" targetEnd="//@children.11/@sourceConnections.6/@children.1" label="//@children.11/@sourceConnections.6/@children.2" sourceEnd="//@children.11/@sourceConnections.6/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="158,62" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/ComparePicturesActivity@comparePicturesActivity|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.6/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.6/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="959,471" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="959,444" size="22,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="comparePicturesActivity" location="0,10" id="com.cs301w01.meatload/PhotoManager@photoManager+com.cs301w01.meatload/ComparePicturesActivity@comparePicturesActivity|com.cs301w01.meatload/ComparePicturesActivity#comparePicturesActivity" multiplicityLabel="//@children.11/@sourceConnections.6/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.6/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - comparePicturesActivity" location="1262,316" size="149,13" automaticRelocationAllowed="false" locationOnWireFromSource="293.0" distanceFromWire="123.0" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="1134,462" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" id="com.cs301w01.meatload/Skindex@moleFinder+com.cs301w01.meatload/PhotoManager@photoManager" source="//@children.11" target="//@children.1" targetEnd="//@children.11/@sourceConnections.7/@children.1" label="//@children.11/@sourceConnections.7/@children.2" sourceEnd="//@children.11/@sourceConnections.7/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="photoManager" location="158,100" id="com.cs301w01.meatload/Skindex@moleFinder+com.cs301w01.meatload/PhotoManager@photoManager|com.cs301w01.meatload/PhotoManager#photoManager" attachSource="true" multiplicityLabel="//@children.11/@sourceConnections.7/@children.0/@children.1" roleLabel="//@children.11/@sourceConnections.7/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - photoManager" location="959,482" size="93,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="959,509" size="22,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="moleFinder" location="10,0" id="com.cs301w01.meatload/Skindex@moleFinder+com.cs301w01.meatload/PhotoManager@photoManager|com.cs301w01.meatload/Skindex#moleFinder" multiplicityLabel="//@children.11/@sourceConnections.7/@children.1/@children.1" roleLabel="//@children.11/@sourceConnections.7/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - moleFinder" location="1162,501" size="74,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="0..1" location="1126,501" size="22,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+      <bendpoints secondRelativeDimension="-50,1" firstRelativeDimension="51,10"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.15/@sourceConnections.0" name="SurfaceView" location="1169,870" size="197,224" id="android.view/SurfaceView" runTimeClassModel="setZOrderMediaOverlay(Z),SurfaceView(Landroid.content.Context;),SurfaceView(Landroid.content.Context;Landroid.util.AttributeSet;I),setZOrderOnTop(Z),gatherTransparentRegion(Landroid.graphics.Region;),setVisibility(I),getHolder(),SurfaceView(Landroid.content.Context;Landroid.util.AttributeSet;),draw(Landroid.graphics.Canvas;)">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="174,162">
+      <children xsi:type="editmodel:MethodEditModel" name="SurfaceView" id="android.view/SurfaceView#SurfaceView(Landroid.content.Context;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SurfaceView" id="android.view/SurfaceView#SurfaceView(Landroid.content.Context;Landroid.util.AttributeSet;I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="SurfaceView" id="android.view/SurfaceView#SurfaceView(Landroid.content.Context;Landroid.util.AttributeSet;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="draw" id="android.view/SurfaceView#draw(Landroid.graphics.Canvas;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="gatherTransparentRegion" id="android.view/SurfaceView#gatherTransparentRegion(Landroid.graphics.Region;)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="getHolder" id="android.view/SurfaceView#getHolder()"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setVisibility" id="android.view/SurfaceView#setVisibility(I)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setZOrderMediaOverlay" id="android.view/SurfaceView#setZOrderMediaOverlay(Z)"/>
+      <children xsi:type="editmodel:MethodEditModel" name="setZOrderOnTop" id="android.view/SurfaceView#setZOrderOnTop(Z)"/>
+    </children>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.15/@sourceConnections.1 //@children.17/@sourceConnections.1" name="FView" location="1790,524" size="91,42" id="com.cs301w01.meatload/FView" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.11/@sourceConnections.1 //@children.16/@sourceConnections.1" name="FController" location="690,600" size="133,42" id="com.cs301w01.meatload/FController" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.6/@sourceConnections.0" name="CameraPreview" location="1110,778" size="166,29" id="com.cs301w01.meatload/CameraPreview" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="android.view/SurfaceView&lt;-com.cs301w01.meatload/CameraPreview" source="//@children.15" target="//@children.12" targetEnd="//@children.15/@sourceConnections.0/@children.1" sourceEnd="//@children.15/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="112,29" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="53,0"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/FView&lt;-com.cs301w01.meatload/CameraPreview" source="//@children.15" target="//@children.13" targetEnd="//@children.15/@sourceConnections.1/@children.1" sourceEnd="//@children.15/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="166,20" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,16" anchorKind="FixedAtEdge"/>
+      <bendpoints secondRelativeDimension="-56,100" firstRelativeDimension="201,-29"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" name="CameraController" location="704,750" size="183,29" id="com.cs301w01.meatload/CameraController" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:AssociationEditModel" autoLocated="true" id="com.cs301w01.meatload/TakePictureActivity@takePictureActivity+com.cs301w01.meatload/CameraController@cameraController" source="//@children.16" target="//@children.6" targetEnd="//@children.16/@sourceConnections.0/@children.1" label="//@children.16/@sourceConnections.0/@children.2" sourceEnd="//@children.16/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" name="cameraController" location="136,29" id="com.cs301w01.meatload/TakePictureActivity@takePictureActivity+com.cs301w01.meatload/CameraController@cameraController|com.cs301w01.meatload/CameraController#cameraController" attachSource="true" multiplicityLabel="//@children.16/@sourceConnections.0/@children.0/@children.1" roleLabel="//@children.16/@sourceConnections.0/@children.0/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - cameraController" location="847,785" size="111,13" anchorKind="FirstPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="826,785" size="7,13" anchorKind="FirstPart"/>
+      </children>
+      <children xsi:type="editmodel:AssociationEndEditModel" name="takePictureActivity" location="46,0" id="com.cs301w01.meatload/TakePictureActivity@takePictureActivity+com.cs301w01.meatload/CameraController@cameraController|com.cs301w01.meatload/TakePictureActivity#takePictureActivity" multiplicityLabel="//@children.16/@sourceConnections.0/@children.1/@children.1" roleLabel="//@children.16/@sourceConnections.0/@children.1/@children.0" navigable="true">
+        <children xsi:type="editmodel:LabelEditModel" name=" - takePictureActivity" location="847,864" size="117,13" anchorKind="LastPart"/>
+        <children xsi:type="editmodel:LabelEditModel" name="1" location="826,864" size="7,13" anchorKind="LastPart"/>
+      </children>
+      <children xsi:type="editmodel:WireLabelEditModel" size="0,13" anchorKind="MiddlePart"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/FController&lt;-com.cs301w01.meatload/CameraController" source="//@children.16" target="//@children.14" targetEnd="//@children.16/@sourceConnections.1/@children.1" sourceEnd="//@children.16/@sourceConnections.1/@children.0" connectionRouterKind="GeneralizationManhattan">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="48,0" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="62,42" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.7/@sourceConnections.0 //@children.8/@sourceConnections.0 //@children.1/@sourceConnections.0 //@children.4/@sourceConnections.0 //@children.5/@sourceConnections.0 //@children.9/@sourceConnections.0 //@children.6/@sourceConnections.1" name="Skindactivity" location="1514,448" size="145,29" id="com.cs301w01.meatload/Skindactivity" runTimeClassModel="">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" autoLocated="true" id="android.app/Activity&lt;-com.cs301w01.meatload/Skindactivity" source="//@children.17" target="//@children.18" targetEnd="//@children.17/@sourceConnections.0/@children.1" sourceEnd="//@children.17/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="145,14" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,22"/>
+    </sourceConnections>
+    <sourceConnections xsi:type="editmodel:GeneralizationEditModel" id="com.cs301w01.meatload/FView&lt;-com.cs301w01.meatload/Skindactivity" source="//@children.17" target="//@children.13" targetEnd="//@children.17/@sourceConnections.1/@children.1" sourceEnd="//@children.17/@sourceConnections.1/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:AssociationEndEditModel" location="112,28" anchorKind="FixedAtEdge" attachSource="true"/>
+      <children xsi:type="editmodel:AssociationEndEditModel" location="0,4" anchorKind="FixedAtEdge"/>
+    </sourceConnections>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:ClassEditModel" targetConnections="//@children.17/@sourceConnections.0" name="Activity" location="1785,440" size="103,42" id="android.app/Activity" runTimeClassModel="onPreparePanel(ILandroid.view.View;Landroid.view.Menu;),rESULT_CANCELED,getIntent(),setTitle(Ljava.lang.CharSequence;),setProgressBarIndeterminateVisibility(Z),dispatchTouchEvent(Landroid.view.MotionEvent;),getCallingActivity(),overridePendingTransition(II),getTaskId(),registerForContextMenu(Landroid.view.View;),dispatchKeyEvent(Landroid.view.KeyEvent;),openContextMenu(Landroid.view.View;),getApplication(),onCreateThumbnail(Landroid.graphics.Bitmap;Landroid.graphics.Canvas;),setTitle(I),getPreferences(I),requestWindowFeature(I),startIntentSenderForResult(Landroid.content.IntentSender;ILandroid.content.Intent;III),onSearchRequested(),getChangingConfigurations(),onMenuOpened(ILandroid.view.Menu;),setFeatureDrawableAlpha(II),getWallpaperDesiredMinimumWidth(),closeOptionsMenu(),setTitleColor(I),startActivityFromChild(Landroid.app.Activity;Landroid.content.Intent;I),finish(),dEFAULT_KEYS_DISABLE,setProgressBarIndeterminate(Z),startIntentSenderFromChild(Landroid.app.Activity;Landroid.content.IntentSender;ILandroid.content.Intent;III),onMenuItemSelected(ILandroid.view.MenuItem;),getLayoutInflater(),getMenuInflater(),dispatchTrackballEvent(Landroid.view.MotionEvent;),setProgressBarVisibility(Z),setContentView(Landroid.view.View;Landroid.view.ViewGroup.LayoutParams;),unregisterForContextMenu(Landroid.view.View;),startActivityIfNeeded(Landroid.content.Intent;I),setDefaultKeyMode(I),startIntentSender(Landroid.content.IntentSender;Landroid.content.Intent;III),&lt;clinit>(),getLocalClassName(),getLastNonConfigurationInstance(),setContentView(I),setContentView(Landroid.view.View;),removeDialog(I),onPanelClosed(ILandroid.view.Menu;),rESULT_OK,rESULT_FIRST_USER,isFinishing(),openOptionsMenu(),dispatchPopulateAccessibilityEvent(Landroid.view.accessibility.AccessibilityEvent;),dEFAULT_KEYS_SEARCH_LOCAL,setRequestedOrientation(I),onKeyUp(ILandroid.view.KeyEvent;),setIntent(Landroid.content.Intent;),setVolumeControlStream(I),isChild(),createPendingResult(ILandroid.content.Intent;I),addContentView(Landroid.view.View;Landroid.view.ViewGroup.LayoutParams;),setFeatureDrawableUri(ILandroid.net.Uri;),managedQuery(Landroid.net.Uri;[Ljava.lang.String;Ljava.lang.String;[Ljava.lang.String;Ljava.lang.String;),onDetachedFromWindow(),onKeyDown(ILandroid.view.KeyEvent;),startActivityForResult(Landroid.content.Intent;I),stopManagingCursor(Landroid.database.Cursor;),onCreateDescription(),getVolumeControlStream(),setFeatureDrawableResource(II),getComponentName(),onBackPressed(),onTouchEvent(Landroid.view.MotionEvent;),dismissDialog(I),onKeyMultiple(IILandroid.view.KeyEvent;),startSearch(Ljava.lang.String;ZLandroid.os.Bundle;Z),onWindowFocusChanged(Z),findViewById(I),onRetainNonConfigurationInstance(),runOnUiThread(Ljava.lang.Runnable;),onContentChanged(),onAttachedToWindow(),finishActivityFromChild(Landroid.app.Activity;I),onTrackballEvent(Landroid.view.MotionEvent;),setPersistent(Z),getTitle(),showDialog(I),getTitleColor(),getInstanceCount(),startManagingCursor(Landroid.database.Cursor;),onOptionsItemSelected(Landroid.view.MenuItem;),onConfigurationChanged(Landroid.content.res.Configuration;),moveTaskToBack(Z),onLowMemory(),getWindowManager(),getSystemService(Ljava.lang.String;),setResult(ILandroid.content.Intent;),getWindow(),dEFAULT_KEYS_SEARCH_GLOBAL,onWindowAttributesChanged(Landroid.view.WindowManager.LayoutParams;),hasWindowFocus(),setSecondaryProgress(I),onCreateOptionsMenu(Landroid.view.Menu;),getWallpaperDesiredMinimumHeight(),getRequestedOrientation(),setProgress(I),getCurrentFocus(),triggerSearch(Ljava.lang.String;Landroid.os.Bundle;),startActivity(Landroid.content.Intent;),onOptionsMenuClosed(Landroid.view.Menu;),onContextItemSelected(Landroid.view.MenuItem;),dEFAULT_KEYS_SHORTCUT,closeContextMenu(),setVisible(Z),setResult(I),onKeyLongPress(ILandroid.view.KeyEvent;),onCreatePanelMenu(ILandroid.view.Menu;),onCreatePanelView(I),onContextMenuClosed(Landroid.view.Menu;),onPrepareOptionsMenu(Landroid.view.Menu;),setFeatureDrawable(ILandroid.graphics.drawable.Drawable;),Activity(),startNextMatchingActivity(Landroid.content.Intent;),dEFAULT_KEYS_DIALER,onCreateContextMenu(Landroid.view.ContextMenu;Landroid.view.View;Landroid.view.ContextMenu.ContextMenuInfo;),getCallingPackage(),onUserInteraction(),isTaskRoot(),takeKeyEvents(Z),onCreateView(Ljava.lang.String;Landroid.content.Context;Landroid.util.AttributeSet;),finishActivity(I),finishFromChild(Landroid.app.Activity;),getParent()">
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <children xsi:type="editmodel:CompartmentEditModel" size="0,0"/>
+    <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
+  </children>
+  <children xsi:type="editmodel:InterfaceEditModel" targetConnections="//@children.10/@sourceConnections.1" name="FModel" location="511,255" size="101,42" id="com.cs301w01.meatload/FModel">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+    <children xsi:type="editmodel:CompartmentEditModel"/>
     <classifierPreferences xsi:type="editmodel:UMLClassDiagramClassifierPreference" showStereotype="true" attributeSorter="Natural" methodSorter="Natural" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
   </children>
   <diagramOptions xsi:type="options:ClassDiagramOptions" properties="wireOptions=0;Product=eUML2" autoName="false"/>
   <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="15,15" gridOrigin="0,0" rulerUnit="pixel" gridVisibility="false">
-    <leftRuler/>
-    <topRuler/>
+    <leftRuler>
+      <guides position="10">
+        <entries alignment="-1"/>
+      </guides>
+    </leftRuler>
+    <topRuler>
+      <guides position="61"/>
+    </topRuler>
   </boardSetting>
   <classDiagramPreferences xsi:type="editmodel:UMLClassDiagramPreference" showPopupBars="true" showConnectionHandles="true" attributeSorter="Natural" methodSorter="Natural" showClassStereotype="true" showPackageStereotype="true" showDependencyStereotype="true" showInterfaceStereotype="true" innerClassSorter="Natural" showPublicAttributes="true" showPackageAttributes="true" showStaticAttributes="true" showPublicMethods="true" showPackageMethods="true" showStaticMethods="true" showPublicInnerClasses="true" showPackageInnerClasses="true" showStaticInnerClasses="true" packageIndication="3" showAttributeProperty="true"/>
 </editmodel:ClassDiagramEditModel>
