@@ -7,5 +7,6 @@ package com.cs301w01.meatload.activities;
  * Time: 1:20 PM
  * To change this template use File | Settings | File Templates.
  */
-public interface FView {
+public interface FView<M> {
+    public void update(M model);
 }

@@ -7,5 +7,12 @@ package com.cs301w01.meatload.controllers;
  * Time: 1:14 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PhotoManager {
+public class PhotoManager implements FController{
+
+    public PhotoManager(){
+
+    }
+
+
+
 }
