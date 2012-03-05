@@ -136,11 +136,11 @@ public class DBManager extends SQLiteOpenHelper {
      * that is preset to the first tuple.
      *
      * @param selectColumns array of columns you wish to have returned
-     * @param from table name
+     * @param tableName table name
      * @param idValue
      * @return
      */
-    public Cursor selectByID(String[] selectColumns, String from, String idValue) {
+    public Cursor selectByID(String[] selectColumns, String tableName, String idValue) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -177,7 +177,7 @@ public class DBManager extends SQLiteOpenHelper {
      * @param id tuple to delete
      * @param tableName
      */
-    public void removeByID(long id, String tableName){
+    public void deleteByID(long id, String tableName){
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -197,23 +197,20 @@ public class DBManager extends SQLiteOpenHelper {
      ContentValues cv: The content values object that has the new values
      String where clause: The WHERE clause to specify which record to update
      String[] args: The arguments of the WHERE clause
-     * @param f Fuel Entry object
+     * @param p Fuel Entry object
      * @param tableName
      * @param id
      * @return
      */
-    public int updateValueByID(FuelEntry f, String tableName, int id)
+    public int updatePhotoByID(Photo p, String tableName, int id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        //add column and corresponding date to update
-        cv.put(COL_DATE, dateToString(f.getDate()));
-        cv.put(COL_FUELAMOUNT, f.getFuelAmount());
-        cv.put(COL_DISTANCE, f.getDistance());
-        cv.put(COL_CENTSPERLITRE, f.getCost());
-        cv.put(COL_FUELGRADE, f.getFuelGrade());
-        cv.put(COL_STATION, f.getStation());
+        //add photo info to cv
+        cv.put(PHOTOS_COL_DATE, dateToString(p.getDate()));
+        cv.put(PHOTOS_COL_PATH, p.getPath());
+        cv.put(COL_NAME, p.getName());
 
         int uVal = db.update(tableName, cv, COL_ID + "=" + id, null);
 
@@ -225,27 +222,37 @@ public class DBManager extends SQLiteOpenHelper {
 
     /**
      * Pass in Object you would like to insert, and the name of the table you are inserting into.
-     * @param f Fuel Entry object
+     * @param p Fuel Entry object
      * @param tableName
      */
-    public void insertData(FuelEntry f, String tableName) {
+    public void insertPhoto(Photo p, String tableName) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         //insert data
-        cv.put(COL_DATE, dateToString(f.getDate()));
-        cv.put(COL_FUELAMOUNT, f.getFuelAmount());
-        cv.put(COL_DISTANCE, f.getDistance());
-        cv.put(COL_CENTSPERLITRE, f.getCost());
-        cv.put(COL_FUELGRADE, f.getFuelGrade());
-        cv.put(COL_STATION, f.getStation());
-        cv.put(COL_COST, f.getCost());
+        cv.put(COL_DATE, dateToString(p.getDate()));
+        cv.put(COL_FUELAMOUNT, p.getFuelAmount());
+        cv.put(COL_DISTANCE, p.getDistance());
+        cv.put(COL_CENTSPERLITRE, p.getCost());
+        cv.put(COL_FUELGRADE, p.getFuelGrade());
+        cv.put(COL_STATION, p.getStation());
+        cv.put(COL_COST, p.getCost());
 
         db.insert(tableName, COL_ID, cv);
         db.close();
 
     }
+
+    public void insertTag(){
+        //todo
+    }
+
+    public void insertAlbum(){
+        //todo
+    }
+
+
 
     /**
      * Useful method for converting from date to String for db insertion
