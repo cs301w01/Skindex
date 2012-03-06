@@ -1,5 +1,6 @@
 package com.cs301w01.meatload.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -18,6 +19,8 @@ public class Photo {
     private Collection<String> tags;
     
     public Photo(String name, String path, Date date, Collection<String> tags){
+
+        tags = tags;
 
         this.name = name;
         this.path = path;
@@ -39,7 +42,9 @@ public class Photo {
     }
 
     public Collection<String> getTags() {
+
         return tags;
+
     }
-    
+
 }

@@ -11,6 +11,7 @@ import android.util.Log;
 import com.cs301w01.meatload.model.Photo;
 
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 
 /**
@@ -22,7 +23,7 @@ import java.util.Date;
 public class DBManager extends SQLiteOpenHelper {
 
     private SQLiteDatabase db;
-    private static String tag = "DBMANAGER";
+    private static String logTag = "DBMANAGER";
     private static final String DB_NAME = "skindexDB";
 
     //common db vars
@@ -82,30 +83,30 @@ public class DBManager extends SQLiteOpenHelper {
     private void createTables(){
 
         db.execSQL(CREATE_TABLE_PHOTOSTABLE);
-        Log.d(tag, CREATE_TABLE_PHOTOSTABLE + " generated.");
+        Log.d(logTag, CREATE_TABLE_PHOTOSTABLE + " generated.");
 
         db.execSQL(CREATE_TABLE_ALBUMSTABLE);
-        Log.d(tag, CREATE_TABLE_ALBUMSTABLE + " generated.");
+        Log.d(logTag, CREATE_TABLE_ALBUMSTABLE + " generated.");
 
         db.execSQL(CREATE_TABLE_TAGSTABLE);
-        Log.d(tag, CREATE_TABLE_TAGSTABLE + " generated.");
+        Log.d(logTag, CREATE_TABLE_TAGSTABLE + " generated.");
 
-        Log.d(tag, "DB generated.");
+        Log.d(logTag, "DB generated.");
 
     }
 
     private void dropTables(){
 
         db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_PHOTOSTABLE);
-        Log.d(tag, TABLE_NAME_PHOTOS + " dropped.");
+        Log.d(logTag, TABLE_NAME_PHOTOS + " dropped.");
 
         db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_ALBUMSTABLE);
-        Log.d(tag, TABLE_NAME_ALBUMS + " dropped.");
+        Log.d(logTag, TABLE_NAME_ALBUMS + " dropped.");
 
         db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_TAGSTABLE);
-        Log.d(tag, TABLE_NAME_TAGS + " dropped.");
+        Log.d(logTag, TABLE_NAME_TAGS + " dropped.");
 
-        Log.d(tag, "DB generated.");    
+        Log.d(logTag, "DB generated.");
         
     }
     
@@ -119,7 +120,7 @@ public class DBManager extends SQLiteOpenHelper {
         dropTables();
         createTables();
         
-        Log.d(tag, "TABLES RESET.");
+        Log.d(logTag, "TABLES RESET.");
 
     }
 
@@ -140,12 +141,12 @@ public class DBManager extends SQLiteOpenHelper {
      * @param idValue
      * @return
      */
-    public Cursor selectByID(String[] selectColumns, String tableName, String idValue) {
+    public Cursor selectRowByID(String[] selectColumns, String tableName, String idValue) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor mCursor =
-                db.query(true, from, selectColumns, COL_ID + " = " + idValue, null,null,null,null,null);
+                db.query(true, tableName, selectColumns, COL_ID + " = " + idValue, null,null,null,null,null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -183,7 +184,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         String dQuery = "DELETE FROM " + tableName + " WHERE " + COL_ID  + " = '" + id + "'";
 
-        Log.d(tag, "Performing delete: " + dQuery);
+        Log.d(logTag, "Performing delete: " + dQuery);
 
         db.execSQL(dQuery);
 
@@ -219,40 +220,86 @@ public class DBManager extends SQLiteOpenHelper {
         return uVal;
     }
 
+    /**
+     * Used to find the id of a photo in the photos table for insertion into the albums and tags tables.
+     * @param name
+     * @return
+     */
+    private int selectPhotoIDByName(String name){
+        
+        int id;
+        
+        //query to execute
+        String select = "SELECT " + COL_ID + 
+                        " FROM " + TABLE_NAME_PHOTOS + 
+                        " WHERE " + COL_NAME + 
+                        " = '" + name + "'";
+        
+        //execute query and get cursor
+        Cursor c = performRawQuery(select);
+        
+        //return id of photo
+        return c.getInt(c.getColumnIndex(COL_ID));
+        
+    }
+    
 
     /**
-     * Pass in Object you would like to insert, and the name of the table you are inserting into.
-     * @param p Fuel Entry object
-     * @param tableName
+     * Inserts a photo into the photos table and corresponding tags into the tag table.
+     * @param p Photo object
      */
-    public void insertPhoto(Photo p, String tableName) {
+    public void insertPhoto(Photo p) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        //insert data
-        cv.put(COL_DATE, dateToString(p.getDate()));
-        cv.put(COL_FUELAMOUNT, p.getFuelAmount());
-        cv.put(COL_DISTANCE, p.getDistance());
-        cv.put(COL_CENTSPERLITRE, p.getCost());
-        cv.put(COL_FUELGRADE, p.getFuelGrade());
-        cv.put(COL_STATION, p.getStation());
-        cv.put(COL_COST, p.getCost());
+        //add photo info to cv
+        cv.put(PHOTOS_COL_DATE, dateToString(p.getDate()));
+        cv.put(PHOTOS_COL_PATH, p.getPath());
+        cv.put(COL_NAME, p.getName());
 
-        db.insert(tableName, COL_ID, cv);
+        //insert photo into photo tables
+        db.insert(TABLE_NAME_PHOTOS, COL_ID, cv);
+
+        //get newly inserted photo's id from photos table
+        int pid = selectPhotoIDByName(p.getName());
+
+        //todo: Insert photo into album
+
+        //insert photo's tags into tags table
+        for(String tag : p.getTags()){
+           
+            ContentValues tcv = new ContentValues();
+            
+            cv.put(COL_NAME, tag);
+            cv.put(COL_PHOTOID, pid);
+
+            //insert tag tuple into tags table
+            db.insert(TABLE_NAME_TAGS, COL_ID, tcv);
+            
+            Log.d(logTag, "Tag inserted: " + tag + " w/ pid: " + pid);
+            
+        }
+
         db.close();
 
     }
 
-    public void insertTag(){
+    public Collection<String> selectAllTags(){
         //todo
     }
 
-    public void insertAlbum(){
+    public Collection<Photo> selectAllPhotos(){
         //todo
     }
 
-
+    public Collection<Photo> selectPhotosFromAlbum(String albumName){
+        //todo
+    }
+    
+    public Collection<Photo> selectPhotosByTag(Collection<String> tags){
+        //todo
+    }
 
     /**
      * Useful method for converting from date to String for db insertion
@@ -267,7 +314,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Performs a raw query, where the where args are null
+     * Performs a raw SQL Select query. Returns a cursor set to the first result.
      * @param query
      * @return
      */
@@ -277,7 +324,7 @@ public class DBManager extends SQLiteOpenHelper {
 
         Cursor c = db.rawQuery(query, null);
 
-        Log.d(tag, "Raw query executed: " + query);
+        Log.d(logTag, "Raw query executed: " + query);
 
         c.moveToFirst();
 
@@ -285,18 +332,4 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
-    /**
-     * Use this method if you wish to return all results and all columns from a table.
-     *
-     * @param tableName
-     * @return
-     */
-    public Cursor getAllRows(String tableName) {
-
-        //build the query
-        String selectionQuery = "SELECT * FROM " + tableName;
-
-        return performRawQuery(selectionQuery);
-
-    }
 }

@@ -8,8 +8,6 @@ import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 
-import java.sql.SQLData;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Derek
@@ -19,20 +17,20 @@ import java.sql.SQLData;
  */
 public class TestDBManager extends TestCase{
 
-    private final SQLiteDatabase db;
+    private DBManager dbPlug;
 
     @Before
     public void setUp() throws Exception {
 
         super.setUp();
-        db = SQLiteDatabase.create(null);
+        final SQLiteDatabase db = SQLiteDatabase.create(null);
         Context context = new MockContext() {
             @Override
             public SQLiteDatabase openOrCreateDatabase(String file, int mode, SQLiteDatabase.CursorFactory factory) {
                 return db;
             };
         };
-        db = new DBManager(context);
+        dbPlug = new DBManager(context);
         mDb = mHelper.getWritableDatabase();
         wipeData(mDb);
 
