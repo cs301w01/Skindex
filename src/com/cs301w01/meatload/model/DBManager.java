@@ -10,7 +10,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.cs301w01.meatload.model.Photo;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -46,24 +49,24 @@ public class DBManager extends SQLiteOpenHelper {
     
     private static final String CREATE_TABLE_PHOTOSTABLE =
             "CREATE TABLE " + TABLE_NAME_PHOTOS + " (" +
-                    COL_ID + " INTEGER PRIMARY KEY," +
-                    PHOTOS_COL_DATE + " Date," +
-                    PHOTOS_COL_PATH + " TEXT," +
+                    COL_ID + " INTEGER PRIMARY KEY, " +
+                    PHOTOS_COL_DATE + " Date, " +
+                    PHOTOS_COL_PATH + " TEXT, " +
                     COL_NAME + " TEXT);";
     
     private static final String CREATE_TABLE_TAGSTABLE =
             "CREATE TABLE " + TABLE_NAME_TAGS + " (" +
-                COL_ID + " INTEGER PRIMARY KEY," +
-                COL_PHOTOID + " INTEGER," +
-                COL_NAME + " TEXT," +
+                COL_ID + " INTEGER PRIMARY KEY, " +
+                COL_PHOTOID + " INTEGER, " +
+                COL_NAME + " TEXT, " +
                 "FOREIGN KEY(" + COL_PHOTOID + ") REFERENCES " +
                                                     TABLE_NAME_PHOTOS + "( " + COL_ID + "));";
 
     private static final String CREATE_TABLE_ALBUMSTABLE =
             "CREATE TABLE " + TABLE_NAME_ALBUMS + " (" +
-                    COL_ID + " INTEGER PRIMARY KEY," +
-                    COL_PHOTOID + " INTEGER," +
-                    COL_NAME + " TEXT," +
+                    COL_ID + " INTEGER PRIMARY KEY, " +
+                    COL_PHOTOID + " INTEGER, " +
+                    COL_NAME + " TEXT, " +
                     "FOREIGN KEY(" + COL_PHOTOID + ") REFERENCES " +
                     TABLE_NAME_PHOTOS + "( " + COL_ID + "));";
 
@@ -264,7 +267,7 @@ public class DBManager extends SQLiteOpenHelper {
         //get newly inserted photo's id from photos table
         int pid = selectPhotoIDByName(p.getName());
 
-        //todo: Insert photo into album
+        addPhotoToAlbum(p.getAlbumName(), pid);
 
         //insert photo's tags into tags table
         for(String tag : p.getTags()){
@@ -286,20 +289,97 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     public Collection<String> selectAllTags(){
-        //todo
+
+        String getTags = "SELECT " + COL_NAME +
+                         " FROM " + TABLE_NAME_TAGS;
+        
+        Cursor c = performRawQuery(getTags);
+        
+        Collection<String> tags = new ArrayList<String>();
+        
+        while(!c.isLast()){
+            
+            tags.add(c.getString(c.getColumnIndex(COL_NAME)));
+            
+            c.moveToNext();
+        }
+
+        return tags;
+
     }
 
-    public Collection<Photo> selectAllPhotos(){
-        //todo
-    }
-
-    public Collection<Photo> selectPhotosFromAlbum(String albumName){
-        //todo
+    public Collection<String> selectPhotoTags(int photoID){
+        
+        Collection<String> tags = new ArrayList<String>();
+        
+        
+        
+        return tags;
+        
     }
     
-    public Collection<Photo> selectPhotosByTag(Collection<String> tags){
-        //todo
+    public Collection<Photo> selectAllPhotos(){
+        
+        String getPhotos = "SELECT * FROM " + TABLE_NAME_PHOTOS;
+        
+        Cursor c = performRawQuery(getPhotos);
+
+        Collection<Photo> photos = new ArrayList<Photo>();
+
+        while(!c.isLast()){
+            
+            String photoName = c.getString(c.getColumnIndex(COL_NAME));
+            String path = c.getString(c.getColumnIndex(PHOTOS_COL_PATH));
+            String albumName = getAlbumNameOfPhoto(c.getInt(c.getColumnIndex(COL_ID)));
+            Date date = stringToDate(c.getString(c.getColumnIndex(PHOTOS_COL_DATE)));
+                    
+            Photo p = new Photo(photoName, path, albumName, date, selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
+            
+            photos.add(p);
+
+            c.moveToNext();
+        }
+
+        return photos;
     }
+
+    /**
+     * Use this to find the name of the album that a photo is contained in by passing the photo's id as
+     * an input parameter.
+     * @param photoID
+     * @return albumName as a string
+     */
+    public String getAlbumNameOfPhoto(int photoID) {
+        
+        Cursor c = performRawQuery("SELECT " + COL_NAME +
+                                   " FROM " + TABLE_NAME_ALBUMS +
+                                   " WHERE " + COL_PHOTOID + " = " +
+                                   "'" + photoID + "'");
+        
+        return c.getString(c.getColumnIndex(COL_NAME));
+        
+    }
+
+    public void addPhotoToAlbum(String albumName, int photoID){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COL_PHOTOID, photoID);
+        cv.put(COL_NAME, albumName);
+
+        //insert photo into photo tables
+        db.insert(TABLE_NAME_ALBUMS, COL_ID, cv);
+        
+    }
+    
+//    public Collection<Photo> selectPhotosFromAlbum(String albumName){
+//        //todo
+//    }
+//
+//    public Collection<Photo> selectPhotosByTag(Collection<String> tags){
+//        //todo
+//    }
 
     /**
      * Useful method for converting from date to String for db insertion
@@ -312,7 +392,22 @@ public class DBManager extends SQLiteOpenHelper {
         return dateFormat.format(date);
 
     }
+    
+    public Date stringToDate(String date){
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date d = null;
+        try {
+            return df.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();  
+        }
+
+        return null;
+
+    }
+    
     /**
      * Performs a raw SQL Select query. Returns a cursor set to the first result.
      * @param query
