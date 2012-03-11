@@ -33,6 +33,7 @@ public class DBManager extends SQLiteOpenHelper {
     public static final String COL_ID = "_id";
     public static final String COL_NAME = "name";
     public static final String COL_PHOTOID = "photoID";
+    public static final String COL_ALBUMID = "albumID";
     
     //vars for photos table
     public static final String TABLE_NAME_PHOTOS = "photos";
@@ -44,6 +45,9 @@ public class DBManager extends SQLiteOpenHelper {
     
     //vars for albums table
     public static final String TABLE_NAME_ALBUMS = "albums";
+    
+    //vars for album tags table
+    public static final String TABLE_NAME_ALBUMTAGS = "albumTags";
 
     private static final int DATABASE_VERSION = 2;
     
@@ -52,7 +56,10 @@ public class DBManager extends SQLiteOpenHelper {
                     COL_ID + " INTEGER PRIMARY KEY, " +
                     PHOTOS_COL_DATE + " Date, " +
                     PHOTOS_COL_PATH + " TEXT, " +
-                    COL_NAME + " TEXT);";
+                    COL_NAME + " TEXT, " +
+                    COL_ALBUMID + " INTEGER, " +
+                    "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
+                    TABLE_NAME_ALBUMS + "( " + COL_ID + "));";
     
     private static final String CREATE_TABLE_TAGSTABLE =
             "CREATE TABLE " + TABLE_NAME_TAGS + " (" +
@@ -69,6 +76,14 @@ public class DBManager extends SQLiteOpenHelper {
                     COL_NAME + " TEXT, " +
                     "FOREIGN KEY(" + COL_PHOTOID + ") REFERENCES " +
                     TABLE_NAME_PHOTOS + "( " + COL_ID + "));";
+    
+    private static final String CREATE_TABLE_ALBUMTAGSTABLE =
+        "CREATE TABLE " + TABLE_NAME_ALBUMTAGS + " (" +
+            COL_ID + " INTEGER PRIMARY KEY, " +
+            COL_ALBUMID + " INTEGER, " +
+            COL_NAME + " TEXT, " +
+            "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
+            										TABLE_NAME_ALBUMS + "( " + COL_ID + "));";
 
 
     public DBManager(Context context) {
@@ -93,6 +108,9 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.execSQL(CREATE_TABLE_TAGSTABLE);
         Log.d(logTag, CREATE_TABLE_TAGSTABLE + " generated.");
+        
+        db.execSQL(CREATE_TABLE_ALBUMTAGSTABLE);
+        Log.d(logTag, CREATE_TABLE_ALBUMTAGSTABLE + " generated.");
 
         Log.d(logTag, "DB generated.");
 
@@ -108,6 +126,9 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_TAGSTABLE);
         Log.d(logTag, TABLE_NAME_TAGS + " dropped.");
+        
+        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_ALBUMTAGSTABLE);
+        Log.d(logTag, CREATE_TABLE_ALBUMTAGSTABLE + " dropped.");
 
         Log.d(logTag, "DB generated.");
         
@@ -195,6 +216,9 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
 
+    /**TODO
+     * use the following function to update tags as well
+     */
     /**
      * The update method has the following parameters:
      String Table: The table to update a value in
@@ -222,19 +246,11 @@ public class DBManager extends SQLiteOpenHelper {
 
         return uVal;
     }
-
-    /**
-     * Used to find the id of a photo in the photos table for insertion into the albums and tags tables.
-     * @param name
-     * @return
-     */
-    private int selectPhotoIDByName(String name){
-        
-        int id;
-        
-        //query to execute
+    
+    private int selectIDByName(String name, String tableName){
+    	//query to execute
         String select = "SELECT " + COL_ID + 
-                        " FROM " + TABLE_NAME_PHOTOS + 
+                        " FROM " + tableName + 
                         " WHERE " + COL_NAME + 
                         " = '" + name + "'";
         
@@ -243,7 +259,19 @@ public class DBManager extends SQLiteOpenHelper {
         
         //return id of photo
         return c.getInt(c.getColumnIndex(COL_ID));
-        
+    }
+
+    /**
+     * Used to find the id of a photo in the photos table for insertion into the albums and tags tables.
+     * @param name
+     * @return
+     */
+    private int selectPhotoIDByName(String name){
+        return selectIDByName(name, TABLE_NAME_PHOTOS);
+    }
+    
+    private int selectAlbumIDByName(String name){
+        return selectIDByName(name, TABLE_NAME_ALBUMS);
     }
     
 
@@ -287,42 +315,45 @@ public class DBManager extends SQLiteOpenHelper {
         db.close();
 
     }
+    
+    public Collection<String> selectTagsByQuery(String tagQuery){
+
+    	Cursor c = performRawQuery(tagQuery);
+
+    	Collection<String> tags = new ArrayList<String>();
+
+    	while(!c.isLast()){
+
+    		tags.add(c.getString(c.getColumnIndex(COL_NAME)));
+
+    		c.moveToNext();
+    	}
+
+return tags;
+    }
 
     public Collection<String> selectAllTags(){
 
         String getTags = "SELECT " + COL_NAME +
                          " FROM " + TABLE_NAME_TAGS;
         
-        Cursor c = performRawQuery(getTags);
-        
-        Collection<String> tags = new ArrayList<String>();
-        
-        while(!c.isLast()){
-            
-            tags.add(c.getString(c.getColumnIndex(COL_NAME)));
-            
-            c.moveToNext();
-        }
-
-        return tags;
+        return selectTagsByQuery(getTags);
 
     }
 
     public Collection<String> selectPhotoTags(int photoID){
         
-        Collection<String> tags = new ArrayList<String>();
+        String getTags = "SELECT " + COL_NAME +
+        					" FROM " + TABLE_NAME_TAGS +
+        					" WHERE " + COL_PHOTOID + " = '" + photoID + "'";
         
-        
-        
-        return tags;
+        return selectTagsByQuery(getTags);
         
     }
     
-    public Collection<Photo> selectAllPhotos(){
+    public Collection<Photo> selectPhotosByQuery(String photoQuery){
         
-        String getPhotos = "SELECT * FROM " + TABLE_NAME_PHOTOS;
-        
-        Cursor c = performRawQuery(getPhotos);
+        Cursor c = performRawQuery(photoQuery);
 
         Collection<Photo> photos = new ArrayList<Photo>();
 
@@ -341,6 +372,55 @@ public class DBManager extends SQLiteOpenHelper {
         }
 
         return photos;
+    }
+    
+    public Collection<Photo> selectAllPhotos(){
+    	return selectPhotosByQuery("SELECT * FROM " + 
+    								TABLE_NAME_PHOTOS + 
+    								" ORDER BY " + PHOTOS_COL_DATE);
+    }
+    
+    public Photo selectPhotoByName(String name){
+    	Cursor c = performRawQuery("SELECT * FROM " +
+									TABLE_NAME_PHOTOS +
+									" WHERE " + COL_NAME + " = '" + name + "'");
+    	
+
+        String photoName = c.getString(c.getColumnIndex(COL_NAME));
+        String path = c.getString(c.getColumnIndex(PHOTOS_COL_PATH));
+        String albumName = getAlbumNameOfPhoto(c.getInt(c.getColumnIndex(COL_ID)));
+        Date date = stringToDate(c.getString(c.getColumnIndex(PHOTOS_COL_DATE)));
+                
+        return new Photo(photoName, path, albumName, date, selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
+    }
+    
+    public void deletePhotoByName(String name){
+    	deleteByID(selectIDByName(name, TABLE_NAME_PHOTOS), TABLE_NAME_PHOTOS);
+    }
+    
+    public void deleteAlbumByName(String name){
+    	deleteByID(selectIDByName(name, TABLE_NAME_ALBUMS), TABLE_NAME_ALBUMS);
+    }
+    
+    public Collection<String> selectAllAlbums(){
+    	
+    	String albumQuery = "SELECT " + COL_NAME + 
+    						" FROM " + TABLE_NAME_ALBUMS;
+    	
+    	Cursor c = performRawQuery(albumQuery);
+
+        Collection<String> albums = new ArrayList<String>();
+
+        while(!c.isLast()){
+            
+            String albumName = c.getString(c.getColumnIndex(COL_NAME));
+            
+            albums.add(albumName);
+
+            c.moveToNext();
+        }
+
+        return albums;
     }
 
     /**
@@ -373,13 +453,35 @@ public class DBManager extends SQLiteOpenHelper {
         
     }
     
-//    public Collection<Photo> selectPhotosFromAlbum(String albumName){
-//        //todo
-//    }
-//
-//    public Collection<Photo> selectPhotosByTag(Collection<String> tags){
-//        //todo
-//    }
+    //TODO fix this function to work properly once the table set ups have been finalized
+    public Collection<Photo> selectPhotosFromAlbum(String albumName){
+    	int albumID = selectAlbumIDByName(albumName);
+    	String query = "SELECT * FROM " + 
+    					TABLE_NAME_PHOTOS + 
+    					" WHERE " + 
+    					COL_ALBUMID + " = " + "'" + albumID + "'" + 
+    					" ORDERBY " + PHOTOS_COL_DATE;
+    	return selectPhotosByQuery(query);
+    }
+    
+    //TODO fix this function to work properly once the table set ups have been finalized
+    public Collection<Photo> selectPhotosByTag(Collection<String> tags){
+    	String query = "SELECT p.* FROM " + 
+    					"p " + TABLE_NAME_PHOTOS + " LEFT JOIN " + 
+    					"t " + TABLE_NAME_TAGS + " ON (p." + COL_ID + " = t." + COL_PHOTOID + ") " +
+    					"WHERE ";
+    	boolean loopedOnce = false;
+    	for(String tag : tags){
+    		if(loopedOnce){
+    			query += " OR ";
+    			loopedOnce = true;
+    		}
+    		query += "t." + COL_NAME + " = '" + tag + "'";
+    	}
+    	query += " GROUP BY p.*" + 
+    			" ORDER BY COUNT(p.*), p." + PHOTOS_COL_DATE;
+    	return selectPhotosByQuery(query);
+    }
 
     /**
      * Useful method for converting from date to String for db insertion

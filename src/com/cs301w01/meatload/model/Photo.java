@@ -21,8 +21,6 @@ public class Photo {
     
     public Photo(String name, String path, String album, Date date, Collection<String> tags){
 
-        tags = tags;
-
         this.name = name;
         this.albumName = album;
         this.path = path;
