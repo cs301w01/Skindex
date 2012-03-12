@@ -5,7 +5,7 @@ import android.app.Activity;
 
 public class EditPictureActivity extends Skindactivity {
 
-    @Override
+    //@Override
     public void update(Object model) {
         //To change body of implemented methods use File | Settings | File Templates.
     }

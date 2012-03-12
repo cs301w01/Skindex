@@ -20,7 +20,7 @@ public class GalleryActivity extends Skindactivity {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery);
+        //setContentView(R.layout.gallery);  //That xml doesn't exist yet.
         
         /**TODO
          * this activity should some how be passed a PhotoManager by it's caller

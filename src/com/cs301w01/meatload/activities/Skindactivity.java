@@ -13,6 +13,10 @@ import android.util.Log;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class Skindactivity extends Activity implements FView{
+	
+	public Skindactivity(){
+		super();
+	}
 
     //for logger, adds class name labels to log msgs
     protected String tag;
