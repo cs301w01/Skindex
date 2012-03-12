@@ -30,29 +30,34 @@ public class Skindex extends TabActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        Resources res = getResources(); // Resource object to get Drawables
-        TabHost tabHost = getTabHost();  // The activity TabHost
-        TabHost.TabSpec spec;  // Resusable TabSpec for each tab
-        Intent intent;  // Reusable Intent for each tab
+        
+        //BEGIN TAB CODE
+        //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html
+        	Resources res = getResources(); // Resource object to get Drawables
+        	TabHost tabHost = getTabHost();  // The activity TabHost
+        	TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+        	Intent intent;  // Reusable Intent for each tab
 
-        // Create an Intent to launch an Activity for the tab (to be reused)
-        intent = new Intent().setClass(this, ViewGroupsActivity.class);
+        	// Create an Intent to launch an Activity for the tab (to be reused)
+        	intent = new Intent().setClass(this, ViewGroupsActivity.class);
 
-        // Initialize a TabSpec for each tab and add it to the TabHost
-        spec = tabHost.newTabSpec("albums").setIndicator("Albums",
+        	// Initialize a TabSpec for each tab and add it to the TabHost
+        	spec = tabHost.newTabSpec("albums").setIndicator("Albums",
                            res.getDrawable(R.drawable.ic_tab_artists))
                          .setContent(intent);
-        tabHost.addTab(spec);
+        	tabHost.addTab(spec);
 
-        // Do the same for the other tabs
-        intent = new Intent().setClass(this, ViewTagsActivity.class);
-        spec = tabHost.newTabSpec("tags").setIndicator("Tags",
+        	// Do the same for the other tabs
+        	intent = new Intent().setClass(this, ViewTagsActivity.class);
+        	spec = tabHost.newTabSpec("tags").setIndicator("Tags",
                               res.getDrawable(R.drawable.ic_tab_artists))
                           .setContent(intent);
-        tabHost.addTab(spec);
+        	tabHost.addTab(spec);
 
 
-        tabHost.setCurrentTab(1);
+        	tabHost.setCurrentTab(0);
+        ///END TAB CODE
+        
         /*
         photoManager = new PhotoManager(this);
         */
