@@ -23,7 +23,7 @@ public class Skindex extends Skindactivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        photoManager = new PhotoManager();
+        photoManager = new PhotoManager(this);
         
         /**TODO
          * map objects created as variables to real objects in the XML R.layout.main
@@ -110,14 +110,14 @@ public class Skindex extends Skindactivity
     }
     
     private void openGalleryFromAlbum(String albumName){
-    	openGallery(new PhotoManager(albumName));
+    	openGallery(new PhotoManager(albumName, this));
     }
     
     private void openGalleryFromTags(Collection<String> tags){
-    	openGallery(new PhotoManager(tags));
+    	openGallery(new PhotoManager(tags, this));
     }
     
     private void openGalleryAllPhotos(){
-    	openGallery(new PhotoManager());
+    	openGallery(new PhotoManager(this));
     }
 }

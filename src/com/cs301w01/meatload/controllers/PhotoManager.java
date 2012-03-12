@@ -3,8 +3,11 @@ package com.cs301w01.meatload.controllers;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import android.content.Context;
+
 import com.cs301w01.meatload.model.DBManager;
 import com.cs301w01.meatload.model.Photo;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,23 +16,29 @@ import com.cs301w01.meatload.model.Photo;
  * Time: 1:14 PM
  * To change this template use File | Settings | File Templates.
  */
+
+
 public class PhotoManager implements FController{
 
+	DBManager dbMan;
 	String albumName = null;
 	Collection<String> tags;
 	boolean isAlbum;
 	
-    public PhotoManager(){
+    public PhotoManager(Context context){
+    	dbMan = new DBManager(context);
     	tags = new ArrayList<String>();
     }
     
-    public PhotoManager(String albumName){
+    public PhotoManager(String albumName, Context context){
     	this.albumName = albumName;
+    	dbMan = new DBManager(context);
     	isAlbum = true;
     }
     
-    public PhotoManager(Collection<String> tags){
+    public PhotoManager(Collection<String> tags, Context context){
     	this.tags = tags;
+    	dbMan = new DBManager(context);
     	isAlbum = false;
     }
     
@@ -38,31 +47,31 @@ public class PhotoManager implements FController{
      * @param photo
      */
     public void storePhoto(Photo photo){
-    	insertPhoto(photo);
+    	dbMan.insertPhoto(photo);
     }
     
     public Photo getPhoto(String name){
-    	return selectPhotoByName(name);
+    	return dbMan.selectPhotoByName(name);
     }
     
     public Collection<Photo> getPhotoGallery(){
     	if(isAlbum)
-    		return selectPhotosFromAlbum(albumName);
+    		return dbMan.selectPhotosFromAlbum(albumName);
     	else if(tags.isEmpty())
-    		return selectAllPhotos();
+    		return dbMan.selectAllPhotos();
     	else
-    		return selectPhotosFromTags(tags);
+    		return dbMan.selectPhotosByTag(tags);
     }
     
     public void deletePhoto(String name){
-    	deletePhotoByName(name);
+    	dbMan.deletePhotoByName(name);
     }
     
     public void deleteAlbum(String name){
-    	deleteAlbumByName(name);
+    	dbMan.deleteAlbumByName(name);
     }
     
-    public void storeTag(String ){
+    public void storeTag(){
     	
     }
     
@@ -83,7 +92,7 @@ public class PhotoManager implements FController{
      * @return
      */
     private Collection<String> getAlbumNames(){
-    	return selectAllAlbums();
+    	return dbMan.selectAllAlbums();
     }
     
     public boolean isAlbum(){

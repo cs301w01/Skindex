@@ -26,7 +26,7 @@ public class GalleryActivity extends Skindactivity {
          * this activity should some how be passed a PhotoManager by it's caller
          * I'm not entirely sure how to do this, but it's possible.
          */
-        photoManager = new PhotoManager();
+        photoManager = new PhotoManager(this);
         
         /**TODO
          * map objects created as variables to real objects in the XML R.layout.main
