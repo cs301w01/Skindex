@@ -31,7 +31,7 @@ public class Skindex extends TabActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        //BEGIN TAB CODE
+        //BEGIN TAB CODE////////////////////////
         //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html
         	Resources res = getResources(); // Resource object to get Drawables
         	TabHost tabHost = getTabHost();  // The activity TabHost
@@ -56,11 +56,14 @@ public class Skindex extends TabActivity
 
 
         	tabHost.setCurrentTab(0);
-        ///END TAB CODE
+        ///END TAB CODE/////////////////////////
         
-        /*
-        photoManager = new PhotoManager(this);
-        */
+
+        //populate album list
+        
+        
+        
+        
         
         /**TODO
          * map objects created as variables to real objects in the XML R.layout.main

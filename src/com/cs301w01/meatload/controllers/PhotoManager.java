@@ -91,7 +91,7 @@ public class PhotoManager implements FController{
      * Not sure how we're going to pass around DBManager... is it a singleton?
      * @return
      */
-    private Collection<String> getAlbumNames(){
+    public Collection<String> getAlbumNames(){
     	return dbMan.selectAllAlbums();
     }
     

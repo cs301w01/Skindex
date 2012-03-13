@@ -408,8 +408,12 @@ return tags;
     						" FROM " + TABLE_NAME_ALBUMS;
     	
     	Cursor c = performRawQuery(albumQuery);
-
-        Collection<String> albums = new ArrayList<String>();
+    	
+    	Collection<String> albums = new ArrayList<String>();
+    	
+    	if(c.getCount() == 0){
+    		return albums;
+    	}
 
         while(!c.isLast()){
             
