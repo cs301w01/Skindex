@@ -411,7 +411,7 @@ return tags;
     	
     	Collection<String> albums = new ArrayList<String>();
     	
-    	if(c.getCount() == 0){
+    	if (c == null){
     		return albums;
     	}
 
@@ -516,6 +516,7 @@ return tags;
     
     /**
      * Performs a raw SQL Select query. Returns a cursor set to the first result.
+     * Returns null if query is empty.
      * @param query
      * @return
      */
@@ -526,7 +527,10 @@ return tags;
         Cursor c = db.rawQuery(query, null);
 
         Log.d(logTag, "Raw query executed: " + query);
-
+        	
+        if(c.getCount() == 0){
+        	return null;
+        }
         c.moveToFirst();
 
         return c;
