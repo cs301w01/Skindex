@@ -3,7 +3,9 @@ package com.cs301w01.meatload.activities;
 import java.util.Collection;
 
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.model.Album;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +15,7 @@ import android.widget.TextView;
 
 
 public class ViewGroupsActivity extends Skindactivity {
-	private PhotoManager photoManager;
+	private MainManager mainManager;
 
     //@Override
     public void update(Object model) {
@@ -42,8 +44,8 @@ public class ViewGroupsActivity extends Skindactivity {
         setContentView(listView);
        
         
-        photoManager = new PhotoManager(this);
-        Collection<String> aNames = photoManager.getAlbumNames();
+        mainManager = new MainManager(this);
+        Collection<Album> aNames = mainManager.getAllAlbums();
     }
 
 }

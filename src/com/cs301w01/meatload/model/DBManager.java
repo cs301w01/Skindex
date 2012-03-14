@@ -316,14 +316,29 @@ public class DBManager extends SQLiteOpenHelper {
 
     }
     
+    public int getTotalPhotos(){
+    	Cursor c = performRawQuery("SELECT COUNT(*) AS numPhotos FROM " + TABLE_NAME_PHOTOS);
+    	
+    	if (c == null){
+    		return 0;
+    	}
+    	
+    	return new Integer(c.getString(c.getColumnIndex("numPhotos")));
+    }
+    
     public Collection<String> selectTagsByQuery(String tagQuery){
 
     	Cursor c = performRawQuery(tagQuery);
 
     	Collection<String> tags = new ArrayList<String>();
+    	
+    	if (c == null){
+    		return tags;
+    	}
 
     	while(!c.isLast()){
 
+    		
     		tags.add(c.getString(c.getColumnIndex(COL_NAME)));
 
     		c.moveToNext();
@@ -332,13 +347,35 @@ public class DBManager extends SQLiteOpenHelper {
 return tags;
     }
 
-    public Collection<String> selectAllTags(){
 
-        String getTags = "SELECT " + COL_NAME +
-                         " FROM " + TABLE_NAME_TAGS;
-        
-        return selectTagsByQuery(getTags);
+    
+    public Collection<Tag> selectAllTags(){
+    	
+    	String tagQuery = "SELECT t." + COL_NAME + ", COUNT(*) AS numPhotos" +
+    						" FROM t " + TABLE_NAME_TAGS + 
+    						" LEFT JOIN p " + TABLE_NAME_PHOTOS +
+    						" ON (t." + COL_PHOTOID + " = p." + COL_ID + ")" + 
+    						" GROUP BY t." + COL_NAME;
+    	
+    	Cursor c = performRawQuery(tagQuery);
+    	
+    	Collection<Tag> tags = new ArrayList<Tag>();
+    	
+    	if (c == null){
+    		return tags;
+    	}
 
+        while(!c.isLast()){
+            
+            String albumName = c.getString(c.getColumnIndex(COL_NAME));
+            int numPhotos = new Integer(c.getString(c.getColumnIndex("numPhotos")));
+            
+            tags.add(new Tag(albumName, numPhotos));
+
+            c.moveToNext();
+        }
+
+        return tags;
     }
 
     public Collection<String> selectPhotoTags(int photoID){
@@ -356,6 +393,10 @@ return tags;
         Cursor c = performRawQuery(photoQuery);
 
         Collection<Photo> photos = new ArrayList<Photo>();
+        
+        if (c == null){
+    		return photos;
+    	}
 
         while(!c.isLast()){
             
@@ -380,10 +421,19 @@ return tags;
     								" ORDER BY " + PHOTOS_COL_DATE);
     }
     
+    /**TODO: selectPhotoByName
+     * add the getting album name to the query
+     * @param name
+     * @return
+     */
     public Photo selectPhotoByName(String name){
     	Cursor c = performRawQuery("SELECT * FROM " +
 									TABLE_NAME_PHOTOS +
 									" WHERE " + COL_NAME + " = '" + name + "'");
+    	
+    	if (c == null){
+    		return null;
+    	}
     	
 
         String photoName = c.getString(c.getColumnIndex(COL_NAME));
@@ -402,14 +452,17 @@ return tags;
     	deleteByID(selectIDByName(name, TABLE_NAME_ALBUMS), TABLE_NAME_ALBUMS);
     }
     
-    public Collection<String> selectAllAlbums(){
+    public Collection<Album> selectAllAlbums(){
     	
-    	String albumQuery = "SELECT " + COL_NAME + 
-    						" FROM " + TABLE_NAME_ALBUMS;
+    	String albumQuery = "SELECT a." + COL_NAME + ", COUNT(*) AS numPhotos" +
+    						" FROM a " + TABLE_NAME_ALBUMS + 
+    						" LEFT JOIN p " + TABLE_NAME_PHOTOS +
+    						" ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
+    						" GROUP BY a." + COL_NAME;
     	
     	Cursor c = performRawQuery(albumQuery);
     	
-    	Collection<String> albums = new ArrayList<String>();
+    	Collection<Album> albums = new ArrayList<Album>();
     	
     	if (c == null){
     		return albums;
@@ -418,8 +471,9 @@ return tags;
         while(!c.isLast()){
             
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
+            int numPhotos = new Integer(c.getString(c.getColumnIndex("numPhotos")));
             
-            albums.add(albumName);
+            albums.add(new Album(albumName, numPhotos));
 
             c.moveToNext();
         }

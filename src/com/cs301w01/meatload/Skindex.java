@@ -12,6 +12,8 @@ import android.widget.TabHost;
 import com.cs301w01.meatload.activities.Skindactivity;
 import com.cs301w01.meatload.activities.ViewGroupsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
+import com.cs301w01.meatload.controllers.GalleryManager;
+import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 
 import java.util.Collection;
@@ -22,7 +24,7 @@ public class Skindex extends TabActivity
 {
 	private Button newAlbumButton;
 	private Button takePictureButton;
-	private PhotoManager photoManager;
+	private MainManager mainManager;
 	
     /** Called when the activity is first created. */
     @Override
@@ -146,19 +148,19 @@ public class Skindex extends TabActivity
      * start a new gallery activity and pass it pMan
      * @param pMan - the PhotoManager object to be used in this activity
      */
-    private void openGallery(PhotoManager pMan){
+    private void openGallery(GalleryManager pMan){
     	
     }
     
     private void openGalleryFromAlbum(String albumName){
-    	openGallery(new PhotoManager(albumName, this));
+    	openGallery(new GalleryManager(albumName, this));
     }
     
     private void openGalleryFromTags(Collection<String> tags){
-    	openGallery(new PhotoManager(tags, this));
+    	openGallery(new GalleryManager(tags, this));
     }
     
     private void openGalleryAllPhotos(){
-    	openGallery(new PhotoManager(this));
+    	openGallery(new GalleryManager(this));
     }
 }
