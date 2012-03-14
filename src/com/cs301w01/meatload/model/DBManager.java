@@ -352,9 +352,9 @@ return tags;
     public Collection<Tag> selectAllTags(){
     	
     	String tagQuery = "SELECT t." + COL_NAME + ", COUNT(*) AS numPhotos" +
-    						" FROM t " + TABLE_NAME_TAGS + 
-    						" LEFT JOIN p " + TABLE_NAME_PHOTOS +
-    						" ON (t." + COL_PHOTOID + " = p." + COL_ID + ")" + 
+    						" FROM " + TABLE_NAME_TAGS + 
+    						" t LEFT JOIN " + TABLE_NAME_PHOTOS +
+    						" p ON (t." + COL_PHOTOID + " = p." + COL_ID + ")" + 
     						" GROUP BY t." + COL_NAME;
     	
     	Cursor c = performRawQuery(tagQuery);
@@ -455,9 +455,9 @@ return tags;
     public Collection<Album> selectAllAlbums(){
     	
     	String albumQuery = "SELECT a." + COL_NAME + ", COUNT(*) AS numPhotos" +
-    						" FROM a " + TABLE_NAME_ALBUMS + 
-    						" LEFT JOIN p " + TABLE_NAME_PHOTOS +
-    						" ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
+    						" FROM " + TABLE_NAME_ALBUMS + 
+    						" a LEFT JOIN " + TABLE_NAME_PHOTOS +
+    						" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
     						" GROUP BY a." + COL_NAME;
     	
     	Cursor c = performRawQuery(albumQuery);
@@ -525,8 +525,8 @@ return tags;
     //TODO fix this function to work properly once the table set ups have been finalized
     public Collection<Photo> selectPhotosByTag(Collection<String> tags){
     	String query = "SELECT p.* FROM " + 
-    					"p " + TABLE_NAME_PHOTOS + " LEFT JOIN " + 
-    					"t " + TABLE_NAME_TAGS + " ON (p." + COL_ID + " = t." + COL_PHOTOID + ") " +
+    					TABLE_NAME_PHOTOS + " p LEFT JOIN " + 
+    					TABLE_NAME_TAGS + " t ON (p." + COL_ID + " = t." + COL_PHOTOID + ") " +
     					"WHERE ";
     	boolean loopedOnce = false;
     	for(String tag : tags){
