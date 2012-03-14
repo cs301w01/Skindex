@@ -43,7 +43,7 @@ public class ViewGroupsActivity extends Skindactivity {
        
         
         photoManager = new PhotoManager(this);
-        //Collection<String> aNames = photoManager.getAlbumNames();
+        Collection<String> aNames = photoManager.getAlbumNames();
     }
 
 }
