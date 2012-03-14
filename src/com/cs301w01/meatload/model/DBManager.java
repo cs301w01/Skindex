@@ -25,7 +25,7 @@ import java.util.Date;
  */
 public class DBManager extends SQLiteOpenHelper {
 
-    private SQLiteDatabase db;
+    //private SQLiteDatabase db;
     private static String logTag = "DBMANAGER";
     private static final String DB_NAME = "skindexDB";
 
@@ -94,41 +94,41 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase newDB) {
 
-        db = newDB;
+        createTables(newDB);
 
     }
 
-    private void createTables(){
+    private void createTables(SQLiteDatabase db){
 
         db.execSQL(CREATE_TABLE_PHOTOSTABLE);
-        Log.d(logTag, CREATE_TABLE_PHOTOSTABLE + " generated.");
+        Log.d(logTag, TABLE_NAME_PHOTOS + " generated.");
 
         db.execSQL(CREATE_TABLE_ALBUMSTABLE);
-        Log.d(logTag, CREATE_TABLE_ALBUMSTABLE + " generated.");
+        Log.d(logTag, TABLE_NAME_ALBUMS + " generated.");
 
         db.execSQL(CREATE_TABLE_TAGSTABLE);
-        Log.d(logTag, CREATE_TABLE_TAGSTABLE + " generated.");
+        Log.d(logTag, TABLE_NAME_TAGS + " generated.");
         
         db.execSQL(CREATE_TABLE_ALBUMTAGSTABLE);
-        Log.d(logTag, CREATE_TABLE_ALBUMTAGSTABLE + " generated.");
+        Log.d(logTag, TABLE_NAME_ALBUMTAGS + " generated.");
 
         Log.d(logTag, "DB generated.");
 
     }
 
-    private void dropTables(){
+    private void dropTables(SQLiteDatabase db){
 
-        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_PHOTOSTABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PHOTOS);
         Log.d(logTag, TABLE_NAME_PHOTOS + " dropped.");
 
-        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_ALBUMSTABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ALBUMS);
         Log.d(logTag, TABLE_NAME_ALBUMS + " dropped.");
 
-        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_TAGSTABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_TAGS);
         Log.d(logTag, TABLE_NAME_TAGS + " dropped.");
         
-        db.execSQL("DROP TABLE IF EXISTS " + CREATE_TABLE_ALBUMTAGSTABLE);
-        Log.d(logTag, CREATE_TABLE_ALBUMTAGSTABLE + " dropped.");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ALBUMTAGS);
+        Log.d(logTag, TABLE_NAME_ALBUMTAGS + " dropped.");
 
         Log.d(logTag, "DB generated.");
         
@@ -141,8 +141,8 @@ public class DBManager extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
-        dropTables();
-        createTables();
+        dropTables(db);
+        createTables(db);
         
         Log.d(logTag, "TABLES RESET.");
 
@@ -151,7 +151,7 @@ public class DBManager extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
-        dropTables();
+        dropTables(sqLiteDatabase);
         onCreate(sqLiteDatabase);
 
     }
