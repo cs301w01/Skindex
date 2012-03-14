@@ -6,4 +6,5 @@
     <string name="button_new_album">New Album</string>
     <string name="tab_albums">Album</string>
     <string name="tab_tags">Tags</string>
+    <string name="button_gen_pic">Generate Pic</string>
 </resources>

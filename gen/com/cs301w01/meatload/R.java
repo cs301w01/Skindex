@@ -17,6 +17,8 @@ public final class R {
         public static final int tab_main=0x7f020003;
     }
     public static final class id {
+        public static final int genPic=0x7f050006;
+        public static final int imgDisplay=0x7f050005;
         public static final int linearLayout1=0x7f050002;
         public static final int linearLayout2=0x7f050000;
         public static final int myList=0x7f050001;
@@ -29,6 +31,7 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
+        public static final int button_gen_pic=0x7f040006;
         public static final int button_new_album=0x7f040003;
         public static final int button_take_pic=0x7f040002;
         public static final int tab_albums=0x7f040004;
