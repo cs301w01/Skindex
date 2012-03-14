@@ -42,14 +42,14 @@ public class Skindex extends TabActivity
         	intent = new Intent().setClass(this, ViewGroupsActivity.class);
 
         	// Initialize a TabSpec for each tab and add it to the TabHost
-        	spec = tabHost.newTabSpec("albums").setIndicator("Albums",
+        	spec = tabHost.newTabSpec("albums").setIndicator(this.getString(R.string.tab_albums),
                            res.getDrawable(R.drawable.tab_main))
                          .setContent(intent);
         	tabHost.addTab(spec);
 
         	// Do the same for the other tabs
         	intent = new Intent().setClass(this, ViewTagsActivity.class);
-        	spec = tabHost.newTabSpec("tags").setIndicator("Tags",
+        	spec = tabHost.newTabSpec("tags").setIndicator(this.getString(R.string.tab_tags),
                               res.getDrawable(R.drawable.tab_main))
                           .setContent(intent);
         	tabHost.addTab(spec);
@@ -59,7 +59,7 @@ public class Skindex extends TabActivity
         ///END TAB CODE/////////////////////////
         
 
-        //populate album list
+        //Current tab set to Album.  ViewGroupsActivity runs in that tab
         
         
         
