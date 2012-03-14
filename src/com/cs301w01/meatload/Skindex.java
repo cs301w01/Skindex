@@ -43,14 +43,14 @@ public class Skindex extends TabActivity
 
         	// Initialize a TabSpec for each tab and add it to the TabHost
         	spec = tabHost.newTabSpec("albums").setIndicator("Albums",
-                           res.getDrawable(R.drawable.ic_tab_artists))
+                           res.getDrawable(R.drawable.tab_main))
                          .setContent(intent);
         	tabHost.addTab(spec);
 
         	// Do the same for the other tabs
         	intent = new Intent().setClass(this, ViewTagsActivity.class);
         	spec = tabHost.newTabSpec("tags").setIndicator("Tags",
-                              res.getDrawable(R.drawable.ic_tab_artists))
+                              res.getDrawable(R.drawable.tab_main))
                           .setContent(intent);
         	tabHost.addTab(spec);
 

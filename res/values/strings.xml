@@ -2,4 +2,7 @@
 <resources>
     <string name="app_name">MoleFinder</string>
     <string name="text1">&quot;TESTING&quot;</string>
+    <string name="button_take_pic">Take Picture</string>
+    <string name="button_new_album">New Album</string>
+    <string name="tab_album">Album</string>
 </resources>
