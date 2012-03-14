@@ -12,7 +12,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+       
+        <activity android:name=".activities.ComparePicturesActivity"></activity>
+        <activity android:name=".activities.EditAlbumActivity"></activity>
+        <activity android:name=".activities.EditPictureActivity"></activity>
+        <activity android:name=".activities.GalleryActivity"></activity>
+        <activity android:name=".activities.Skindactivity"></activity>
+        <activity android:name=".activities.TakePictureActivity"></activity>
         <activity android:name=".activities.ViewGroupsActivity"></activity>
         <activity android:name=".activities.ViewTagsActivity"></activity>
+
     </application>
 </manifest> 

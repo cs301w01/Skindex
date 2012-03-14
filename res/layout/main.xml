@@ -42,26 +42,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
 
-            <LinearLayout
-                android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent" >
+
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/newAlbum"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:text="@string/button_new_album" />
-
-            </LinearLayout>
            
-                    <Button
-                        android:id="@+id/button1"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@string/button_take_pic" />
-
+                <Button
+                    android:id="@+id/takePic"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="@string/button_take_pic" />
+                
         </LinearLayout>
 
     </LinearLayout>

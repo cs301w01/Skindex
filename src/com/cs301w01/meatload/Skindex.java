@@ -62,7 +62,14 @@ public class Skindex extends TabActivity
         
 
         //Current tab set to Album.  ViewGroupsActivity runs in that tab
-        
+        	//on click listener 
+            final Button button = (Button) findViewById(R.id.takePic);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    // Perform action on click
+                	takePicture();
+                }
+            });
         
         
         
@@ -121,7 +128,7 @@ public class Skindex extends TabActivity
      * otherwise assume the user wants to choose an album
      * if they hit cancel, exit out of this function
      */
-    private void takePicture(){
+    protected void takePicture(){
     	//Display prompt
     	boolean wantsNewAlbum = false;
     	String newAlbumName = "";
@@ -142,6 +149,10 @@ public class Skindex extends TabActivity
     	 * end up at the gallery activity.
     	 * Use openGalleryFromAlbum for this maybe?
     	 */
+        	//Code on push of stats button
+        	Intent myIntent = new Intent();
+        	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+        	startActivity(myIntent); 
     }
     
     /**TODO
