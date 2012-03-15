@@ -72,14 +72,6 @@ public class GalleryManager implements FController{
     	dbMan.deleteAlbumByName(name);
     }
     
-    /**TODO
-     * Not sure how we're going to pass around DBManager... is it a singleton?
-     * @return
-     */
-    public Collection<Album> getAlbumNames(){
-    	return dbMan.selectAllAlbums();
-    }
-    
     public boolean isAlbum(){
     	return isAlbum;
     }

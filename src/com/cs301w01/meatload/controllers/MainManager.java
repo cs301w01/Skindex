@@ -2,6 +2,7 @@ package com.cs301w01.meatload.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import android.content.Context;
 
@@ -28,14 +29,21 @@ public class MainManager implements FController{
     	dbMan = new DBManager(context);
     }
     
-    public Collection<Album> getAllAlbums(){
-    	Collection<Album> albums = new ArrayList<Album>();
-    	albums.add(new Album("All Photos", dbMan.getTotalPhotos()));
+    public ArrayList<HashMap<String,String>> getAllAlbums(){
+    	ArrayList<HashMap<String,String>> albums = new ArrayList<HashMap<String,String>>();
+    	HashMap<String,String> map = new HashMap<String,String>();
+    	map.put("name", "All Photos");
+    	map.put("numPhotos", Integer.toString(dbMan.getTotalPhotos()));
+    	albums.add(map);
     	albums.addAll(dbMan.selectAllAlbums());
     	return albums;
     }
     
     public Collection<Tag> getAllTags(){
     	return dbMan.selectAllTags();
+    }
+    
+    public void addAlbum(String albumName, Collection<String> tags){
+    	dbMan.insertAlbum(albumName, tags);
     }
 }
