@@ -1,5 +1,8 @@
 package com.cs301w01.meatload.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
@@ -35,8 +38,8 @@ public class GalleryActivity extends Skindactivity {
         
         TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
         albumTitle.setText(galleryManager.getTitle());
-
-        galleryManager = new GalleryManager(this);
+        
+        refreshScreen();
         
         /**TODO
          * map objects created as variables to real objects in the XML R.layout.main
@@ -64,10 +67,25 @@ public class GalleryActivity extends Skindactivity {
          * should we call update here... we probably want to update the screen right away
          */
     }
+    
+    @Override
+    protected void onResume(){
+    	super.onResume();
+    	refreshScreen();
+    }
 
     @Override
     public void update(Object model) {
         
+    }
+    
+    public void refreshScreen(){
+    	photoListView = (ListView) findViewById(R.id.photoListView);
+        
+        ArrayList<HashMap<String, String>> albumList = galleryManager.getPhotoGallery();
+        
+        adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
+		photoListView.setAdapter(adapter);
     }
     
     private void editAlbum(){

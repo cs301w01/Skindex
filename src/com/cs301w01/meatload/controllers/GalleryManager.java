@@ -35,13 +35,13 @@ public class GalleryManager implements FController, Serializable{
 	Collection<String> tags;
 	boolean isAlbum = false;
 	
-    public GalleryManager(Context context){
+    public GalleryManager(){
     	//dbMan = new DBManager(context);
     	tags = new ArrayList<String>();
     	isAlbum = false;
     }
     
-    public GalleryManager(String albumName, Context context){
+    public GalleryManager(String albumName){
     	if(albumName.equals("All Photos"))
     	{
     		this.albumName = albumName;
@@ -51,7 +51,7 @@ public class GalleryManager implements FController, Serializable{
     	//dbMan = new DBManager(context);
     }
     
-    public GalleryManager(Collection<String> tags, Context context){
+    public GalleryManager(Collection<String> tags){
     	this.tags = tags;
     	//dbMan = new DBManager(context);
     	isAlbum = false;

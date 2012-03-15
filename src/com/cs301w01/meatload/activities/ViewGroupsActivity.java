@@ -183,14 +183,14 @@ public class ViewGroupsActivity extends Skindactivity {
     }
     
     private void openGalleryFromAlbum(String albumName){
-    	openGallery(new GalleryManager(albumName, this));
+    	openGallery(new GalleryManager(albumName));
     }
     
     private void openGalleryFromTags(Collection<String> tags){
-    	openGallery(new GalleryManager(tags, this));
+    	openGallery(new GalleryManager(tags));
     }
     
     private void openGalleryAllPhotos(){
-    	openGallery(new GalleryManager(this));
+    	openGallery(new GalleryManager());
     }
 }
