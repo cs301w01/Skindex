@@ -5,11 +5,9 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/3/12
- * Time: 1:15 PM
- * To change this template use File | Settings | File Templates.
+ * <b>Album</b>
+ * <p>
+ * Currently not implemented
  */
 public class Album {
     

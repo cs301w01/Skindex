@@ -12,9 +12,9 @@ import android.util.Log;
  * Time: 1:19 PM
  * To change this template use File | Settings | File Templates.
  */
-public abstract class Skindactivity extends Activity implements FView{
+public abstract class Skindactivity extends Activity implements FView {
 	
-	public Skindactivity(){
+	public Skindactivity() {
 		super();
 	}
 
@@ -34,7 +34,7 @@ public abstract class Skindactivity extends Activity implements FView{
      * Allows for easy debugging using androids logging system.
      * @param logMsg
      */
-    protected void log(String logMsg){
+    protected void log(String logMsg) {
         
         Log.d(tag, logMsg);
         

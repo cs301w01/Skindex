@@ -19,10 +19,15 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * This class is helper for dealing with SQLite in Android. It provides a variety of useful methods for
- * creating, updating, deleting, and selecting data.
- *
- * Great resource: http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android
+ * <b>DBManager</b>
+ * <p>
+ * This class is helper for dealing with SQLite in Android. It provides a variety of useful methods 
+ * for creating, updating, deleting, and selecting data.
+ * <p>
+ * Great resource: 
+ * <a href=http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android>
+ * http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android
+ * </a>
  */
 public class DBManager extends SQLiteOpenHelper {
 
@@ -155,8 +160,8 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
-     * This method is used to select rows from a table where a specific id is known. Returns a cursor
-     * that is preset to the first tuple.
+     * This method is used to select rows from a table where a specific id is known. Returns a 
+     * cursor that is preset to the first tuple.
      *
      * @param selectColumns array of columns you wish to have returned
      * @param tableName table name
@@ -168,7 +173,8 @@ public class DBManager extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor mCursor =
-                db.query(true, tableName, selectColumns, COL_ID + " = " + idValue, null,null,null,null,null);
+                db.query(true, tableName, selectColumns, COL_ID + " = " + idValue, 
+                		null, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
         }
@@ -180,6 +186,7 @@ public class DBManager extends SQLiteOpenHelper {
     }
 
     /**
+     * <b>selectAllColsByID</b>
      * Use this method if you want to do a "SELECT *" style query on a table for a specific ID
      * @param tableName name of table
      * @param id row in table
@@ -374,7 +381,7 @@ public class DBManager extends SQLiteOpenHelper {
     		c.moveToNext();
     	}
 
-return tags;
+    	return tags;
     }
 
 
