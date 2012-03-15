@@ -2,6 +2,7 @@ package com.cs301w01.meatload.activities;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.model.Photo;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -33,18 +34,19 @@ public class EditPictureActivity extends Skindactivity {
 		
 		// Get picture object from Intent's extras bundle
 		pictureManager = (PhotoManager) getIntent().getExtras().getSerializable("Manager");
+		Photo picture = picture.getPhoto();
 		
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
-		pictureView.setImageDrawable(Drawable.createFromPath(pictureManager.getPath()));
+		pictureView.setImageDrawable(Drawable.createFromPath(picture.getPath()));
 		
 		// Set dateView to toString representation of Date in Picture object
 		TextView dateView = (TextView) findViewById(R.id.dateView);
-		dateView.setText(pictureManager.getDate().toString());
+		dateView.setText(picture.getDate().toString());
 		
 		// Set albumView to string representation of Album in Picture object
 		TextView albumView = (TextView) findViewById(R.id.albumView);
-		albumView.setText(pictureManager.getAlbumName());
+		albumView.setText(picture.getAlbumName());
 		
 		Button changeAlbumButton = (Button) findViewById(R.id.changeAlbumButton);
 		// TODO: Add Change Album functionality to EditPicture
