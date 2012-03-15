@@ -45,7 +45,7 @@ public class ViewGroupsActivity extends Skindactivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewgroups);
-        mainManager = new MainManager(this);
+        mainManager = new MainManager();
         
         refreshScreen();
         
