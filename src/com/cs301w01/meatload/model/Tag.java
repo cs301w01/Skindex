@@ -1,9 +1,5 @@
 package com.cs301w01.meatload.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
 /**
  * <b>Tag</b>
  * <p>
