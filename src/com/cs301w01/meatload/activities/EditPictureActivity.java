@@ -9,16 +9,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * <b>EditPictureActivity</b>
+ * <p>
+ * Takes a picture and displays it in exploded view along with important metadata including
+ * tags, date, etc.
+ * <p>
+ * Allows user to change certain metadata such as tags and album
+ */
 public class EditPictureActivity extends Skindactivity {
 
-	/**
-	 * EditPictureActivity
-	 * 
-	 * Takes a picture and displays it in exploded view along with important metadata including
-	 * tags, date, etc.
-	 * 
-	 * Allows user to change certain metadata such as tags and album
-	 */
 	Photo picture;
 	
 	@Override
