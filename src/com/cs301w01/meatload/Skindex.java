@@ -5,8 +5,11 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.cs301w01.meatload.activities.Skindactivity;
@@ -15,6 +18,7 @@ import com.cs301w01.meatload.activities.ViewTagsActivity;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.model.Album;
 
 import java.util.Collection;
 
@@ -22,8 +26,6 @@ public class Skindex extends TabActivity
 
 //used to extend Skindactivity
 {
-	private Button newAlbumButton;
-	private Button takePictureButton;
 	private MainManager mainManager;
 	
     /** Called when the activity is first created. */
@@ -62,14 +64,7 @@ public class Skindex extends TabActivity
         
 
         //Current tab set to Album.  ViewGroupsActivity runs in that tab
-        	//on click listener 
-            final Button button = (Button) findViewById(R.id.takePic);
-            button.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View v) {
-                    // Perform action on click
-                	takePicture();
-                }
-            });
+        	
         
         
         
@@ -111,49 +106,7 @@ public class Skindex extends TabActivity
     public void update(Object model) {
         //update whatever screen is up.
     }
-    
-    /**TODO
-     * Prompt the user to enter an album name and pick a bunch of tags
-     * When the user presses OK, gather the name and tags the user entered, 
-     * and call photoManager.addNewAlbum();
-     * @return the name of the new album (for use in takePicture)
-     */
-    private String addAlbum(){
-    	return null;
-    }
-    
-    /**TODO
-     * Display a message asking if the user wants to create a new album
-     * populate the boolean with true is the user wants a new album
-     * otherwise assume the user wants to choose an album
-     * if they hit cancel, exit out of this function
-     */
-    protected void takePicture(){
-    	//Display prompt
-    	boolean wantsNewAlbum = false;
-    	String newAlbumName = "";
-    	if(wantsNewAlbum){
-    		newAlbumName = addAlbum();
-    	}
-    	else{
-    		/**TODO
-    		 * Prompt the user to pick an album from the list
-    		 * Populate this string with the name
-    		 */
-    		newAlbumName = "";
-    	}
-    	
-    	/**TODO
-    	 * we need to start the gallery activity then have the gallery activity
-    	 * immediately switch to takePicture, so that when the user goes back, they'll
-    	 * end up at the gallery activity.
-    	 * Use openGalleryFromAlbum for this maybe?
-    	 */
-        	//Code on push of stats button
-        	Intent myIntent = new Intent();
-        	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-        	startActivity(myIntent); 
-    }
+   
     
     /**TODO
      * start a new gallery activity and pass it pMan
@@ -173,5 +126,16 @@ public class Skindex extends TabActivity
     
     private void openGalleryAllPhotos(){
     	openGallery(new GalleryManager(this));
+    }
+    
+    @Override
+    public void onPause(){
+    	super.onPause();
+    	Log.i("TEST", "OnPause: outer");
+    	
+    }
+    public void onResume(){
+    	super.onResume();
+    	Log.i("TEST", "OnResume: outer");
     }
 }

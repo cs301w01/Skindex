@@ -41,21 +41,6 @@
             android:id="@+id/linearLayout1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" >
-
-
-
-                <Button
-                    android:id="@+id/newAlbum"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/button_new_album" />
-           
-                <Button
-                    android:id="@+id/takePic"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="@string/button_take_pic" />
                 
         </LinearLayout>
 

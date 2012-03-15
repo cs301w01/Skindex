@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * This class is helper for dealing with SQLite in Android. It provides a variety of useful methods for
@@ -72,10 +73,7 @@ public class DBManager extends SQLiteOpenHelper {
     private static final String CREATE_TABLE_ALBUMSTABLE =
             "CREATE TABLE " + TABLE_NAME_ALBUMS + " (" +
                     COL_ID + " INTEGER PRIMARY KEY, " +
-                    COL_PHOTOID + " INTEGER, " +
-                    COL_NAME + " TEXT, " +
-                    "FOREIGN KEY(" + COL_PHOTOID + ") REFERENCES " +
-                    TABLE_NAME_PHOTOS + "( " + COL_ID + "));";
+                    COL_NAME + " TEXT);";
     
     private static final String CREATE_TABLE_ALBUMTAGSTABLE =
         "CREATE TABLE " + TABLE_NAME_ALBUMTAGS + " (" +
@@ -287,6 +285,7 @@ public class DBManager extends SQLiteOpenHelper {
         //add photo info to cv
         cv.put(PHOTOS_COL_DATE, dateToString(p.getDate()));
         cv.put(PHOTOS_COL_PATH, p.getPath());
+        cv.put(COL_ALBUMID, selectAlbumIDByName(p.getAlbumName()));
         cv.put(COL_NAME, p.getName());
 
         //insert photo into photo tables
@@ -294,8 +293,6 @@ public class DBManager extends SQLiteOpenHelper {
 
         //get newly inserted photo's id from photos table
         int pid = selectPhotoIDByName(p.getName());
-
-        addPhotoToAlbum(p.getAlbumName(), pid);
 
         //insert photo's tags into tags table
         for(String tag : p.getTags()){
@@ -314,6 +311,39 @@ public class DBManager extends SQLiteOpenHelper {
 
         db.close();
 
+    }
+    
+    public void insertAlbum(String albumName, Collection<String> tags){
+    	SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        //add album info to cv
+        cv.put(COL_NAME, albumName);
+
+        //insert photo into photo tables
+        db.insert(TABLE_NAME_ALBUMS, COL_ID, cv);
+        
+        //get newly inserted photo's id from photos table
+        int aid = selectAlbumIDByName(albumName);
+        
+        Log.d(logTag, "Album inserted: " + albumName + " w/ aid " + aid);
+
+        //insert photo's tags into tags table
+        for(String tag : tags){
+           
+            ContentValues tcv = new ContentValues();
+            
+            cv.put(COL_NAME, tag);
+            cv.put(COL_ALBUMID, aid);
+
+            //insert tag tuple into tags table
+            db.insert(TABLE_NAME_ALBUMTAGS, COL_ID, tcv);
+            
+            Log.d(logTag, "Tag inserted: " + tag + " w/ pid: " + aid);
+            
+        }
+
+        db.close();
     }
     
     public int getTotalPhotos(){
@@ -336,7 +366,7 @@ public class DBManager extends SQLiteOpenHelper {
     		return tags;
     	}
 
-    	while(!c.isLast()){
+    	while(!c.isAfterLast()){
 
     		
     		tags.add(c.getString(c.getColumnIndex(COL_NAME)));
@@ -351,7 +381,7 @@ return tags;
     
     public Collection<Tag> selectAllTags(){
     	
-    	String tagQuery = "SELECT t." + COL_NAME + ", COUNT(*) AS numPhotos" +
+    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPhotos" +
     						" FROM " + TABLE_NAME_TAGS + 
     						" t LEFT JOIN " + TABLE_NAME_PHOTOS +
     						" p ON (t." + COL_PHOTOID + " = p." + COL_ID + ")" + 
@@ -365,7 +395,7 @@ return tags;
     		return tags;
     	}
 
-        while(!c.isLast()){
+        while(!c.isAfterLast()){
             
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
             int numPhotos = new Integer(c.getString(c.getColumnIndex("numPhotos")));
@@ -398,7 +428,7 @@ return tags;
     		return photos;
     	}
 
-        while(!c.isLast()){
+        while(!c.isAfterLast()){
             
             String photoName = c.getString(c.getColumnIndex(COL_NAME));
             String path = c.getString(c.getColumnIndex(PHOTOS_COL_PATH));
@@ -452,28 +482,29 @@ return tags;
     	deleteByID(selectIDByName(name, TABLE_NAME_ALBUMS), TABLE_NAME_ALBUMS);
     }
     
-    public Collection<Album> selectAllAlbums(){
+    public ArrayList<HashMap<String,String>> selectAllAlbums(){
     	
-    	String albumQuery = "SELECT a." + COL_NAME + ", COUNT(*) AS numPhotos" +
+    	String albumQuery = "SELECT a." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPhotos" +
     						" FROM " + TABLE_NAME_ALBUMS + 
-    						" a LEFT JOIN " + TABLE_NAME_PHOTOS +
+    						" a LEFT OUTER JOIN " + TABLE_NAME_PHOTOS +
     						" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
     						" GROUP BY a." + COL_NAME;
     	
     	Cursor c = performRawQuery(albumQuery);
     	
-    	Collection<Album> albums = new ArrayList<Album>();
-    	
+    	ArrayList<HashMap<String,String>> albums = new ArrayList<HashMap<String,String>>();
     	if (c == null){
     		return albums;
     	}
 
-        while(!c.isLast()){
-            
+        while(!c.isAfterLast()){
+        	HashMap<String,String> map = new HashMap<String,String>();
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
-            int numPhotos = new Integer(c.getString(c.getColumnIndex("numPhotos")));
+            String numPhotos = c.getString(c.getColumnIndex("numPhotos"));
             
-            albums.add(new Album(albumName, numPhotos));
+            map.put("name", albumName);
+            map.put("numPhotos", numPhotos);
+            albums.add(map);
 
             c.moveToNext();
         }
