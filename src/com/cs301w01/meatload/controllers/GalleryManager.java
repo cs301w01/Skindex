@@ -3,6 +3,7 @@ package com.cs301w01.meatload.controllers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
@@ -64,11 +65,11 @@ public class GalleryManager implements FController, Serializable{
     	new DBManager().insertPhoto(photo);
     }
     
-    public Photo getPhoto(String name){
-    	return new DBManager().selectPhotoByName(name);
+    public Photo getPhoto(int pid){
+    	return new DBManager().selectPhotoByID(pid);
     }
     
-    public Collection<Photo> getPhotoGallery(){
+    public ArrayList<HashMap<String,String>> getPhotoGallery(){
     	if(isAlbum)
     		return new DBManager().selectPhotosFromAlbum(albumName);
     	else if(tags.isEmpty())
@@ -77,8 +78,8 @@ public class GalleryManager implements FController, Serializable{
     		return new DBManager().selectPhotosByTag(tags);
     }
     
-    public void deletePhoto(String name){
-    	new DBManager().deletePhotoByName(name);
+    public void deletePhoto(int pid){
+    	new DBManager().deletePhotoByID(pid);
     }
     
     public void deleteAlbum(String name){

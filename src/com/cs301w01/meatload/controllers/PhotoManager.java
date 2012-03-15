@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Random;
 
 import android.content.Context;
@@ -38,6 +39,7 @@ public class PhotoManager implements FController, Serializable{
 	//DBManager dbMan;
 	Photo photo;
 	String albumName;
+	int photoID;
 	private Bitmap imgOnDisplay;
 	
 	public PhotoManager(Context context, String albumName){
@@ -53,6 +55,10 @@ public class PhotoManager implements FController, Serializable{
     public PhotoManager(Context context){
     	//dbMan = new DBManager(context);
     	this.photo = null;
+    }
+    
+    public PhotoManager(int pid){
+    	photoID = pid;
     }
     
     //take imgOnDisplay, save it to file, do all DB mumbo jumbo
@@ -123,5 +129,7 @@ public class PhotoManager implements FController, Serializable{
         return imgOnDisplay;
     }
     
-    
+    public Photo getPhoto(){
+    	return new DBManager().selectPhotoByID(photoID);
+    }
 }

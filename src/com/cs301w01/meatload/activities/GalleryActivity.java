@@ -8,12 +8,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 public class GalleryActivity extends Skindactivity {
 	
-	Button editAlbumButton;
-	Button takePictureButton;
+	
+	ListView photoListView;
+	SimpleAdapter adapter;
 	
 	GalleryManager galleryManager;
 	
@@ -35,14 +38,14 @@ public class GalleryActivity extends Skindactivity {
         /**TODO
          * map objects created as variables to real objects in the XML R.layout.main
          */
-        
+        final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				setResult(RESULT_OK);
 				editAlbum();
 			}
 		});
-        
+        final Button takePictureButton = (Button) findViewById(R.id.takePic);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				setResult(RESULT_OK);
