@@ -23,13 +23,14 @@ import com.cs301w01.meatload.model.Tag;
 
 public class MainManager implements FController{
 
-	DBManager dbMan;
+	//DBManager dbMan;
 	
-    public MainManager(Context context){
-    	dbMan = new DBManager(context);
+    public MainManager(){
+    	//dbMan = new DBManager(context);
     }
     
     public ArrayList<HashMap<String,String>> getAllAlbums(){
+    	DBManager dbMan = new DBManager();
     	ArrayList<HashMap<String,String>> albums = new ArrayList<HashMap<String,String>>();
     	HashMap<String,String> map = new HashMap<String,String>();
     	map.put("name", "All Photos");
@@ -40,10 +41,10 @@ public class MainManager implements FController{
     }
     
     public Collection<Tag> getAllTags(){
-    	return dbMan.selectAllTags();
+    	return new DBManager().selectAllTags();
     }
     
     public void addAlbum(String albumName, Collection<String> tags){
-    	dbMan.insertAlbum(albumName, tags);
+    	new DBManager().insertAlbum(albumName, tags);
     }
 }

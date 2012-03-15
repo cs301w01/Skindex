@@ -20,6 +20,9 @@ public class GalleryActivity extends Skindactivity {
 	
 	GalleryManager galleryManager;
 	
+	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
+	private String[] adapterCols = { "date", "id" };
+	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
