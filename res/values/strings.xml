@@ -13,4 +13,5 @@
     <string name="tagsLabel">Tags</string>
     <string name="changeAlbumButton">Change...</string>
     <string name="button_search">Search</string>
+    <string name="button_edit_album">Edit Album</string>
 </resources>

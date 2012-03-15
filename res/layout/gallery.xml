@@ -24,11 +24,11 @@
         android:layout_height="wrap_content" >
 
         <Button
-            android:id="@+id/newAlbum"
+            android:id="@+id/editAlbum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.50"
-            android:text="@string/button_new_album" />
+            android:text="@string/button_edit_album" />
 
         <Button
             android:id="@+id/takePic"
