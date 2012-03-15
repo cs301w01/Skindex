@@ -5,6 +5,7 @@ import com.cs301w01.meatload.model.Photo;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,11 @@ public class EditPictureActivity extends Skindactivity {
 		// Set albumView to string representation of Album in Picture object
 		TextView albumView = (TextView) findViewById(R.id.albumView);
 		albumView.setText(picture.getAlbumName());
+		
+		Button changeAlbumButton = (Button) findViewById(R.id.changeAlbumButton);
+		// TODO: Add Change Album functionality to EditPicture
+		
+		// TODO: Add Edit Tags functionality to EditPicture
 	}
     
 }
