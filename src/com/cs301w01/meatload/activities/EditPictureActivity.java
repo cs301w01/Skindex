@@ -34,7 +34,7 @@ public class EditPictureActivity extends Skindactivity {
 		
 		// Get picture object from Intent's extras bundle
 		pictureManager = (PhotoManager) getIntent().getExtras().getSerializable("Manager");
-		Photo picture = picture.getPhoto();
+		Photo picture = pictureManager.getPhoto();
 		
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);

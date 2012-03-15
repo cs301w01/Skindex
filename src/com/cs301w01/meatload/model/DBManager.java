@@ -20,8 +20,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * <b>DBManager</b>
- * <p>
  * This class is helper for dealing with SQLite in Android. It provides a variety of useful methods 
  * for creating, updating, deleting, and selecting data.
  * <p>
@@ -232,15 +230,13 @@ public class DBManager extends SQLiteOpenHelper implements Serializable{
 
     }
 
-    /**TODO
-     * use the following function to update tags as well
-     */
     /**
      * The update method has the following parameters:
-     String Table: The table to update a value in
-     ContentValues cv: The content values object that has the new values
-     String where clause: The WHERE clause to specify which record to update
-     String[] args: The arguments of the WHERE clause
+     * <p>
+     * String Table: The table to update a value in<br>
+     * ContentValues cv: The content values object that has the new values<br>
+     * String where clause: The WHERE clause to specify which record to update<br>
+     * String[] args: The arguments of the WHERE clause
      * @param p Fuel Entry object
      * @param tableName
      * @param id
