@@ -1,32 +1,36 @@
 package com.cs301w01.meatload.activities;
 
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class GalleryActivity extends Skindactivity {
 	
 	Button editAlbumButton;
 	Button takePictureButton;
 	
-	PhotoManager photoManager;
+	GalleryManager galleryManager;
 	
 	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.gallery);  //That xml doesn't exist yet.
+        setContentView(R.layout.gallery);  //That xml doesn't exist yet.
         
-        /**TODO
-         * this activity should some how be passed a PhotoManager by it's caller
-         * I'm not entirely sure how to do this, but it's possible.
-         */
-        photoManager = new PhotoManager(this);
+        Bundle b = getIntent().getExtras();
+        galleryManager = (GalleryManager) b.getSerializable("manager");
+        
+        TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
+        albumTitle.setText(galleryManager.getTitle());
+
+        galleryManager = new GalleryManager(this);
         
         /**TODO
          * map objects created as variables to real objects in the XML R.layout.main

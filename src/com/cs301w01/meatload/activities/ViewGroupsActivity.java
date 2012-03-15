@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 import com.cs301w01.meatload.model.Album;
@@ -31,6 +32,8 @@ public class ViewGroupsActivity extends Skindactivity {
 	
 	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 	private String[] adapterCols = { "name", "numPhotos" };
+	
+	boolean isTakingPicture;
 
     //@Override
     public void update(Object model) {
@@ -58,7 +61,7 @@ public class ViewGroupsActivity extends Skindactivity {
         addAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-            	addAlbum();
+            	addAlbum(false);
             }
         });
     }
@@ -67,13 +70,12 @@ public class ViewGroupsActivity extends Skindactivity {
     protected void onResume(){
     	super.onResume();
     	refreshScreen();
-    	Log.i("TEST", "OnResume: inner");
     }
     
     public void refreshScreen(){
     	albumListView = (ListView) findViewById(R.id.albumListView);
         
-        ArrayList<HashMap<String,String>> albumList = mainManager.getAllAlbums();
+        ArrayList<HashMap<String, String>> albumList = mainManager.getAllAlbums();
         
         SimpleAdapter adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
 		albumListView.setAdapter(adapter);
@@ -90,7 +92,7 @@ public class ViewGroupsActivity extends Skindactivity {
     	boolean wantsNewAlbum = false;
     	String newAlbumName = "";
     	if(wantsNewAlbum){
-    		newAlbumName = addAlbum();
+    		//newAlbumName = addAlbum();
     	}
     	else{
     		/**TODO
@@ -106,10 +108,15 @@ public class ViewGroupsActivity extends Skindactivity {
     	 * end up at the gallery activity.
     	 * Use openGalleryFromAlbum for this maybe?
     	 */
-        	//Code on push of stats button
-        	Intent myIntent = new Intent();
-        	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-        	startActivity(myIntent); 
+    	switchToTakePicture(newAlbumName);
+    }
+    
+    private void switchToTakePicture(String album){
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+    	myIntent.putExtra("photoManager", new PhotoManager(this, album));
+    	
+    	startActivity(myIntent); 
     }
     
     /**TODO
@@ -118,7 +125,8 @@ public class ViewGroupsActivity extends Skindactivity {
      * and call photoManager.addNewAlbum();
      * @return the name of the new album (for use in takePicture)
      */
-    private String addAlbum(){
+    private void addAlbum(boolean takingPicture){
+    	isTakingPicture = takingPicture;
     	//Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -133,6 +141,9 @@ public class ViewGroupsActivity extends Skindactivity {
 		public void onClick(DialogInterface dialog, int whichButton) {
 		  String newAlbumName = input.getText().toString();
 		  mainManager.addAlbum(newAlbumName, new ArrayList<String>());
+		  if(isTakingPicture){
+			  
+		  }
 		  refreshScreen();
 		  }
 		});
@@ -144,6 +155,30 @@ public class ViewGroupsActivity extends Skindactivity {
 		});
 
 		alert.show();
-	    return null;
+    }
+   
+    
+    /**TODO
+     * start a new gallery activity and pass it pMan
+     * @param pMan - the PhotoManager object to be used in this activity
+     */
+    private void openGallery(GalleryManager gMan){
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.GalleryActivity");
+    	myIntent.putExtra("manager", gMan);
+    	
+    	startActivity(myIntent); 
+    }
+    
+    private void openGalleryFromAlbum(String albumName){
+    	openGallery(new GalleryManager(albumName, this));
+    }
+    
+    private void openGalleryFromTags(Collection<String> tags){
+    	openGallery(new GalleryManager(tags, this));
+    }
+    
+    private void openGalleryAllPhotos(){
+    	openGallery(new GalleryManager(this));
     }
 }

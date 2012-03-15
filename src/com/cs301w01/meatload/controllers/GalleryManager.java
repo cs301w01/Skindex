@@ -1,9 +1,13 @@
 package com.cs301w01.meatload.controllers;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.DBManager;
@@ -19,7 +23,7 @@ import com.cs301w01.meatload.model.Photo;
  */
 
 
-public class GalleryManager implements FController{
+public class GalleryManager implements FController, Serializable{
 
 	DBManager dbMan;
 	String albumName = null;
@@ -29,6 +33,7 @@ public class GalleryManager implements FController{
     public GalleryManager(Context context){
     	dbMan = new DBManager(context);
     	tags = new ArrayList<String>();
+    	isAlbum = false;
     }
     
     public GalleryManager(String albumName, Context context){
@@ -78,5 +83,14 @@ public class GalleryManager implements FController{
 
     public String getAlbumName(){
     	return albumName;
+    }
+    
+    public String getTitle(){
+    	if(isAlbum)
+    		return albumName;
+    	else if(tags.isEmpty())
+    		return "All Photos";
+    	else
+    		return dbMan.stringJoin(tags, ", ");
     }
 }

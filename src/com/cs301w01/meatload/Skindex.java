@@ -106,36 +106,5 @@ public class Skindex extends TabActivity
     public void update(Object model) {
         //update whatever screen is up.
     }
-   
     
-    /**TODO
-     * start a new gallery activity and pass it pMan
-     * @param pMan - the PhotoManager object to be used in this activity
-     */
-    private void openGallery(GalleryManager pMan){
-    	
-    }
-    
-    private void openGalleryFromAlbum(String albumName){
-    	openGallery(new GalleryManager(albumName, this));
-    }
-    
-    private void openGalleryFromTags(Collection<String> tags){
-    	openGallery(new GalleryManager(tags, this));
-    }
-    
-    private void openGalleryAllPhotos(){
-    	openGallery(new GalleryManager(this));
-    }
-    
-    @Override
-    public void onPause(){
-    	super.onPause();
-    	Log.i("TEST", "OnPause: outer");
-    	
-    }
-    public void onResume(){
-    	super.onResume();
-    	Log.i("TEST", "OnResume: outer");
-    }
 }

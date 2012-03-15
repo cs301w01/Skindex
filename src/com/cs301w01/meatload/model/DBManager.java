@@ -621,5 +621,18 @@ return tags;
         return c;
 
     }
+    
+    public String stringJoin(Collection<String> strings, String delimiter){
+    	String newString = "";
+    	boolean isFirst = true;
+    	for (String curr : strings){
+    		newString += curr;
+    		if(isFirst){
+    			isFirst = false;
+    			newString += delimiter;
+    		}
+    	}
+    	return newString;
+    }
 
 }
