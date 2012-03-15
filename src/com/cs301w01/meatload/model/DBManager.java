@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 import com.cs301w01.meatload.model.Photo;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,9 +30,13 @@ import java.util.HashMap;
  * http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android
  * </a>
  */
-public class DBManager extends SQLiteOpenHelper {
+public class DBManager extends SQLiteOpenHelper implements Serializable{
 
-    //private SQLiteDatabase db;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//private SQLiteDatabase db;
     private static String logTag = "DBMANAGER";
     private static final String DB_NAME = "skindexDB";
 
@@ -87,11 +92,17 @@ public class DBManager extends SQLiteOpenHelper {
             COL_NAME + " TEXT, " +
             "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
             										TABLE_NAME_ALBUMS + "( " + COL_ID + "));";
+    
+    private static Context myContext;
 
 
     public DBManager(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
-
+        myContext = context;
+    }
+    
+    public DBManager(){
+    	super(myContext, DB_NAME, null, DATABASE_VERSION);
     }
 
     @Override

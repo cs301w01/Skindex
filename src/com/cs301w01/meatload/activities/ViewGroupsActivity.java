@@ -17,23 +17,24 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 
 public class ViewGroupsActivity extends Skindactivity {
 	
 	private MainManager mainManager;
 	ListView albumListView;
+	SimpleAdapter adapter;
 	
 	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 	private String[] adapterCols = { "name", "numPhotos" };
-	
-	boolean isTakingPicture;
 
     //@Override
     public void update(Object model) {
@@ -61,9 +62,23 @@ public class ViewGroupsActivity extends Skindactivity {
         addAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-            	addAlbum(false);
+            	addAlbum();
             }
         });
+        
+        // Below is the listener for a list button click. It takes the id
+        // of the clicked item and passes it to the FlogEdit activity so
+        // you can edit the selected log.
+        
+        albumListView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                int position, long id) {
+             HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
+             String clickedName = temp.get("name");
+             openGalleryFromAlbum(clickedName);
+            }
+        }
+        );
     }
     
     @Override
@@ -77,7 +92,7 @@ public class ViewGroupsActivity extends Skindactivity {
         
         ArrayList<HashMap<String, String>> albumList = mainManager.getAllAlbums();
         
-        SimpleAdapter adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
+        adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
 		albumListView.setAdapter(adapter);
     }
     
@@ -114,7 +129,8 @@ public class ViewGroupsActivity extends Skindactivity {
     private void switchToTakePicture(String album){
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-    	myIntent.putExtra("photoManager", new PhotoManager(this, album));
+    	PhotoManager pMan = new PhotoManager(this, album);
+    	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 
     }
@@ -125,8 +141,7 @@ public class ViewGroupsActivity extends Skindactivity {
      * and call photoManager.addNewAlbum();
      * @return the name of the new album (for use in takePicture)
      */
-    private void addAlbum(boolean takingPicture){
-    	isTakingPicture = takingPicture;
+    private void addAlbum(){
     	//Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -139,12 +154,9 @@ public class ViewGroupsActivity extends Skindactivity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
-		  String newAlbumName = input.getText().toString();
-		  mainManager.addAlbum(newAlbumName, new ArrayList<String>());
-		  if(isTakingPicture){
-			  
-		  }
-		  refreshScreen();
+			  String newAlbumName = input.getText().toString();
+			  mainManager.addAlbum(newAlbumName, new ArrayList<String>());
+			  refreshScreen();
 		  }
 		});
 

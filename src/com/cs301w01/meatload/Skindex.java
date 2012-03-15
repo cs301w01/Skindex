@@ -19,6 +19,7 @@ import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.DBManager;
 
 import java.util.Collection;
 
@@ -34,6 +35,8 @@ public class Skindex extends TabActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        DBManager dbMan = new DBManager(this);
         
         //BEGIN TAB CODE////////////////////////
         //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html

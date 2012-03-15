@@ -31,23 +31,27 @@ import com.cs301w01.meatload.model.Photo;
 
 public class PhotoManager implements FController, Serializable{
 
-	DBManager dbMan;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	//DBManager dbMan;
 	Photo photo;
 	String albumName;
 	private Bitmap imgOnDisplay;
 	
 	public PhotoManager(Context context, String albumName){
-		dbMan = new DBManager(context);
+		//dbMan = new DBManager(context);
 		this.albumName = albumName;
 	}
 	
     public PhotoManager(Context context, Photo photo){
-    	dbMan = new DBManager(context);
+    	//dbMan = new DBManager(context);
     	this.photo = photo;
     }
     
     public PhotoManager(Context context){
-    	dbMan = new DBManager(context);
+    	//dbMan = new DBManager(context);
     	this.photo = null;
     }
     
@@ -81,7 +85,8 @@ public class PhotoManager implements FController, Serializable{
     
     
     //Generates a random bitmap
-    //Used http://developer.android.com/reference/android/graphics/Bitmap.html#createBitmap%28int[],%20int,%20int,%20int,%20int,%20android.graphics.Bitmap.Config%29
+    //Used http://developer.android.com/reference/android/graphics/Bitmap.html#createBitmap
+    //%28int[],%20int,%20int,%20int,%20int,%20android.graphics.Bitmap.Config%29
     //http://developer.android.com/reference/android/graphics/Color.html
     //http://developer.android.com/reference/android/widget/ImageView.html
     //http://docs.oracle.com/javase/1.4.2/docs/api/java/util/Random.html
