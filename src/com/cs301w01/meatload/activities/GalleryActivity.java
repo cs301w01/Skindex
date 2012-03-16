@@ -7,7 +7,6 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,9 +18,14 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * Shows all pictures in a gallery as denoted by the GalleryManager object passed in to the 
+ * Activity through the Intent Extras with key "manager".
+ * @author Isaac Matichuk
+ * @see GalleryManager
+ */
 public class GalleryActivity extends Skindactivity {
-	
-	
+		
 	ListView photoListView;
 	SimpleAdapter adapter;
 	
@@ -30,12 +34,10 @@ public class GalleryActivity extends Skindactivity {
 	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 	private String[] adapterCols = { "date", "id" };
 	
-	/** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gallery);  //That xml doesn't exist yet.
+        setContentView(R.layout.gallery);
         
         Bundle b = getIntent().getExtras();
         galleryManager = (GalleryManager) b.getSerializable("manager");
@@ -46,9 +48,7 @@ public class GalleryActivity extends Skindactivity {
         
         refreshScreen();
         
-        /**TODO
-         * map objects created as variables to real objects in the XML R.layout.main
-         */
+        // TODO: Map objects created as variables to real objects in the XML R.layout.main
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -71,12 +71,11 @@ public class GalleryActivity extends Skindactivity {
              String clickedPhoto = temp.get("id");
              openPhoto(new Integer(clickedPhoto));
             }
-        }
-        );
+        });
     }
     
     @Override
-    protected void onResume(){
+    protected void onResume() {
     	super.onResume();
     	refreshScreen();
     }
@@ -86,32 +85,48 @@ public class GalleryActivity extends Skindactivity {
         
     }
     
-    public void refreshScreen(){
-    	photoListView = (ListView) findViewById(R.id.photoListView);
-        
+    /**
+     * @see GalleryManager
+     */
+    public void refreshScreen() {
+    	photoListView = (ListView) findViewById(R.id.photoListView);   
         ArrayList<HashMap<String, String>> albumList = galleryManager.getPhotoGallery();
-        
         adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
 		photoListView.setAdapter(adapter);
     }
     
-    private void editAlbum(){
+    private void editAlbum() {
     	
     }
     
-    private void takePicture(){
+    /**
+     * Starts a new TakePictureActivity using the Album referred to by the GalleryManager object
+     * in the GalleryActivity state.
+     * @see TakePictureActivity
+     */
+    private void takePicture() {
     	Intent myIntent = new Intent();
-    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+    	myIntent.setClassName("com.cs301w01.meatload", 
+    			"com.cs301w01.meatload.activities.TakePictureActivity");
     	Log.d("derp", "ALBUM NAME:" + galleryManager.getAlbumName());
+    	// TODO: Should not care about albumName if galleryManager is based off of tags or "all"
     	PhotoManager pMan = new PhotoManager(galleryManager.getAlbumName());
     	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 
     }
     
-    private void openPhoto(int photoID){
+    /**
+     * Starts a new EditPictureActivity using the Picture object referred to by the photoID
+     * argument.
+     * <p>
+     * Passes a PictureManager as part of the Intent. 
+     * @param photoID The tuple ID of the photo to be opened.
+     */
+    private void openPhoto(int photoID) {
     	Intent myIntent = new Intent();
-    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.EditPictureActivity");
+    	myIntent.setClassName("com.cs301w01.meatload", 
+    			"com.cs301w01.meatload.activities.EditPictureActivity");
     	PhotoManager pMan = new PhotoManager(photoID);
     	myIntent.putExtra("manager", pMan);
     	

@@ -6,11 +6,8 @@ import android.app.Activity;
 import android.util.Log;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/3/12
- * Time: 1:19 PM
- * To change this template use File | Settings | File Templates.
+ * Abstract class implementing the FView interface.
+ * @author Derek Dowling
  */
 public abstract class Skindactivity extends Activity implements FView {
 	
@@ -32,7 +29,7 @@ public abstract class Skindactivity extends Activity implements FView {
 
     /**
      * Allows for easy debugging using androids logging system.
-     * @param logMsg
+     * @param logMsg Message to be logged, in String format
      */
     protected void log(String logMsg) {
         
