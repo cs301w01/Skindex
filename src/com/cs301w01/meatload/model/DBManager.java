@@ -544,6 +544,11 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     // TODO: fix this function to work properly once the table set ups have been finalized
+    /**
+     * Gets all Pictures from an album from database.
+     * @param albumName
+     * @return
+     */
     public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) {
     	int albumID = selectAlbumIDByName(albumName);
     	String query = "SELECT * FROM " + 
@@ -555,6 +560,11 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     // TODO: fix this function to work properly once the table set ups have been finalized
+    /**
+     * Gets all pictures with the given tags from the database.
+     * @param tags A collection of Tags represented as Strings to be used in the query
+     * @return ArrayList of HashMaps representing all Pictures with the given tag
+     */
     public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags) {
     	String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." + 
     					PHOTOS_COL_PATH + " AS " + PHOTOS_COL_PATH + ", p." + 
@@ -578,8 +588,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     /**
      * Useful method for converting from date to String for db insertion.
-     * @param date
-     * @return
+     * @param date Date object to be converted to String object
+     * @return String object from converted Date object
      */
     public String dateToString(Date date) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -587,9 +597,9 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     /**
-     * Parses a string into a usable Date object
-     * @param date
-     * @return
+     * Parses a string into a usable Date object.
+     * @param date String representation of Date to be parsed
+     * @return Parsed Date object
      */
     public Date stringToDate(String date) {
 
@@ -606,10 +616,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     
     /**
      * Performs a raw SQL Select query. Returns a cursor set to the first result.
-     * <p>
-     * Returns null if query is empty.
-     * @param query
-     * @return
+     * @param query Query to be sent to database
+     * @return Cursor to first result of query, or null if query is empty
      */
     private Cursor performRawQuery(String query) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -627,6 +635,12 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     }
     
+    /**
+     * Performs a join on a collection of Strings with a delimiter between each String.
+     * @param strings Collection of Strings to be joined
+     * @param delimiter String to be placed between each String
+     * @return String representation of joined Strings
+     */
     public String stringJoin(Collection<String> strings, String delimiter) {
     	String newString = "";
     	boolean isFirst = true;

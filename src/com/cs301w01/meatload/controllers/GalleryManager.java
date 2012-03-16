@@ -4,46 +4,31 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
-import android.content.Context;
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.DBManager;
 import com.cs301w01.meatload.model.Photo;
 
-
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/3/12
- * Time: 1:14 PM
- * To change this template use File | Settings | File Templates.
+ * Mediates between the GalleryActivity and the DBManager by creating HashMaps of pictures to be
+ * displayed in the Gallery View.
+ * @author Isaac Matichuk
  */
+public class GalleryManager implements FController, Serializable {
 
-
-public class GalleryManager implements FController, Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	//DBManager dbMan;
 	String albumName = null;
 	Collection<String> tags;
 	boolean isAlbum = false;
 	
-    public GalleryManager(){
+    public GalleryManager() {
     	//dbMan = new DBManager(context);
     	tags = new ArrayList<String>();
     	isAlbum = false;
     }
     
-    public GalleryManager(String albumName){
-    	if(albumName.equals("All Photos"))
-    	{
+    public GalleryManager(String albumName) {
+    	if (albumName.equals("All Photos")) {
     		this.albumName = albumName;
         	isAlbum = true;
     	}
@@ -51,53 +36,49 @@ public class GalleryManager implements FController, Serializable{
     	//dbMan = new DBManager(context);
     }
     
-    public GalleryManager(Collection<String> tags){
+    public GalleryManager(Collection<String> tags) {
     	this.tags = tags;
     	//dbMan = new DBManager(context);
     	isAlbum = false;
     }
     
-    /**TODO
-     * Should I make this store a file path too?
-     * @param photo
-     */
-    public void storePhoto(Photo photo){
-    	new DBManager().insertPhoto(photo);
+    public void storePhoto(Photo picture) {
+    	new DBManager().insertPhoto(picture);
     }
     
-    public Photo getPhoto(int pid){
+    public Photo getPhoto(int pid) {
     	return new DBManager().selectPhotoByID(pid);
     }
     
-    public ArrayList<HashMap<String,String>> getPhotoGallery(){
-    	if(isAlbum)
+    public ArrayList<HashMap<String, String>> getPhotoGallery() {
+    	if (isAlbum)
     		return new DBManager().selectPhotosFromAlbum(albumName);
-    	else if(tags.isEmpty())
+    	else if (tags.isEmpty())
     		return new DBManager().selectAllPhotos();
     	else
     		return new DBManager().selectPhotosByTag(tags);
     }
     
-    public void deletePhoto(int pid){
+    public void deletePhoto(int pid) {
     	new DBManager().deletePhotoByID(pid);
     }
     
-    public void deleteAlbum(String name){
+    public void deleteAlbum(String name) {
     	new DBManager().deleteAlbumByName(name);
     }
     
-    public boolean isAlbum(){
+    public boolean isAlbum() {
     	return isAlbum;
     }
 
-    public String getAlbumName(){
+    public String getAlbumName() {
     	return albumName;
     }
     
-    public String getTitle(){
-    	if(isAlbum)
+    public String getTitle() {
+    	if (isAlbum)
     		return albumName;
-    	else if(tags.isEmpty())
+    	else if (tags.isEmpty())
     		return "All Photos";
     	else
     		return new DBManager().stringJoin(tags, ", ");

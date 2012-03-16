@@ -8,7 +8,8 @@ import com.cs301w01.meatload.model.DBManager;
 import com.cs301w01.meatload.model.Tag;
 
 /**
- * Mediates between DBManager and Skindex by providing lists of Albums and Tags
+ * Mediates between DBManager and Skindex by providing lists of Albums and Tags.
+ * @author Isaac Matichuk
  * @see DBManager
  * @see Skindex
  */
@@ -23,7 +24,7 @@ public class MainManager implements FController {
     /**
      * Creates and invokes an instance of the DBManager class to return HashMaps corresponding to
      * the table of albums in the database.  
-     * @return
+     * @return albums
      */
     public ArrayList<HashMap<String, String>> getAllAlbums() {
     	DBManager dbMan = new DBManager();
