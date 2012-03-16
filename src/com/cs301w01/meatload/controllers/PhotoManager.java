@@ -26,7 +26,7 @@ import com.cs301w01.meatload.model.Photo;
 public class PhotoManager implements FController, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	//DBManager dbMan;
+	Context context;
 	Photo photo;
 	String albumName;
 	int photoID;
@@ -53,6 +53,10 @@ public class PhotoManager implements FController, Serializable {
     
     public PhotoManager(String albumName) {
     	this.albumName = albumName;
+    }
+    
+    public void setContext(Context context){
+    	this.context = context;
     }
     
     /**
@@ -126,11 +130,11 @@ public class PhotoManager implements FController, Serializable {
     }
     
     private void savePhoto(String fpath, Date date) {
-    	DBManager dbMan = new DBManager();
+    	DBManager dbMan = new DBManager(context);
     	dbMan.insertPhoto(new Photo("", fpath, albumName, date, new ArrayList<String>()));
     }
     
     public Photo getPhoto() {
-    	return new DBManager().selectPhotoByID(photoID);
+    	return new DBManager(context).selectPhotoByID(photoID);
     }
 }

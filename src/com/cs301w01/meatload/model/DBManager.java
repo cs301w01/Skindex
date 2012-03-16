@@ -553,7 +553,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     					TABLE_NAME_PHOTOS + 
     					" WHERE " + 
     					COL_ALBUMID + " = " + "'" + albumID + "'" + 
-    					" ORDERBY " + PHOTOS_COL_DATE;
+    					" ORDER BY " + PHOTOS_COL_DATE;
     	return selectPhotosByQuery(query);
     }
     

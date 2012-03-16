@@ -39,6 +39,7 @@ public class GalleryActivity extends Skindactivity {
         
         Bundle b = getIntent().getExtras();
         galleryManager = (GalleryManager) b.getSerializable("manager");
+        galleryManager.setContext(this);
         
         TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
         albumTitle.setText(galleryManager.getTitle());

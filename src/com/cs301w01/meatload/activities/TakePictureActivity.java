@@ -41,6 +41,7 @@ public class TakePictureActivity extends Skindactivity {
 	    
 	    Bundle b = getIntent().getExtras();
         photoManager = (PhotoManager) b.getSerializable("manager");
+        photoManager.setContext(this);
 	    
 	    imgOnDisplay = photoManager.generatePicture();
     	ImageView image = (ImageView) findViewById(R.id.imgDisplay);

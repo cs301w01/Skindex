@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import android.content.Context;
+
 import com.cs301w01.meatload.model.DBManager;
 import com.cs301w01.meatload.model.Photo;
 
@@ -20,7 +22,7 @@ import com.cs301w01.meatload.model.Photo;
 public class GalleryManager implements FController, Serializable {
 
 	private static final long serialVersionUID = 1L;
-	//DBManager dbMan;
+	Context context;
 	String albumName = null;
 	Collection<String> tags;
 	boolean isAlbum = false;
@@ -37,7 +39,7 @@ public class GalleryManager implements FController, Serializable {
      * @param albumName String representation of album name to be associated with this object
      */
     public GalleryManager(String albumName) {
-    	if (albumName.equals("All Photos")) {
+    	if (!albumName.equals("All Photos")) {
     		this.albumName = albumName;
         	isAlbum = true;
     	}
@@ -56,12 +58,16 @@ public class GalleryManager implements FController, Serializable {
     	isAlbum = false;
     }
     
+    public void setContext(Context context){
+    	this.context = context;
+    }
+    
     public void storePhoto(Photo picture) {
-    	new DBManager().insertPhoto(picture);
+    	new DBManager(context).insertPhoto(picture);
     }
     
     public Photo getPhoto(int pid) {
-    	return new DBManager().selectPhotoByID(pid);
+    	return new DBManager(context).selectPhotoByID(pid);
     }
     
     /**
@@ -71,19 +77,19 @@ public class GalleryManager implements FController, Serializable {
      */
     public ArrayList<HashMap<String, String>> getPhotoGallery() {
     	if (isAlbum())
-    		return new DBManager().selectPhotosFromAlbum(albumName);
+    		return new DBManager(context).selectPhotosFromAlbum(albumName);
     	else if (tags.isEmpty())
-    		return new DBManager().selectAllPhotos();
+    		return new DBManager(context).selectAllPhotos();
     	else
-    		return new DBManager().selectPhotosByTag(tags);
+    		return new DBManager(context).selectPhotosByTag(tags);
     }
     
     public void deletePhoto(int pid) {
-    	new DBManager().deletePhotoByID(pid);
+    	new DBManager(context).deletePhotoByID(pid);
     }
     
     public void deleteAlbum(String name) {
-    	new DBManager().deleteAlbumByName(name);
+    	new DBManager(context).deleteAlbumByName(name);
     }
     
     public boolean isAlbum() {
@@ -100,6 +106,6 @@ public class GalleryManager implements FController, Serializable {
     	else if (tags.isEmpty())
     		return "All Photos";
     	else
-    		return new DBManager().stringJoin(tags, ", ");
+    		return new DBManager(context).stringJoin(tags, ", ");
     }
 }
