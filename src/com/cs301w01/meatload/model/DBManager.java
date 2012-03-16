@@ -170,7 +170,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param idValue
      * @return
      */
-    public Cursor selectRowByID(String[] selectColumns, String tableName, String idValue) {
+    private Cursor selectRowByID(String[] selectColumns, String tableName, String idValue) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -193,7 +193,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param id Row in table
      * @return
      */
-    public Cursor selectAllColsByID(String tableName, long id) {
+    private Cursor selectAllColsByID(String tableName, long id) {
 
         //build the query
         String selectionQuery = "SELECT * FROM " + tableName + " WHERE " + DBManager.COL_ID +
@@ -208,7 +208,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param id Tuple to delete
      * @param tableName
      */
-    public void deleteByID(long id, String tableName) {
+    private void deleteByID(long id, String tableName) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -368,7 +368,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     	return new Integer(c.getString(c.getColumnIndex("numPhotos")));
     }
     
-    public Collection<String> selectTagsByQuery(String tagQuery) {
+    private Collection<String> selectTagsByQuery(String tagQuery) {
     	Cursor c = performRawQuery(tagQuery);
     	Collection<String> tags = new ArrayList<String>();
     	
@@ -423,7 +423,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         
     }
     
-    public ArrayList<HashMap<String,String>> selectPhotosByQuery(String photoQuery) {
+    private ArrayList<HashMap<String,String>> selectPhotosByQuery(String photoQuery) {
         
         Cursor c = performRawQuery(photoQuery);
         ArrayList<HashMap<String,String>> photos = new ArrayList<HashMap<String,String>>();
@@ -611,7 +611,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param query
      * @return
      */
-    public Cursor performRawQuery(String query) {
+    private Cursor performRawQuery(String query) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         Cursor c = db.rawQuery(query, null);
