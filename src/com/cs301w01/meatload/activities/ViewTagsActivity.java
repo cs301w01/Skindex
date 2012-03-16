@@ -1,15 +1,17 @@
 package com.cs301w01.meatload.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-
+/**
+ * Implements the logic in the Tags view of the Tab layout in Skindex. 
+ * @author Joel Burford
+ */
 public class ViewTagsActivity extends Skindactivity {
 
     //@Override
     public void update(Object model) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        
     }
     
     public void onCreate(Bundle savedInstanceState) {

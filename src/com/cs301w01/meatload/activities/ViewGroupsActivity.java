@@ -8,25 +8,23 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
-import com.cs301w01.meatload.model.Album;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-
+/**
+ * Implements the logic in the Albums view of the Tab layout in Skindex.
+ * @author Joel Burford
+ */
 public class ViewGroupsActivity extends Skindactivity {
 	
 	private MainManager mainManager;
@@ -77,8 +75,7 @@ public class ViewGroupsActivity extends Skindactivity {
              String clickedName = temp.get("name");
              openGalleryFromAlbum(clickedName);
             }
-        }
-        );
+        });
     }
     
     @Override
@@ -96,37 +93,35 @@ public class ViewGroupsActivity extends Skindactivity {
 		albumListView.setAdapter(adapter);
     }
     
-    /**TODO
-     * Display a message asking if the user wants to create a new album
+    /* 
+     * TODO: Display a message asking if the user wants to create a new album
      * populate the boolean with true is the user wants a new album
      * otherwise assume the user wants to choose an album
      * if they hit cancel, exit out of this function
      */
-    protected void takePicture(){
+    protected void takePicture() {
     	//Display prompt
     	boolean wantsNewAlbum = false;
     	String newAlbumName = "";
     	if(wantsNewAlbum){
     		//newAlbumName = addAlbum();
-    	}
-    	else{
-    		/**TODO
-    		 * Prompt the user to pick an album from the list
-    		 * Populate this string with the name
+    	} else {
+    		/*
+    		 * TODO: Prompt the user to pick an album from the list
+    		 * TODO: Populate this string with the name
     		 */
     		newAlbumName = "";
     	}
     	
-    	/**TODO
-    	 * we need to start the gallery activity then have the gallery activity
-    	 * immediately switch to takePicture, so that when the user goes back, they'll
-    	 * end up at the gallery activity.
-    	 * Use openGalleryFromAlbum for this maybe?
+    	/*
+    	 * TODO: We need to start the gallery activity then have the gallery activity... 
+    	 * immediately switch to takePicture, so that when the user goes back, they'll end up at 
+    	 * the gallery activity. Use openGalleryFromAlbum for this maybe?
     	 */
     	switchToTakePicture(newAlbumName);
     }
     
-    private void switchToTakePicture(String album){
+    private void switchToTakePicture(String album) {
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
     	PhotoManager pMan = new PhotoManager(album);
@@ -135,13 +130,12 @@ public class ViewGroupsActivity extends Skindactivity {
     	startActivity(myIntent); 
     }
     
-    /**TODO
-     * Prompt the user to enter an album name and pick a bunch of tags
-     * When the user presses OK, gather the name and tags the user entered, 
-     * and call photoManager.addNewAlbum();
-     * @return the name of the new album (for use in takePicture)
+    /** 
+     * Prompts the user to enter an album name and pick a set of tags. When the user presses OK, 
+     * gather the name and tags the user entered, and call photoManager.addNewAlbum();
+     * @return Name of the new album (for use in takePicture)
      */
-    private void addAlbum(){
+    private void addAlbum() {
     	//Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -153,30 +147,31 @@ public class ViewGroupsActivity extends Skindactivity {
 		alert.setView(input);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-			  String newAlbumName = input.getText().toString();
-			  mainManager.addAlbum(newAlbumName, new ArrayList<String>());
-			  refreshScreen();
-		  }
+			public void onClick(DialogInterface dialog, int whichButton) {
+				String newAlbumName = input.getText().toString();
+				mainManager.addAlbum(newAlbumName, new ArrayList<String>());
+				refreshScreen();
+			}
 		});
 
 		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		    // Canceled.
-		  }
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
 		});
 
 		alert.show();
     }
    
     
-    /**TODO
-     * start a new gallery activity and pass it pMan
-     * @param pMan - the PhotoManager object to be used in this activity
+    /**
+     * Starts a new gallery activity using the GalleryManager object passed via argument.
+     * @param gMan - the GalleryManager object on which the new GalleryActivity is based
      */
     private void openGallery(GalleryManager gMan){
     	Intent myIntent = new Intent();
-    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.GalleryActivity");
+    	myIntent.setClassName("com.cs301w01.meatload", 
+    			"com.cs301w01.meatload.activities.GalleryActivity");
     	myIntent.putExtra("manager", gMan);
     	
     	startActivity(myIntent); 
