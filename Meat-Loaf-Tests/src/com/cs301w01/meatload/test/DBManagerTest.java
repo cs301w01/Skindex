@@ -2,7 +2,6 @@ package com.cs301w01.meatload.test;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 
 import android.content.Context;
@@ -111,6 +110,8 @@ public class DBManagerTest extends AndroidTestCase {
 		assertFalse(test);
 	}
 	
+	
+	
 	//deleteAlbum name not in database
 	public void testDeleteNonExistingAlbum(){
 		int oldSize = mClassToTest.selectAllAlbums().size();
@@ -149,44 +150,133 @@ public class DBManagerTest extends AndroidTestCase {
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize + 1);
 	}
 	
-	//Call resetDB, verify empty
-	public void testResetDB(){
-		mClassToTest.resetDB();
-		assertEquals(mClassToTest.selectAllAlbums().size(), 0);
-	}
 
-	//Call resetDB on empty database, verify
-	public void testResetEmptyDB(){
-		mClassToTest.resetDB();
-		mClassToTest.resetDB();
-		assertEquals(mClassToTest.selectAllAlbums().size(), 0);
-	}
-	
-	//Insert Picture with an existing album name
-	public void testInsertPicture(){
-		int num = mClassToTest.getTotalPhotos();
-		mClassToTest.insertPicture(new Picture("Pic1", "thisIsAPathYo", "Album 1", new Date(), new ArrayList<String>()));
-		assertEquals(mClassToTest.getTotalPhotos(), num+1);
+	public void testSelectAllTags() {
+		
+		//assume 8 tags by default
+		
+		assertEquals(mClassToTest.selectAllTags().size(), 8);
 		
 	}
 	
-	//Insert Picture with a non existing album name
-	public void testInsertNonAlbumPicture(){
-		int num = mClassToTest.getTotalPhotos();
-		mClassToTest.insertPicture(new Picture("Pic1", "thisIsAPathYo", "fubar", new Date(), new ArrayList<String>()));
-		assertEquals(mClassToTest.getTotalPhotos(), num);
+	public void testGetAlbumNameOfPicture() {
+		
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		String testAlbum = "Album 1";
+		
+		Picture p = new Picture("testname", "testpath", testAlbum, new Date(), tags);
+		
+		int actualID = mClassToTest.insertPicture(p);
+		
+		String albumName = mClassToTest.getAlbumNameOfPhoto(actualID);
+		
+		assertTrue(albumName.equals(testAlbum));
+		
 	}
 	
-	//Get total photos on an empty DB
-	public void testGetTotalPhotosEmpty(){
-		mClassToTest.resetDB();
+	public void testDeletePhotoByID() {
+		
+		int photoCount = mClassToTest.getTotalPhotos();
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+		
+		int actualID = mClassToTest.insertPicture(p);
+		
+		//test insertion occurred
+		assertEquals(photoCount + 1, mClassToTest.getTotalPhotos());
+		
+		mClassToTest.deletePhotoByID(actualID);
+		
+		assertEquals(photoCount, mClassToTest.getTotalPhotos());
+		
+	}
+	
+	public void testSelectPictureByID() {
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+		
+		int actualID = mClassToTest.insertPicture(p);
+		
+		Picture rPic = mClassToTest.selectPictureByID(actualID);
+		
+		assertEquals("testname", rPic.getName());
+		
+	}
+	
+	public void testSelectAllPhotos() {
+		
 		assertEquals(mClassToTest.getTotalPhotos(), 0);
+		
+		for(int i = 0; i < 4; i++) {
+		
+			Collection<String> tags = new ArrayList<String>();
+			tags.add("Mole"); tags.add("Wart");
+			
+			Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+			
+			mClassToTest.insertPicture(p);
+			
+		}
+		
+		assertEquals(mClassToTest.getTotalPhotos(), 4);		
+		
 	}
 	
-	//Get total photos on test DB
-	public void testGetTotalPhotosTestDB(){
-		assertEquals(mClassToTest.getTotalPhotos(), 1);
+	public void testSelectPictureTags() {
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+		
+		int id = mClassToTest.insertPicture(p);
+		
+		Collection<String> returnedTags = mClassToTest.selectPictureTags(id);
+		
+		assertEquals(returnedTags.size(), 2);
+		
 	}
+	
+	/*
+	IMPLEMENT THESE TESTS
+	public void resetDB()
+	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
+	public int updatePhotoByID(Photo p, String tableName, int id)
+	public void insertPhoto(Photo p)
+	public int getTotalPhotos()
+	public Collection<Tag> selectAllTags() 
+	
+	mine
+	public Collection<String> selectPhotoTags(int photoID)
+	public ArrayList<HashMap<String,String>> selectAllPhotos()
+	public Photo selectPhotoByID(int photoID)
+	public void deletePhotoByID(int photoID)
+	public String getAlbumNameOfPhoto(int photoID) 
+	
+	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
+	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
+	public String dateToString(Date date)
+	public Date stringToDate(String date)
+	public String stringJoin(Collection<String> strings, String delimiter)
+	
+	THESE ARE TESTED
+	public void insertAlbum(String albumName, Collection<String> tags)
+	public ArrayList<HashMap<String,String>> selectAllAlbums()
+	public void deleteAlbumByName(String name)
+	*/
+	
+	//cut starting here
+	
+	
 	
 	
 	public void populateDB1(){
