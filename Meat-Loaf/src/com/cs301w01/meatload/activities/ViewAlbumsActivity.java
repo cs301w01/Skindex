@@ -25,14 +25,14 @@ import android.widget.AdapterView.OnItemClickListener;
  * Implements the logic in the Albums view of the Tab layout in Skindex.
  * @author Joel Burford
  */
-public class ViewGroupsActivity extends Skindactivity {
+public class ViewAlbumsActivity extends Skindactivity {
 	
 	private MainManager mainManager;
 	ListView albumListView;
 	SimpleAdapter adapter;
 	
 	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
-	private String[] adapterCols = { "name", "numPhotos" };
+	private String[] adapterCols = { "name", "numPictures" };
 
     //@Override
     public void update(Object model) {

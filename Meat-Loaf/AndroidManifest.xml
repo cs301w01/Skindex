@@ -21,7 +21,7 @@
         <activity android:name=".activities.GalleryActivity"></activity>
         <activity android:name=".activities.Skindactivity"></activity>
         <activity android:name=".activities.TakePictureActivity"></activity>
-        <activity android:name=".activities.ViewGroupsActivity"></activity>
+        <activity android:name=".activities.ViewAlbumsActivity"></activity>
         <activity android:name=".activities.ViewTagsActivity"></activity>
 
     </application>
