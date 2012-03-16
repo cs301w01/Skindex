@@ -35,6 +35,7 @@ public class EditPictureActivity extends Skindactivity {
 		
 		// Get picture object from Intent's extras bundle
 		pictureManager = (PhotoManager) getIntent().getExtras().getSerializable("manager");
+		pictureManager.setContext(this);
 		Photo picture = pictureManager.getPhoto();
 		
 		// Set pictureView to path provided by Picture object
@@ -54,5 +55,11 @@ public class EditPictureActivity extends Skindactivity {
 		
 		// TODO: Add Edit Tags functionality to EditPicture
 	}
+	
+	@Override
+    protected void onResume() {
+    	super.onResume();
+    	pictureManager.setContext(this);
+    }
     
 }

@@ -292,12 +292,13 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         cv.put(PHOTOS_COL_PATH, p.getPath());
         cv.put(COL_ALBUMID, selectAlbumIDByName(p.getAlbumName()));
         cv.put(COL_NAME, p.getName());
+        Log.d(logTag, "ALBUM NAME OF THINGY THANG: " + p.getAlbumName());
 
         //insert photo into photo tables
-        db.insert(TABLE_NAME_PHOTOS, COL_ID, cv);
+        long pid = db.insert(TABLE_NAME_PHOTOS, COL_ID, cv);
 
         //get newly inserted photo's id from photos table
-        int pid = selectPhotoIDByName(p.getName());
+        //int pid = selectPhotoIDByName(p.getName());
 
         //insert photo's tags into tags table
         for(String tag : p.getTags()){
@@ -532,9 +533,11 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      */
     public String getAlbumNameOfPhoto(int photoID) {
         
-        Cursor c = performRawQuery("SELECT " + COL_NAME +
-                                   " FROM " + TABLE_NAME_ALBUMS +
-                                   " WHERE " + COL_PHOTOID + " = " +
+        Cursor c = performRawQuery("SELECT a." + COL_NAME + " AS " + COL_NAME +
+                                   " FROM " + TABLE_NAME_PHOTOS + " p LEFT JOIN " +
+                                   TABLE_NAME_ALBUMS + " a ON (a." + COL_ID + " = p." +
+                                   COL_ALBUMID + ")" + 
+                                   " WHERE p." + COL_ID + " = " +
                                    "'" + photoID + "'");
         
         return c.getString(c.getColumnIndex(COL_NAME));

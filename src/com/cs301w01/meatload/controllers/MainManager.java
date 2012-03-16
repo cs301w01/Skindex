@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import android.content.Context;
+
 import com.cs301w01.meatload.model.DBManager;
 
 /**
@@ -14,10 +16,14 @@ import com.cs301w01.meatload.model.DBManager;
  */
 public class MainManager implements FController {
 
-	//DBManager dbMan;
+	Context context;
 	
     public MainManager() {
     	//dbMan = new DBManager(context);
+    }
+    
+    public void setContext(Context context){
+    	this.context = context;
     }
     
     /**

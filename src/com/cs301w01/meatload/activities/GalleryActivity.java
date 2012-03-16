@@ -78,6 +78,7 @@ public class GalleryActivity extends Skindactivity {
     protected void onResume() {
     	super.onResume();
     	refreshScreen();
+    	galleryManager.setContext(this);
     }
 
     @Override

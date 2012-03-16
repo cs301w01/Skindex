@@ -82,6 +82,7 @@ public class ViewGroupsActivity extends Skindactivity {
     protected void onResume(){
     	super.onResume();
     	refreshScreen();
+    	mainManager.setContext(this);
     }
     
     public void refreshScreen(){
