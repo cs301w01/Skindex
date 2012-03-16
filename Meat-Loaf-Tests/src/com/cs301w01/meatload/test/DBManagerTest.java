@@ -6,9 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.test.AndroidTestCase;
-import com.cs301w01.meatload.*;
 import com.cs301w01.meatload.model.DBManager;
 import com.cs301w01.meatload.model.Picture;
 
@@ -153,7 +151,7 @@ public class DBManagerTest extends AndroidTestCase {
 	
 	// NEW CODE STARTS HERE
 	/*
-	public String getAlbumNameOfPhoto(int photoID) 
+	public String getAlbumNameOfPicture(int photoID)
 	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
 	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
 	public String dateToString(Date date)
@@ -181,7 +179,7 @@ public void testGetAlbumNameOfPicture2() {
 		
 		int actualID = (int) mClassToTest.insertPicture(p);
 		
-		String albumName = mClassToTest.getAlbumNameOfPhoto(actualID);
+		String albumName = mClassToTest.getAlbumNameOfPicture(actualID);
 		
 		assertTrue(albumName.equals(testAlbum));
 		
@@ -255,15 +253,15 @@ public void testGetAlbumNameOfPicture2() {
 		
 		int actualID = (int) mClassToTest.insertPicture(p);
 		
-		String albumName = mClassToTest.getAlbumNameOfPhoto(actualID);
+		String albumName = mClassToTest.getAlbumNameOfPicture(actualID);
 		
 		assertTrue(albumName.equals(testAlbum));
 		
 	}
 	
-	public void testDeletePhotoByID() {
+	public void testDeletePictureByID() {
 		
-		int photoCount = mClassToTest.getTotalPhotos();
+		int photoCount = mClassToTest.getPictureCount();
 		
 		Collection<String> tags = new ArrayList<String>();
 		tags.add("Mole"); tags.add("Wart");
@@ -273,11 +271,11 @@ public void testGetAlbumNameOfPicture2() {
 		int actualID = (int) mClassToTest.insertPicture(p);
 		
 		//test insertion occurred
-		assertEquals(photoCount + 1, mClassToTest.getTotalPhotos());
+		assertEquals(photoCount + 1, mClassToTest.getPictureCount());
 		
-		mClassToTest.deletePhotoByID(actualID);
+		mClassToTest.deletePictureByID(actualID);
 		
-		assertEquals(photoCount, mClassToTest.getTotalPhotos());
+		assertEquals(photoCount, mClassToTest.getPictureCount());
 		
 	}
 	
@@ -296,9 +294,9 @@ public void testGetAlbumNameOfPicture2() {
 		
 	}
 	
-	public void testSelectAllPhotos() {
+	public void testSelectAllPictures() {
 		
-		assertEquals(mClassToTest.getTotalPhotos(), 0);
+		assertEquals(mClassToTest.getPictureCount(), 0);
 		
 		for(int i = 0; i < 4; i++) {
 		
@@ -311,7 +309,7 @@ public void testGetAlbumNameOfPicture2() {
 			
 		}
 		
-		assertEquals(mClassToTest.getTotalPhotos(), 4);		
+		assertEquals(mClassToTest.getPictureCount(), 4);
 		
 	}
 	
@@ -334,19 +332,19 @@ public void testGetAlbumNameOfPicture2() {
 	IMPLEMENT THESE TESTS
 	public void resetDB()
 	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
-	public int updatePhotoByID(Photo p, String tableName, int id)
+	public int updatePictureByID(Photo p, String tableName, int id)
 	public void insertPhoto(Photo p)
-	public int getTotalPhotos()
+	public int getPictureCount()
 	public Collection<Tag> selectAllTags() 
 	
 	mine
 	public Collection<String> selectPhotoTags(int photoID)
 	public ArrayList<HashMap<String,String>> selectAllPhotos()
 	public Photo selectPhotoByID(int photoID)
-	public void deletePhotoByID(int photoID)
+	public void deletePictureByID(int photoID)
 <<<<<<< HEAD
 =======
-	public String getAlbumNameOfPhoto(int photoID) 
+	public String getAlbumNameOfPicture(int photoID)
 	
 	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
 	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
