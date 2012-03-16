@@ -2,6 +2,7 @@ package com.cs301w01.meatload.test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.test.AndroidTestCase;
 import com.cs301w01.meatload.*;
 import com.cs301w01.meatload.model.DBManager;
+import com.cs301w01.meatload.model.Picture;
 
 public class DBManagerTest extends AndroidTestCase {
 	DBManager mClassToTest;
@@ -109,6 +111,8 @@ public class DBManagerTest extends AndroidTestCase {
 		assertFalse(test);
 	}
 	
+	
+	
 	//deleteAlbum name not in database
 	public void testDeleteNonExistingAlbum(){
 		int oldSize = mClassToTest.selectAllAlbums().size();
@@ -147,6 +151,90 @@ public class DBManagerTest extends AndroidTestCase {
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize + 1);
 	}
 	
+	// NEW CODE STARTS HERE
+	/*
+	public String getAlbumNameOfPhoto(int photoID) 
+	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
+	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
+	public String dateToString(Date date)
+	public Date stringToDate(String date)
+	public String stringJoin(Collection<String> strings, String delimiter)
+	*/
+	
+	public void testGetAlbumNameOfPicture1() {
+		ArrayList<HashMap<String, String>> pictures = mClassToTest.selectAllPictures();
+		String id = pictures.get(0).get("id");
+		int idInt = new Integer(id);
+		Picture picture = mClassToTest.selectPictureByID(idInt);
+		assertEquals(picture.getAlbumName(), "Album 3");
+	}
+	
+public void testGetAlbumNameOfPicture2() {
+		
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		String testAlbum = "Album 1";
+		
+		Picture p = new Picture("testname", "testpath", testAlbum, new Date(), tags);
+		
+		int actualID = (int) mClassToTest.insertPicture(p);
+		
+		String albumName = mClassToTest.getAlbumNameOfPhoto(actualID);
+		
+		assertTrue(albumName.equals(testAlbum));
+		
+	}
+		
+	public void testSelectPicturesFromAlbum() {
+		ArrayList<HashMap<String, String>> albumPictures;
+		albumPictures = mClassToTest.selectPicturesFromAlbum("Album 3");
+		assertEquals(albumPictures.size(), 1);
+	}
+	
+	public void testSelectPicturesByTag() {
+		ArrayList<HashMap<String, String>> tagPictures;
+		ArrayList<String> tags = new ArrayList<String>();
+		tags.add("blood");
+		tagPictures = mClassToTest.selectPicturesByTag(tags);
+		assertEquals(tagPictures.size(), 1);
+	}
+	
+	public void testDateToString() {
+		Date date = new Date();
+		date.setYear(112);
+		date.setMonth(10);
+		date.setDate(20);
+		date.setHours(11);
+		date.setMinutes(55);
+		date.setSeconds(54);
+		String dateString = mClassToTest.dateToString(date);
+		assertTrue(dateString.equals("2012-10-20 11:55:54"));
+	}
+	
+	public void testStringToDate() {
+		String dateString = "2012-10-20 11:55:54";
+		Date date = mClassToTest.stringToDate(dateString);
+		assertEquals(date.getYear(), 112);
+		assertEquals(date.getMonth(), 10);
+		assertEquals(date.getDate(), 20);
+		assertEquals(date.getHours(), 11);
+		assertEquals(date.getMinutes(), 55);
+		assertEquals(date.getSeconds(), 54);
+	}
+	
+	public void testStringJoin() {
+		ArrayList<String> strings = new ArrayList<String>();
+		strings.add("Butts");
+		strings.add("lmao");
+		strings.add("Seriously though");
+		String joinedString = mClassToTest.stringJoin(strings, " ");
+		assertTrue(joinedString.equals("Butts lmao Seriously though"));
+	}
+	
+	// NEW CODE ENDS
+	
 	/*
 	IMPLEMENT THESE TESTS
 	public void resetDB()
@@ -155,16 +243,12 @@ public class DBManagerTest extends AndroidTestCase {
 	public void insertPhoto(Photo p)
 	public int getTotalPhotos()
 	public Collection<Tag> selectAllTags() 
+	
+	mine
 	public Collection<String> selectPhotoTags(int photoID)
 	public ArrayList<HashMap<String,String>> selectAllPhotos()
 	public Photo selectPhotoByID(int photoID)
 	public void deletePhotoByID(int photoID)
-	public String getAlbumNameOfPhoto(int photoID) 
-	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
-	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
-	public String dateToString(Date date)
-	public Date stringToDate(String date)
-	public String stringJoin(Collection<String> strings, String delimiter)
 	
 	THESE ARE TESTED
 	public void insertAlbum(String albumName, Collection<String> tags)
@@ -172,20 +256,24 @@ public class DBManagerTest extends AndroidTestCase {
 	public void deleteAlbumByName(String name)
 	*/
 	
-	
+	//cut starting here
 	
 	public void populateDB1(){
 		ArrayList<String> tag1 = new ArrayList<String>();
 		tag1.add("red");tag1.add("blue");tag1.add("green");tag1.add("orange");
 		ArrayList<String> tag2 = new ArrayList<String>();
-		tag1.add("red");tag1.add("blue");tag1.add("green");tag1.add("orange");
+		tag2.add("red");tag2.add("blue");tag2.add("green");tag2.add("orange");
 		ArrayList<String> tag3 = new ArrayList<String>();
-		tag1.add("blood");tag1.add("puss");tag1.add("bruise");tag1.add("ear");
+		tag3.add("blood");tag3.add("puss");tag3.add("bruise");tag3.add("ear");
 		
 		mClassToTest.insertAlbum("Album 1", tag1);
 		mClassToTest.insertAlbum("Album 2", tag2);
 		mClassToTest.insertAlbum("Album 3", tag3);
 		mClassToTest.insertAlbum("Album 4", new ArrayList<String>());
+		
+		// NEW CODE STARTS
+		mClassToTest.insertPicture(new Picture("", "", "Album 3" , new Date(), tag3));
+		// NEW CODE ENDS
 	}
 
 }

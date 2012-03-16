@@ -283,7 +283,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * Inserts a picture into the pictures table and corresponding tags into the tag table.
      * @param p Picture object
      */
-    public void insertPicture(Picture p) {
+    public long insertPicture(Picture p) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -317,7 +317,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         }
 
         db.close();
-
+        return pid;
     }
     
     /**
@@ -325,7 +325,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param albumName
      * @param tags
      */
-    public void insertAlbum(String albumName, Collection<String> tags) {
+    public long insertAlbum(String albumName, Collection<String> tags) {
     	SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -333,10 +333,10 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         cv.put(COL_NAME, albumName);
 
         // Insert picture into picture tables
-        db.insert(TABLE_NAME_ALBUMS, COL_ID, cv);
+        long aid = db.insert(TABLE_NAME_ALBUMS, COL_ID, cv);
         
         // Get newly inserted picture's id from pictures table
-        int aid = selectAlbumIDByName(albumName);
+        //int aid = selectAlbumIDByName(albumName);
         
         Log.d(logTag, "Album inserted: " + albumName + " w/ aid " + aid);
 
@@ -356,6 +356,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         }
 
         db.close();
+        return aid;
     }
     
     public int getTotalPhotos() {
