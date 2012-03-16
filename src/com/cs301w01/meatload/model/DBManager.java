@@ -18,10 +18,8 @@ import java.util.HashMap;
 
 /**
  * This class is helper for dealing with SQLite in Android. It provides a variety of useful methods 
- * for creating, updating, deleting, and selecting data.
- * <p>
- * Great resource: 
- * <a href=http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android>
+ * for creating, updating, deleting, and selecting data. 
+ * @see <a href=http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android>
  * http://www.codeproject.com/Articles/119293/Using-SQLite-Database-with-Android
  * </a>
  */

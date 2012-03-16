@@ -8,9 +8,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Random;
 
 import android.content.Context;
@@ -21,21 +19,12 @@ import android.util.Log;
 import com.cs301w01.meatload.model.DBManager;
 import com.cs301w01.meatload.model.Photo;
 
-
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/3/12
- * Time: 1:14 PM
- * To change this template use File | Settings | File Templates.
+ * Implements Controller logic for Picture objects.
+ * @author Isaac Matichuk
  */
+public class PhotoManager implements FController, Serializable {
 
-
-public class PhotoManager implements FController, Serializable{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	//DBManager dbMan;
 	Photo photo;
@@ -43,39 +32,43 @@ public class PhotoManager implements FController, Serializable{
 	int photoID;
 	private Bitmap imgOnDisplay;
 	
-	public PhotoManager(Context context, String albumName){
+	public PhotoManager(Context context, String albumName) {
 		//dbMan = new DBManager(context);
 		this.albumName = albumName;
 	}
 	
-    public PhotoManager(Context context, Photo photo){
+    public PhotoManager(Context context, Photo photo) {
     	//dbMan = new DBManager(context);
     	this.photo = photo;
     }
     
-    public PhotoManager(Context context){
+    public PhotoManager(Context context) {
     	//dbMan = new DBManager(context);
     	this.photo = null;
     }
     
-    public PhotoManager(int pid){
+    public PhotoManager(int pid) {
     	photoID = pid;
     }
     
-    public PhotoManager(String albumName){
+    public PhotoManager(String albumName) {
     	this.albumName = albumName;
     }
     
-    //take imgOnDisplay, save it to file, do all DB mumbo jumbo
-    //http://stackoverflow.com/questions/649154/android-bitmap-save-to-location
-    public void takePicture(File path){
+    /**
+     * Takes Picture, save it to file, pass Picture object to DBManager
+     * @see <a href=http://stackoverflow.com/questions/649154/android-bitmap-save-to-location>
+     * http://stackoverflow.com/questions/649154/android-bitmap-save-to-location</a>
+     * @param path File directory where the Picture is to be saved
+     */
+    public void takePicture(File path) {
     	Calendar cal = Calendar.getInstance();
     	SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-sss");
     	String timestamp = sdf.format(cal.getTime());
     	String fname = "img-" + timestamp + ".PNG";
     	String fpath = path.toString() + "/";
 
-    	try{
+    	try {
     		OutputStream outStream = null;
     		File file = new File(path, fname);
 
@@ -85,14 +78,11 @@ public class PhotoManager implements FController, Serializable{
     		outStream.close();
     		savePhoto(fpath + fname, cal.getTime());
     		Log.d("SAVE", "Saving " + fpath + fname);
-        }
-        catch(IOException e){
+        } catch (IOException e) {
         	Log.d("ERROR", "Unable to write " + fpath + fname);
         }
         
-        //Writing file "fname" to path "fpath".  Seems to be succesful.  Now
-        //we have to write this information to the database and move to
-        //EditPicture activity
+        // TODO: Move to EditPictureActivity after takePicture finishes.
     }
     
     
@@ -103,7 +93,7 @@ public class PhotoManager implements FController, Serializable{
     //http://developer.android.com/reference/android/widget/ImageView.html
     //http://docs.oracle.com/javase/1.4.2/docs/api/java/util/Random.html
     //http://developer.android.com/reference/android/graphics/BitmapFactory.html
-    public Bitmap generatePicture(){
+    public Bitmap generatePicture() {
     	int height = 200;
     	int width = 200;
     	int[] colors = new int[height*width];
@@ -115,7 +105,7 @@ public class PhotoManager implements FController, Serializable{
 		g = gen.nextInt(256);
 		b = gen.nextInt(256);
 		
-        for (int i = 0; i < height; i++){
+        for (int i = 0; i < height; i++) {
         	if (test > 15){
         		r = gen.nextInt(256);
         		g = gen.nextInt(256);
@@ -125,7 +115,7 @@ public class PhotoManager implements FController, Serializable{
         		test++;
         	}
         	
-        	for (int j = 0; j < width; j++){
+        	for (int j = 0; j < width; j++) {
         		colors[i * height + j] = Color.rgb(r,g,b);
         	}
         }
@@ -135,12 +125,12 @@ public class PhotoManager implements FController, Serializable{
         return imgOnDisplay;
     }
     
-    private void savePhoto(String fpath, Date date){
+    private void savePhoto(String fpath, Date date) {
     	DBManager dbMan = new DBManager();
     	dbMan.insertPhoto(new Photo("", fpath, albumName, date, new ArrayList<String>()));
     }
     
-    public Photo getPhoto(){
+    public Photo getPhoto() {
     	return new DBManager().selectPhotoByID(photoID);
     }
 }
