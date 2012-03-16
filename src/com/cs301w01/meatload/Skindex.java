@@ -1,32 +1,26 @@
 package com.cs301w01.meatload;
 
-import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TabHost;
 
-import com.cs301w01.meatload.activities.Skindactivity;
 import com.cs301w01.meatload.activities.ViewGroupsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
-import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.controllers.PhotoManager;
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.DBManager;
 
-import java.util.Collection;
-
-public class Skindex extends TabActivity
-
-//used to extend Skindactivity
-{
+/**
+ * Activity file for tabbed landing page of MoleFinder.
+ * @author Joel Burford
+ * @author Derek Dowling
+ * @author Isaac Matichuk
+ * @see <a href="http://developer.android.com/resources/tutorials/views/hello-tabwidget.html">
+ 	http://developer.android.com/resources/tutorials/views/hello-tabwidget.html</a>
+ */
+public class Skindex extends TabActivity {
+	
 	private MainManager mainManager;
 	
     /** Called when the activity is first created. */
@@ -51,30 +45,24 @@ public class Skindex extends TabActivity
         	// Initialize a TabSpec for each tab and add it to the TabHost
         	spec = tabHost.newTabSpec("albums").setIndicator(this.getString(R.string.tab_albums),
                            res.getDrawable(R.drawable.tab_main))
-                         .setContent(intent);
+                           .setContent(intent);
         	tabHost.addTab(spec);
 
         	// Do the same for the other tabs
         	intent = new Intent().setClass(this, ViewTagsActivity.class);
         	spec = tabHost.newTabSpec("tags").setIndicator(this.getString(R.string.tab_tags),
-                              res.getDrawable(R.drawable.tab_main))
-                          .setContent(intent);
+                           	res.getDrawable(R.drawable.tab_main))
+                           	.setContent(intent);
         	tabHost.addTab(spec);
 
 
         	tabHost.setCurrentTab(0);
         ///END TAB CODE/////////////////////////
-        
 
         //Current tab set to Album.  ViewGroupsActivity runs in that tab
+        
+        // TODO: Map objects created as variables to real objects in the XML R.layout.main
         	
-        
-        
-        
-        
-        /**TODO
-         * map objects created as variables to real objects in the XML R.layout.main
-         */
         /*
         newAlbumButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -91,20 +79,11 @@ public class Skindex extends TabActivity
 		});
 		*/
         
-        /**TODO
-         * we should add all the other listeners here.
-         * Use the openGallery functions to open the gallery activity
-         */
-        
-        /**TODO
-         * should we call update here... we probably want to update the screen right away
-         */
+        // TODO: We should add all the other listeners here.
     }
     
-    /**TODO
-     * use selectAllAlbums and selectAllTags to get the lists you need to
-     * populate the screen
-     */
+    // TODO: use selectAllAlbums and selectAllTags to get the lists you need to populate the screen
+    
     //@Override
     public void update(Object model) {
         //update whatever screen is up.
