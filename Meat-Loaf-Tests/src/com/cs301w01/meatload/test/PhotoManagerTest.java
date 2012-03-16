@@ -1,16 +1,16 @@
 package com.cs301w01.meatload.test;
 
-import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.controllers.PictureManager;
 
 import android.test.AndroidTestCase;
 
 public class PhotoManagerTest extends AndroidTestCase {
-	PhotoManager mClassToTest;
+	PictureManager mClassToTest;
 	int mArg1;
 	int mArg2;
  
 	protected void setUp() throws Exception {
-		mClassToTest=new PhotoManager(5); //5 is photoID
+		mClassToTest=new PictureManager(5); //5 is photoID
 		mArg1=6;
 		mArg2=3;
 		super.setUp();
