@@ -1,35 +1,20 @@
 package com.cs301w01.meatload.activities;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Random;
-
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
-
+/**
+ * 
+ * @author Joel Burford
+ */
 public class TakePictureActivity extends Skindactivity {
 	private Bitmap imgOnDisplay;
 	
@@ -75,25 +60,30 @@ public class TakePictureActivity extends Skindactivity {
         //To change body of implemented methods use File | Settings | File Templates.
     }
     
-    private void takePicture(){
-    	
-      //Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
+    /**
+     * Opens a dialog asking the user if they want to keep the picture they have just taken.
+     * <p>
+     * If yes, saves the Picture in the Viewfinder (Or current randomly generated picture)
+     * @see <a href="http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog">
+     	http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog</a>
+     */
+    private void takePicture() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Confirm");
 		alert.setMessage("Are you sure you want this picture?");
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-		public void onClick(DialogInterface dialog, int whichButton) {
-	        photoManager.takePicture(getFilesDir());
-			  finish();
-		  }
+			public void onClick(DialogInterface dialog, int whichButton) {
+				photoManager.takePicture(getFilesDir());
+				finish();
+			}
 		});
 
 		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-		  public void onClick(DialogInterface dialog, int whichButton) {
-		    // Canceled.
-		  }
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
 		});
 
 		alert.show();
