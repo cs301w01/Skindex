@@ -39,7 +39,7 @@ public class GalleryManager implements FController, Serializable {
      * @param albumName String representation of album name to be associated with this object
      */
     public GalleryManager(String albumName) {
-    	if (!albumName.equals("All Photos")) {
+    	if (!albumName.equals("All Pictures")) {
     		this.albumName = albumName;
         	isAlbum = true;
     	}
@@ -75,13 +75,13 @@ public class GalleryManager implements FController, Serializable {
      * was contructed with an album name or a set of tags. 
      * @return ArrayList of HashMaps representing a set of Picture objects
      */
-    public ArrayList<HashMap<String, String>> getPhotoGallery() {
+    public ArrayList<HashMap<String, String>> getPictureGallery() {
     	if (isAlbum())
-    		return new DBManager(context).selectPhotosFromAlbum(albumName);
+    		return new DBManager(context).selectPicturesFromAlbum(albumName);
     	else if (tags.isEmpty())
-    		return new DBManager(context).selectAllPhotos();
+    		return new DBManager(context).selectAllPictures();
     	else
-    		return new DBManager(context).selectPhotosByTag(tags);
+    		return new DBManager(context).selectPicturesByTag(tags);
     }
     
     public void deletePhoto(int pid) {
@@ -104,7 +104,7 @@ public class GalleryManager implements FController, Serializable {
     	if (isAlbum)
     		return albumName;
     	else if (tags.isEmpty())
-    		return "All Photos";
+    		return "All Pictures";
     	else
     		return new DBManager(context).stringJoin(tags, ", ");
     }

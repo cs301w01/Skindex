@@ -91,7 +91,7 @@ public class GalleryActivity extends Skindactivity {
      */
     public void refreshScreen() {
     	pictureListView = (ListView) findViewById(R.id.pictureListView);   
-        ArrayList<HashMap<String, String>> albumList = galleryManager.getPhotoGallery();
+        ArrayList<HashMap<String, String>> albumList = galleryManager.getPictureGallery();
         adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
 		pictureListView.setAdapter(adapter);
     }

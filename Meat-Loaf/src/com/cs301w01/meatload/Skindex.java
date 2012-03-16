@@ -6,7 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 
-import com.cs301w01.meatload.activities.ViewGroupsActivity;
+import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.DBManager;
@@ -40,7 +40,7 @@ public class Skindex extends TabActivity {
         	Intent intent;  // Reusable Intent for each tab
 
         	// Create an Intent to launch an Activity for the tab (to be reused)
-        	intent = new Intent().setClass(this, ViewGroupsActivity.class);
+        	intent = new Intent().setClass(this, ViewAlbumsActivity.class);
 
         	// Initialize a TabSpec for each tab and add it to the TabHost
         	spec = tabHost.newTabSpec("albums").setIndicator(this.getString(R.string.tab_albums),
