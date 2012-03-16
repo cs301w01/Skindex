@@ -76,7 +76,7 @@ public class GalleryManager implements FController, Serializable {
      * @return ArrayList of HashMaps representing a set of Picture objects
      */
     public ArrayList<HashMap<String, String>> getPictureGallery() {
-    	if (isAlbum())
+    	if (isAlbum)
     		return new DBManager(context).selectPicturesFromAlbum(albumName);
     	else if (tags.isEmpty())
     		return new DBManager(context).selectAllPictures();

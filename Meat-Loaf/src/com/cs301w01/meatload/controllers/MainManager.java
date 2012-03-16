@@ -35,8 +35,8 @@ public class MainManager implements FController {
     	DBManager dbMan = new DBManager();
     	ArrayList<HashMap<String, String>> albums = new ArrayList<HashMap<String,String>>();
     	HashMap<String, String> map = new HashMap<String,String>();
-    	map.put("name", "All Photos");
-    	map.put("numPhotos", Integer.toString(dbMan.getTotalPhotos()));
+    	map.put("name", "All Pictures");
+    	map.put("numPictures", Integer.toString(dbMan.getTotalPhotos()));
     	albums.add(map);
     	albums.addAll(dbMan.selectAllAlbums());
     	return albums;
