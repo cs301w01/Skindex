@@ -1,7 +1,5 @@
 package com.cs301w01.meatload.activities;
 
-import com.cs301w01.meatload.controllers.PhotoManager;
-
 import android.app.Activity;
 import android.util.Log;
 
@@ -9,7 +7,7 @@ import android.util.Log;
  * Abstract class implementing the FView interface.
  * @author Derek Dowling
  */
-public abstract class Skindactivity extends Activity implements FView {
+public abstract class Skindactivity extends Activity implements FView<Object> {
 	
 	public Skindactivity() {
 		super();
@@ -18,12 +16,14 @@ public abstract class Skindactivity extends Activity implements FView {
     //for logger, adds class name labels to log msgs
     protected String tag;
     
-    /**public Skindactivity(String className){
-        super();
+    /*
+    public Skindactivity(String className) {
+    	super();
 
-        tag = className;
+    	tag = className;
 
-    }*/
+    }
+    */
     
     public abstract void update(Object model);
 
