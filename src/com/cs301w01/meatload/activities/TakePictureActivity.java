@@ -36,7 +36,6 @@ public class TakePictureActivity extends Skindactivity {
 	private PhotoManager photoManager;
 	
 	public void onCreate(Bundle savedInstanceState) {
-		
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.take_picture);
 	    

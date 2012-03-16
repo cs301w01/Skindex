@@ -10,6 +10,7 @@ import com.cs301w01.meatload.controllers.PhotoManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -100,16 +101,8 @@ public class GalleryActivity extends Skindactivity {
     private void takePicture(){
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+    	Log.d("derp", "ALBUM NAME:" + galleryManager.getAlbumName());
     	PhotoManager pMan = new PhotoManager(galleryManager.getAlbumName());
-    	myIntent.putExtra("manager", pMan);
-    	
-    	startActivity(myIntent); 
-    }
-    
-    private void switchToTakePicture(String album){
-    	Intent myIntent = new Intent();
-    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-    	PhotoManager pMan = new PhotoManager(this, album);
     	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 
