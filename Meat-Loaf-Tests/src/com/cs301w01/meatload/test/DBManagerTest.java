@@ -234,6 +234,101 @@ public void testGetAlbumNameOfPicture2() {
 	}
 	
 	// NEW CODE ENDS
+
+	public void testSelectAllTags() {
+		
+		//assume 8 tags by default
+		
+		assertEquals(mClassToTest.selectAllTags().size(), 8);
+		
+	}
+	
+	public void testGetAlbumNameOfPicture() {
+		
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		String testAlbum = "Album 1";
+		
+		Picture p = new Picture("testname", "testpath", testAlbum, new Date(), tags);
+		
+		int actualID = (int) mClassToTest.insertPicture(p);
+		
+		String albumName = mClassToTest.getAlbumNameOfPhoto(actualID);
+		
+		assertTrue(albumName.equals(testAlbum));
+		
+	}
+	
+	public void testDeletePhotoByID() {
+		
+		int photoCount = mClassToTest.getTotalPhotos();
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+		
+		int actualID = (int) mClassToTest.insertPicture(p);
+		
+		//test insertion occurred
+		assertEquals(photoCount + 1, mClassToTest.getTotalPhotos());
+		
+		mClassToTest.deletePhotoByID(actualID);
+		
+		assertEquals(photoCount, mClassToTest.getTotalPhotos());
+		
+	}
+	
+	public void testSelectPictureByID() {
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+		
+		int actualID = (int) mClassToTest.insertPicture(p);
+		
+		Picture rPic = mClassToTest.selectPictureByID(actualID);
+		
+		assertEquals("testname", rPic.getName());
+		
+	}
+	
+	public void testSelectAllPhotos() {
+		
+		assertEquals(mClassToTest.getTotalPhotos(), 0);
+		
+		for(int i = 0; i < 4; i++) {
+		
+			Collection<String> tags = new ArrayList<String>();
+			tags.add("Mole"); tags.add("Wart");
+			
+			Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+			
+			mClassToTest.insertPicture(p);
+			
+		}
+		
+		assertEquals(mClassToTest.getTotalPhotos(), 4);		
+		
+	}
+	
+	public void testSelectPictureTags() {
+		
+		Collection<String> tags = new ArrayList<String>();
+		tags.add("Mole"); tags.add("Wart");
+		
+		Picture p = new Picture("testname", "testpath", "Album 1", new Date(), tags);
+		
+		int id = (int) mClassToTest.insertPicture(p);
+		
+		Collection<String> returnedTags = mClassToTest.selectPictureTags(id);
+		
+		assertEquals(returnedTags.size(), 2);
+		
+	}
 	
 	/*
 	IMPLEMENT THESE TESTS
@@ -249,6 +344,16 @@ public void testGetAlbumNameOfPicture2() {
 	public ArrayList<HashMap<String,String>> selectAllPhotos()
 	public Photo selectPhotoByID(int photoID)
 	public void deletePhotoByID(int photoID)
+<<<<<<< HEAD
+=======
+	public String getAlbumNameOfPhoto(int photoID) 
+	
+	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
+	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
+	public String dateToString(Date date)
+	public Date stringToDate(String date)
+	public String stringJoin(Collection<String> strings, String delimiter)
+>>>>>>> branch 'master' of ssh://git@github.com/cs301w01/Meat-Loaf.git
 	
 	THESE ARE TESTED
 	public void insertAlbum(String albumName, Collection<String> tags)
