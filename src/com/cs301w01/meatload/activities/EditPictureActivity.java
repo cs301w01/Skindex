@@ -11,12 +11,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * <b>EditPictureActivity</b>
- * <p>
  * Takes a picture and displays it in exploded view along with important metadata including
  * tags, date, etc.
  * <p>
- * Allows user to change certain metadata such as tags and album
+ * Gives the user an exploded view of the picture being edited. 
+ * <p>
+ * Allows user to change certain metadata such as tags and album.
  */
 public class EditPictureActivity extends Skindactivity {
 
