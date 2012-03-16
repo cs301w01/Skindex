@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 /**
- * 
+ * Implements the logic for the TakePictureActivity, as well as the Take Picture dialog.
  * @author Joel Burford
  */
 public class TakePictureActivity extends Skindactivity {
