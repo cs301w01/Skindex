@@ -41,8 +41,24 @@ public class DBManagerTest extends AndroidTestCase {
 	
 	//nulls not valid input, insert fails
 	public void testInsertNullTagsAlbum(){
+		
 		int oldSize = mClassToTest.selectAllAlbums().size();
-		mClassToTest.insertAlbum("test", null);
+		
+		boolean insertSuccess = false;
+		
+		try {
+			
+			mClassToTest.insertAlbum("test", null);
+			insertSuccess = true;
+			
+			
+		} catch (NullPointerException e) {
+			
+			insertSuccess = false;
+			
+		}
+		
+		assertFalse(insertSuccess);
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
 	}
 	
@@ -87,7 +103,22 @@ public class DBManagerTest extends AndroidTestCase {
 	public void testDeleteAlbumNoName(){
 		int oldSize = mClassToTest.selectAllAlbums().size();
 		
-		mClassToTest.deleteAlbumByName("");
+		boolean deleteSuccess = false;
+		
+		try {
+			
+			mClassToTest.deleteAlbumByName("");
+			deleteSuccess = true;
+			
+			
+		} catch (NullPointerException e) {
+			
+			deleteSuccess = false;
+			
+		}
+		
+		assertFalse(deleteSuccess);
+
 		
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
 	}
@@ -137,7 +168,24 @@ public class DBManagerTest extends AndroidTestCase {
 	public void testCaseSensitiveAlbum(){
 		int oldSize = mClassToTest.selectAllAlbums().size();
 		mClassToTest.insertAlbum("CaPiTaL", new ArrayList<String>());
-		mClassToTest.deleteAlbumByName("cApItAl");
+		
+		
+		boolean deleteSuccess;
+
+		try {
+			
+			mClassToTest.deleteAlbumByName("cApItAl");
+			deleteSuccess = true;
+			
+			
+		} catch (NullPointerException e) {
+			
+			deleteSuccess = false;
+			
+		}
+		
+		assertFalse(deleteSuccess);
+		
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
 	}
 	
@@ -148,16 +196,6 @@ public class DBManagerTest extends AndroidTestCase {
 		mClassToTest.insertAlbum("cApItAl", new ArrayList<String>());
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize + 1);
 	}
-	
-	// NEW CODE STARTS HERE
-	/*
-	public String getAlbumNameOfPicture(int photoID)
-	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
-	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
-	public String dateToString(Date date)
-	public Date stringToDate(String date)
-	public String stringJoin(Collection<String> strings, String delimiter)
-	*/
 	
 	public void testGetAlbumNameOfPicture1() {
 		ArrayList<HashMap<String, String>> pictures = mClassToTest.selectAllPictures();
@@ -231,7 +269,6 @@ public void testGetAlbumNameOfPicture2() {
 		assertTrue(joinedString.equals("Butts lmao Seriously though"));
 	}
 	
-	// NEW CODE ENDS
 
 	public void testSelectAllTags() {
 		
@@ -328,40 +365,9 @@ public void testGetAlbumNameOfPicture2() {
 		
 	}
 	
-	/*
-	IMPLEMENT THESE TESTS
-	public void resetDB()
-	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
-	public int updatePictureByID(Photo p, String tableName, int id)
-	public void insertPhoto(Photo p)
-	public int getPictureCount()
-	public Collection<Tag> selectAllTags() 
-	
-	mine
-	public Collection<String> selectPhotoTags(int photoID)
-	public ArrayList<HashMap<String,String>> selectAllPhotos()
-	public Photo selectPhotoByID(int photoID)
-	public void deletePictureByID(int photoID)
-<<<<<<< HEAD
-=======
-	public String getAlbumNameOfPicture(int photoID)
-	
-	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
-	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
-	public String dateToString(Date date)
-	public Date stringToDate(String date)
-	public String stringJoin(Collection<String> strings, String delimiter)
->>>>>>> branch 'master' of ssh://git@github.com/cs301w01/Meat-Loaf.git
-	
-	THESE ARE TESTED
-	public void insertAlbum(String albumName, Collection<String> tags)
-	public ArrayList<HashMap<String,String>> selectAllAlbums()
-	public void deleteAlbumByName(String name)
-	*/
-	
-	//cut starting here
 	
 	public void populateDB1(){
+		
 		ArrayList<String> tag1 = new ArrayList<String>();
 		tag1.add("red");tag1.add("blue");tag1.add("green");tag1.add("orange");
 		ArrayList<String> tag2 = new ArrayList<String>();
@@ -374,9 +380,8 @@ public void testGetAlbumNameOfPicture2() {
 		mClassToTest.insertAlbum("Album 3", tag3);
 		mClassToTest.insertAlbum("Album 4", new ArrayList<String>());
 		
-		// NEW CODE STARTS
 		mClassToTest.insertPicture(new Picture("", "", "Album 3" , new Date(), tag3));
-		// NEW CODE ENDS
+
 	}
 
 }
