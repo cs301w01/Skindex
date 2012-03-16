@@ -4,35 +4,31 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-import android.content.Context;
-
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.DBManager;
-import com.cs301w01.meatload.model.Photo;
 import com.cs301w01.meatload.model.Tag;
 
-
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/3/12
- * Time: 1:14 PM
- * To change this template use File | Settings | File Templates.
+ * Mediates between DBManager and Skindex by providing lists of Albums and Tags
+ * @see DBManager
+ * @see Skindex
  */
-
-
-public class MainManager implements FController{
+public class MainManager implements FController {
 
 	//DBManager dbMan;
 	
-    public MainManager(){
+    public MainManager() {
     	//dbMan = new DBManager(context);
     }
     
-    public ArrayList<HashMap<String,String>> getAllAlbums(){
+    /**
+     * Creates and invokes an instance of the DBManager class to return HashMaps corresponding to
+     * the table of albums in the database.  
+     * @return
+     */
+    public ArrayList<HashMap<String, String>> getAllAlbums() {
     	DBManager dbMan = new DBManager();
-    	ArrayList<HashMap<String,String>> albums = new ArrayList<HashMap<String,String>>();
-    	HashMap<String,String> map = new HashMap<String,String>();
+    	ArrayList<HashMap<String, String>> albums = new ArrayList<HashMap<String,String>>();
+    	HashMap<String, String> map = new HashMap<String,String>();
     	map.put("name", "All Photos");
     	map.put("numPhotos", Integer.toString(dbMan.getTotalPhotos()));
     	albums.add(map);
@@ -40,11 +36,11 @@ public class MainManager implements FController{
     	return albums;
     }
     
-    public Collection<Tag> getAllTags(){
+    public Collection<Tag> getAllTags() {
     	return new DBManager().selectAllTags();
     }
     
-    public void addAlbum(String albumName, Collection<String> tags){
+    public void addAlbum(String albumName, Collection<String> tags) {
     	new DBManager().insertAlbum(albumName, tags);
     }
 }

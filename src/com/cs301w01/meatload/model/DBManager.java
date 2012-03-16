@@ -93,7 +93,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         myContext = context;
     }
     
-    public DBManager(){
+    public DBManager() {
     	super(myContext, DB_NAME, null, DATABASE_VERSION);
     }
 
@@ -189,8 +189,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     /**
      * Use this method if you want to do a "SELECT *" style query on a table for a specific ID
-     * @param tableName name of table
-     * @param id row in table
+     * @param tableName Name of table
+     * @param id Row in table
      * @return
      */
     public Cursor selectAllColsByID(String tableName, long id) {
@@ -205,7 +205,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     /**
      * Removes a tuple based on its id value.
-     * @param id tuple to delete
+     * @param id Tuple to delete
      * @param tableName
      */
     public void deleteByID(long id, String tableName) {
@@ -369,9 +369,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     public Collection<String> selectTagsByQuery(String tagQuery) {
-
     	Cursor c = performRawQuery(tagQuery);
-
     	Collection<String> tags = new ArrayList<String>();
     	
     	if (c == null) {
@@ -379,18 +377,13 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     	}
 
     	while(!c.isAfterLast()) {
-
-    		
     		tags.add(c.getString(c.getColumnIndex(COL_NAME)));
-
     		c.moveToNext();
     	}
 
     	return tags;
     }
 
-
-    
     public Collection<Tag> selectAllTags() {
     	
     	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPhotos" +
@@ -433,14 +426,13 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     public ArrayList<HashMap<String,String>> selectPhotosByQuery(String photoQuery) {
         
         Cursor c = performRawQuery(photoQuery);
-
         ArrayList<HashMap<String,String>> photos = new ArrayList<HashMap<String,String>>();
         
         if (c == null){
     		return photos;
     	}
 
-        while(!c.isAfterLast()){
+        while(!c.isAfterLast()) {
             HashMap<String,String> map = new HashMap<String,String>();
             map.put("id", c.getString(c.getColumnIndex(COL_ID)));
             map.put("albumName", getAlbumNameOfPhoto(c.getInt(c.getColumnIndex(COL_ID))));
@@ -496,11 +488,11 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         return new Photo(photoName, path, albumName, date, selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
     }
     
-    public void deletePhotoByID(int photoID){
+    public void deletePhotoByID(int photoID) {
     	deleteByID(photoID, TABLE_NAME_PHOTOS);
     }
     
-    public void deleteAlbumByName(String name){
+    public void deleteAlbumByName(String name) {
     	deleteByID(selectIDByName(name, TABLE_NAME_ALBUMS), TABLE_NAME_ALBUMS);
     }
     
@@ -552,7 +544,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     // TODO: fix this function to work properly once the table set ups have been finalized
-    public ArrayList<HashMap<String,String>> selectPhotosFromAlbum(String albumName) {
+    public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) {
     	int albumID = selectAlbumIDByName(albumName);
     	String query = "SELECT * FROM " + 
     					TABLE_NAME_PHOTOS + 
@@ -563,7 +555,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     // TODO: fix this function to work properly once the table set ups have been finalized
-    public ArrayList<HashMap<String,String>> selectPhotosByTag(Collection<String> tags){
+    public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags) {
     	String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." + 
     					PHOTOS_COL_PATH + " AS " + PHOTOS_COL_PATH + ", p." + 
     					COL_ID + " AS " + COL_ID + ", p." + PHOTOS_COL_DATE + " AS " + 
@@ -590,10 +582,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @return
      */
     public String dateToString(Date date) {
-
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return dateFormat.format(date);
-
     }
     
     /**
@@ -649,5 +639,4 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     	}
     	return newString;
     }
-
 }
