@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
-import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.controllers.PictureManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,7 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public class GalleryActivity extends Skindactivity {
 		
-	ListView photoListView;
+	ListView pictureListView;
 	SimpleAdapter adapter;
 	
 	GalleryManager galleryManager;
@@ -64,7 +64,7 @@ public class GalleryActivity extends Skindactivity {
 			}
 		});
         
-        photoListView.setOnItemClickListener(new OnItemClickListener() {
+        pictureListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                 int position, long id) {
              HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
@@ -90,10 +90,10 @@ public class GalleryActivity extends Skindactivity {
      * @see GalleryManager
      */
     public void refreshScreen() {
-    	photoListView = (ListView) findViewById(R.id.photoListView);   
+    	pictureListView = (ListView) findViewById(R.id.pictureListView);   
         ArrayList<HashMap<String, String>> albumList = galleryManager.getPhotoGallery();
         adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
-		photoListView.setAdapter(adapter);
+		pictureListView.setAdapter(adapter);
     }
     
     private void editAlbum() {
@@ -111,7 +111,7 @@ public class GalleryActivity extends Skindactivity {
     			"com.cs301w01.meatload.activities.TakePictureActivity");
     	Log.d("derp", "ALBUM NAME:" + galleryManager.getAlbumName());
     	// TODO: Should not care about albumName if galleryManager is based off of tags or "all"
-    	PhotoManager pMan = new PhotoManager(galleryManager.getAlbumName());
+    	PictureManager pMan = new PictureManager(galleryManager.getAlbumName());
     	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 
@@ -128,7 +128,7 @@ public class GalleryActivity extends Skindactivity {
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.EditPictureActivity");
-    	PhotoManager pMan = new PhotoManager(photoID);
+    	PictureManager pMan = new PictureManager(photoID);
     	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 

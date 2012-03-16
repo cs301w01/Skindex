@@ -1,7 +1,7 @@
 package com.cs301w01.meatload.activities;
 
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.controllers.PictureManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,14 +18,14 @@ import android.widget.ImageView;
 public class TakePictureActivity extends Skindactivity {
 	private Bitmap imgOnDisplay;
 	
-	private PhotoManager photoManager;
+	private PictureManager photoManager;
 	
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.take_picture);
 	    
 	    Bundle b = getIntent().getExtras();
-        photoManager = (PhotoManager) b.getSerializable("manager");
+        photoManager = (PictureManager) b.getSerializable("manager");
         photoManager.setContext(this);
 	    
 	    imgOnDisplay = photoManager.generatePicture();

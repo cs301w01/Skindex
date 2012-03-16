@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import com.cs301w01.meatload.model.Photo;
+import com.cs301w01.meatload.model.Picture;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -33,13 +33,13 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     //common db vars
     public static final String COL_ID = "_id";
     public static final String COL_NAME = "name";
-    public static final String COL_PHOTOID = "photoID";
+    public static final String COL_PICTUREID = "pictureID";
     public static final String COL_ALBUMID = "albumID";
     
     //vars for photos table
-    public static final String TABLE_NAME_PHOTOS = "photos";
-    public static final String PHOTOS_COL_PATH = "path";
-    public static final String PHOTOS_COL_DATE = "date";
+    public static final String TABLE_NAME_PICTURES = "pictures";
+    public static final String PICTURES_COL_PATH = "path";
+    public static final String PICTURES_COL_DATE = "date";
     
     //vars for tags table
     public static final String TABLE_NAME_TAGS = "tags";
@@ -52,11 +52,11 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     private static final int DATABASE_VERSION = 2;
     
-    private static final String CREATE_TABLE_PHOTOSTABLE =
-            "CREATE TABLE " + TABLE_NAME_PHOTOS + " (" +
+    private static final String CREATE_TABLE_PICTURESTABLE =
+            "CREATE TABLE " + TABLE_NAME_PICTURES + " (" +
                     COL_ID + " INTEGER PRIMARY KEY, " +
-                    PHOTOS_COL_DATE + " Date, " +
-                    PHOTOS_COL_PATH + " TEXT, " +
+                    PICTURES_COL_DATE + " Date, " +
+                    PICTURES_COL_PATH + " TEXT, " +
                     COL_NAME + " TEXT, " +
                     COL_ALBUMID + " INTEGER, " +
                     "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
@@ -65,10 +65,10 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     private static final String CREATE_TABLE_TAGSTABLE =
             "CREATE TABLE " + TABLE_NAME_TAGS + " (" +
                 COL_ID + " INTEGER PRIMARY KEY, " +
-                COL_PHOTOID + " INTEGER, " +
+                COL_PICTUREID + " INTEGER, " +
                 COL_NAME + " TEXT, " +
-                "FOREIGN KEY(" + COL_PHOTOID + ") REFERENCES " +
-                                                    TABLE_NAME_PHOTOS + "( " + COL_ID + "));";
+                "FOREIGN KEY(" + COL_PICTUREID + ") REFERENCES " +
+                                                    TABLE_NAME_PICTURES + "( " + COL_ID + "));";
 
     private static final String CREATE_TABLE_ALBUMSTABLE =
             "CREATE TABLE " + TABLE_NAME_ALBUMS + " (" +
@@ -104,8 +104,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     private void createTables(SQLiteDatabase db) {
 
-        db.execSQL(CREATE_TABLE_PHOTOSTABLE);
-        Log.d(logTag, TABLE_NAME_PHOTOS + " generated.");
+        db.execSQL(CREATE_TABLE_PICTURESTABLE);
+        Log.d(logTag, TABLE_NAME_PICTURES + " generated.");
 
         db.execSQL(CREATE_TABLE_ALBUMSTABLE);
         Log.d(logTag, TABLE_NAME_ALBUMS + " generated.");
@@ -122,8 +122,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
     private void dropTables(SQLiteDatabase db) {
 
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PHOTOS);
-        Log.d(logTag, TABLE_NAME_PHOTOS + " dropped.");
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_PICTURES);
+        Log.d(logTag, TABLE_NAME_PICTURES + " dropped.");
 
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ALBUMS);
         Log.d(logTag, TABLE_NAME_ALBUMS + " dropped.");
@@ -227,13 +227,13 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param id 		ID value of 
      * @return
      */
-    public int updatePhotoByID(Photo p, String tableName, int id) {
+    public int updatePhotoByID(Picture p, String tableName, int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         //add photo info to cv
-        cv.put(PHOTOS_COL_DATE, dateToString(p.getDate()));
-        cv.put(PHOTOS_COL_PATH, p.getPath());
+        cv.put(PICTURES_COL_DATE, dateToString(p.getDate()));
+        cv.put(PICTURES_COL_PATH, p.getPath());
         cv.put(COL_NAME, p.getName());
 
         int uVal = db.update(tableName, cv, COL_ID + "=" + id, null);
@@ -270,7 +270,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @return
      */
     private int selectPhotoIDByName (String name) {
-        return selectIDByName(name, TABLE_NAME_PHOTOS);
+        return selectIDByName(name, TABLE_NAME_PICTURES);
     }
     
     private int selectAlbumIDByName (String name) {
@@ -282,20 +282,20 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * Inserts a picture into the photos table and corresponding tags into the tag table.
      * @param p Picture object
      */
-    public void insertPhoto(Photo p) {
+    public void insertPicture(Picture p) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
         //add photo info to cv
-        cv.put(PHOTOS_COL_DATE, dateToString(p.getDate()));
-        cv.put(PHOTOS_COL_PATH, p.getPath());
+        cv.put(PICTURES_COL_DATE, dateToString(p.getDate()));
+        cv.put(PICTURES_COL_PATH, p.getPath());
         cv.put(COL_ALBUMID, selectAlbumIDByName(p.getAlbumName()));
         cv.put(COL_NAME, p.getName());
         Log.d(logTag, "ALBUM NAME OF THINGY THANG: " + p.getAlbumName());
 
         //insert photo into photo tables
-        long pid = db.insert(TABLE_NAME_PHOTOS, COL_ID, cv);
+        long pid = db.insert(TABLE_NAME_PICTURES, COL_ID, cv);
 
         //get newly inserted photo's id from photos table
         //int pid = selectPhotoIDByName(p.getName());
@@ -306,7 +306,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
             ContentValues tcv = new ContentValues();
             
             cv.put(COL_NAME, tag);
-            cv.put(COL_PHOTOID, pid);
+            cv.put(COL_PICTUREID, pid);
 
             //insert tag tuple into tags table
             db.insert(TABLE_NAME_TAGS, COL_ID, tcv);
@@ -358,7 +358,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     }
     
     public int getTotalPhotos() {
-    	Cursor c = performRawQuery("SELECT COUNT(*) AS numPhotos FROM " + TABLE_NAME_PHOTOS);
+    	Cursor c = performRawQuery("SELECT COUNT(*) AS numPhotos FROM " + TABLE_NAME_PICTURES);
     	
     	if (c == null) {
     		return 0;
@@ -387,8 +387,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     	
     	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPhotos" +
     						" FROM " + TABLE_NAME_TAGS + 
-    						" t LEFT JOIN " + TABLE_NAME_PHOTOS +
-    						" p ON (t." + COL_PHOTOID + " = p." + COL_ID + ")" + 
+    						" t LEFT JOIN " + TABLE_NAME_PICTURES +
+    						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
     						" GROUP BY t." + COL_NAME;
     	
     	Cursor c = performRawQuery(tagQuery);
@@ -416,7 +416,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         
         String getTags = "SELECT " + COL_NAME +
         					" FROM " + TABLE_NAME_TAGS +
-        					" WHERE " + COL_PHOTOID + " = '" + photoID + "'";
+        					" WHERE " + COL_PICTUREID + " = '" + photoID + "'";
         
         return selectTagsByQuery(getTags);
         
@@ -435,8 +435,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
             HashMap<String,String> map = new HashMap<String,String>();
             map.put("id", c.getString(c.getColumnIndex(COL_ID)));
             map.put("albumName", getAlbumNameOfPhoto(c.getInt(c.getColumnIndex(COL_ID))));
-            map.put("path", c.getString(c.getColumnIndex(PHOTOS_COL_PATH)));
-            map.put("date", c.getString(c.getColumnIndex(PHOTOS_COL_DATE)));
+            map.put("path", c.getString(c.getColumnIndex(PICTURES_COL_PATH)));
+            map.put("date", c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
             
             photos.add(map);
             
@@ -460,8 +460,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     
     public ArrayList<HashMap<String,String>> selectAllPhotos() {
     	return selectPhotosByQuery("SELECT * FROM " + 
-    								TABLE_NAME_PHOTOS + 
-    								" ORDER BY " + PHOTOS_COL_DATE);
+    								TABLE_NAME_PICTURES + 
+    								" ORDER BY " + PICTURES_COL_DATE);
     }
     
     /**TODO: selectPhotoByName
@@ -469,9 +469,9 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      * @param name
      * @return
      */
-    public Photo selectPhotoByID(int photoID) {
+    public Picture selectPictureByID(int photoID) {
     	Cursor c = performRawQuery("SELECT * FROM " +
-									TABLE_NAME_PHOTOS +
+									TABLE_NAME_PICTURES +
 									" WHERE " + COL_ID + " = '" + photoID + "'");
     	
     	if (c == null){
@@ -479,16 +479,16 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     	}
     	
 
-        String photoName = c.getString(c.getColumnIndex(COL_NAME));
-        String path = c.getString(c.getColumnIndex(PHOTOS_COL_PATH));
+        String pictureName = c.getString(c.getColumnIndex(COL_NAME));
+        String path = c.getString(c.getColumnIndex(PICTURES_COL_PATH));
         String albumName = getAlbumNameOfPhoto(c.getInt(c.getColumnIndex(COL_ID)));
-        Date date = stringToDate(c.getString(c.getColumnIndex(PHOTOS_COL_DATE)));
+        Date date = stringToDate(c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
                 
-        return new Photo(photoName, path, albumName, date, selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
+        return new Picture(pictureName, path, albumName, date, selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
     }
     
-    public void deletePhotoByID(int photoID) {
-    	deleteByID(photoID, TABLE_NAME_PHOTOS);
+    public void deletePhotoByID(int pictureID) {
+    	deleteByID(pictureID, TABLE_NAME_PICTURES);
     }
     
     public void deleteAlbumByName(String name) {
@@ -499,7 +499,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     	
     	String albumQuery = "SELECT a." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPhotos" +
     						" FROM " + TABLE_NAME_ALBUMS + 
-    						" a LEFT OUTER JOIN " + TABLE_NAME_PHOTOS +
+    						" a LEFT OUTER JOIN " + TABLE_NAME_PICTURES +
     						" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
     						" GROUP BY a." + COL_NAME;
     	
@@ -534,7 +534,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     public String getAlbumNameOfPhoto(int photoID) {
         
         Cursor c = performRawQuery("SELECT a." + COL_NAME + " AS " + COL_NAME +
-                                   " FROM " + TABLE_NAME_PHOTOS + " p LEFT JOIN " +
+                                   " FROM " + TABLE_NAME_PICTURES + " p LEFT JOIN " +
                                    TABLE_NAME_ALBUMS + " a ON (a." + COL_ID + " = p." +
                                    COL_ALBUMID + ")" + 
                                    " WHERE p." + COL_ID + " = " +
@@ -553,10 +553,10 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) {
     	int albumID = selectAlbumIDByName(albumName);
     	String query = "SELECT * FROM " + 
-    					TABLE_NAME_PHOTOS + 
+    					TABLE_NAME_PICTURES + 
     					" WHERE " + 
     					COL_ALBUMID + " = " + "'" + albumID + "'" + 
-    					" ORDER BY " + PHOTOS_COL_DATE;
+    					" ORDER BY " + PICTURES_COL_DATE;
     	return selectPhotosByQuery(query);
     }
     
@@ -568,11 +568,11 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
      */
     public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags) {
     	String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." + 
-    					PHOTOS_COL_PATH + " AS " + PHOTOS_COL_PATH + ", p." + 
-    					COL_ID + " AS " + COL_ID + ", p." + PHOTOS_COL_DATE + " AS " + 
-    					PHOTOS_COL_DATE + " FROM " + 
-    					TABLE_NAME_PHOTOS + " p LEFT JOIN " + 
-    					TABLE_NAME_TAGS + " t ON (p." + COL_ID + " = t." + COL_PHOTOID + ") " +
+    					PICTURES_COL_PATH + " AS " + PICTURES_COL_PATH + ", p." + 
+    					COL_ID + " AS " + COL_ID + ", p." + PICTURES_COL_DATE + " AS " + 
+    					PICTURES_COL_DATE + " FROM " + 
+    					TABLE_NAME_PICTURES + " p LEFT JOIN " + 
+    					TABLE_NAME_TAGS + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
     					"WHERE ";
     	boolean loopedOnce = false;
     	for (String tag : tags) {
@@ -583,7 +583,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     		query += "t." + COL_NAME + " = '" + tag + "'";
     	}
     	query += " GROUP BY p." + COL_ID +
-    			" ORDER BY COUNT(*), " + PHOTOS_COL_DATE;
+    			" ORDER BY COUNT(*), " + PICTURES_COL_DATE;
     	return selectPhotosByQuery(query);
     }
 

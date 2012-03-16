@@ -8,7 +8,7 @@ import java.util.HashMap;
 import android.content.Context;
 
 import com.cs301w01.meatload.model.DBManager;
-import com.cs301w01.meatload.model.Photo;
+import com.cs301w01.meatload.model.Picture;
 
 /**
  * Mediates between the GalleryActivity and the DBManager by creating HashMaps of pictures to be
@@ -62,12 +62,12 @@ public class GalleryManager implements FController, Serializable {
     	this.context = context;
     }
     
-    public void storePhoto(Photo picture) {
-    	new DBManager(context).insertPhoto(picture);
+    public void storePhoto(Picture picture) {
+    	new DBManager(context).insertPicture(picture);
     }
     
-    public Photo getPhoto(int pid) {
-    	return new DBManager(context).selectPhotoByID(pid);
+    public Picture getPhoto(int pid) {
+    	return new DBManager(context).selectPictureByID(pid);
     }
     
     /**

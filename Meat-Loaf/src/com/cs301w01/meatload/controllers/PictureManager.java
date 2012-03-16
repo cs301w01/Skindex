@@ -17,41 +17,41 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.cs301w01.meatload.model.DBManager;
-import com.cs301w01.meatload.model.Photo;
+import com.cs301w01.meatload.model.Picture;
 
 /**
  * Implements Controller logic for Picture objects.
  * @author Isaac Matichuk
  */
-public class PhotoManager implements FController, Serializable {
+public class PictureManager implements FController, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	Context context;
-	Photo photo;
+	Picture photo;
 	String albumName;
 	int photoID;
 	private Bitmap imgOnDisplay;
 	
-	public PhotoManager(Context context, String albumName) {
+	public PictureManager(Context context, String albumName) {
 		//dbMan = new DBManager(context);
 		this.albumName = albumName;
 	}
 	
-    public PhotoManager(Context context, Photo photo) {
+    public PictureManager(Context context, Picture photo) {
     	//dbMan = new DBManager(context);
     	this.photo = photo;
     }
     
-    public PhotoManager(Context context) {
+    public PictureManager(Context context) {
     	//dbMan = new DBManager(context);
     	this.photo = null;
     }
     
-    public PhotoManager(int pid) {
+    public PictureManager(int pid) {
     	photoID = pid;
     }
     
-    public PhotoManager(String albumName) {
+    public PictureManager(String albumName) {
     	this.albumName = albumName;
     }
     
@@ -80,7 +80,7 @@ public class PhotoManager implements FController, Serializable {
     		imgOnDisplay.compress(Bitmap.CompressFormat.PNG, 100, outStream);
     		outStream.flush();
     		outStream.close();
-    		savePhoto(fpath + fname, cal.getTime());
+    		savePicture(fpath + fname, cal.getTime());
     		Log.d("SAVE", "Saving " + fpath + fname);
         } catch (IOException e) {
         	Log.d("ERROR", "Unable to write " + fpath + fname);
@@ -129,12 +129,12 @@ public class PhotoManager implements FController, Serializable {
         return imgOnDisplay;
     }
     
-    private void savePhoto(String fpath, Date date) {
+    private void savePicture(String fpath, Date date) {
     	DBManager dbMan = new DBManager(context);
-    	dbMan.insertPhoto(new Photo("", fpath, albumName, date, new ArrayList<String>()));
+    	dbMan.insertPicture(new Picture("", fpath, albumName, date, new ArrayList<String>()));
     }
     
-    public Photo getPhoto() {
-    	return new DBManager(context).selectPhotoByID(photoID);
+    public Picture getPicture() {
+    	return new DBManager(context).selectPictureByID(photoID);
     }
 }

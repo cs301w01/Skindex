@@ -8,7 +8,7 @@ import java.util.Date;
  * classes.
  * @author Derek Dowling
  */
-public class Photo {
+public class Picture {
     
     private String name;
     private String albumName;
@@ -16,7 +16,7 @@ public class Photo {
     private Date date;
     private Collection<String> tags;
     
-    public Photo(String name, String path, String album, Date date, Collection<String> tags) {
+    public Picture(String name, String path, String album, Date date, Collection<String> tags) {
         this.name = name;
         this.albumName = album;
         this.path = path;

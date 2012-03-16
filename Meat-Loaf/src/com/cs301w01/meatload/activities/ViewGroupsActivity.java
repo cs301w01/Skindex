@@ -7,7 +7,7 @@ import java.util.HashMap;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.controllers.PhotoManager;
+import com.cs301w01.meatload.controllers.PictureManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -125,7 +125,7 @@ public class ViewGroupsActivity extends Skindactivity {
     private void switchToTakePicture(String album) {
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-    	PhotoManager pMan = new PhotoManager(album);
+    	PictureManager pMan = new PictureManager(album);
     	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 

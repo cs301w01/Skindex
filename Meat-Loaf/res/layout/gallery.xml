@@ -12,7 +12,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ListView
-        android:id="@+id/photoListView"
+        android:id="@+id/pictureListView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.50" >

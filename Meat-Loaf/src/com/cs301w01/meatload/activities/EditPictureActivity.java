@@ -1,8 +1,8 @@
 package com.cs301w01.meatload.activities;
 
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.controllers.PhotoManager;
-import com.cs301w01.meatload.model.Photo;
+import com.cs301w01.meatload.controllers.PictureManager;
+import com.cs301w01.meatload.model.Picture;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -21,7 +21,7 @@ import android.widget.TextView;
  */
 public class EditPictureActivity extends Skindactivity {
 
-	PhotoManager pictureManager;
+	PictureManager pictureManager;
 	
 	@Override
 	public void update(Object model) {
@@ -34,9 +34,9 @@ public class EditPictureActivity extends Skindactivity {
 		setContentView(R.layout.edit_picture);
 		
 		// Get picture object from Intent's extras bundle
-		pictureManager = (PhotoManager) getIntent().getExtras().getSerializable("manager");
+		pictureManager = (PictureManager) getIntent().getExtras().getSerializable("manager");
 		pictureManager.setContext(this);
-		Photo picture = pictureManager.getPhoto();
+		Picture picture = pictureManager.getPicture();
 		
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
