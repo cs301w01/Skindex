@@ -2,6 +2,7 @@ package com.cs301w01.meatload.test;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.database.Cursor;
 import android.test.AndroidTestCase;
 import com.cs301w01.meatload.*;
 import com.cs301w01.meatload.model.DBManager;
+import com.cs301w01.meatload.model.Picture;
 
 public class DBManagerTest extends AndroidTestCase {
 	DBManager mClassToTest;
@@ -147,31 +149,44 @@ public class DBManagerTest extends AndroidTestCase {
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize + 1);
 	}
 	
-	/*
-	IMPLEMENT THESE TESTS
-	public void resetDB()
-	public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1)
-	public int updatePhotoByID(Photo p, String tableName, int id)
-	public void insertPhoto(Photo p)
-	public int getTotalPhotos()
-	public Collection<Tag> selectAllTags() 
-	public Collection<String> selectPhotoTags(int photoID)
-	public ArrayList<HashMap<String,String>> selectAllPhotos()
-	public Photo selectPhotoByID(int photoID)
-	public void deletePhotoByID(int photoID)
-	public String getAlbumNameOfPhoto(int photoID) 
-	public ArrayList<HashMap<String, String>> selectPhotosFromAlbum(String albumName) 
-	public ArrayList<HashMap<String, String>> selectPhotosByTag(Collection<String> tags)
-	public String dateToString(Date date)
-	public Date stringToDate(String date)
-	public String stringJoin(Collection<String> strings, String delimiter)
+	//Call resetDB, verify empty
+	public void testResetDB(){
+		mClassToTest.resetDB();
+		assertEquals(mClassToTest.selectAllAlbums().size(), 0);
+	}
+
+	//Call resetDB on empty database, verify
+	public void testResetEmptyDB(){
+		mClassToTest.resetDB();
+		mClassToTest.resetDB();
+		assertEquals(mClassToTest.selectAllAlbums().size(), 0);
+	}
 	
-	THESE ARE TESTED
-	public void insertAlbum(String albumName, Collection<String> tags)
-	public ArrayList<HashMap<String,String>> selectAllAlbums()
-	public void deleteAlbumByName(String name)
-	*/
+	//Insert Picture with an existing album name
+	public void testInsertPicture(){
+		int num = mClassToTest.getTotalPhotos();
+		mClassToTest.insertPicture(new Picture("Pic1", "thisIsAPathYo", "Album 1", new Date(), new ArrayList<String>()));
+		assertEquals(mClassToTest.getTotalPhotos(), num+1);
+		
+	}
 	
+	//Insert Picture with a non existing album name
+	public void testInsertNonAlbumPicture(){
+		int num = mClassToTest.getTotalPhotos();
+		mClassToTest.insertPicture(new Picture("Pic1", "thisIsAPathYo", "fubar", new Date(), new ArrayList<String>()));
+		assertEquals(mClassToTest.getTotalPhotos(), num);
+	}
+	
+	//Get total photos on an empty DB
+	public void testGetTotalPhotosEmpty(){
+		mClassToTest.resetDB();
+		assertEquals(mClassToTest.getTotalPhotos(), 0);
+	}
+	
+	//Get total photos on test DB
+	public void testGetTotalPhotosTestDB(){
+		assertEquals(mClassToTest.getTotalPhotos(), 1);
+	}
 	
 	
 	public void populateDB1(){
