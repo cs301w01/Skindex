@@ -77,7 +77,6 @@ public class TakePictureActivity extends Skindactivity {
     
     private void takePicture(){
     	
-        photoManager.takePicture(getFilesDir());
       //Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -86,7 +85,8 @@ public class TakePictureActivity extends Skindactivity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 		public void onClick(DialogInterface dialog, int whichButton) {
-			  
+	        photoManager.takePicture(getFilesDir());
+			  finish();
 		  }
 		});
 

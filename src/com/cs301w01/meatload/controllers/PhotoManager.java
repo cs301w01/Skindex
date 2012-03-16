@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -61,6 +62,10 @@ public class PhotoManager implements FController, Serializable{
     	photoID = pid;
     }
     
+    public PhotoManager(String albumName){
+    	this.albumName = albumName;
+    }
+    
     //take imgOnDisplay, save it to file, do all DB mumbo jumbo
     //http://stackoverflow.com/questions/649154/android-bitmap-save-to-location
     public void takePicture(File path){
@@ -78,6 +83,7 @@ public class PhotoManager implements FController, Serializable{
     		imgOnDisplay.compress(Bitmap.CompressFormat.PNG, 100, outStream);
     		outStream.flush();
     		outStream.close();
+    		savePhoto(fpath + fname, cal.getTime());
     		Log.d("SAVE", "Saving " + fpath + fname);
         }
         catch(IOException e){
@@ -127,6 +133,11 @@ public class PhotoManager implements FController, Serializable{
         imgOnDisplay = Bitmap.createBitmap(colors, width, height, Bitmap.Config.RGB_565);
 
         return imgOnDisplay;
+    }
+    
+    private void savePhoto(String fpath, Date date){
+    	DBManager dbMan = new DBManager();
+    	dbMan.insertPhoto(new Photo("", fpath, albumName, date, new ArrayList<String>()));
     }
     
     public Photo getPhoto(){

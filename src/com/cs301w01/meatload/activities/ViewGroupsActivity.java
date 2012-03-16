@@ -129,7 +129,7 @@ public class ViewGroupsActivity extends Skindactivity {
     private void switchToTakePicture(String album){
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-    	PhotoManager pMan = new PhotoManager(this, album);
+    	PhotoManager pMan = new PhotoManager(album);
     	myIntent.putExtra("manager", pMan);
     	
     	startActivity(myIntent); 

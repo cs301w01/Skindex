@@ -8,12 +8,15 @@ import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.PhotoManager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class GalleryActivity extends Skindactivity {
 	
@@ -59,13 +62,15 @@ public class GalleryActivity extends Skindactivity {
 			}
 		});
         
-        /**TODO
-         * we should add all the other listeners here.
-         */
-        
-        /**TODO
-         * should we call update here... we probably want to update the screen right away
-         */
+        photoListView.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                int position, long id) {
+             HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
+             String clickedPhoto = temp.get("id");
+             openPhoto(new Integer(clickedPhoto));
+            }
+        }
+        );
     }
     
     @Override
@@ -93,6 +98,29 @@ public class GalleryActivity extends Skindactivity {
     }
     
     private void takePicture(){
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+    	PhotoManager pMan = new PhotoManager(galleryManager.getAlbumName());
+    	myIntent.putExtra("manager", pMan);
     	
+    	startActivity(myIntent); 
+    }
+    
+    private void switchToTakePicture(String album){
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+    	PhotoManager pMan = new PhotoManager(this, album);
+    	myIntent.putExtra("manager", pMan);
+    	
+    	startActivity(myIntent); 
+    }
+    
+    private void openPhoto(int photoID){
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.EditPictureActivity");
+    	PhotoManager pMan = new PhotoManager(photoID);
+    	myIntent.putExtra("manager", pMan);
+    	
+    	startActivity(myIntent); 
     }
 }
