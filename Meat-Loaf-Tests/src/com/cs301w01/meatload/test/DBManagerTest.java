@@ -145,22 +145,50 @@ public class DBManagerTest extends AndroidTestCase {
 	//deleteAlbum name not in database
 	public void testDeleteNonExistingAlbum(){
 		int oldSize = mClassToTest.selectAllAlbums().size();
-		mClassToTest.deleteAlbumByName("ThisNameDoesNotExist");
-		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
+		
+		boolean deleted = true;
+		
+		try {
+			
+			mClassToTest.deleteAlbumByName("ThisNameDoesNotExist");
+		
+		} catch(NullPointerException e) {
+			
+			deleted = false;
+			
+		}
+			assertFalse(deleted);
+			assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
 	}
 	
-	//deleteAlbum name == null
-	public void testDeleteAlbumNull(){
-		int oldSize = mClassToTest.selectAllAlbums().size();
-		mClassToTest.deleteAlbumByName(null);
-		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
-	}
+//	//deleteAlbum name == null
+//	public void testDeleteAlbumNull(){
+//		int oldSize = mClassToTest.selectAllAlbums().size();
+//		mClassToTest.deleteAlbumByName(null);
+//		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
+//	}
 	
 	//delete same album twice
 	public void testDeleteAlbumTwice(){
 		int oldSize = mClassToTest.selectAllAlbums().size();
+		
+		mClassToTest.insertAlbum("DeleteOnce", new ArrayList<String>());		
 		mClassToTest.deleteAlbumByName("DeleteOnce");
-		mClassToTest.deleteAlbumByName("DeleteOnce");
+		
+		boolean failed = true;
+		
+		try {
+			
+			mClassToTest.deleteAlbumByName("DeleteOnce");
+			failed = false;
+			
+		} catch(NullPointerException e) {
+			
+			failed = true;
+			
+		}
+		
+		assertTrue(failed);
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize - 1);
 	}
 	
