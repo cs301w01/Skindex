@@ -1,9 +1,7 @@
 package com.cs301w01.meatload.model;
 
 /**
- * <b>Tag</b>
- * <p>
- * Currently not implemented
+ * @deprecated
  */
 public class Tag {
     

@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.cs301w01.meatload.model.DBManager;
-import com.cs301w01.meatload.model.Tag;
 
 /**
  * Mediates between DBManager and Skindex by providing lists of Albums and Tags.
@@ -24,7 +23,7 @@ public class MainManager implements FController {
     /**
      * Creates and invokes an instance of the DBManager class to return HashMaps corresponding to
      * the table of albums in the database.  
-     * @return albums
+     * @return All albums as ArrayList of HashMaps
      */
     public ArrayList<HashMap<String, String>> getAllAlbums() {
     	DBManager dbMan = new DBManager();
@@ -37,8 +36,12 @@ public class MainManager implements FController {
     	return albums;
     }
     
-    public Collection<Tag> getAllTags() {
-    	return new DBManager().selectAllTags();
+    /**
+     * @deprecated
+     * @return ArrayList of HashMaps containing tags as Strings
+     */
+    public ArrayList<HashMap<String, String>> getAllTags() {
+    	return null;
     }
     
     public void addAlbum(String albumName, Collection<String> tags) {

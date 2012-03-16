@@ -17,6 +17,7 @@ import android.widget.TextView;
  * Gives the user an exploded view of the picture being edited. 
  * <p>
  * Allows user to change certain metadata such as tags and album.
+ * @author Blake Bouchard
  */
 public class EditPictureActivity extends Skindactivity {
 
