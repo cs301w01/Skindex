@@ -85,7 +85,7 @@ public class GalleryManager implements FController, Serializable {
     }
     
     public void deletePhoto(int pid) {
-    	new DBManager(context).deletePhotoByID(pid);
+    	new DBManager(context).deletePictureByID(pid);
     }
     
     public void deleteAlbum(String name) {
