@@ -27,6 +27,20 @@
     </EditText>
 
     <TextView
+        android:id="@+id/text_num_pics_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_num_pics"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/text_num_pics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
         android:id="@+id/text_date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

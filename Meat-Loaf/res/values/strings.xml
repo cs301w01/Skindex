@@ -18,4 +18,5 @@
     <string name="button_save_album">Save Album</string>
     <string name="button_delete_album">Delete Album</string>
     <string name="albumName">Album Name</string>
+    <string name="label_num_pics">Number of Pictures</string>
 </resources>
