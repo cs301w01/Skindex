@@ -14,4 +14,8 @@
     <string name="changeAlbumButton">Change...</string>
     <string name="button_search">Search</string>
     <string name="button_edit_album">Edit Album</string>
+    <string name="button_edit_tags">Edit Tags</string>
+    <string name="button_save_album">Save Album</string>
+    <string name="button_delete_album">Delete Album</string>
+    <string name="albumName">Album Name</string>
 </resources>

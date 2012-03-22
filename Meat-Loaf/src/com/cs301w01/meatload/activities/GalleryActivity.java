@@ -53,7 +53,7 @@ public class GalleryActivity extends Skindactivity {
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				setResult(RESULT_OK);
-				editAlbum();
+				editAlbum(galleryManager);
 			}
 		});
         final Button takePictureButton = (Button) findViewById(R.id.takePic);
@@ -96,8 +96,18 @@ public class GalleryActivity extends Skindactivity {
 		pictureListView.setAdapter(adapter);
     }
     
-    private void editAlbum() {
+    private void editAlbum(GalleryManager gm) {
+    	//Launch the EditAlbumActivity with a given GalleryManager
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", 
+    			"com.cs301w01.meatload.activities.EditAlbumActivity");
+    	Log.d("derp", "EDITING ALBUM, NAME:" + galleryManager.getAlbumName());
     	
+    	//NEED TO SET TAGS AS WELL!
+    	
+    	myIntent.putExtra("albumName", galleryManager.getAlbumName());
+    	
+    	startActivity(myIntent); 
     }
     
     /**
@@ -107,12 +117,14 @@ public class GalleryActivity extends Skindactivity {
      */
     private void takePicture() {
     	Intent myIntent = new Intent();
+    	
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.TakePictureActivity");
     	Log.d("derp", "ALBUM NAME:" + galleryManager.getAlbumName());
     	// TODO: Should not care about albumName if galleryManager is based off of tags or "all"
     	PictureManager pMan = new PictureManager(galleryManager.getAlbumName());
     	myIntent.putExtra("manager", pMan);
+
     	
     	startActivity(myIntent); 
     }
