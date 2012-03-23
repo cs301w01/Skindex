@@ -152,7 +152,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         dropTables(db);
         createTables(db);
         
-        db.close();
+        //TODO: test db.close();
         
         Log.d(logTag, "TABLES RESET.");
 
@@ -187,7 +187,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
         mCursor.moveToFirst();
 
-        db.close();
+        //TODO: test db.close();
         
         return mCursor;
 
@@ -301,7 +301,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         cv.put(PICTURES_COL_PATH, p.getPath());
         cv.put(COL_ALBUMID, selectAlbumIDByName(p.getAlbumName()));
         cv.put(COL_NAME, p.getName());
-        Log.d(logTag, "ALBUM NAME OF THINGY THANG: " + p.getAlbumName());
+        Log.d(logTag, "ALBUM NAME OF Picture: " + p.getAlbumName());
 
         //insert picture into picture tables
         long pid = db.insert(TABLE_NAME_PICTURES, COL_ID, cv);
@@ -653,7 +653,7 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         }
         c.moveToFirst();
 
-        db.close();
+        //TODO: test db.close();
         
         return c;
 
