@@ -60,7 +60,6 @@ public class EditPictureActivity extends Skindactivity {
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
         
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
                 openSendEmailActivity();
             }
