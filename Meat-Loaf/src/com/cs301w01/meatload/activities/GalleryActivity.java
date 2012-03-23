@@ -42,12 +42,19 @@ public class GalleryActivity extends Skindactivity {
         Bundle b = getIntent().getExtras();
         galleryManager = (GalleryManager) b.getSerializable("manager");
         galleryManager.setContext(this);
-        
-        TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
-        albumTitle.setText(galleryManager.getTitle());
-        
+                
+        populateTextFields(galleryManager.getTitle());
+        createListeners();
         refreshScreen();
         
+    }
+    
+    protected void populateTextFields(String title){
+        TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
+        albumTitle.setText(title);
+    }
+    
+    protected void createListeners(){
         // TODO: Map objects created as variables to real objects in the XML R.layout.main
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
