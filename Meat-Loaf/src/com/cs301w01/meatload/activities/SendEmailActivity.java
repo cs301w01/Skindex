@@ -39,7 +39,6 @@ public class SendEmailActivity extends Skindactivity {
         //handle logic for when user chooses to send an email
         sendButton.setOnClickListener(new View.OnClickListener() {
 
-            @Override
             public void onClick(View v) {
 
                 String recipient = textTo.getText().toString();
