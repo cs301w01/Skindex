@@ -23,6 +23,7 @@
         <activity android:name=".activities.TakePictureActivity"></activity>
         <activity android:name=".activities.ViewAlbumsActivity"></activity>
         <activity android:name=".activities.ViewTagsActivity"></activity>
+        <activity android:name=".activities.SendEmailActivity"></activity>
 
     </application>
 </manifest> 

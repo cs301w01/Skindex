@@ -1,5 +1,7 @@
 package com.cs301w01.meatload.activities;
 
+import android.content.Intent;
+import android.view.View;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.Picture;
@@ -54,12 +56,31 @@ public class EditPictureActivity extends Skindactivity {
 		// TODO: Add Change Album functionality to EditPicture
 		
 		// TODO: Add Edit Tags functionality to EditPicture
+        
+        Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
+        
+        sendEmailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSendEmailActivity();
+            }
+        });
 	}
 	
 	@Override
     protected void onResume() {
     	super.onResume();
     	pictureManager.setContext(this);
+    }
+    
+    private void openSendEmailActivity() {
+        
+        Intent sendEmail = new Intent();
+        sendEmail.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.SendEmailActivity");
+        //sendEmail.putExtra("picture", pictureManager.getPicture());
+        
+        startActivity(sendEmail);
+
     }
     
 }

@@ -88,10 +88,15 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
     public DBManager(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
         myContext = context;
+
+        //uncomment if any changes have been made to tables to reset
+        //resetDB();
+
     }
     
     public DBManager() {
     	super(myContext, DB_NAME, null, DATABASE_VERSION);
+
     }
 
     @Override
@@ -147,6 +152,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         dropTables(db);
         createTables(db);
         
+        db.close();
+        
         Log.d(logTag, "TABLES RESET.");
 
     }
@@ -180,6 +187,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
 
         mCursor.moveToFirst();
 
+        db.close();
+        
         return mCursor;
 
     }
@@ -644,6 +653,8 @@ public class DBManager extends SQLiteOpenHelper implements Serializable {
         }
         c.moveToFirst();
 
+        db.close();
+        
         return c;
 
     }

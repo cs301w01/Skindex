@@ -68,6 +68,9 @@ public class TakePictureActivity extends Skindactivity {
      	http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog</a>
      */
     private void takePicture() {
+
+        //TODO: Add album association, and null album checking
+
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Confirm");
