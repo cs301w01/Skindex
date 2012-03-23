@@ -40,23 +40,39 @@ public class EditPictureActivity extends Skindactivity {
 		pictureManager.setContext(this);
 		Picture picture = pictureManager.getPicture();
 		
+		populateTextFields(picture.getAlbumName(),
+						   picture.getDate().toString(),
+						   picture.getPath());
+		createListeners();
+	}
+	
+	@Override
+    protected void onResume() {
+    	super.onResume();
+    	pictureManager.setContext(this);
+    }
+	
+	
+	//Fills the text and image fields on the screen with a current picture
+	protected void populateTextFields(String albumName, String date, String path){
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
-		pictureView.setImageDrawable(Drawable.createFromPath(picture.getPath()));
+		pictureView.setImageDrawable(Drawable.createFromPath(path));
 		
 		// Set dateView to toString representation of Date in Picture object
 		TextView dateView = (TextView) findViewById(R.id.dateView);
-		dateView.setText(picture.getDate().toString());
+		dateView.setText(date);
 		
 		// Set albumView to string representation of Album in Picture object
 		TextView albumView = (TextView) findViewById(R.id.albumView);
-		albumView.setText(picture.getAlbumName());
-		
+		albumView.setText(albumName);
+	}
+	
+	protected void createListeners(){
 		Button changeAlbumButton = (Button) findViewById(R.id.changeAlbumButton);
 		// TODO: Add Change Album functionality to EditPicture
 		
 		// TODO: Add Edit Tags functionality to EditPicture
-        
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
         
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -65,12 +81,6 @@ public class EditPictureActivity extends Skindactivity {
             }
         });
 	}
-	
-	@Override
-    protected void onResume() {
-    	super.onResume();
-    	pictureManager.setContext(this);
-    }
     
     private void openSendEmailActivity() {
         
