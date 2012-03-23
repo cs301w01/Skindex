@@ -27,18 +27,13 @@ import android.widget.AdapterView.OnItemClickListener;
  */
 public class ViewAlbumsActivity extends Skindactivity {
 	
+	//TODO: Can these be moved inside a method?
 	private MainManager mainManager;
 	ListView albumListView;
 	SimpleAdapter adapter;
 	
 	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 	private String[] adapterCols = { "name", "numPictures" };
-
-    //@Override
-    public void update(Object model) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    	refreshScreen();
-    }
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +41,25 @@ public class ViewAlbumsActivity extends Skindactivity {
         mainManager = new MainManager();
         
         refreshScreen();
+        createListeners();
         
-      //on click listener 
+    }
+    
+    //@Override
+    public void update(Object model) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    	refreshScreen();
+    }
+    
+    @Override
+    protected void onResume(){
+    	super.onResume();
+    	refreshScreen();
+    	mainManager.setContext(this);
+    }
+    
+    protected void createListeners(){
+        //on click listener 
     	final Button takePicButton = (Button) findViewById(R.id.takePic);
     	takePicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -76,13 +88,6 @@ public class ViewAlbumsActivity extends Skindactivity {
              openGalleryFromAlbum(clickedName);
             }
         });
-    }
-    
-    @Override
-    protected void onResume(){
-    	super.onResume();
-    	refreshScreen();
-    	mainManager.setContext(this);
     }
     
     public void refreshScreen(){

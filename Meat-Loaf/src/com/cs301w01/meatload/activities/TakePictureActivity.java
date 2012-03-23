@@ -16,22 +16,32 @@ import android.widget.ImageView;
  * @author Joel Burford
  */
 public class TakePictureActivity extends Skindactivity {
+	
+	//TODO: can we move imgOnDisplay into the methods?  It would be nice
+	//if it weren't a global variable
 	private Bitmap imgOnDisplay;
 	
 	private PictureManager photoManager;
 	
 	public void onCreate(Bundle savedInstanceState) {
+		Bitmap img;////
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.take_picture);
 	    
 	    Bundle b = getIntent().getExtras();
         photoManager = (PictureManager) b.getSerializable("manager");
         photoManager.setContext(this);
-	    
 	    imgOnDisplay = photoManager.generatePicture();
+	    populateFields(imgOnDisplay);
+	    createListeners(imgOnDisplay);
+	}
+	
+	protected void populateFields(Bitmap pic){
     	ImageView image = (ImageView) findViewById(R.id.imgDisplay);
-    	image.setImageBitmap(imgOnDisplay);
-	    
+    	image.setImageBitmap(pic);
+	}
+	
+	protected void createListeners(Bitmap pic){
 	    //Take Picture button listener
         final Button takePicButton = (Button) findViewById(R.id.takePic);
         takePicButton.setOnClickListener(new View.OnClickListener() {
@@ -49,8 +59,7 @@ public class TakePictureActivity extends Skindactivity {
             	imgOnDisplay = photoManager.generatePicture();
             	
             	//used http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android
-            	ImageView image = (ImageView) findViewById(R.id.imgDisplay);
-            	image.setImageBitmap(imgOnDisplay);
+            	populateFields(imgOnDisplay);
             }
         });
 	}
