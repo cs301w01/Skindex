@@ -100,8 +100,9 @@ public abstract class QueryGenerator {
         Cursor mCursor =
                 db.query(true, tableName, selectColumns, COL_ID + " = " + idValue, 
                 		null, null, null, null, null);
-        if (mCursor != null) {
-            mCursor.moveToFirst();
+        
+        if (mCursor.getCount() == 0) {
+            return null;
         }
 
         mCursor.moveToFirst();

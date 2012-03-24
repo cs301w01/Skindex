@@ -1,5 +1,6 @@
 package com.cs301w01.meatload.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
@@ -8,11 +9,12 @@ import java.util.Date;
  * classes.
  * @author Derek Dowling
  */
-public class Picture {
+public class Picture implements Serializable {
     
     private String name;
     private String albumName;
     private String path;
+    private int id;
     private Date date;
     private Collection<String> tags;
     
@@ -22,6 +24,16 @@ public class Picture {
         this.path = path;
         this.date = date;
         this.tags = tags;
+    }
+
+    public int getPictureID() {
+
+        return this.id;
+
+    }
+
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getName() {

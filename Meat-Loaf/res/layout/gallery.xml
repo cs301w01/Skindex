@@ -11,12 +11,18 @@
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <ListView
-        android:id="@+id/pictureListView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.50" >
-    </ListView>
+    <!--<ListView-->
+        <!--android:id="@+id/pictureListView"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="0.50" >-->
+    <!--</ListView>-->
+
+    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"
+             android:id="@+id/gallery"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+            />
 
     <LinearLayout
         android:id="@+id/linearLayout1"

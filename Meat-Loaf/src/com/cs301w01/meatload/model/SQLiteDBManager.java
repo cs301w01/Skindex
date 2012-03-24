@@ -148,24 +148,51 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
     }
 
 	public Cursor query(boolean b, String tableName, String[] selectColumns,
-			String string, Object object, Object object2, Object object3,
-			Object object4, Object object5) {
-		
-		return this.query(b, tableName, selectColumns, string, object, 
-									object2, object3, object4, object5);
+			String string, String selectionArgs[], String object2, String object3,
+			String object4, String object5) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor c = db.query(b, tableName, selectColumns, string, selectionArgs,
+                object2, object3, object4, object5);
+
+        Log.d(logTag, "Query Executed On " + tableName + "Selecting, " + selectColumns.toString());
+        
+        if (c.getCount() == 0) {
+
+            db.close();
+
+            return null;
+        }
+
+        c.moveToFirst();
+
+        db.close();
+
+		return c;
 		
 	}
 
-	public int update(String tableName, ContentValues cv, String string,
-			Object object) {
-		
-		return this.update(tableName, cv, string, object);
+	public int update(String tableName, ContentValues cv, String whereClause,
+			String whereArgs[]) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int id = db.update(tableName, cv, whereClause, whereArgs);
+
+        db.close();
+
+		return id;
 		
 	}
 
 	public long insert(String tableName, String colId, ContentValues cv) {
-		
-		return this.insert(tableName, colId, cv);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long id = db.insert(tableName, colId, cv);
+        
+		return id;
 		
 	}
 

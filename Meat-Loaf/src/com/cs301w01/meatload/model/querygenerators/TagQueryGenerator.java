@@ -11,7 +11,7 @@ import android.database.Cursor;
 public class TagQueryGenerator extends QueryGenerator{
 	
 	 //vars for tags table
-    private static final String TABLE_NAME = "tags";
+    public static final String TABLE_NAME = "tags";
 
     private static final String CREATE_TABLE_QUERY =
         "CREATE TABLE " + TABLE_NAME + " (" +
@@ -19,7 +19,7 @@ public class TagQueryGenerator extends QueryGenerator{
             COL_PICTUREID + " INTEGER, " +
             COL_NAME + " TEXT, " +
             "FOREIGN KEY(" + COL_PICTUREID + ") REFERENCES " +
-                                                PictureQueryGenerator.getTableName() + "( " + COL_ID + "));";
+                                                PictureQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
     
     public TagQueryGenerator(Context context) {
 		super(context);
@@ -50,7 +50,7 @@ public class TagQueryGenerator extends QueryGenerator{
     public Collection<String> selectPictureTags(int pictureID) {
         
         String getTags = "SELECT " + COL_NAME +
-        					" FROM " + TagQueryGenerator.getTableName() +
+        					" FROM " + TagQueryGenerator.TABLE_NAME +
         					" WHERE " + COL_PICTUREID + " = '" + pictureID + "'";
         
         return selectTagsByQuery(getTags);
@@ -61,7 +61,7 @@ public class TagQueryGenerator extends QueryGenerator{
     	
     	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" +
     						" FROM " + TABLE_NAME + 
-    						" t LEFT JOIN " + PictureQueryGenerator.getTableName() +
+    						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
     						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
     						" GROUP BY t." + COL_NAME;
     	

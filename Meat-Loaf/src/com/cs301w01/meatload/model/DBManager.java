@@ -8,11 +8,11 @@ public interface DBManager {
 	public Cursor performRawQuery(String query);
 
 	public Cursor query(boolean b, String tableName, String[] selectColumns,
-			String string, Object object, Object object2, Object object3,
-			Object object4, Object object5);
+                        String string, String selectionArgs[], String object2, String object3,
+                        String object4, String object5);
 
-	public int update(String tableName, ContentValues cv, String string,
-			Object object);
+	public int update(String tableName, ContentValues cv, String whereClause,
+                      String whereArgs[]);
 
 	public long insert(String tableName, String colId, ContentValues cv);
 

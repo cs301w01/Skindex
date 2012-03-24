@@ -1,15 +1,17 @@
 package com.cs301w01.meatload.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * 
  */
-public class Album {
+public class Album implements Serializable {
     
     private String name;
     private int numPhotos;
+    private int id;
     private Collection<Picture> pictures;
     
     public Album(String name, int numPhotos, Collection<Picture> pictures){
@@ -38,7 +40,7 @@ public class Album {
     	
     	Collection<String> tags = new ArrayList<String>();
     	
-    	//TODO: get all tags that are associated with the album
+
     	
     	return tags;
     	

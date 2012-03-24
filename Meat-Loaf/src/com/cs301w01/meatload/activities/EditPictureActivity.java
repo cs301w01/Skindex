@@ -23,8 +23,9 @@ import android.widget.TextView;
  */
 public class EditPictureActivity extends Skindactivity {
 
-	PictureManager pictureManager;
-	
+	private PictureManager pictureManager;
+	private Picture picture;
+
 	@Override
 	public void update(Object model) {
 		
@@ -36,13 +37,13 @@ public class EditPictureActivity extends Skindactivity {
 		setContentView(R.layout.edit_picture);
 		
 		// Get picture object from Intent's extras bundle
-		pictureManager = (PictureManager) getIntent().getExtras().getSerializable("manager");
-		pictureManager.setContext(this);
-		Picture picture = pictureManager.getPicture();
-		
+		picture = (Picture) getIntent().getExtras().getSerializable("picture");
+        pictureManager = new PictureManager(this, picture);
+
 		populateTextFields(picture.getAlbumName(),
-						   picture.getDate().toString(),
-						   picture.getPath());
+                picture.getDate().toString(),
+                picture.getPath());
+
 		createListeners();
 	}
 	

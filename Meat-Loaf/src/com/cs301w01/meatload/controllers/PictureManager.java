@@ -34,17 +34,14 @@ public class PictureManager implements FController{
 	private Bitmap imgOnDisplay;
 	
 	public PictureManager(Context context, String albumName) {
-		//dbMan = new DBManager(context);
 		this.albumName = albumName;
 	}
 	
     public PictureManager(Context context, Picture photo) {
-    	//dbMan = new DBManager(context);
     	this.photo = photo;
     }
     
     public PictureManager(Context context) {
-    	//dbMan = new DBManager(context);
     	this.photo = null;
     }
     

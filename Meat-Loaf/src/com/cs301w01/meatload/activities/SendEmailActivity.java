@@ -14,10 +14,10 @@ import java.util.Collection;
 
 public class SendEmailActivity extends Skindactivity {
 
-    Button sendButton;
-    EditText textTo;
-    EditText textSubject;
-    EditText textMessage;
+    private Button sendButton;
+    private EditText textTo;
+    private EditText textSubject;
+    private EditText textMessage;
 
     private Picture picture;
 

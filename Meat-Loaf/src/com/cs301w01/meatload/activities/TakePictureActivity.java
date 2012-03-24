@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import com.cs301w01.meatload.model.Album;
 
 /**
  * Implements the logic for the TakePictureActivity, as well as the Take Picture dialog.
@@ -21,17 +22,20 @@ public class TakePictureActivity extends Skindactivity {
 	//if it weren't a global variable
 	private Bitmap imgOnDisplay;
 	
-	private PictureManager photoManager;
-	
+	private PictureManager pictureManager;
+	private Album album;
+    
 	public void onCreate(Bundle savedInstanceState) {
 		Bitmap img;////
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.take_picture);
 	    
 	    Bundle b = getIntent().getExtras();
-        photoManager = (PictureManager) b.getSerializable("manager");
-        photoManager.setContext(this);
-	    imgOnDisplay = photoManager.generatePicture();
+        album = (Album) b.getSerializable("album");
+
+        pictureManager = new PictureManager(this, album.getName());
+        pictureManager.setContext(this);
+	    imgOnDisplay = pictureManager.generatePicture();
 	    populateFields(imgOnDisplay);
 	    createListeners(imgOnDisplay);
 	}
@@ -56,7 +60,7 @@ public class TakePictureActivity extends Skindactivity {
         genPicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Perform action on click
-            	imgOnDisplay = photoManager.generatePicture();
+            	imgOnDisplay = pictureManager.generatePicture();
             	
             	//used http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android
             	populateFields(imgOnDisplay);
@@ -87,7 +91,7 @@ public class TakePictureActivity extends Skindactivity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				photoManager.takePicture(getFilesDir());
+				pictureManager.takePicture(getFilesDir());
 				finish();
 			}
 		});

@@ -20,6 +20,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
+import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Implements the logic in the Albums view of the Tab layout in Skindex.
@@ -29,8 +34,8 @@ public class ViewAlbumsActivity extends Skindactivity {
 	
 	//TODO: Can these be moved inside a method?
 	private MainManager mainManager;
-	ListView albumListView;
-	SimpleAdapter adapter;
+	private ListView albumListView;
+	private SimpleAdapter adapter;
 	
 	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 	private String[] adapterCols = { "name", "numPictures" };
@@ -39,7 +44,8 @@ public class ViewAlbumsActivity extends Skindactivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewgroups);
         mainManager = new MainManager();
-        
+        mainManager.setContext(this);
+
         refreshScreen();
         createListeners();
         
@@ -82,10 +88,10 @@ public class ViewAlbumsActivity extends Skindactivity {
         
         albumListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
-                int position, long id) {
-             HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
-             String clickedName = temp.get("name");
-             openGalleryFromAlbum(clickedName);
+                                    int position, long id) {
+                HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
+                String clickedName = temp.get("name");
+                openGalleryFromAlbum(clickedName);
             }
         });
     }
@@ -124,14 +130,14 @@ public class ViewAlbumsActivity extends Skindactivity {
     	 * immediately switch to takePicture, so that when the user goes back, they'll end up at 
     	 * the gallery activity. Use openGalleryFromAlbum for this maybe?
     	 */
-    	switchToTakePicture(newAlbumName);
+    	switchToTakePicture(new AlbumQueryGenerator(this).getAlbumByName(newAlbumName));
     }
     
-    private void switchToTakePicture(String album) {
-    	Intent myIntent = new Intent();
+    private void switchToTakePicture(Album album) {
+
+        Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
-    	PictureManager pMan = new PictureManager(album);
-    	myIntent.putExtra("manager", pMan);
+    	myIntent.putExtra("album", album);
     	
     	startActivity(myIntent); 
     }
@@ -172,26 +178,27 @@ public class ViewAlbumsActivity extends Skindactivity {
     
     /**
      * Starts a new gallery activity using the GalleryManager object passed via argument.
-     * @param gMan - the GalleryManager object on which the new GalleryActivity is based
+     * @param album, the album we are opening the gallery manager on
      */
-    private void openGallery(GalleryManager gMan){
+    private void openGallery(Album album){
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.GalleryActivity");
-    	myIntent.putExtra("manager", gMan);
+    	myIntent.putExtra("album", album);
     	
     	startActivity(myIntent); 
     }
     
     private void openGalleryFromAlbum(String albumName){
-    	openGallery(new GalleryManager(albumName));
+    	openGallery(new AlbumQueryGenerator(this).getAlbumByName(albumName));
     }
     
     private void openGalleryFromTags(Collection<String> tags){
-    	openGallery(new GalleryManager(tags));
+        openGallery(new GalleryManager(tags, this).getAlbum());
     }
     
     private void openGalleryAllPhotos(){
-    	openGallery(new GalleryManager());
+    	openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>()));
     }
+
 }

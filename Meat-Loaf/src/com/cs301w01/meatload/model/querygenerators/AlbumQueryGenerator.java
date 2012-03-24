@@ -2,6 +2,7 @@ package com.cs301w01.meatload.model.querygenerators;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 import android.content.ContentValues;
@@ -9,6 +10,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Picture;
 
 public class AlbumQueryGenerator extends QueryGenerator {
 	
@@ -17,7 +20,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
 	}
 
 	//vars for albums table
-    private static final String TABLE_NAME = "albums";
+    public static final String TABLE_NAME = "albums";
     
     private static final String CREATE_TABLE_QUERY =
         "CREATE TABLE " + TABLE_NAME + " (" +
@@ -75,7 +78,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	String albumQuery = "SELECT a." + COL_NAME + " AS " + COL_NAME + ", " + 
     							"COUNT(p." + COL_ID + ") AS numPictures" +
     						" FROM " + TABLE_NAME + 
-    						" a LEFT OUTER JOIN " + PictureQueryGenerator.getTableName() +
+    						" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
     						" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
     						" GROUP BY a." + COL_NAME;
     	
@@ -110,7 +113,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
     public String getAlbumNameOfPicture(int pictureID) {
         
         Cursor c = db.performRawQuery("SELECT a." + COL_NAME + " AS " + COL_NAME +
-                                   " FROM " + PictureQueryGenerator.getTableName() + " p LEFT JOIN " +
+                                   " FROM " + PictureQueryGenerator.TABLE_NAME + " p LEFT JOIN " +
                                    TABLE_NAME + " a ON (a." + COL_ID + " = p." +
                                    COL_ALBUMID + ")" + 
                                    " WHERE p." + COL_ID + " = " +
@@ -119,7 +122,41 @@ public class AlbumQueryGenerator extends QueryGenerator {
         return c.getString(c.getColumnIndex(COL_NAME));
         
     }
-    
-    
+
+    /**
+     * Returns an album object based on the name of the album.
+     * 
+     * @param albumName of album
+     * @return an album object
+     */
+    public Album getAlbumByName(String albumName) {
+
+        Collection<Picture> pictures = new ArrayList<Picture>();
+        
+        Collection<Picture> hashPicture = new PictureQueryGenerator(context).selectPicturesFromAlbum(albumName);
+
+        for(Picture picture : hashPicture) {
+            
+            int id = new PictureQueryGenerator(context).selectIDByName(picture.getName(),
+                    PictureQueryGenerator.TABLE_NAME);
+            String name = picture.getName();
+            String path = picture.getPath();
+
+            Date date = picture.getDate();
+
+            Collection<String> tags = new TagQueryGenerator(context).selectPictureTags(id);
+           
+            Picture p = new Picture(name, path, albumName, date, tags);
+            p.setID(id);
+            
+            pictures.add(p);
+            
+        }
+
+        Album album = new Album(albumName, hashPicture.size(),pictures);
+
+        return album;
+
+    }
     
 }

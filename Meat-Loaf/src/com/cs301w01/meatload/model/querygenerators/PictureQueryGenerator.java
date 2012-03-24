@@ -28,7 +28,7 @@ public class PictureQueryGenerator extends QueryGenerator {
                 COL_NAME + " TEXT, " +
                 COL_ALBUMID + " INTEGER, " +
                 "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
-                AlbumQueryGenerator.getTableName() + "( " + COL_ID + "));";
+                AlbumQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
 	
 	public PictureQueryGenerator(Context context) {
 		super(context);
@@ -96,7 +96,7 @@ public class PictureQueryGenerator extends QueryGenerator {
             cv.put(COL_PICTUREID, pid);
 
             //insert tag tuple into tags table
-            db.insert(TagQueryGenerator.getTableName(), COL_ID, tcv);
+            db.insert(TagQueryGenerator.TABLE_NAME, COL_ID, tcv);
             
             Log.d(TABLE_NAME, "Tag inserted: " + tag + " w/ pid: " + pid);
             
@@ -122,47 +122,50 @@ public class PictureQueryGenerator extends QueryGenerator {
     * @param pictureQuery
     * @return
     */
-   private ArrayList<HashMap<String,String>> selectPicturesByQuery(String pictureQuery) {
+   private Collection<Picture> selectPicturesByQuery(String pictureQuery) {
        
        Cursor c = db.performRawQuery(pictureQuery);
-       ArrayList<HashMap<String,String>> pictures = new ArrayList<HashMap<String,String>>();
+       ArrayList<Picture> pictures = new ArrayList<Picture>();
        
        if (c == null){
    		return pictures;
-   	}
+        }
 
-       while(!c.isAfterLast()) {
-    	   
-    	   AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
-    	   String albumName = albumGen.getAlbumNameOfPicture(c.getInt(c.getColumnIndex(COL_ID)));
-    	   
-           HashMap<String,String> map = new HashMap<String,String>();
-           map.put("id", c.getString(c.getColumnIndex(COL_ID)));
-           map.put("albumName", albumName);
-           map.put("path", c.getString(c.getColumnIndex(PICTURES_COL_PATH)));
-           map.put("date", c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
-           
-           pictures.add(map);
-           
+        while(!c.isAfterLast()) {
+
+           AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
+           String albumName = albumGen.getAlbumNameOfPicture(c.getInt(c.getColumnIndex(COL_ID)));
+
+           int id = Integer.parseInt(c.getString(c.getColumnIndex(COL_ID)));
+           String path = c.getString(c.getColumnIndex(PICTURES_COL_PATH));
+           Date date = stringToDate(c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
+           String name = c.getString(c.getColumnIndex(COL_NAME));
+
+           //String name, String path, String album, Date date, Collection<String> tags
+           Picture p = new Picture(name, path, albumName, date, new TagQueryGenerator(context).selectPictureTags(id));
+            p.setID(id);
+            
+           pictures.add(p);
+
            /*
            String photoName = c.getString(c.getColumnIndex(COL_NAME));
            String path = c.getString(c.getColumnIndex(PHOTOS_COL_PATH));
            String albumName = getAlbumNameOfPicture(c.getInt(c.getColumnIndex(COL_ID)));
            Date date = stringToDate(c.getString(c.getColumnIndex(PHOTOS_COL_DATE)));
-                   
-           Photo p = new Photo(photoName, path, albumName, date, 
-           		selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
-           
+
+           Photo p = new Photo(photoName, path, albumName, date,
+                selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
+
            photos.add(p);
            */
 
            c.moveToNext();
-       }
+        }
 
-       return pictures;
+        return pictures;
    }
    
-   public ArrayList<HashMap<String,String>> selectAllPictures() {
+   public Collection<Picture> selectAllPictures() {
    	
 	   return selectPicturesByQuery("SELECT * FROM " + 
    								TABLE_NAME + 
@@ -194,7 +197,10 @@ public class PictureQueryGenerator extends QueryGenerator {
 	   TagQueryGenerator tagGen = new TagQueryGenerator(this.context);
 	   Collection<String> tags = tagGen.selectPictureTags(c.getInt(c.getColumnIndex(COL_ID)));
 	   
-	   return new Picture(pictureName, path, albumName, date, tags);
+       Picture p = new Picture(pictureName, path, albumName, date, tags);
+       p.setID(pictureID);
+       
+	   return p;
 	   
    }
    
@@ -211,7 +217,7 @@ public class PictureQueryGenerator extends QueryGenerator {
     * @param albumName
     * @return
     */
-   public ArrayList<HashMap<String, String>> selectPicturesFromAlbum(String albumName) {
+   public Collection<Picture> selectPicturesFromAlbum(String albumName) {
 		
 	   AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
 	   
@@ -222,7 +228,8 @@ public class PictureQueryGenerator extends QueryGenerator {
 						" WHERE " + 
 						COL_ALBUMID + " = " + "'" + albumID + "'" + 
 						" ORDER BY " + PICTURES_COL_DATE;
-		return selectPicturesByQuery(query);
+		
+       return selectPicturesByQuery(query);
    	
    }
    
@@ -232,25 +239,31 @@ public class PictureQueryGenerator extends QueryGenerator {
     * @param tags A collection of Tags represented as Strings to be used in the query
     * @return ArrayList of HashMaps representing all Pictures with the given tag
     */
-   public ArrayList<HashMap<String, String>> selectPicturesByTag(Collection<String> tags) {
-   	String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." + 
-   					PICTURES_COL_PATH + " AS " + PICTURES_COL_PATH + ", p." + 
-   					COL_ID + " AS " + COL_ID + ", p." + PICTURES_COL_DATE + " AS " + 
-   					PICTURES_COL_DATE + " FROM " + 
-   					TABLE_NAME + " p LEFT JOIN " + 
-   					TagQueryGenerator.getTableName() + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
-   					"WHERE ";
-   	boolean loopedOnce = false;
-   	for (String tag : tags) {
-   		if (loopedOnce) {
-   			query += " OR ";
-   			loopedOnce = true;
-   		}
-   		query += "t." + COL_NAME + " = '" + tag + "'";
-   	}
-   	query += " GROUP BY p." + COL_ID +
-   			" ORDER BY COUNT(*), " + PICTURES_COL_DATE;
-   	return selectPicturesByQuery(query);
+   public Collection<Picture> selectPicturesByTag(Collection<String> tags) {
+
+        String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." +
+                    PICTURES_COL_PATH + " AS " + PICTURES_COL_PATH + ", p." +
+                    COL_ID + " AS " + COL_ID + ", p." + PICTURES_COL_DATE + " AS " +
+                    PICTURES_COL_DATE + " FROM " +
+                    TABLE_NAME + " p LEFT JOIN " +
+                    TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
+                    "WHERE ";
+
+        boolean loopedOnce = false;
+
+        for (String tag : tags) {
+
+            if (loopedOnce) {
+                query += " OR ";
+                loopedOnce = true;
+            }
+
+            query += "t." + COL_NAME + " = '" + tag + "'";
+        }
+        query += " GROUP BY p." + COL_ID +
+            " ORDER BY COUNT(*), " + PICTURES_COL_DATE;
+
+        return selectPicturesByQuery(query);
    	
    }
 
