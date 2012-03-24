@@ -9,7 +9,7 @@ import android.widget.TabHost;
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
 import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.model.DBManager;
+import com.cs301w01.meatload.model.SQLiteDBManager;
 
 /**
  * Activity file for tabbed landing page of MoleFinder.
@@ -30,7 +30,7 @@ public class Skindex extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        DBManager dbMan = new DBManager(this);
+        SQLiteDBManager dbMan = new SQLiteDBManager(this);
         
         //BEGIN TAB CODE////////////////////////
         //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html

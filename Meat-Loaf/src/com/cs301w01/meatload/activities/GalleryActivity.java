@@ -97,6 +97,9 @@ public class GalleryActivity extends Skindactivity {
      * @see GalleryManager
      */
     public void refreshScreen() {
+    	
+    	//TODO: MERGE WITH UPDATE
+    	
     	pictureListView = (ListView) findViewById(R.id.pictureListView);   
         ArrayList<HashMap<String, String>> albumList = galleryManager.getPictureGallery();
         adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);

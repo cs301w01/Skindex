@@ -16,14 +16,15 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.cs301w01.meatload.model.DBManager;
+import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
  * Implements Controller logic for Picture objects.
  * @author Isaac Matichuk
  */
-public class PictureManager implements FController, Serializable {
+public class PictureManager implements FController{
 
 	private static final long serialVersionUID = 1L;
 	Context context;
@@ -130,11 +131,10 @@ public class PictureManager implements FController, Serializable {
     }
     
     private void savePicture(String fpath, Date date) {
-    	DBManager dbMan = new DBManager(context);
-    	dbMan.insertPicture(new Picture("", fpath, albumName, date, new ArrayList<String>()));
+    	new PictureQueryGenerator(context).insertPicture(new Picture("", fpath, albumName, date, new ArrayList<String>()));
     }
     
     public Picture getPicture() {
-    	return new DBManager(context).selectPictureByID(photoID);
+    	return new PictureQueryGenerator(context).selectPictureByID(photoID);
     }
 }

@@ -6,12 +6,14 @@ import java.util.HashMap;
 
 import android.content.Context;
 
-import com.cs301w01.meatload.model.DBManager;
+import com.cs301w01.meatload.model.SQLiteDBManager;
+import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
  * Mediates between DBManager and Skindex by providing lists of Albums and Tags.
  * @author Isaac Matichuk
- * @see DBManager
+ * @see SQLiteDBManager
  * @see Skindex
  */
 public class MainManager implements FController {
@@ -32,13 +34,13 @@ public class MainManager implements FController {
      * @return All albums as ArrayList of HashMaps
      */
     public ArrayList<HashMap<String, String>> getAllAlbums() {
-    	DBManager dbMan = new DBManager();
+
     	ArrayList<HashMap<String, String>> albums = new ArrayList<HashMap<String,String>>();
     	HashMap<String, String> map = new HashMap<String,String>();
     	map.put("name", "All Pictures");
-    	map.put("numPictures", Integer.toString(dbMan.getPictureCount()));
+    	map.put("numPictures", Integer.toString(new PictureQueryGenerator(context).getPictureCount()));
     	albums.add(map);
-    	albums.addAll(dbMan.selectAllAlbums());
+    	albums.addAll(new AlbumQueryGenerator(context).selectAllAlbums());
     	return albums;
     }
     
@@ -51,6 +53,6 @@ public class MainManager implements FController {
     }
     
     public void addAlbum(String albumName, Collection<String> tags) {
-    	new DBManager().insertAlbum(albumName, tags);
+    	new AlbumQueryGenerator(context).insertAlbum(albumName, tags);
     }
 }

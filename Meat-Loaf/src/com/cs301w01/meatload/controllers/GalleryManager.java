@@ -7,8 +7,11 @@ import java.util.HashMap;
 
 import android.content.Context;
 
-import com.cs301w01.meatload.model.DBManager;
+import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Mediates between the GalleryActivity and the DBManager by creating HashMaps of pictures to be
@@ -16,15 +19,15 @@ import com.cs301w01.meatload.model.Picture;
  * <p>
  * Can be constructed using an album name as a String or a Collection of tags as Strings. 
  * @author Isaac Matichuk
- * @see DBManager
+ * @see SQLiteDBManager
  * @see GalleryActivity
  */
-public class GalleryManager implements FController, Serializable {
+public class GalleryManager implements FController {
 
 	private static final long serialVersionUID = 1L;
-	Context context;
-	String albumName = null;
-	Collection<String> tags;
+	private Context context;
+	private String albumName = null;
+	private Collection<String> tags;
 	boolean isAlbum = false;
 	
     public GalleryManager() {
@@ -63,11 +66,11 @@ public class GalleryManager implements FController, Serializable {
     }
     
     public void storePhoto(Picture picture) {
-    	new DBManager(context).insertPicture(picture);
+    	new PictureQueryGenerator(context).insertPicture(picture);
     }
     
     public Picture getPhoto(int pid) {
-    	return new DBManager(context).selectPictureByID(pid);
+    	return new PictureQueryGenerator(context).selectPictureByID(pid);
     }
     
     /**
@@ -77,19 +80,19 @@ public class GalleryManager implements FController, Serializable {
      */
     public ArrayList<HashMap<String, String>> getPictureGallery() {
     	if (isAlbum)
-    		return new DBManager(context).selectPicturesFromAlbum(albumName);
+    		return new PictureQueryGenerator(context).selectPicturesFromAlbum(albumName);
     	else if (tags.isEmpty())
-    		return new DBManager(context).selectAllPictures();
+    		return new PictureQueryGenerator(context).selectAllPictures();
     	else
-    		return new DBManager(context).selectPicturesByTag(tags);
+    		return new PictureQueryGenerator(context).selectPicturesByTag(tags);
     }
     
-    public void deletePhoto(int pid) {
-    	new DBManager(context).deletePictureByID(pid);
+    public void deletePicture(int pid) {
+    	new PictureQueryGenerator(context).deletePictureByID(pid);
     }
     
     public void deleteAlbum(String name) {
-    	new DBManager(context).deleteAlbumByName(name);
+    	new AlbumQueryGenerator(context).deleteAlbumByName(name);
     }
     
     public boolean isAlbum() {
@@ -101,11 +104,14 @@ public class GalleryManager implements FController, Serializable {
     }
     
     public String getTitle() {
+    	
     	if (isAlbum)
     		return albumName;
+    	
     	else if (tags.isEmpty())
     		return "All Pictures";
+    	
     	else
-    		return new DBManager(context).stringJoin(tags, ", ");
+    		return new TagQueryGenerator(context).stringJoin(tags, ", ");
     }
 }
