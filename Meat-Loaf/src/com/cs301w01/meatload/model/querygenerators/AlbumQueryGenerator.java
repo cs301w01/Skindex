@@ -13,6 +13,12 @@ import android.util.Log;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
 
+/**
+ * Creates queries dealing with albums in the database.
+ * <p>
+ * Converts values from the database to usable data by the rest of the application.
+ * @author Derek Dowling
+ */
 public class AlbumQueryGenerator extends QueryGenerator {
 	
 	public AlbumQueryGenerator(Context context) {
@@ -28,7 +34,9 @@ public class AlbumQueryGenerator extends QueryGenerator {
                 COL_NAME + " TEXT);";
 
     /**
-     * 
+     * Creates a new album in the database with an albumName and a Collection of tags.
+     * <p>
+     * Does not insert any pictures into the newly created album.
      * @param albumName
      * @param tags
      */
@@ -73,7 +81,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	deleteByID(selectIDByName(name, TABLE_NAME), TABLE_NAME);
     }
     
-    public ArrayList<HashMap<String,String>> selectAllAlbums(){
+    public ArrayList<HashMap<String,String>> selectAllAlbums() {
     	
     	String albumQuery = "SELECT a." + COL_NAME + " AS " + COL_NAME + ", " + 
     							"COUNT(p." + COL_ID + ") AS numPictures" +
@@ -85,12 +93,12 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	Cursor c = db.performRawQuery(albumQuery);
     	
     	ArrayList<HashMap<String,String>> albums = new ArrayList<HashMap<String,String>>();
-    	if (c == null){
+    	if (c == null) {
     		return albums;
     	}
 
-        while(!c.isAfterLast()){
-        	HashMap<String,String> map = new HashMap<String,String>();
+        while(!c.isAfterLast()) {
+        	HashMap<String, String> map = new HashMap<String,String>();
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
             String numPictures = c.getString(c.getColumnIndex("numPictures"));
             
@@ -153,7 +161,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
             
         }
 
-        Album album = new Album(albumName, hashPicture.size(),pictures);
+        Album album = new Album(albumName, hashPicture.size(), pictures);
 
         return album;
 
