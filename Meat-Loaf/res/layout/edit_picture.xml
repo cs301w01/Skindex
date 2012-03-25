@@ -15,49 +15,49 @@
         android:id="@+id/dateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dateLabel"
-        android:layout_below="@id/pictureView" />
+        android:text="@string/dateLabel" />
 
     <TextView
         android:id="@+id/dateView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@id/dateLabel" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/albumLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/albumLabel"
-        android:layout_below="@id/dateView" />
+        android:text="@string/albumLabel" />
 
     <TextView
         android:id="@+id/albumView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_below="@id/albumLabel" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <Button
         android:id="@+id/changeAlbumButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/albumView"
         android:text="@string/changeAlbumButton" />
 
     <TextView
         android:id="@+id/tagsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/tagsLabel"
-        android:layout_below="@+id/changeAlbumButton" />
+        android:text="@string/tagsLabel" />
     
     <Button
         android:id="@+id/sendEmailButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sendEmail"
-    />
+        android:text="@string/sendEmail" />
+    
+    <LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+    
+	</LinearLayout>
 
 </LinearLayout>

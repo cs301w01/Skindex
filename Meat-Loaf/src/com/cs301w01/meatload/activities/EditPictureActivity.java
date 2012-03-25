@@ -1,5 +1,6 @@
 package com.cs301w01.meatload.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.view.View;
 import com.cs301w01.meatload.R;
@@ -16,7 +17,7 @@ import android.widget.TextView;
  * Takes a picture and displays it in exploded view along with important metadata including
  * tags, date, etc.
  * <p>
- * Gives the user an exploded view of the picture being edited. 
+ * Gives the user an exploded view of the picture being edited.
  * <p>
  * Allows user to change certain metadata such as tags and album.
  * @author Blake Bouchard
@@ -54,8 +55,10 @@ public class EditPictureActivity extends Skindactivity {
     }
 	
 	
-	//Fills the text and image fields on the screen with a current picture
-	protected void populateTextFields(String albumName, String date, String path){
+	/**
+	 * Fills the text and image fields on the screen with a current picture.
+	 */
+	protected void populateTextFields(String albumName, String date, String path) {
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
 		pictureView.setImageDrawable(Drawable.createFromPath(path));
@@ -69,9 +72,15 @@ public class EditPictureActivity extends Skindactivity {
 		albumView.setText(albumName);
 	}
 	
-	protected void createListeners(){
+	protected void createListeners() {
 		Button changeAlbumButton = (Button) findViewById(R.id.changeAlbumButton);
 		// TODO: Add Change Album functionality to EditPicture
+		changeAlbumButton.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View view) {
+				openChangeAlbumDialog();		
+			}
+		});
 		
 		// TODO: Add Edit Tags functionality to EditPicture
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
@@ -81,6 +90,15 @@ public class EditPictureActivity extends Skindactivity {
                 openSendEmailActivity();
             }
         });
+	}
+	
+	/**
+	 * Opens a dialog that will allow the user to select an album from a list of album names,
+	 * which will move the selected picture to that album.
+	 */
+	private void openChangeAlbumDialog() {
+		Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.change_album);
 	}
     
     private void openSendEmailActivity() {
