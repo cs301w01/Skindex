@@ -48,8 +48,8 @@ public class EditAlbumActivity extends Skindactivity {
     }
 
     /**
-     * Checks to see if the user has made changes to the name of the album, if so
-     * updates the album name in the DB.
+     * Checks to see if the user has made changes to the name of the album, if so updates the 
+     * album name in the DB.
      */
     private void updateAlbumName() {
 
@@ -57,7 +57,7 @@ public class EditAlbumActivity extends Skindactivity {
         String newAlbumName = albumName.getText().toString();
         
         String oldAlbumName = gMan.getAlbum().getName();
-        if(!oldAlbumName.equals(newAlbumName)){
+        if (!oldAlbumName.equals(newAlbumName)) {
             
             gMan.changeAlbumName(newAlbumName, gMan.getAlbum());
             
