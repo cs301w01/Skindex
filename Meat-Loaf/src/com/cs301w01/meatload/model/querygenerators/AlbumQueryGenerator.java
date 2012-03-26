@@ -81,7 +81,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	deleteByID(selectIDByName(name, TABLE_NAME), TABLE_NAME);
     }
     
-    public ArrayList<HashMap<String,String>> selectAllAlbums() {
+    public ArrayList<Album> selectAllAlbums() {
     	
     	String albumQuery = "SELECT a." + COL_NAME + " AS " + COL_NAME + ", " + 
     							"COUNT(p." + COL_ID + ") AS numPictures" +
@@ -92,19 +92,22 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	
     	Cursor c = db.performRawQuery(albumQuery);
     	
-    	ArrayList<HashMap<String,String>> albums = new ArrayList<HashMap<String,String>>();
+    	ArrayList<Album> albums = new ArrayList<Album>();
+
     	if (c == null) {
     		return albums;
     	}
 
         while(!c.isAfterLast()) {
-        	HashMap<String, String> map = new HashMap<String,String>();
+
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
             String numPictures = c.getString(c.getColumnIndex("numPictures"));
-            
-            map.put("name", albumName);
-            map.put("numPictures", numPictures);
-            albums.add(map);
+
+            long id = selectAlbumIDByName(albumName);
+
+            Album a = new Album(albumName, Integer.parseInt(numPictures), new ArrayList<Picture>(), id);
+
+            albums.add(a);
 
             c.moveToNext();
         }

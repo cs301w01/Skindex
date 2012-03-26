@@ -6,6 +6,8 @@ import java.util.HashMap;
 
 import android.content.Context;
 
+import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
@@ -33,14 +35,16 @@ public class MainManager implements FController {
      * the table of albums in the database.  
      * @return All albums as ArrayList of HashMaps
      */
-    public ArrayList<HashMap<String, String>> getAllAlbums() {
+    public ArrayList<Album> getAllAlbums() {
 
-    	ArrayList<HashMap<String, String>> albums = new ArrayList<HashMap<String,String>>();
-    	HashMap<String, String> map = new HashMap<String,String>();
-    	map.put("name", "All Pictures");
-    	map.put("numPictures", Integer.toString(new PictureQueryGenerator(context).getPictureCount()));
-    	albums.add(map);
+    	ArrayList<Album> albums = new ArrayList<Album>();
+
+        Album allPics = new Album("All Pictures", new PictureQueryGenerator(context).getPictureCount(),
+                new ArrayList<Picture>(), -1);
+
+    	albums.add(allPics);
     	albums.addAll(new AlbumQueryGenerator(context).selectAllAlbums());
+
     	return albums;
     }
     

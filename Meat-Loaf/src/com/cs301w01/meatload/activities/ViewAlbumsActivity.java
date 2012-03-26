@@ -98,7 +98,19 @@ public class ViewAlbumsActivity extends Skindactivity {
     public void refreshScreen(){
     	albumListView = (ListView) findViewById(R.id.albumListView);
         
-        ArrayList<HashMap<String, String>> albumList = mainManager.getAllAlbums();
+        ArrayList<Album> albums = mainManager.getAllAlbums();
+        
+        ArrayList<HashMap<String, String>> albumList = new ArrayList<HashMap<String, String>>();
+        
+        for(Album album : albums) {
+            
+            HashMap<String, String> a = new HashMap<String, String>();
+            
+            a.put("name", album.getName());
+            a.put("numPictures", Integer.toString(album.getNumPhotos()));
+
+            albumList.add(a);
+        }
         
         adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
 		albumListView.setAdapter(adapter);
@@ -116,12 +128,6 @@ public class ViewAlbumsActivity extends Skindactivity {
     	String albumName;
 
         showCreateAlbumPrompt();
-
-    	/*
-    	 * TODO: We need to start the gallery activity then have the gallery activity... 
-    	 * immediately switch to takePicture, so that when the user goes back, they'll end up at 
-    	 * the gallery activity. Use openGalleryFromAlbum for this maybe?
-    	 */
 
     }
     
