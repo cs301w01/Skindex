@@ -1,7 +1,6 @@
 package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,12 +14,9 @@ import com.cs301w01.meatload.model.Picture;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 /**

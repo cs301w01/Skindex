@@ -63,7 +63,7 @@ public class ViewAlbumsActivity extends Skindactivity {
     	mainManager.setContext(this);
     }
     
-    protected void createListeners(){
+    protected void createListeners() {
         //on click listener 
     	final Button takePicButton = (Button) findViewById(R.id.takePic);
     	takePicButton.setOnClickListener(new View.OnClickListener() {
@@ -87,15 +87,13 @@ public class ViewAlbumsActivity extends Skindactivity {
         albumListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                Album temp = adapter.getItem(position);
-                String clickedName = temp.getName();
-                openGalleryFromAlbum(clickedName);
+                openGallery(adapter.getItem(position));
             }
         });
     }
     
     public void refreshScreen() {
-    	ListView albumListView = (ListView) findViewById(R.id.albumListView);
+    	albumListView = (ListView) findViewById(R.id.albumListView);
 		ArrayList<Album> albumList = mainManager.getAllAlbums();
 		AlbumAdapter adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
 		albumListView.setAdapter(adapter);
@@ -185,10 +183,9 @@ public class ViewAlbumsActivity extends Skindactivity {
 				String newAlbumName = input.getText().toString();
 				mainManager.addAlbum(newAlbumName, new ArrayList<String>());
 				
-                if(takePicture) {
-                    
-                    switchToTakePicture(new AlbumQueryGenerator(ViewAlbumsActivity.this).getAlbumByName(newAlbumName));
-                    
+                if (takePicture) {
+                	AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(ViewAlbumsActivity.this); 
+                    switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
                 }
 
                 refreshScreen();

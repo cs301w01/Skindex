@@ -30,8 +30,7 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
 		this.resource = textViewResourceId;
 	}
 
-	public View getView(int position, View convertView, ViewGroup parent)
-    {
+	public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout albumListItem;
         // Get current album object
         Album album = getItem(position);
@@ -46,13 +45,14 @@ public class AlbumAdapter extends ArrayAdapter<Album> {
         } else {
             albumListItem = (LinearLayout) convertView;
         }
+        
         // Get the text boxes from the list_item.xml file
-        TextView albumName =(TextView)albumListItem.findViewById(R.id.itemName);
-        TextView albumCount =(TextView)albumListItem.findViewById(R.id.itemValue);
+        TextView albumName = (TextView) albumListItem.findViewById(R.id.itemName);
+        TextView albumCount = (TextView) albumListItem.findViewById(R.id.itemValue);
  
         // Assign the appropriate data from album object
         albumName.setText(album.getName());
-        albumCount.setText(album.getNumPhotos());
+        albumCount.setText(Integer.toString(album.getNumPhotos()));
  
         return albumListItem;
     }
