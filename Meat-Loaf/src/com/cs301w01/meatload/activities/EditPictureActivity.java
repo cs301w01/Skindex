@@ -119,11 +119,13 @@ public class EditPictureActivity extends Skindactivity {
 		changeAlbumDialog.setContentView(R.layout.change_album);
 		changeAlbumDialog.setCancelable(true);
 		
-		ListView albumListView = (ListView) findViewById(R.id.albumListView);
 		ArrayList<Album> albumList = mainManager.getAllAlbums();
-		albumListView = (ListView) findViewById(R.id.changeAlbumListView);
 		AlbumAdapter adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
+		
+		ListView albumListView = (ListView) findViewById(R.id.albumListView);
+		albumListView = (ListView) findViewById(R.id.changeAlbumListView);
 		albumListView.setAdapter(adapter);
+		albumListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 		
 		Button moveToAlbumButton = (Button) findViewById(R.id.moveToAlbumButton);
 		moveToAlbumButton.setOnClickListener(new View.OnClickListener() {
