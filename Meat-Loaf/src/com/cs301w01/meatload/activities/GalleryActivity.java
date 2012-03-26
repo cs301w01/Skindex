@@ -90,8 +90,10 @@ public class GalleryActivity extends Skindactivity {
 
         gallery.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
-                Picture temp = (Picture) adapter.getItem(position);
-                int pictureID = temp.getPictureID();
+                Picture selectedPic = adapter.getItem(position);
+                Log.d("Info For PictureListener", selectedPic.toString());
+                int pictureID = selectedPic.getPictureID();
+
 
                 openPicture(pictureID);
             }
@@ -201,6 +203,7 @@ public class GalleryActivity extends Skindactivity {
     }
 
     private class ImageAdapter extends BaseAdapter {
+
         int mGalleryItemBackground;
         private Context mContext;
         private ArrayList<Picture> pictures;
@@ -219,12 +222,12 @@ public class GalleryActivity extends Skindactivity {
             return pictures.size();
         }
 
-        public Object getItem(int position) {
-            return position;
+        public Picture getItem(int position) {
+            return pictures.get(position);
         }
 
         public long getItemId(int position) {
-            return position;
+            return pictures.get(position).getPictureID();
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {

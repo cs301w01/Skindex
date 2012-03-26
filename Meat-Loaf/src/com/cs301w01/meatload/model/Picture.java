@@ -55,4 +55,23 @@ public class Picture implements Serializable {
     public String getAlbumName(){
         return this.albumName;
     }
+    
+    public String toString() {
+        
+        String output = "Picture, id = " + getPictureID() + " " +
+                        " name = " + getName() + " date =  " + getDate().toString() +
+                        " tags = ( ";
+        
+                        for(String tag : getTags()) {
+
+                            output.concat(tag + ", ");
+
+                        }
+
+                        output.concat(").");
+        
+        return output;
+        
+    }
+    
 }
