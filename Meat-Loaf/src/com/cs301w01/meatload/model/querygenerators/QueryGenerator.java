@@ -21,30 +21,16 @@ public abstract class QueryGenerator {
     public static final String COL_PICTUREID = "pictureID";
     public static final String COL_ALBUMID = "albumID";
     
-    private static String CREATE_TABLE_QUERY;
-    private static String TABLE_NAME;
-    
     public static final String TABLE_NAME_ALBUMTAGS = "albumTags";
     
-    private static final String CREATE_TABLE_ALBUMTAGSTABLE =
+    public static final String CREATE_TABLE_ALBUMTAGS_TABLE =
         "CREATE TABLE " + TABLE_NAME_ALBUMTAGS + " (" +
             COL_ID + " INTEGER PRIMARY KEY, " +
             COL_ALBUMID + " INTEGER, " +
             COL_NAME + " TEXT, " +
             "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
-            										AlbumQueryGenerator.getTableName() + "( " + COL_ID + "));";
-    
-    public static String getCreateTableQuery() { 
-    	
-    	return CREATE_TABLE_QUERY;
-    	
-    }
-    
-	public static String getTableName() {
-		
-		return TABLE_NAME;
-		
-	}
+            										AlbumQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
+
 	
 	protected DBManager db;
 	protected Context context;
@@ -157,7 +143,7 @@ public abstract class QueryGenerator {
 
         String dQuery = "DELETE FROM " + tableName + " WHERE " + COL_ID  + " = '" + id + "'";
 
-        Log.d(TABLE_NAME, "Performing delete: " + dQuery);
+        Log.d(tableName, "Performing delete: " + dQuery);
 
         //db.execSQL(dQuery);
         

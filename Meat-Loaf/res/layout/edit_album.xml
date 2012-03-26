@@ -17,9 +17,10 @@
         android:layout_height="wrap_content"
         android:text="@string/albumName"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
+
     <EditText
-        android:id="@+id/edit_name"
+        android:id="@+id/edit_album_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
@@ -61,7 +62,8 @@
         android:layout_height="wrap_content"
         android:text="@string/tagsLabel"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
+
+
     <TextView
         android:id="@+id/text_tag_list"
         android:layout_width="fill_parent"
@@ -75,7 +77,8 @@
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
-
+
+
         <Button
             android:id="@+id/button_edit_tags"
             android:layout_width="wrap_content"
@@ -92,7 +95,7 @@
 
     </LinearLayout>
     <Button
-        android:id="@+id/button_save"
+        android:id="@+id/save_album_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_save_album" />

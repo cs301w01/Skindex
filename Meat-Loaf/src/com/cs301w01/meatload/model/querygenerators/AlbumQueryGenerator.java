@@ -28,7 +28,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
 	//vars for albums table
     public static final String TABLE_NAME = "albums";
     
-    private static final String CREATE_TABLE_QUERY =
+    public static final String CREATE_TABLE_QUERY =
         "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY, " +
                 COL_NAME + " TEXT);";
@@ -130,6 +130,19 @@ public class AlbumQueryGenerator extends QueryGenerator {
         return c.getString(c.getColumnIndex(COL_NAME));
         
     }
+    
+    public void updateAlbumName(String oldAlbumName, String newAlbumName) {
+
+        int aID = selectAlbumIDByName(oldAlbumName);
+
+        String query = "UPDATE " + TABLE_NAME + " " +
+                       "SET " + COL_NAME + " = '" + newAlbumName + "' " +
+                       "WHERE " + COL_ID + " = '" + aID +"'";
+        
+        db.performRawQuery(query);
+        Log.d(TABLE_NAME, "Updated name of Album: " + query);
+        
+    }
 
     /**
      * Returns an album object based on the name of the album.
@@ -161,10 +174,36 @@ public class AlbumQueryGenerator extends QueryGenerator {
             
         }
 
-        Album album = new Album(albumName, hashPicture.size(), pictures);
+        long id = selectAlbumIDByName(albumName);
+
+        Album album = new Album(albumName, hashPicture.size(), pictures, id);
 
         return album;
 
     }
-    
+
+    public Album getAlbumByID(long albumId) {
+
+        String aName = getAlbumNameById(albumId);
+        
+        Album a = getAlbumByName(aName);
+        
+        return a;
+
+    }
+
+    private String getAlbumNameById(long albumId) {
+        
+        String query = "SELECT " + COL_NAME + " " +
+                       "FROM " + TABLE_NAME + " " +
+                       "WHERE " + COL_ID + " = '" + albumId + "'";
+        
+        Cursor c = db.performRawQuery(query);
+        Log.d(TABLE_NAME, "Fetching Album Name for: " + query);
+               
+        String aName = c.getString(c.getColumnIndex(COL_NAME));
+
+        return aName;
+
+    }
 }

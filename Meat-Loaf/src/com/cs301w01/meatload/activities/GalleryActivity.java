@@ -117,14 +117,15 @@ public class GalleryActivity extends Skindactivity {
     protected void onResume() {
         super.onResume();
 
-    	refreshScreen();
     	galleryManager.setContext(this);
+        galleryManager.updateAlbum();
 
+        refreshScreen();
     }
 
     @Override
     public void update(Object model) {
-        
+
     }
     
     /**
@@ -160,7 +161,7 @@ public class GalleryActivity extends Skindactivity {
     	
     	//NEED TO SET TAGS AS WELL!
     	
-    	myIntent.putExtra("albumName", galleryManager.getAlbumName());
+    	myIntent.putExtra("album", galleryManager.getAlbum());
     	
     	startActivity(myIntent);
 

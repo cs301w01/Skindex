@@ -68,7 +68,12 @@ public class DBManagerTest extends AndroidTestCase {
 		mClassToTest.insertAlbum(null, new ArrayList<String>());
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
 	}
-		
+
+    //TODO
+    public void testAlbumNameChange() {
+
+    }
+
 	//Insert 3 albums, size should grow by 3
 	public void testInsertMultipleAlbums(){
 		int oldSize = mClassToTest.selectAllAlbums().size();

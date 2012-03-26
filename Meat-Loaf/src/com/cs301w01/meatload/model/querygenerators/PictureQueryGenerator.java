@@ -20,7 +20,7 @@ public class PictureQueryGenerator extends QueryGenerator {
     public static final String PICTURES_COL_PATH = "path";
     public static final String PICTURES_COL_DATE = "date";
 	
-	private static final String CREATE_TABLE_QUERY =
+	public static final String CREATE_TABLE_QUERY =
         "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY, " +
                 PICTURES_COL_DATE + " Date, " +

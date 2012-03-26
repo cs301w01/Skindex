@@ -84,6 +84,14 @@ public class GalleryManager implements FController {
     	return new PictureQueryGenerator(context).selectPictureByID(pid);
     }
     
+    public void changeAlbumName(String newAlbumName, Album a) {
+        
+        AlbumQueryGenerator aG = new AlbumQueryGenerator(this.context);
+
+        aG.updateAlbumName(a.getName(), newAlbumName);
+        
+    } 
+    
     /**
      * Invokes the DBManager to return a set of Picture objects based on whether GalleryManager
      * was contructed with an album name or a set of tags. 
@@ -135,7 +143,7 @@ public class GalleryManager implements FController {
 
         Collection<Picture> pictures = new PictureQueryGenerator(context).selectPicturesByTag(tags);
 
-        return new Album("Tag Album", pictures.size(), pictures);
+        return new Album("Tag Album", pictures.size(), pictures, -1);
 
     }
     
@@ -145,4 +153,10 @@ public class GalleryManager implements FController {
 
     }
 
+    public void updateAlbum() {
+
+        long albumId = album.getID();
+        this.album = new AlbumQueryGenerator(context).getAlbumByID(albumId);
+
+    }
 }

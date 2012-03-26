@@ -13,7 +13,7 @@ public class TagQueryGenerator extends QueryGenerator{
 	 //vars for tags table
     public static final String TABLE_NAME = "tags";
 
-    private static final String CREATE_TABLE_QUERY =
+    public static final String CREATE_TABLE_QUERY =
         "CREATE TABLE " + TABLE_NAME + " (" +
             COL_ID + " INTEGER PRIMARY KEY, " +
             COL_PICTUREID + " INTEGER, " +

@@ -63,7 +63,7 @@ public class PictureManager implements FController{
      * http://stackoverflow.com/questions/649154/android-bitmap-save-to-location</a>
      * @param path File directory where the Picture is to be saved
      */
-    public void takePicture(File path) {
+    public Picture takePicture(File path) {
     	Calendar cal = Calendar.getInstance();
     	SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-sss");
     	String timestamp = sdf.format(cal.getTime());
@@ -78,10 +78,13 @@ public class PictureManager implements FController{
     		imgOnDisplay.compress(Bitmap.CompressFormat.PNG, 100, outStream);
     		outStream.flush();
     		outStream.close();
-    		savePicture(fpath + fname, cal.getTime());
-    		Log.d("SAVE", "Saving " + fpath + fname);
+
+            //adds the new picture to the db and returns a picture object
+            return savePicture(fpath + fname, cal.getTime(), fname);
+
         } catch (IOException e) {
         	Log.d("ERROR", "Unable to write " + fpath + fname);
+            return null;
         }
         
         // TODO: Move to EditPictureActivity after takePicture finishes.
@@ -127,8 +130,15 @@ public class PictureManager implements FController{
         return imgOnDisplay;
     }
     
-    private void savePicture(String fpath, Date date) {
-    	new PictureQueryGenerator(context).insertPicture(new Picture("", fpath, albumName, date, new ArrayList<String>()));
+    private Picture savePicture(String fpath, Date date, String fname) {
+
+        Picture newPic = new Picture(albumName+":"+date.toString(), fpath,
+                albumName, date, new ArrayList<String>());
+        
+        new PictureQueryGenerator(context).insertPicture(newPic);
+        Log.d("SAVE", "Saving " + fpath + fname);
+
+        return newPic;
     }
     
     public Picture getPicture() {

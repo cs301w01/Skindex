@@ -7,14 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.QueryGenerator;
@@ -42,7 +34,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
     public SQLiteDBManager(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
         
-        //myContext = context;
+        myContext = context;
 
         //uncomment if any changes have been made to tables to reset
         //resetDB();
@@ -58,16 +50,16 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
 
     private void createTables(SQLiteDatabase db) {
 
-        db.execSQL(PictureQueryGenerator.getCreateTableQuery());
-        Log.d(logTag, PictureQueryGenerator.getTableName() + " generated.");
+        db.execSQL(PictureQueryGenerator.CREATE_TABLE_QUERY);
+        Log.d(logTag, PictureQueryGenerator.TABLE_NAME + " generated.");
 
-        db.execSQL(AlbumQueryGenerator.getCreateTableQuery());
-        Log.d(logTag, AlbumQueryGenerator.getTableName() + " generated.");
+        db.execSQL(AlbumQueryGenerator.CREATE_TABLE_QUERY);
+        Log.d(logTag, AlbumQueryGenerator.TABLE_NAME + " generated.");
 
-        db.execSQL(TagQueryGenerator.getCreateTableQuery());
-        Log.d(logTag, TagQueryGenerator.getTableName() + " generated.");
+        db.execSQL(TagQueryGenerator.CREATE_TABLE_QUERY);
+        Log.d(logTag, TagQueryGenerator.TABLE_NAME + " generated.");
         
-        db.execSQL(QueryGenerator.TABLE_NAME_ALBUMTAGS);
+        db.execSQL(QueryGenerator.CREATE_TABLE_ALBUMTAGS_TABLE);
         Log.d(logTag, QueryGenerator.TABLE_NAME_ALBUMTAGS + " generated.");
 
         Log.d(logTag, "DB generated.");
@@ -76,14 +68,14 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
 
     private void dropTables(SQLiteDatabase db) {
 
-        db.execSQL("DROP TABLE IF EXISTS " + PictureQueryGenerator.getTableName());
-        Log.d(logTag, PictureQueryGenerator.getTableName() + " dropped.");
+        db.execSQL("DROP TABLE IF EXISTS " + PictureQueryGenerator.TABLE_NAME);
+        Log.d(logTag, PictureQueryGenerator.TABLE_NAME + " dropped.");
 
-        db.execSQL("DROP TABLE IF EXISTS " + AlbumQueryGenerator.getTableName());
-        Log.d(logTag, AlbumQueryGenerator.getTableName() + " dropped.");
+        db.execSQL("DROP TABLE IF EXISTS " + AlbumQueryGenerator.TABLE_NAME);
+        Log.d(logTag, AlbumQueryGenerator.TABLE_NAME + " dropped.");
 
-        db.execSQL("DROP TABLE IF EXISTS " + TagQueryGenerator.getTableName());
-        Log.d(logTag, TagQueryGenerator.getTableName() + " dropped.");
+        db.execSQL("DROP TABLE IF EXISTS " + TagQueryGenerator.TABLE_NAME);
+        Log.d(logTag, TagQueryGenerator.TABLE_NAME + " dropped.");
         
         db.execSQL("DROP TABLE IF EXISTS " + QueryGenerator.TABLE_NAME_ALBUMTAGS);
         Log.d(logTag, QueryGenerator.TABLE_NAME_ALBUMTAGS + " dropped.");
@@ -102,7 +94,7 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
         dropTables(db);
         createTables(db);
         
-        //TODO: test db.close();
+        db.close();
         
         Log.d(logTag, "TABLES RESET.");
 

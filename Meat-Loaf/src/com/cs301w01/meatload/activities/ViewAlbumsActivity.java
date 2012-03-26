@@ -77,8 +77,7 @@ public class ViewAlbumsActivity extends Skindactivity {
         final Button addAlbumButton = (Button) findViewById(R.id.newAlbum);
         addAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-            	addAlbum();
+            	addAlbum(false); //false means not taking a picture, just adding album
             }
         });
         
@@ -114,23 +113,16 @@ public class ViewAlbumsActivity extends Skindactivity {
     protected void takePicture() {
     	//Display prompt
     	boolean wantsNewAlbum = false;
-    	String newAlbumName = "";
-    	if(wantsNewAlbum){
-    		//newAlbumName = addAlbum();
-    	} else {
-    		/*
-    		 * TODO: Prompt the user to pick an album from the list
-    		 * TODO: Populate this string with the name
-    		 */
-    		newAlbumName = "";
-    	}
-    	
+    	String albumName;
+
+        showCreateAlbumPrompt();
+
     	/*
     	 * TODO: We need to start the gallery activity then have the gallery activity... 
     	 * immediately switch to takePicture, so that when the user goes back, they'll end up at 
     	 * the gallery activity. Use openGalleryFromAlbum for this maybe?
     	 */
-    	switchToTakePicture(new AlbumQueryGenerator(this).getAlbumByName(newAlbumName));
+
     }
     
     private void switchToTakePicture(Album album) {
@@ -139,15 +131,49 @@ public class ViewAlbumsActivity extends Skindactivity {
     	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
     	myIntent.putExtra("album", album);
     	
-    	startActivity(myIntent); 
+    	startActivity(myIntent);
+
+        Intent goToGallery = new Intent();
+        goToGallery.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.GalleryActivity");
+        goToGallery.putExtra("album", album);
+
+        startActivity(goToGallery);
     }
-    
+
+    private void showCreateAlbumPrompt() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("New Album?");
+        alert.setMessage("Would you like to create a new album?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                addAlbum(Boolean.TRUE);
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                chooseAlbumPrompt();
+            }
+        });
+
+        alert.show();
+
+    }
+
+    private void chooseAlbumPrompt() {
+        //TODO: present list of albums, make user select one, redirect to takePicture
+    }
+
     /** 
      * Prompts the user to enter an album name and pick a set of tags. When the user presses OK, 
      * gather the name and tags the user entered, and call photoManager.addNewAlbum();
      * @return Name of the new album (for use in takePicture)
      */
-    private void addAlbum() {
+    private void addAlbum(final Boolean takePicture) {
+    	
     	//Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -162,7 +188,14 @@ public class ViewAlbumsActivity extends Skindactivity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String newAlbumName = input.getText().toString();
 				mainManager.addAlbum(newAlbumName, new ArrayList<String>());
-				refreshScreen();
+				
+                if(takePicture) {
+                    
+                    switchToTakePicture(new AlbumQueryGenerator(ViewAlbumsActivity.this).getAlbumByName(newAlbumName));
+                    
+                }
+
+                refreshScreen();
 			}
 		});
 
@@ -173,6 +206,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		});
 
 		alert.show();
+
     }
    
     
@@ -198,7 +232,7 @@ public class ViewAlbumsActivity extends Skindactivity {
     }
     
     private void openGalleryAllPhotos(){
-    	openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>()));
+    	openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>(), -1));
     }
 
 }

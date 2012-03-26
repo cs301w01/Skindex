@@ -1,5 +1,6 @@
 package com.cs301w01.meatload.activities;
 
+import android.content.Intent;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.PictureManager;
 
@@ -11,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
  * Implements the logic for the TakePictureActivity, as well as the Take Picture dialog.
@@ -91,9 +94,18 @@ public class TakePictureActivity extends Skindactivity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				pictureManager.takePicture(getFilesDir());
-				finish();
-			}
+
+                Picture newPic = pictureManager.takePicture(getFilesDir());
+
+                Intent myIntent = new Intent();
+                myIntent.setClassName("com.cs301w01.meatload",
+                        "com.cs301w01.meatload.activities.EditPictureActivity");
+                myIntent.putExtra("picture", newPic);
+
+                startActivity(myIntent);
+
+                finish();
+            }
 		});
 
 		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

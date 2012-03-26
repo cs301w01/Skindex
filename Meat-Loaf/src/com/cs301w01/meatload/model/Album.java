@@ -11,14 +11,15 @@ public class Album implements Serializable {
     
     private String name;
     private int numPhotos;
-    private int id;
+    private long id;
     private Collection<Picture> pictures;
     
-    public Album(String name, int numPhotos, Collection<Picture> pictures){
+    public Album(String name, int numPhotos, Collection<Picture> pictures, long id){
     	
     	this.name = name;
     	this.numPhotos = numPhotos;
     	this.pictures = pictures;
+        this.id = id;
     	
     }
     
@@ -56,6 +57,8 @@ public class Album implements Serializable {
     	
     }
     
-    
+    public long getID(){
+        return id;
+    }
 
 }
