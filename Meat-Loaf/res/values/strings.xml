@@ -20,4 +20,5 @@
     <string name="albumName">Album Name</string>
     <string name="label_num_pics">Number of Pictures</string>
     <string name="sendEmail">Send Email</string>
+    <string name="button_save_picture">Save Picture</string>
 </resources>

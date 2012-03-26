@@ -58,7 +58,6 @@ public class EditPictureActivity extends Skindactivity {
     	pictureManager.setContext(this);
     }
 	
-	
 	/**
 	 * Fills the text and image fields on the screen with a current picture.
 	 */
@@ -82,7 +81,7 @@ public class EditPictureActivity extends Skindactivity {
 		changeAlbumButton.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View view) {
-				openChangeAlbumDialog();		
+				openChangeAlbumDialog();
 			}
 		});
 		
