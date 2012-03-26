@@ -38,8 +38,12 @@ public class EditPictureActivity extends Skindactivity {
 		setContentView(R.layout.edit_picture);
 		
 		// Get picture object from Intent's extras bundle
-		picture = (Picture) getIntent().getExtras().getSerializable("picture");
-        pictureManager = new PictureManager(this, picture);
+		Intent intent = getIntent();
+		Bundle extras = intent.getExtras();
+		picture = (Picture) extras.getSerializable("picture");
+        
+		// Set up a new PictureManager using the Picture object passed via the intent 
+		pictureManager = new PictureManager(this, picture);
 
 		populateTextFields(picture.getAlbumName(),
                 picture.getDate().toString(),
