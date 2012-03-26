@@ -57,6 +57,9 @@ public class Skindex extends TabActivity {
 
 
         	tabHost.setCurrentTab(0);
+        	
+        	
+        	
         ///END TAB CODE/////////////////////////
 
         //Current tab set to Album.  ViewGroupsActivity runs in that tab

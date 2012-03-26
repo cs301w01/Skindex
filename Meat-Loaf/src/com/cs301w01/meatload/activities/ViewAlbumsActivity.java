@@ -95,7 +95,7 @@ public class ViewAlbumsActivity extends Skindactivity {
     public void refreshScreen() {
     	albumListView = (ListView) findViewById(R.id.albumListView);
 		ArrayList<Album> albumList = mainManager.getAllAlbums();
-		AlbumAdapter adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
+		adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
 		albumListView.setAdapter(adapter);
     }
     

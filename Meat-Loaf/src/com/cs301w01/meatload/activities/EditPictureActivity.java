@@ -15,6 +15,7 @@ import com.cs301w01.meatload.model.Picture;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -82,11 +83,14 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(date);
 		
 		// Set albumView to string representation of Album in Picture object
-		TextView albumView = (TextView) findViewById(R.id.albumView);
+		EditText albumView = (EditText) findViewById(R.id.albumView);
 		albumView.setText(albumName);
 	}
-	
+
 	protected void createListeners() {
+		//JOEL DELETED THIS BUTTON, THE BELOW CODE CAN EVENTUALLY BE DELETED
+		//IF WE DO IN FACT NEVER USE THE BUTTON
+		/*
 		Button changeAlbumButton = (Button) findViewById(R.id.changeAlbumButton);
 		// TODO: Add Change Album functionality to EditPicture
 		changeAlbumButton.setOnClickListener(new View.OnClickListener() {
@@ -94,7 +98,7 @@ public class EditPictureActivity extends Skindactivity {
 			public void onClick(View view) {
 				openChangeAlbumDialog();
 			}
-		});
+		});*/
 		
 		// TODO: Add Edit Tags functionality to EditPicture
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);

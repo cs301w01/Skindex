@@ -8,7 +8,7 @@
     <string name="tab_tags">Tags</string>
     <string name="button_gen_pic">Generate Pic</string>
     <string name="editPicDesc">Exploded view of user picture</string>
-    <string name="dateLabel">Date</string>
+    <string name="dateLabel">Date Created</string>
     <string name="albumLabel">Album</string>
     <string name="tagsLabel">Tags</string>
     <string name="changeAlbumButton">Change...</string>
@@ -23,4 +23,5 @@
     <string name="button_save_picture">Save Picture</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_move_album">Move to Album</string>
+    <string name="photoName">Photo Name</string>
 </resources>
