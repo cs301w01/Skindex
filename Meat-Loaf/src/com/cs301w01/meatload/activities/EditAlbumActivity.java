@@ -28,12 +28,9 @@ public class EditAlbumActivity extends Skindactivity {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.edit_album);
     	
-    	
     	Bundle b = getIntent().getExtras();
         Album a = (Album) b.getSerializable("album");
         gMan = new GalleryManager(a, this);
-
-
 
         createListeners();
     }
@@ -42,7 +39,6 @@ public class EditAlbumActivity extends Skindactivity {
 
         final Button saveAlbumButton = (Button) findViewById(R.id.save_album_button);
         saveAlbumButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
                 updateAlbumName();
                 finish();

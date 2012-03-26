@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.adapters.AlbumAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
@@ -35,10 +36,10 @@ public class ViewAlbumsActivity extends Skindactivity {
 	//TODO: Can these be moved inside a method?
 	private MainManager mainManager;
 	private ListView albumListView;
-	private SimpleAdapter adapter;
+	private AlbumAdapter adapter;
 	
-	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
-	private String[] adapterCols = { "name", "numPictures" };
+//	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
+//	private String[] adapterCols = { "name", "numPictures" };
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +52,7 @@ public class ViewAlbumsActivity extends Skindactivity {
         
     }
     
-    //@Override
     public void update(Object model) {
-        //To change body of implemented methods use File | Settings | File Templates.
     	refreshScreen();
     }
     
@@ -88,31 +87,17 @@ public class ViewAlbumsActivity extends Skindactivity {
         albumListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
-                String clickedName = temp.get("name");
+                Album temp = adapter.getItem(position);
+                String clickedName = temp.getName();
                 openGalleryFromAlbum(clickedName);
             }
         });
     }
     
-    public void refreshScreen(){
-    	albumListView = (ListView) findViewById(R.id.albumListView);
-        
-        ArrayList<Album> albums = mainManager.getAllAlbums();
-        
-        ArrayList<HashMap<String, String>> albumList = new ArrayList<HashMap<String, String>>();
-        
-        for(Album album : albums) {
-            
-            HashMap<String, String> a = new HashMap<String, String>();
-            
-            a.put("name", album.getName());
-            a.put("numPictures", Integer.toString(album.getNumPhotos()));
-
-            albumList.add(a);
-        }
-        
-        adapter = new SimpleAdapter(this, albumList, R.layout.list_item, adapterCols, adapterIDs);
+    public void refreshScreen() {
+    	ListView albumListView = (ListView) findViewById(R.id.albumListView);
+		ArrayList<Album> albumList = mainManager.getAllAlbums();
+		AlbumAdapter adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
 		albumListView.setAdapter(adapter);
     }
     
@@ -134,13 +119,15 @@ public class ViewAlbumsActivity extends Skindactivity {
     private void switchToTakePicture(Album album) {
 
         Intent myIntent = new Intent();
-    	myIntent.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.TakePictureActivity");
+    	myIntent.setClassName("com.cs301w01.meatload", 
+    			"com.cs301w01.meatload.activities.TakePictureActivity");
     	myIntent.putExtra("album", album);
     	
     	startActivity(myIntent);
 
         Intent goToGallery = new Intent();
-        goToGallery.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.GalleryActivity");
+        goToGallery.setClassName("com.cs301w01.meatload", 
+        		"com.cs301w01.meatload.activities.GalleryActivity");
         goToGallery.putExtra("album", album);
 
         startActivity(goToGallery);
@@ -177,10 +164,13 @@ public class ViewAlbumsActivity extends Skindactivity {
      * Prompts the user to enter an album name and pick a set of tags. When the user presses OK, 
      * gather the name and tags the user entered, and call photoManager.addNewAlbum();
      * @return Name of the new album (for use in takePicture)
+     * @see <a href="http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog">
+     http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog</a>
      */
     private void addAlbum(final Boolean takePicture) {
     	
-    	//Alert code snippet taken from http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
+    	// Alert code snippet taken from: 
+    	// http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("New Album");
@@ -220,7 +210,7 @@ public class ViewAlbumsActivity extends Skindactivity {
      * Starts a new gallery activity using the GalleryManager object passed via argument.
      * @param album, the album we are opening the gallery manager on
      */
-    private void openGallery(Album album){
+    private void openGallery(Album album) {
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.GalleryActivity");
@@ -229,16 +219,17 @@ public class ViewAlbumsActivity extends Skindactivity {
     	startActivity(myIntent); 
     }
     
-    private void openGalleryFromAlbum(String albumName){
+    private void openGalleryFromAlbum(String albumName) {
     	openGallery(new AlbumQueryGenerator(this).getAlbumByName(albumName));
     }
     
-    private void openGalleryFromTags(Collection<String> tags){
+    private void openGalleryFromTags(Collection<String> tags) {
         openGallery(new GalleryManager(tags, this).getAlbum());
     }
     
-    private void openGalleryAllPhotos(){
-    	openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>(), -1));
+    private void openGalleryAllPhotos() {
+    	openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>(), 
+    			-1));
     }
 
 }

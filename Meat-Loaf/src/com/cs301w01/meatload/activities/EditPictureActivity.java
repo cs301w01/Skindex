@@ -1,21 +1,31 @@
 package com.cs301w01.meatload.activities;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.view.View;
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.adapters.AlbumAdapter;
+import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
+import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 /**
- * Takes a picture and displays it in exploded view along with important metadata including
- * tags, date, etc.
+ * Takes a picture and displays it in exploded view along with important metadata including tags, 
+ * date, etc.
  * <p>
  * Gives the user an exploded view of the picture being edited.
  * <p>
@@ -24,6 +34,7 @@ import android.widget.TextView;
  */
 public class EditPictureActivity extends Skindactivity {
 
+	private MainManager mainManager;
 	private PictureManager pictureManager;
 	private Picture picture;
 
@@ -36,6 +47,10 @@ public class EditPictureActivity extends Skindactivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_picture);
+		
+		// Set up MainManager
+		mainManager = new MainManager();
+		mainManager.setContext(this);
 		
 		// Get picture object from Intent's extras bundle
 		Intent intent = getIntent();
@@ -100,14 +115,41 @@ public class EditPictureActivity extends Skindactivity {
 	 * which will move the selected picture to that album.
 	 */
 	private void openChangeAlbumDialog() {
-		Dialog dialog = new Dialog(this);
-		dialog.setContentView(R.layout.change_album);
+		final Dialog changeAlbumDialog = new Dialog(this);
+		changeAlbumDialog.setContentView(R.layout.change_album);
+		changeAlbumDialog.setCancelable(true);
+		
+		ListView albumListView = (ListView) findViewById(R.id.albumListView);
+		ArrayList<Album> albumList = mainManager.getAllAlbums();
+		albumListView = (ListView) findViewById(R.id.changeAlbumListView);
+		AlbumAdapter adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
+		albumListView.setAdapter(adapter);
+		
+		Button moveToAlbumButton = (Button) findViewById(R.id.moveToAlbumButton);
+		moveToAlbumButton.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				// TODO: Make this move the picture into the selected album.
+				changeAlbumDialog.dismiss();
+			}
+		});
+		
+		Button cancelDialogButton = (Button) findViewById(R.id.cancelDialogButton);
+		cancelDialogButton.setOnClickListener(new View.OnClickListener() {
+			
+			public void onClick(View v) {
+				changeAlbumDialog.dismiss();
+			}
+		});
+		
+		changeAlbumDialog.show();
 	}
     
     private void openSendEmailActivity() {
         
         Intent sendEmail = new Intent();
-        sendEmail.setClassName("com.cs301w01.meatload", "com.cs301w01.meatload.activities.SendEmailActivity");
+        sendEmail.setClassName("com.cs301w01.meatload", 
+        		"com.cs301w01.meatload.activities.SendEmailActivity");
         //sendEmail.putExtra("picture", pictureManager.getPicture());
         
         startActivity(sendEmail);
