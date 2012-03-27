@@ -9,12 +9,16 @@ import java.util.Collection;
  */
 public class Album implements Serializable {
     
-    private String name;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String name;
     private int numPhotos;
     private long id;
     private Collection<Picture> pictures;
     
-    public Album(String name, int numPhotos, Collection<Picture> pictures, long id){
+    public Album(String name, int numPhotos, Collection<Picture> pictures, long id) {
     	
     	this.name = name;
     	this.numPhotos = numPhotos;
@@ -23,18 +27,16 @@ public class Album implements Serializable {
     	
     }
     
-    public String getName(){
+    public String getName() {
     	return name;
     }
     
-    public int getNumPhotos(){
+    public int getNumPhotos() {
     	return numPhotos;
     }
     
     public Collection<Picture> getPictures() {
-    	
     	return pictures;
-    	
     }
     
     public Collection<String> getAlbumTags() {
@@ -57,8 +59,7 @@ public class Album implements Serializable {
     	
     }
     
-    public long getID(){
+    public long getID() {
         return id;
     }
-
 }
