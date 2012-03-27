@@ -24,13 +24,14 @@
         	 android:layout_height="wrap_content"
        		 android:orientation="vertical" 
        		 android:layout_weight="1.0">
-
+
        		 <TextView
-          		  android:id="@+id/textView1"
-          		  android:layout_width="fill_parent"
-          		  android:layout_height="wrap_content"
-           		 android:text="@string/photoName"
-           		 android:textAppearance="?android:attr/textAppearanceSmall" />
+       		     android:id="@+id/textView1"
+       		     android:layout_width="wrap_content"
+       		     android:layout_height="wrap_content"
+       		     android:layout_gravity="center_horizontal"
+       		     android:text="@string/photoName"
+       		     android:textAppearance="?android:attr/textAppearanceMedium" />
 
         		<EditText
           		  android:id="@+id/editText2"
@@ -43,17 +44,22 @@
         		 android:layout_width="wrap_content"
       		 	 android:layout_height="wrap_content"
       		  	 android:orientation="vertical" 
-      		  	 android:layout_weight="1.0">
+      		  	 android:layout_weight="1.0"
+      		  	 >
+
        		 <TextView
-           		 android:id="@+id/albumLabel"
-          		 android:layout_width="fill_parent"
-           		 android:layout_height="wrap_content"
-           		 android:text="@string/albumName" />
-
-        	 <EditText
-            	android:id="@+id/albumView"
+       		     android:id="@+id/albumLabel"
+       		     android:layout_width="wrap_content"
+       		     android:layout_height="wrap_content"
+       		     android:layout_gravity="center_horizontal"
+       		     android:text="@string/albumName"
+       		     android:textAppearance="?android:attr/textAppearanceMedium" />
+       		 
+       		 <Spinner
+           		android:id="@+id/albumView"
             	android:layout_width="fill_parent"
             	android:layout_height="wrap_content" />
+       		 
 
     	</LinearLayout>
     	
@@ -65,20 +71,21 @@
         android:id="@+id/dateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dateLabel" />
+        android:text="@string/dateLabel" 
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <TextView
         android:id="@+id/dateView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tagsLabel"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textView3"
@@ -92,9 +99,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1.0">
-
+
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/editTagsButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
