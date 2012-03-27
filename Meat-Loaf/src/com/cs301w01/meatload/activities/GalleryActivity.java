@@ -1,15 +1,11 @@
 package com.cs301w01.meatload.activities;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
-import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
-import android.view.ViewGroup;
+import java.util.Collection;
+
 import android.widget.*;
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.adapters.ImageAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 
 import android.content.Intent;
@@ -203,45 +199,7 @@ public class GalleryActivity extends Skindactivity {
     	startActivity(myIntent); 
     }
 
-    private class ImageAdapter extends BaseAdapter {
 
-        int mGalleryItemBackground;
-        private Context mContext;
-        private ArrayList<Picture> pictures;
-
-        public ImageAdapter(Context c, Collection<Picture> pictures) {
-
-            mContext = c;
-            TypedArray attr = mContext.obtainStyledAttributes(R.styleable.GalleryActivity);
-            mGalleryItemBackground = attr.getResourceId(
-                    R.styleable.GalleryActivity_android_galleryItemBackground, 0);
-            this.pictures = new ArrayList<Picture>(pictures);
-            attr.recycle();
-        }
-
-        public int getCount() {
-            return pictures.size();
-        }
-
-        public Picture getItem(int position) {
-            return pictures.get(position);
-        }
-
-        public long getItemId(int position) {
-            return pictures.get(position).getPictureID();
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView imageView = new ImageView(mContext);
-
-            imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
-            imageView.setLayoutParams(new Gallery.LayoutParams(150, 100));
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-            imageView.setBackgroundResource(mGalleryItemBackground);
-
-            return imageView;
-        }
-    }
 
 }
 
