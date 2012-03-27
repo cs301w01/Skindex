@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import com.cs301w01.meatload.R;
@@ -131,7 +133,6 @@ public class EditPictureActivity extends Skindactivity {
 
         //Create Send Email Button logic
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
-
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 openSendEmailActivity();
@@ -140,13 +141,53 @@ public class EditPictureActivity extends Skindactivity {
 
         //Edit Tags button
         Button editTagsButton = (Button) findViewById(R.id.editTagsButton);
-        
         editTagsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 openEditTagsDialog();
             }
         });
+
+        //Delete button logic
+        Button deletePicButton = (Button) findViewById(R.id.deletePictureButton);
+        deletePicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePhoto();
+            }
+        });
+
+        //save picture logic
+        Button savePictureButton = (Button) findViewById(R.id.savePictureButton);
+        savePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                savePicture();
+            }
+        });
 	}
+
+    /**
+     * This method implements the logic that occurs when the "savePicture" button is clicked.
+     * Checks for any changes in the pictures meta-data, updates those, and then finished the
+     * activity.
+     */
+    private void savePicture() {
+        
+        //TODO: Check for changes in any of the photo data
+        
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Picture Saved.");
+
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finish();
+            }
+        });
+
+        alert.show();
+        
+    }
+    
 	private void openEditTagsDialog() {
 		final Dialog editTagsDialog = new Dialog(this);
 		editTagsDialog.setContentView(R.layout.edit_tags);
@@ -180,7 +221,31 @@ public class EditPictureActivity extends Skindactivity {
 		
 		editTagsDialog.show();
 	}
-    
+
+    private void deletePhoto() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Delete Photo?");
+        alert.setMessage("Are you sure?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                pictureManager.deletePhoto();
+                finish();
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //do nothing
+            }
+        });
+
+        alert.show();
+
+    }
+
     private void openSendEmailActivity() {
         Intent sendEmail = new Intent();
         sendEmail.setClassName("com.cs301w01.meatload", 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,7 +15,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
@@ -27,10 +25,9 @@ import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 public class PictureManager implements FController{
 
 	private static final long serialVersionUID = 1L;
-	Context context;
-	Picture photo;
-	String albumName;
-	int photoID;
+	private Context context;
+	private Picture picture;
+    private String albumName;
 	private Bitmap imgOnDisplay;
 	
 	public PictureManager(Context context, String albumName) {
@@ -38,20 +35,20 @@ public class PictureManager implements FController{
 	}
 	
     public PictureManager(Context context, Picture photo) {
-    	this.photo = photo;
+    	this.picture = photo;
     }
     
     public PictureManager(Context context) {
-    	this.photo = null;
+    	this.picture = null;
     }
     
-    public PictureManager(int pid) {
-    	photoID = pid;
-    }
+//    public PictureManager(int pid) {
+//    	photoID = pid;
+//    }
     
-    public PictureManager(String albumName) {
-    	this.albumName = albumName;
-    }
+//    public PictureManager(String albumName) {
+//    	this.albumName = albumName;
+//    }
     
     public void setContext(Context context){
     	this.context = context;
@@ -142,6 +139,14 @@ public class PictureManager implements FController{
     }
     
     public Picture getPicture() {
-    	return new PictureQueryGenerator(context).selectPictureByID(photoID);
+    	return picture;
+    }
+
+    public void deletePhoto() {
+
+        PictureQueryGenerator pQ = new PictureQueryGenerator(context);
+
+        pQ.deletePictureByID(picture.getPictureID());
+
     }
 }
