@@ -126,15 +126,18 @@ public class EditPictureActivity extends Skindactivity {
 			}
 		});
 		
+
+        */
+
+        //Create Send Email Button logic
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
-        
+
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 openSendEmailActivity();
             }
         });
-        */
-        
+
         //Edit Tags button
         Button editTagsButton = (Button) findViewById(R.id.editTagsButton);
         

@@ -27,7 +27,7 @@ public class SendEmailActivity extends Skindactivity {
      */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.send_email);
 
 
         // Get picture object from Intent's extras bundle
@@ -63,7 +63,7 @@ public class SendEmailActivity extends Skindactivity {
 //
 //
 //                }
-                
+
                 //add subject and additional message
                 email.putExtra(Intent.EXTRA_SUBJECT, subject);
                 email.putExtra(Intent.EXTRA_TEXT, message);
