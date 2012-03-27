@@ -64,6 +64,7 @@ public class EditPictureActivity extends Skindactivity {
 		// TODO: DELETE THESE LINES WHEN picture.getTags() is working!!!
 		ArrayList<String> testTagList = new ArrayList();
 		testTagList.add("brown");testTagList.add("moldy");testTagList.add("bruise");
+		testTagList.add("taco sauce");testTagList.add("herp");testTagList.add("derp");
 		//END DELETE, AND UPDATE ARGS IN FOLLOWING FUNCTION CALL
 		
 		populateTextFields(picture.getAlbumName(),
@@ -106,7 +107,7 @@ public class EditPictureActivity extends Skindactivity {
 		while(tagIter.hasNext()){
 			tagList.add(tagIter.next());
 		}
-		ArrayAdapter<String> arrAdapt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tagList);
+		ArrayAdapter<String> arrAdapt = new ArrayAdapter<String>(this, R.layout.tag_list_item, tagList);
 		tagListView.setAdapter(arrAdapt);
 		
 	}
