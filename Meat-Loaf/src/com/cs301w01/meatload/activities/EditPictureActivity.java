@@ -150,7 +150,9 @@ public class EditPictureActivity extends Skindactivity {
 	/**
 	 * Opens a dialog that will allow the user to select an album from a list of album names,
 	 * which will move the selected picture to that album.
+	 * @deprecated
 	 */
+	@SuppressWarnings("unused")
 	private void openChangeAlbumDialog() {
 		final Dialog changeAlbumDialog = new Dialog(this);
 		changeAlbumDialog.setContentView(R.layout.change_album);
