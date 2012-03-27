@@ -1,5 +1,7 @@
 package com.cs301w01.meatload.activities;
 
+import java.util.Collection;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import com.cs301w01.meatload.R;
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Picture;
 
 /**
  * View Activity which uses GalleryManager to modify Albums.
@@ -33,6 +36,19 @@ public class EditAlbumActivity extends Skindactivity {
         gMan = new GalleryManager(a, this);
 
         createListeners();
+        populate();
+    }
+    
+    private void populate(){
+		EditText name = (EditText) findViewById(R.id.edit_album_name);
+		name.setText(gMan.getAlbumName());
+		
+		Collection<Picture> test = gMan.getPictureGallery();
+		TextView numView = (TextView) findViewById(R.id.text_num_pics);
+		numView.setText("" + gMan.getPictureGallery().size());
+		
+		TextView dateView = (TextView) findViewById(R.id.text_date);
+		dateView.setText(gMan.getDate().toString());
     }
 
     private void createListeners() {

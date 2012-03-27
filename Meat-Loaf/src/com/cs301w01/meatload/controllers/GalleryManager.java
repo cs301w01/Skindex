@@ -1,6 +1,7 @@
 package com.cs301w01.meatload.controllers;
 
 import java.util.Collection;
+import java.util.Date;
 
 import android.content.Context;
 
@@ -92,7 +93,11 @@ public class GalleryManager implements FController {
     	else if (album.getName().equals(ALL_PICTURES_ALBUM_NAME))
     		return new PictureQueryGenerator(context).selectAllPictures();
     	else
-    		return new PictureQueryGenerator(context).selectPicturesByTag(album.getAlbumTags());
+    		return null;
+    		// TODO: I removed the following code.  Now that album tags do not have tags
+    		// this should never be the case, correct?  I am leaving it in a mess here
+    		// because I would like someone to confirm this behaviour.
+    		//new PictureQueryGenerator(context).selectPicturesByTag(album.getAlbumTags());
     }
     
     public void deletePicture(int pid) {
@@ -111,6 +116,10 @@ public class GalleryManager implements FController {
     	return album.getName();
     }
     
+    public Date getDate() {
+    	return album.getDate();
+    }
+    
     public String getTitle() {
     	
     	if (isAlbum)
@@ -120,7 +129,10 @@ public class GalleryManager implements FController {
     		return ALL_PICTURES_ALBUM_NAME;
     	
     	else
-    		return new TagQueryGenerator(context).stringJoin(album.getAlbumTags(), ", ");
+    		return null;
+    	// I am removing the following code as it is no longer needed I think.
+    	// Joel was here.
+    	//new TagQueryGenerator(context).stringJoin(album.getAlbumTags(), ", ");
     }
 
     /**

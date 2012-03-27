@@ -2,7 +2,9 @@ package com.cs301w01.meatload.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * 
@@ -17,13 +19,15 @@ public class Album implements Serializable {
     private int pictureCount;
     private long id;
     private Collection<Picture> pictures;
+    private Date date;
     
     public Album(String name, int pictureCount, Collection<Picture> pictures, long id) {
-    	
+    	Calendar cal = Calendar.getInstance();
     	this.name = name;
     	this.pictureCount = pictureCount;
     	this.pictures = pictures;
         this.id = id;
+        this.date = cal.getTime();
     	
     }
     
@@ -38,17 +42,7 @@ public class Album implements Serializable {
     public Collection<Picture> getPictures() {
     	return pictures;
     }
-    
-    public Collection<String> getAlbumTags() {
-    	
-    	Collection<String> tags = new ArrayList<String>();
-    	
-
-    	
-    	return tags;
-    	
-    }
-    
+     
     public Collection<String> getAllAlbumTags() {
     	
     	Collection<String> tags = new ArrayList<String>();
@@ -61,5 +55,9 @@ public class Album implements Serializable {
     
     public long getID() {
         return id;
+    }
+    
+    public Date getDate(){
+    	return date;
     }
 }

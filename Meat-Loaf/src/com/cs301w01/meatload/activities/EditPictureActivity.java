@@ -70,7 +70,7 @@ public class EditPictureActivity extends Skindactivity {
 		populateTextFields(picture.getAlbumName(),
                 picture.getDate().toString(),
                 picture.getPath(),
-                testTagList);
+                picture.getTags());
 
 		createListeners();
 	}
