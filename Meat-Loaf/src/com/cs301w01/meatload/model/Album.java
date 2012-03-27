@@ -14,14 +14,14 @@ public class Album implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
-    private int numPhotos;
+    private int pictureCount;
     private long id;
     private Collection<Picture> pictures;
     
-    public Album(String name, int numPhotos, Collection<Picture> pictures, long id) {
+    public Album(String name, int pictureCount, Collection<Picture> pictures, long id) {
     	
     	this.name = name;
-    	this.numPhotos = numPhotos;
+    	this.pictureCount = pictureCount;
     	this.pictures = pictures;
         this.id = id;
     	
@@ -31,8 +31,8 @@ public class Album implements Serializable {
     	return name;
     }
     
-    public int getNumPhotos() {
-    	return numPhotos;
+    public int getPictureCount() {
+    	return pictureCount;
     }
     
     public Collection<Picture> getPictures() {
