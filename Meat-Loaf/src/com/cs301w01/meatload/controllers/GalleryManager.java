@@ -1,9 +1,6 @@
 package com.cs301w01.meatload.controllers;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import android.content.Context;
 
@@ -25,7 +22,6 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class GalleryManager implements FController {
 
-	private static final long serialVersionUID = 1L;
 	private Context context;
 	private Album album;
 	private boolean isAlbum = true;
@@ -62,18 +58,14 @@ public class GalleryManager implements FController {
      * @param tags Collection of tags as Strings
      */
     public GalleryManager(Collection<String> tags, Context context) {
-
     	this.album = createTagAlbum(tags);
     	isAlbum = false;
 
         this.context = context;
-
     }
 
     public void setContext(Context context) {
-
         this.context = context;
-
     }
     
     public void storePhoto(Picture picture) {
@@ -85,12 +77,9 @@ public class GalleryManager implements FController {
     }
     
     public void changeAlbumName(String newAlbumName, Album a) {
-        
         AlbumQueryGenerator aG = new AlbumQueryGenerator(this.context);
-
         aG.updateAlbumName(a.getName(), newAlbumName);
-        
-    } 
+    }
     
     /**
      * Invokes the DBManager to return a set of Picture objects based on whether GalleryManager
@@ -140,23 +129,18 @@ public class GalleryManager implements FController {
      * @param tags, Collection of strings representing selected tags
      */
     private Album createTagAlbum(Collection<String> tags) {
-
-        Collection<Picture> pictures = new PictureQueryGenerator(context).selectPicturesByTag(tags);
+    	PictureQueryGenerator pictureQueryGenerator = new PictureQueryGenerator(context);
+        Collection<Picture> pictures = pictureQueryGenerator.selectPicturesByTag(tags);
 
         return new Album("Tag Album", pictures.size(), pictures, -1);
-
     }
     
     public Album getAlbum() {
-
         return album;
-
     }
 
     public void updateAlbum() {
-
         long albumId = album.getID();
         this.album = new AlbumQueryGenerator(context).getAlbumByID(albumId);
-
     }
 }

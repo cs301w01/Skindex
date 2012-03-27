@@ -36,7 +36,6 @@ public class EditAlbumActivity extends Skindactivity {
     }
 
     private void createListeners() {
-
         final Button saveAlbumButton = (Button) findViewById(R.id.save_album_button);
         saveAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -44,7 +43,6 @@ public class EditAlbumActivity extends Skindactivity {
                 finish();
             }
         });
-
     }
 
     /**
@@ -52,17 +50,15 @@ public class EditAlbumActivity extends Skindactivity {
      * album name in the DB.
      */
     private void updateAlbumName() {
-
         final EditText albumName = (EditText) findViewById(R.id.edit_album_name);
+        if (albumName.length() == 0) {
+        	return;
+        }
         String newAlbumName = albumName.getText().toString();
         
         String oldAlbumName = gMan.getAlbum().getName();
-        if (!oldAlbumName.equals(newAlbumName)) {
-            
+        if (!oldAlbumName.equals(newAlbumName) && newAlbumName.length() > 0) {
             gMan.changeAlbumName(newAlbumName, gMan.getAlbum());
-            
         }
-
     }
-
 }
