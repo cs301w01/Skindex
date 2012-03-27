@@ -3,10 +3,10 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 	<ListView 
-	    android:id="@+id/changeAlbumListView"
+	    android:id="@+id/editTagsListView"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent" >
-	    
+	
 	</ListView>
 	
 	<LinearLayout
@@ -15,11 +15,11 @@
 	    android:orientation="horizontal" >
 	    
 	    <Button 
-	        android:id="@+id/moveToAlbumButton" 
+	        android:id="@+id/saveTagsButton" 
 	        android:layout_width="0dip"
 	        android:layout_height="wrap_content"
 	        android:layout_weight="0.50"
-	        android:text="@string/button_move_album"/>
+	        android:text="@string/save"/>
 	    
 	    <Button 
 	        android:id="@+id/cancelDialogButton" 

@@ -18,7 +18,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -83,10 +82,11 @@ public class EditPictureActivity extends Skindactivity {
 	
 	/**
 	 * Fills the text and image fields on the screen with a current picture.
+	 * @see <a href="http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/">
+	 http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
-	
-	//USED http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/
-	protected void populateTextFields(String albumName, String date, String path, Collection<String> tags) {
+	protected void populateTextFields(String albumName, String date, String path, 
+			Collection<String> tags) {
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
 		pictureView.setImageDrawable(Drawable.createFromPath(path));
@@ -107,7 +107,8 @@ public class EditPictureActivity extends Skindactivity {
 		while(tagIter.hasNext()){
 			tagList.add(tagIter.next());
 		}
-		ArrayAdapter<String> arrAdapt = new ArrayAdapter<String>(this, R.layout.tag_list_item, tagList);
+		ArrayAdapter<String> arrAdapt = 
+				new ArrayAdapter<String>(this, R.layout.tag_list_item, tagList);
 		tagListView.setAdapter(arrAdapt);
 		
 	}
@@ -139,62 +140,50 @@ public class EditPictureActivity extends Skindactivity {
         
         editTagsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                openEditTagsDialogue();
+                openEditTagsDialog();
             }
         });
 	}
-	private void openEditTagsDialogue(){
+	private void openEditTagsDialog() {
+		final Dialog editTagsDialog = new Dialog(this);
+		editTagsDialog.setContentView(R.layout.edit_tags);
+		editTagsDialog.setCancelable(true);
 		
-	}
-	
-	/**
-	 * Opens a dialog that will allow the user to select an album from a list of album names,
-	 * which will move the selected picture to that album.
-	 * @deprecated
-	 */
-	@SuppressWarnings("unused")
-	private void openChangeAlbumDialog() {
-		final Dialog changeAlbumDialog = new Dialog(this);
-		changeAlbumDialog.setContentView(R.layout.change_album);
-		changeAlbumDialog.setCancelable(true);
+		ArrayList<String> tags = (ArrayList<String>) picture.getTags();
+		ArrayAdapter<String> adapter = 
+				new ArrayAdapter<String>(this, R.layout.tag_list_item, tags);
 		
-		ArrayList<Album> albumList = mainManager.getAllAlbums();
-		AlbumAdapter adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
+		ListView tagListView = (ListView) findViewById(R.id.editTagsListView);
+		tagListView = (ListView) findViewById(R.id.changeAlbumListView);
+		tagListView.setAdapter(adapter);
+		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
-		ListView albumListView = (ListView) findViewById(R.id.albumListView);
-		albumListView = (ListView) findViewById(R.id.changeAlbumListView);
-		albumListView.setAdapter(adapter);
-		albumListView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-		
-		Button moveToAlbumButton = (Button) findViewById(R.id.moveToAlbumButton);
-		moveToAlbumButton.setOnClickListener(new View.OnClickListener() {
+		Button saveTagsButton = (Button) editTagsDialog.findViewById(R.id.saveTagsButton);
+		saveTagsButton.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				// TODO: Make this move the picture into the selected album.
-				changeAlbumDialog.dismiss();
+				// TODO: Make this set the tentative tags on the picture object.
+				editTagsDialog.dismiss();
 			}
 		});
 		
-		Button cancelDialogButton = (Button) findViewById(R.id.cancelDialogButton);
+		Button cancelDialogButton = (Button) editTagsDialog.findViewById(R.id.cancelDialogButton);
 		cancelDialogButton.setOnClickListener(new View.OnClickListener() {
 			
 			public void onClick(View v) {
-				changeAlbumDialog.dismiss();
+				editTagsDialog.dismiss();
 			}
 		});
 		
-		changeAlbumDialog.show();
+		editTagsDialog.show();
 	}
     
     private void openSendEmailActivity() {
-        
         Intent sendEmail = new Intent();
         sendEmail.setClassName("com.cs301w01.meatload", 
         		"com.cs301w01.meatload.activities.SendEmailActivity");
         sendEmail.putExtra("picture", picture);
         
         startActivity(sendEmail);
-
     }
-    
 }
