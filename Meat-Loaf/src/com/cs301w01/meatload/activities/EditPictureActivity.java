@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -83,8 +84,9 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(date);
 		
 		// Set albumView to string representation of Album in Picture object
-		EditText albumView = (EditText) findViewById(R.id.albumView);
-		albumView.setText(albumName);
+		// TODO: This spinner also needs to be populated with other albums in drop down!!
+		Spinner albumView = (Spinner) findViewById(R.id.albumView);
+		albumView.setTag(albumName);
 	}
 
 	protected void createListeners() {

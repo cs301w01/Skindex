@@ -15,11 +15,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/26/12
- * Time: 6:06 PM
- * To change this template use File | Settings | File Templates.
+ * Used in conjunction with a view to create a timeline of pictures built from the paths given in
+ * the pictures array passed in the constructor.
  */
 public class ImageAdapter extends BaseAdapter {
 
