@@ -29,7 +29,11 @@ public class SendEmailActivity extends Skindactivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        //picture = (Picture) getIntent().getExtras().getSerializable("picture");
+
+        // Get picture object from Intent's extras bundle
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        picture = (Picture) extras.getSerializable("picture");
 
         sendButton = (Button) findViewById(R.id.buttonSend);
         textTo = (EditText) findViewById(R.id.editTextTo);
@@ -50,7 +54,7 @@ public class SendEmailActivity extends Skindactivity {
                 //email.putExtra(Intent.EXTRA_CC, new String[]{ recipient});
                 //email.putExtra(Intent.EXTRA_BCC, new String[]{recipient});
 
-               // email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + picture.getPath()));
+                email.putExtra(Intent.EXTRA_STREAM, Uri.parse("file://" + picture.getPath()));
 
                 //add multiple photos
 //                for(Picture picture: pictureAttachments){
