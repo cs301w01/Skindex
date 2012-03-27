@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Adapter for populating a ListView with album names and picture counts of those albums.
+ * Adapter for populating a ListView with tag names.
  * @author Blake Bouchard
  * @author Jose C. Gomez
  * @see <a href="http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/">
@@ -32,7 +32,7 @@ public class TagAdapter extends ArrayAdapter<Tag> {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout tagListItem;
-        // Get current album object
+        // Get current tag object
         Tag tag = getItem(position);
  
         // Inflate the view
@@ -49,7 +49,7 @@ public class TagAdapter extends ArrayAdapter<Tag> {
         // Get the text boxes from the list_item.xml file
         TextView tagName = (TextView) tagListItem.findViewById(R.id.tag_list_item);
  
-        // Assign the appropriate data from album object
+        // Assign the appropriate data from tag object
         tagName.setText(tag.getName());
  
         return tagListItem;
