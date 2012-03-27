@@ -3,7 +3,7 @@ package com.cs301w01.meatload.adapters;
 import java.util.List;
 
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Tag;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -20,40 +20,38 @@ import android.widget.TextView;
  * @see <a href="http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/">
  http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/</a>
  */
-public class AlbumAdapter extends ArrayAdapter<Album> {
+public class TagAdapter extends ArrayAdapter<Tag> {
 
 	int resource;
 	String response;
 	Context context;
-	public AlbumAdapter(Context context, int textViewResourceId, List<Album> albums) {
-		super(context, textViewResourceId, albums);
+	public TagAdapter(Context context, int textViewResourceId, List<Tag> tags) {
+		super(context, textViewResourceId, tags);
 		this.resource = textViewResourceId;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
-        LinearLayout albumListItem;
+        LinearLayout tagListItem;
         // Get current album object
-        Album album = getItem(position);
+        Tag tag = getItem(position);
  
         // Inflate the view
         if (convertView == null) {
-            albumListItem = new LinearLayout(getContext());
+            tagListItem = new LinearLayout(getContext());
             String inflater = Context.LAYOUT_INFLATER_SERVICE;
             LayoutInflater vi;
             vi = (LayoutInflater)getContext().getSystemService(inflater);
-            vi.inflate(resource, albumListItem, true);
+            vi.inflate(resource, tagListItem, true);
         } else {
-            albumListItem = (LinearLayout) convertView;
+            tagListItem = (LinearLayout) convertView;
         }
         
         // Get the text boxes from the list_item.xml file
-        TextView albumName = (TextView) albumListItem.findViewById(R.id.itemName);
-        TextView albumCount = (TextView) albumListItem.findViewById(R.id.itemValue);
+        TextView tagName = (TextView) tagListItem.findViewById(R.id.tag_list_item);
  
         // Assign the appropriate data from album object
-        albumName.setText(album.getName());
-        albumCount.setText(Integer.toString(album.getPictureCount()));
+        tagName.setText(tag.getName());
  
-        return albumListItem;
+        return tagListItem;
     }
 }
