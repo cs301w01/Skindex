@@ -183,7 +183,9 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
         SQLiteDatabase db = this.getWritableDatabase();
 
         long id = db.insert(tableName, colId, cv);
-        
+
+        db.close();
+
 		return id;
 		
 	}

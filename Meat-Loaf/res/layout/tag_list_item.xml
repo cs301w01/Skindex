@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+   	android:layout_height="wrap_content" 
+    android:gravity="left|center"
+    android:layout_width="wrap_content" 
+    android:paddingBottom="5px"
+    android:paddingTop="5px"
+    android:paddingLeft="5px">
+    
+      <TextView android:id="@+id/tag_list_item" 
+      android:layout_width="wrap_content" 
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="10px" 
+      android:textColor="#0099CC"/>
+</LinearLayout>

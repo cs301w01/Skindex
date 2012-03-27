@@ -19,9 +19,10 @@
     <string name="button_delete_album">Delete Album</string>
     <string name="albumName">Album Name</string>
     <string name="label_num_pics">Number of Pictures</string>
-    <string name="sendEmail">Send Email</string>
-    <string name="button_save_picture">Save Picture</string>
+    <string name="sendEmail">Email</string>
+    <string name="save">Save</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_move_album">Move to Album</string>
     <string name="photoName">Photo Name</string>
+    <string name="delete">Delete</string>
 </resources>

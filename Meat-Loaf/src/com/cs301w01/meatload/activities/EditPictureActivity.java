@@ -1,6 +1,8 @@
 package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import com.cs301w01.meatload.model.Picture;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -58,9 +61,15 @@ public class EditPictureActivity extends Skindactivity {
 		// Set up a new PictureManager using the Picture object passed via the intent 
 		pictureManager = new PictureManager(this, picture);
 
+		// TODO: DELETE THESE LINES WHEN picture.getTags() is working!!!
+		ArrayList<String> testTagList = new ArrayList();
+		testTagList.add("brown");testTagList.add("moldy");testTagList.add("bruise");
+		//END DELETE, AND UPDATE ARGS IN FOLLOWING FUNCTION CALL
+		
 		populateTextFields(picture.getAlbumName(),
                 picture.getDate().toString(),
-                picture.getPath());
+                picture.getPath(),
+                testTagList);
 
 		createListeners();
 	}
@@ -74,7 +83,9 @@ public class EditPictureActivity extends Skindactivity {
 	/**
 	 * Fills the text and image fields on the screen with a current picture.
 	 */
-	protected void populateTextFields(String albumName, String date, String path) {
+	
+	//USED http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/
+	protected void populateTextFields(String albumName, String date, String path, Collection<String> tags) {
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
 		pictureView.setImageDrawable(Drawable.createFromPath(path));
@@ -87,6 +98,17 @@ public class EditPictureActivity extends Skindactivity {
 		// TODO: This spinner also needs to be populated with other albums in drop down!!
 		Spinner albumView = (Spinner) findViewById(R.id.albumView);
 		albumView.setTag(albumName);
+		
+		// TODO: populate picTags with this pictures Tags
+		ListView tagListView = (ListView) findViewById(R.id.picTagList);
+		Iterator<String> tagIter = tags.iterator();
+		ArrayList<String> tagList = new ArrayList<String>();
+		while(tagIter.hasNext()){
+			tagList.add(tagIter.next());
+		}
+		ArrayAdapter<String> arrAdapt = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, tagList);
+		tagListView.setAdapter(arrAdapt);
+		
 	}
 
 	protected void createListeners() {
@@ -100,9 +122,8 @@ public class EditPictureActivity extends Skindactivity {
 			public void onClick(View view) {
 				openChangeAlbumDialog();
 			}
-		});*/
+		});
 		
-		// TODO: Add Edit Tags functionality to EditPicture
         Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
         
         sendEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +131,19 @@ public class EditPictureActivity extends Skindactivity {
                 openSendEmailActivity();
             }
         });
+        */
+        
+        //Edit Tags button
+        Button editTagsButton = (Button) findViewById(R.id.editTagsButton);
+        
+        editTagsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                openEditTagsDialogue();
+            }
+        });
+	}
+	private void openEditTagsDialogue(){
+		
 	}
 	
 	/**
@@ -154,7 +188,7 @@ public class EditPictureActivity extends Skindactivity {
         Intent sendEmail = new Intent();
         sendEmail.setClassName("com.cs301w01.meatload", 
         		"com.cs301w01.meatload.activities.SendEmailActivity");
-        //sendEmail.putExtra("picture", pictureManager.getPicture());
+        sendEmail.putExtra("picture", picture);
         
         startActivity(sendEmail);
 
