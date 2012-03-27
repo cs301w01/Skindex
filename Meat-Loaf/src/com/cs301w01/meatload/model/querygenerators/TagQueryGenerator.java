@@ -8,7 +8,7 @@ import com.cs301w01.meatload.model.Tag;
 import android.content.Context;
 import android.database.Cursor;
 
-public class TagQueryGenerator extends QueryGenerator{
+public class TagQueryGenerator extends QueryGenerator {
 	
 	 //vars for tags table
     public static final String TABLE_NAME = "tags";
@@ -19,7 +19,7 @@ public class TagQueryGenerator extends QueryGenerator{
             COL_PICTUREID + " INTEGER, " +
             COL_NAME + " TEXT, " +
             "FOREIGN KEY(" + COL_PICTUREID + ") REFERENCES " +
-                                                PictureQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
+            	PictureQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
     
     public TagQueryGenerator(Context context) {
 		super(context);
@@ -34,7 +34,7 @@ public class TagQueryGenerator extends QueryGenerator{
     		return tags;
     	}
 
-    	while(!c.isAfterLast()) {
+    	while (!c.isAfterLast()) {
     		tags.add(c.getString(c.getColumnIndex(COL_NAME)));
     		c.moveToNext();
     	}
@@ -59,7 +59,8 @@ public class TagQueryGenerator extends QueryGenerator{
     
     public Collection<Tag> selectAllTags() {
     	
-    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" +
+    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
+    						+ 
     						" FROM " + TABLE_NAME + 
     						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
     						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
@@ -73,7 +74,7 @@ public class TagQueryGenerator extends QueryGenerator{
     		return tags;
     	}
 
-        while(!c.isAfterLast()) {
+        while (!c.isAfterLast()) {
             
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
             int numPictures = new Integer(c.getString(c.getColumnIndex("numPictures")));
@@ -101,7 +102,7 @@ public class TagQueryGenerator extends QueryGenerator{
 		 for (String curr : strings) {
 			 newString += curr;
 			 
-			 if(isFirst){
+			 if(isFirst) {
 				 isFirst = false;
 				 newString += delimiter;
 			 }

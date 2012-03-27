@@ -6,7 +6,6 @@ public class CommentQueryGenerator extends QueryGenerator{
 
 	public CommentQueryGenerator(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 
 	//TODO: create queries for comments if we ever implement this

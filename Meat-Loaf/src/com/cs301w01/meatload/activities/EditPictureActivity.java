@@ -188,7 +188,7 @@ public class EditPictureActivity extends Skindactivity {
         Intent sendEmail = new Intent();
         sendEmail.setClassName("com.cs301w01.meatload", 
         		"com.cs301w01.meatload.activities.SendEmailActivity");
-        //sendEmail.putExtra("picture", pictureManager.getPicture());
+        sendEmail.putExtra("picture", picture);
         
         startActivity(sendEmail);
 
