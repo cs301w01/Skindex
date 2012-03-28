@@ -150,7 +150,6 @@ public class EditPictureActivity extends Skindactivity {
         //Delete button logic
         Button deletePicButton = (Button) findViewById(R.id.deletePictureButton);
         deletePicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
                 deletePhoto();
             }
@@ -159,7 +158,6 @@ public class EditPictureActivity extends Skindactivity {
         //save picture logic
         Button savePictureButton = (Button) findViewById(R.id.savePictureButton);
         savePictureButton.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
                 savePicture();
             }
