@@ -1,7 +1,9 @@
 package com.cs301w01.meatload.activities;
 
 import android.content.Intent;
+import android.widget.Gallery;
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
 import com.cs301w01.meatload.controllers.PictureManager;
 
 import android.app.AlertDialog;
@@ -13,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
-import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
  * Implements the logic for the TakePictureActivity, as well as the Take Picture dialog.
@@ -27,6 +28,8 @@ public class TakePictureActivity extends Skindactivity {
 	
 	private PictureManager pictureManager;
 	private Album album;
+    private HorizontalGalleryAdapter adapter;
+    private Gallery gallery;
     
 	public void onCreate(Bundle savedInstanceState) {
 		Bitmap img;////
@@ -35,6 +38,12 @@ public class TakePictureActivity extends Skindactivity {
 	    
 	    Bundle b = getIntent().getExtras();
         album = (Album) b.getSerializable("album");
+
+        //handle photo consistency gallery logic
+        adapter = new HorizontalGalleryAdapter(this, album.getPictures());
+
+        gallery = (Gallery) findViewById(R.id.gallery);
+        gallery.setAdapter(adapter);
 
         pictureManager = new PictureManager(this, album.getName());
         pictureManager.setContext(this);

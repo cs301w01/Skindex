@@ -15,16 +15,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Used in conjunction with a view to create a timeline of pictures built from the paths given in
- * the pictures array passed in the constructor.
+ * Use this adapter when you want to create a vertical photo gallery that slides up and down.
+ * @author Derek Dowling
  */
-public class ImageAdapter extends BaseAdapter {
+public class VerticalGalleryAdapter extends BaseAdapter{
 
     int mGalleryItemBackground;
     private Context mContext;
     private ArrayList<Picture> pictures;
 
-    public ImageAdapter(Context c, Collection<Picture> pictures) {
+    public VerticalGalleryAdapter(Context c, Collection<Picture> pictures) {
 
         mContext = c;
         TypedArray attr = mContext.obtainStyledAttributes(R.styleable.GalleryActivity);
@@ -56,4 +56,5 @@ public class ImageAdapter extends BaseAdapter {
 
         return imageView;
     }
+
 }

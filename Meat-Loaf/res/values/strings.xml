@@ -25,4 +25,8 @@
     <string name="button_move_album">Move to Album</string>
     <string name="photoName">Photo Name</string>
     <string name="delete">Delete</string>
+    <string name="sendTo">To :</string>
+    <string name="subject">Subject :</string>
+    <string name="emailMessage">Message :</string>
+    <string name="pastPictures">Past Pictures:</string>
 </resources>
