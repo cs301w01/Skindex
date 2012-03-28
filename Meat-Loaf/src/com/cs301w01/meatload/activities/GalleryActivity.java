@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import android.widget.*;
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.adapters.ImageAdapter;
+import com.cs301w01.meatload.adapters.VerticalGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 
 import android.content.Intent;
@@ -30,7 +30,7 @@ public class GalleryActivity extends Skindactivity {
 	//private SimpleAdapter adapter;
 
     private Gallery gallery;
-    private ImageAdapter adapter;
+    private VerticalGalleryAdapter adapter;
 	
 	private GalleryManager galleryManager;
 	
@@ -49,7 +49,11 @@ public class GalleryActivity extends Skindactivity {
         galleryManager.setContext(this);
 
 
+<<<<<<< HEAD
         adapter = new ImageAdapter(this, galleryManager.getPictureGallery());
+=======
+        adapter = new VerticalGalleryAdapter(this, galleryManager.getAlbum().getPictures());
+>>>>>>> b74d26e0ca933ea936c10cae5e69bfbe2334250f
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
@@ -141,7 +145,7 @@ public class GalleryActivity extends Skindactivity {
         Collection<Picture> albumPictures = galleryManager.getPictureGallery();
 
         //adapter = new SimpleAdapter(this, albumPictures, R.layout.list_item, adapterCols, adapterIDs);
-        adapter = new ImageAdapter(this, albumPictures);
+        adapter = new VerticalGalleryAdapter(this, albumPictures);
 
         gallery.setAdapter(adapter);
 

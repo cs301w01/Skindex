@@ -47,6 +47,12 @@ public class TakePictureActivity extends Skindactivity {
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
 
+        //handle photo consistency gallery logic
+        adapter = new HorizontalGalleryAdapter(this, album.getPictures());
+
+        gallery = (Gallery) findViewById(R.id.gallery);
+        gallery.setAdapter(adapter);
+
         pictureManager = new PictureManager(this, album.getName());
         pictureManager.setContext(this);
 	    imgOnDisplay = pictureManager.generatePicture();
