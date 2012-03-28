@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
@@ -211,7 +212,7 @@ public class ViewAlbumsActivity extends Skindactivity {
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.GalleryActivity");
-    	myIntent.putExtra("album", album);
+    	myIntent.putExtra("gallery", new AlbumGallery(album));
     	
     	startActivity(myIntent); 
     }
@@ -221,12 +222,12 @@ public class ViewAlbumsActivity extends Skindactivity {
     }
     
     private void openGalleryFromTags(Collection<String> tags) {
-        openGallery(new GalleryManager(tags, this).getAlbum());
+        //openGallery(new GalleryManager(tags, this).getAlbum());
     }
     
     private void openGalleryAllPhotos() {
-    	openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>(), 
-    			-1));
+    	//openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new ArrayList<Picture>(), 
+    			//-1));
     }
 
 }

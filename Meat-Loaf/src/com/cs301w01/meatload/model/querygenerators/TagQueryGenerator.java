@@ -57,7 +57,7 @@ public class TagQueryGenerator extends QueryGenerator {
         
     }
     
-    public Collection<Tag> selectAllTags() {
+    public ArrayList<Tag> selectAllTags() {
     	
     	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
     						+ 
@@ -68,7 +68,7 @@ public class TagQueryGenerator extends QueryGenerator {
     	
     	Cursor c = db.performRawQuery(tagQuery);
     	
-    	Collection<Tag> tags = new ArrayList<Tag>();
+    	ArrayList<Tag> tags = new ArrayList<Tag>();
     	
     	if (c == null) {
     		return tags;

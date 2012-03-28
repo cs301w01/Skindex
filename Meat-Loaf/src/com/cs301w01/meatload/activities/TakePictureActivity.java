@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
@@ -34,7 +35,8 @@ public class TakePictureActivity extends Skindactivity {
 	    setContentView(R.layout.take_picture);
 	    
 	    Bundle b = getIntent().getExtras();
-        album = (Album) b.getSerializable("album");
+        AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
+        album = aGal.getAlbum();
 
         pictureManager = new PictureManager(this, album.getName());
         pictureManager.setContext(this);

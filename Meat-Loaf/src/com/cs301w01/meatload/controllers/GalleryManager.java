@@ -6,6 +6,8 @@ import java.util.Date;
 import android.content.Context;
 
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.AllPicturesGallery;
+import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
@@ -24,24 +26,23 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 public class GalleryManager implements FController {
 
 	private Context context;
-	private Album album;
-	private boolean isAlbum = true;
-    
-    public static final String ALL_PICTURES_ALBUM_NAME = "ALL PICTURES";
+	private GalleryData gallery;
 	
-    public GalleryManager(Context context) {
-
-    	isAlbum = false;
-
+	public GalleryManager(GalleryData gallery){
+		this.gallery = gallery;
+	}
+	
+    /*public GalleryManager(Context context) {
+    	gallery = new AllPicturesGallery();
         this.context = context;
-    }
+    }*/
     
     /**
      * Constructs the GalleryManager with an Album of Pictures (or All Pictures) as opposed to
      * Pictures with a set of tags.
      * @param album String representation of album name to be associated with this object
      */
-    public GalleryManager(Album album, Context context) {
+    /*public GalleryManager(Album album, Context context) {
 
         this.album = album;
 
@@ -51,19 +52,23 @@ public class GalleryManager implements FController {
 
         this.context = context;
 
-    }
+    }*/
     
     /**
      * Constructs the GalleryManager with all Pictures with a set of Tags as opposed to with an
      * Album.
      * @param tags Collection of tags as Strings
      */
-    public GalleryManager(Collection<String> tags, Context context) {
+    /*public GalleryManager(Collection<String> tags, Context context) {
     	this.album = createTagAlbum(tags);
     	isAlbum = false;
 
         this.context = context;
-    }
+    }*/
+	
+	public GalleryData getGallery() {
+		return gallery;
+	}
 
     public void setContext(Context context) {
         this.context = context;
@@ -88,16 +93,7 @@ public class GalleryManager implements FController {
      * @return ArrayList of HashMaps representing a set of Picture objects
      */
     public Collection<Picture> getPictureGallery() {
-    	if (isAlbum)
-    		return new PictureQueryGenerator(context).selectPicturesFromAlbum(album.getName());
-    	else if (album.getName().equals(ALL_PICTURES_ALBUM_NAME))
-    		return new PictureQueryGenerator(context).selectAllPictures();
-    	else
-    		return null;
-    		// TODO: I removed the following code.  Now that album tags do not have tags
-    		// this should never be the case, correct?  I am leaving it in a mess here
-    		// because I would like someone to confirm this behaviour.
-    		//new PictureQueryGenerator(context).selectPicturesByTag(album.getAlbumTags());
+    	return gallery.getPictureGallery(context);
     }
     
     public void deletePicture(int pid) {
@@ -109,38 +105,27 @@ public class GalleryManager implements FController {
     }
     
     public boolean isAlbum() {
-    	return isAlbum;
+    	return gallery.isAlbum();
+    }
+    
+    public String getTitle() {
+    	return gallery.getTitle();
     }
 
-    public String getAlbumName() {
+    /*public String getAlbumName() {
     	return album.getName();
     }
     
     public Date getDate() {
     	return album.getDate();
-    }
-    
-    public String getTitle() {
-    	
-    	if (isAlbum)
-    		return album.getName();
-    	
-    	else if (album.getName().equals(ALL_PICTURES_ALBUM_NAME))
-    		return ALL_PICTURES_ALBUM_NAME;
-    	
-    	else
-    		return null;
-    	// I am removing the following code as it is no longer needed I think.
-    	// Joel was here.
-    	//new TagQueryGenerator(context).stringJoin(album.getAlbumTags(), ", ");
-    }
+    }*/
 
     /**
      * Method for creating a temporary album for the gallery manager.
      *
      * @param tags, Collection of strings representing selected tags
      */
-    private Album createTagAlbum(Collection<String> tags) {
+    /*private Album createTagAlbum(Collection<String> tags) {
     	PictureQueryGenerator pictureQueryGenerator = new PictureQueryGenerator(context);
         Collection<Picture> pictures = pictureQueryGenerator.selectPicturesByTag(tags);
 
@@ -154,5 +139,5 @@ public class GalleryManager implements FController {
     public void updateAlbum() {
         long albumId = album.getID();
         this.album = new AlbumQueryGenerator(context).getAlbumByID(albumId);
-    }
+    }*/
 }

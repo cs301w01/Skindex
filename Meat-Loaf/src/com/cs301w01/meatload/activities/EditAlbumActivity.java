@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
 
 /**
@@ -20,6 +21,7 @@ import com.cs301w01.meatload.model.Picture;
 public class EditAlbumActivity extends Skindactivity {
 
     private GalleryManager gMan;
+    private Album album;
 
     @Override
     public void update(Object model) {
@@ -32,8 +34,9 @@ public class EditAlbumActivity extends Skindactivity {
     	setContentView(R.layout.edit_album);
     	
     	Bundle b = getIntent().getExtras();
-        Album a = (Album) b.getSerializable("album");
-        gMan = new GalleryManager(a, this);
+    	AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
+    	album = aGal.getAlbum();
+        gMan = new GalleryManager(new AlbumGallery(album));
 
         createListeners();
         populate();
@@ -41,14 +44,14 @@ public class EditAlbumActivity extends Skindactivity {
     
     private void populate(){
 		EditText name = (EditText) findViewById(R.id.edit_album_name);
-		name.setText(gMan.getAlbumName());
+		name.setText(album.getName());
 		
 		Collection<Picture> test = gMan.getPictureGallery();
 		TextView numView = (TextView) findViewById(R.id.text_num_pics);
 		numView.setText("" + gMan.getPictureGallery().size());
 		
 		TextView dateView = (TextView) findViewById(R.id.text_date);
-		dateView.setText(gMan.getDate().toString());
+		dateView.setText(album.getDate().toString());
     }
 
     private void createListeners() {
@@ -72,9 +75,9 @@ public class EditAlbumActivity extends Skindactivity {
         }
         String newAlbumName = albumName.getText().toString();
         
-        String oldAlbumName = gMan.getAlbum().getName();
+        String oldAlbumName = album.getName();
         if (!oldAlbumName.equals(newAlbumName) && newAlbumName.length() > 0) {
-            gMan.changeAlbumName(newAlbumName, gMan.getAlbum());
+            gMan.changeAlbumName(newAlbumName, album);
         }
     }
 }

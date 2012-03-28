@@ -2,15 +2,15 @@ package com.cs301w01.meatload.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 
 import android.content.Context;
 
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.SQLiteDBManager;
+import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Mediates between DBManager and Skindex by providing lists of Albums and Tags.
@@ -39,8 +39,7 @@ public class MainManager implements FController {
 
     	ArrayList<Album> albums = new ArrayList<Album>();
 
-        Album allPics = new Album("All Pictures", new PictureQueryGenerator(context).getPictureCount(),
-                new ArrayList<Picture>(), -1);
+        Album allPics = new Album("All Pictures", new PictureQueryGenerator(context).getPictureCount(), -1);
 
     	albums.add(allPics);
     	albums.addAll(new AlbumQueryGenerator(context).selectAllAlbums());
@@ -48,15 +47,11 @@ public class MainManager implements FController {
     	return albums;
     }
     
-    /**
-     * @deprecated
-     * @return ArrayList of HashMaps containing tags as Strings
-     */
-    public ArrayList<HashMap<String, String>> getAllTags() {
-    	return null;
+    public ArrayList<Tag> getAllTags(){
+    	return new TagQueryGenerator(context).selectAllTags();
     }
     
     public void addAlbum(String albumName, Collection<String> tags) {
-    	new AlbumQueryGenerator(context).insertAlbum(albumName, tags);
+    	new AlbumQueryGenerator(context).insertAlbum(albumName);
     }
 }

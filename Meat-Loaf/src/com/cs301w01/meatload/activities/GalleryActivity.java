@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
@@ -43,11 +44,12 @@ public class GalleryActivity extends Skindactivity {
         setContentView(R.layout.gallery);
 
         Bundle b = getIntent().getExtras();
-        Album album = (Album) b.getSerializable("album");
-        galleryManager = new GalleryManager(album, this);
+        GalleryData gallerydata = (GalleryData) b.getSerializable("gallery");
+        galleryManager = new GalleryManager(gallerydata);
+        galleryManager.setContext(this);
 
 
-        adapter = new ImageAdapter(this, galleryManager.getAlbum().getPictures());
+        adapter = new ImageAdapter(this, galleryManager.getPictureGallery());
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
@@ -114,7 +116,7 @@ public class GalleryActivity extends Skindactivity {
         super.onResume();
 
     	galleryManager.setContext(this);
-        galleryManager.updateAlbum();
+        //galleryManager.updateAlbum();
 
         refreshScreen();
     }
@@ -136,7 +138,7 @@ public class GalleryActivity extends Skindactivity {
         createListeners();
 
 //    	pictureListView = (ListView) findViewById(R.id.pictureListView);
-        Collection<Picture> albumPictures = galleryManager.getAlbum().getPictures();
+        Collection<Picture> albumPictures = galleryManager.getPictureGallery();
 
         //adapter = new SimpleAdapter(this, albumPictures, R.layout.list_item, adapterCols, adapterIDs);
         adapter = new ImageAdapter(this, albumPictures);
@@ -153,11 +155,11 @@ public class GalleryActivity extends Skindactivity {
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.EditAlbumActivity");
-    	Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + galleryManager.getAlbumName());
+    	Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + galleryManager.getGallery().getAlbumName());
     	
     	//NEED TO SET TAGS AS WELL!
     	
-    	myIntent.putExtra("album", galleryManager.getAlbum());
+    	myIntent.putExtra("gallery", galleryManager.getGallery());
     	
     	startActivity(myIntent);
 
@@ -174,9 +176,9 @@ public class GalleryActivity extends Skindactivity {
     	
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.TakePictureActivity");
-    	Log.d("Taking Picture", "ALBUM NAME:" + galleryManager.getAlbumName());
+    	Log.d("Taking Picture", "ALBUM NAME:" + galleryManager.getGallery().getAlbumName());
 
-        myIntent.putExtra("album", galleryManager.getAlbum());
+        myIntent.putExtra("gallery", galleryManager.getGallery());
 
     	startActivity(myIntent);
 

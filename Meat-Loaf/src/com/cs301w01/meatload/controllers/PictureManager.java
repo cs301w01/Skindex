@@ -34,8 +34,8 @@ public class PictureManager implements FController{
 		this.albumName = albumName;
 	}
 	
-    public PictureManager(Context context, Picture photo) {
-    	this.picture = photo;
+    public PictureManager(Context context, Picture picture) {
+    	this.picture = picture;
     }
     
     public PictureManager(Context context) {

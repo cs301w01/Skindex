@@ -1,6 +1,7 @@
 package com.cs301w01.meatload.model.querygenerators;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,7 +41,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
      * @param albumName
      * @param tags
      */
-    public long insertAlbum(String albumName, Collection<String> tags) {
+    public long insertAlbum(String albumName) {
 
         ContentValues cv = new ContentValues();
 
@@ -56,7 +57,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
         Log.d(TABLE_NAME, "Album inserted: " + albumName + " w/ aid " + aid);
 
         // Insert picture's tags into tags table
-        for(String tag : tags){
+        /*for(String tag : tags){
            
             ContentValues tcv = new ContentValues();
             
@@ -68,7 +69,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
             
             Log.d(TABLE_NAME, "Tag inserted: " + tag + " w/ pid: " + aid);
             
-        }
+        }*/
 
         return aid;
     }
@@ -81,15 +82,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	deleteByID(selectIDByName(name, TABLE_NAME), TABLE_NAME);
     }
     
-    public ArrayList<Album> selectAllAlbums() {
-    	
-    	String albumQuery = "SELECT a." + COL_NAME + " AS " + COL_NAME + ", " + 
-    							"COUNT(p." + COL_ID + ") AS numPictures" +
-    						" FROM " + TABLE_NAME + 
-    						" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
-    						" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
-    						" GROUP BY a." + COL_NAME;
-    	
+    public ArrayList<Album>selectAlbumsByQuery(String albumQuery){
     	Cursor c = db.performRawQuery(albumQuery);
     	
     	ArrayList<Album> albums = new ArrayList<Album>();
@@ -99,13 +92,11 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	}
 
         while(!c.isAfterLast()) {
-
+        	String id = c.getString(c.getColumnIndex(COL_ID));
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
             String numPictures = c.getString(c.getColumnIndex("numPictures"));
 
-            long id = selectAlbumIDByName(albumName);
-
-            Album a = new Album(albumName, Integer.parseInt(numPictures), new ArrayList<Picture>(), id);
+            Album a = new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
 
             albums.add(a);
 
@@ -113,6 +104,19 @@ public class AlbumQueryGenerator extends QueryGenerator {
         }
 
         return albums;
+    }
+    
+    public ArrayList<Album> selectAllAlbums() {
+    	
+    	String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
+    						"a." + COL_NAME + " AS " + COL_NAME + ", " + 
+    						"COUNT(p." + COL_ID + ") AS numPictures" +
+    						" FROM " + TABLE_NAME + 
+    						" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
+    						" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
+    						" GROUP BY a." + COL_NAME;
+    	
+    	return selectAlbumsByQuery(albumQuery);
     }
     
     /**
@@ -155,11 +159,11 @@ public class AlbumQueryGenerator extends QueryGenerator {
      */
     public Album getAlbumByName(String albumName) {
 
-        Collection<Picture> pictures = new ArrayList<Picture>();
+        //Collection<Picture> pictures = new ArrayList<Picture>();
         
-        Collection<Picture> hashPicture = new PictureQueryGenerator(context).selectPicturesFromAlbum(albumName);
+        //Collection<Picture> hashPicture = new PictureQueryGenerator(context).selectPicturesFromAlbum(albumName);
 
-        for(Picture picture : hashPicture) {
+        /*for(Picture picture : hashPicture) {
             
             int id = new PictureQueryGenerator(context).selectIDByName(picture.getName(),
                     PictureQueryGenerator.TABLE_NAME);
@@ -175,23 +179,50 @@ public class AlbumQueryGenerator extends QueryGenerator {
             
             pictures.add(p);
             
-        }
+        }*/
+    	
+	    String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
+	    					"a." + COL_NAME + " AS " + COL_NAME + ", " + 
+							"COUNT(p." + COL_ID + ") AS numPictures" +
+							" FROM " + TABLE_NAME + 
+							" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
+							" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
+							" GROUP BY a." + COL_NAME + 
+							" HAVING a." + COL_NAME + " = '" + albumName + "'";
+	    
+	    Cursor c = db.performRawQuery(albumQuery);
 
-        long id = selectAlbumIDByName(albumName);
+    	if (c == null) {
+    		return null;
+    	}
+    	String id = c.getString(c.getColumnIndex(COL_ID));
+        String numPictures = c.getString(c.getColumnIndex("numPictures"));
 
-        Album album = new Album(albumName, hashPicture.size(), pictures, id);
-
-        return album;
+        return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
 
     }
 
     public Album getAlbumByID(long albumId) {
+    	
+    	String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
+							"a." + COL_NAME + " AS " + COL_NAME + ", " + 
+							"COUNT(p." + COL_ID + ") AS numPictures" +
+							" FROM " + TABLE_NAME + 
+							" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
+							" p ON (a." + COL_ID + " = p." + COL_ALBUMID + ")" + 
+							" GROUP BY a." + COL_NAME + 
+							" HAVING a." + COL_ID + " = '" + albumId + "'";
 
-        String aName = getAlbumNameById(albumId);
-        
-        Album a = getAlbumByName(aName);
-        
-        return a;
+		Cursor c = db.performRawQuery(albumQuery);
+		
+		if (c == null) {
+			return null;
+		}
+		String id = c.getString(c.getColumnIndex(COL_ID));
+		String albumName = c.getString(c.getColumnIndex(COL_NAME));
+		String numPictures = c.getString(c.getColumnIndex("numPictures"));
+		
+		return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
 
     }
 
