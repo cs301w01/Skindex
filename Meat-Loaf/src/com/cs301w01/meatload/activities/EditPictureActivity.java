@@ -151,7 +151,7 @@ public class EditPictureActivity extends Skindactivity {
         Button deletePicButton = (Button) findViewById(R.id.deletePictureButton);
         deletePicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                deletePhoto();
+                deletePicture();
             }
         });
 
@@ -220,7 +220,7 @@ public class EditPictureActivity extends Skindactivity {
 		editTagsDialog.show();
 	}
 
-    private void deletePhoto() {
+    private void deletePicture() {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 

@@ -11,7 +11,7 @@
             android:id="@+id/textViewPhoneNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To : "
+            android:text="@string/sendTo"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
@@ -28,7 +28,7 @@
             android:id="@+id/textViewSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Subject : "
+            android:text="@string/subject"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
@@ -42,7 +42,7 @@
             android:id="@+id/textViewMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Message : "
+            android:text="@string/emailMessage"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
