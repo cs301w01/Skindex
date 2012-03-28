@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.Gallery;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
+import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.PictureManager;
 
 import android.app.AlertDialog;
@@ -28,6 +29,7 @@ public class TakePictureActivity extends Skindactivity {
 private Bitmap imgOnDisplay;
 
 private PictureManager pictureManager;
+private GalleryManager galleryManager;
 private Album album;
     private HorizontalGalleryAdapter adapter;
     private Gallery gallery;
@@ -42,13 +44,13 @@ Bundle b = getIntent().getExtras();
         album = aGal.getAlbum();
 
         //handle photo consistency gallery logic
-        adapter = new HorizontalGalleryAdapter(this, album.getPictures());
+        adapter = new HorizontalGalleryAdapter(this, aGal.getPictureGallery(this));
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
 
         //handle photo consistency gallery logic
-        adapter = new HorizontalGalleryAdapter(this, album.getPictures());
+        adapter = new HorizontalGalleryAdapter(this, aGal.getPictureGallery(this));
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);

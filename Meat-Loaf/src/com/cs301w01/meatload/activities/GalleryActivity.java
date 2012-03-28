@@ -49,11 +49,7 @@ private GalleryManager galleryManager;
         galleryManager.setContext(this);
 
 
-<<<<<<< HEAD
-        adapter = new ImageAdapter(this, galleryManager.getPictureGallery());
-=======
-        adapter = new VerticalGalleryAdapter(this, galleryManager.getAlbum().getPictures());
->>>>>>> b74d26e0ca933ea936c10cae5e69bfbe2334250f
+        adapter = new VerticalGalleryAdapter(this, galleryManager.getPictureGallery());
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
