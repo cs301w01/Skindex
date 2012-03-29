@@ -44,7 +44,7 @@ public class GalleryActivity extends Skindactivity {
         setContentView(R.layout.gallery);
 
         Bundle b = getIntent().getExtras();
-        GalleryData gallerydata = (GalleryData) b.getSerializable("gridview");
+        GalleryData gallerydata = (GalleryData) b.getSerializable("gallery");
         galleryManager = new GalleryManager(gallerydata);
         galleryManager.setContext(this);
 
@@ -71,43 +71,28 @@ public class GalleryActivity extends Skindactivity {
 
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
-public void onClick(View v) {
-setResult(RESULT_OK);
-editAlbum(galleryManager);
-}
-});
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                editAlbum(galleryManager);
+            }
+        });
 
         final Button takePictureButton = (Button) findViewById(R.id.takePic);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
-public void onClick(View v) {
-setResult(RESULT_OK);
-takePicture();
-}
-});
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                takePicture();
+            }
+        });
 
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Picture selectedPic = adapter.getItem(position);
                 Log.d("Info For PictureListener", selectedPic.toString());
                 int pictureID = selectedPic.getPictureID();
-
-
                 openPicture(pictureID);
             }
         });
-
-// pictureListView.setOnItemClickListener(new OnItemClickListener() {
-//
-// public void onItemClick(AdapterView<?> parent, View view,
-//
-// int position, long id) {
-// HashMap<String, String> temp = (HashMap<String, String>) adapter.getItem(position);
-// String clickedPicture = temp.get("id");
-// openPicture(new Integer(clickedPicture));
-//
-// }
-//
-// });
     }
     
     @Override
@@ -136,7 +121,6 @@ takePicture();
 
         createListeners();
 
-// pictureListView = (ListView) findViewById(R.id.pictureListView);
         Collection<Picture> albumPictures = galleryManager.getPictureGallery();
 
         //adapter = new SimpleAdapter(this, albumPictures, R.layout.list_item, adapterCols, adapterIDs);
@@ -144,7 +128,6 @@ takePicture();
 
         gridview.setAdapter(adapter);
 
-// pictureListView.setAdapter(adapter);
 
     }
     
@@ -177,13 +160,14 @@ takePicture();
         
         AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
     
-     myIntent.setClassName("com.cs301w01.meatload",
+        myIntent.setClassName("com.cs301w01.meatload",
              "com.cs301w01.meatload.activities.TakePictureActivity");
-     Log.d("Taking Picture", "ALBUM NAME:" + aGal.getAlbum().getName());
+
+        Log.d("Taking Picture", "ALBUM NAME:" + aGal.getAlbum().getName());
 
         myIntent.putExtra("album", aGal.getAlbum());
 
-     startActivity(myIntent);
+        startActivity(myIntent);
 
     }
     
@@ -197,11 +181,11 @@ takePicture();
     private void openPicture(int pictureID) {
 
         Intent myIntent = new Intent();
-     myIntent.setClassName("com.cs301w01.meatload",
-     "com.cs301w01.meatload.activities.EditPictureActivity");
-     myIntent.putExtra("picture", new PictureQueryGenerator(this).selectPictureByID(pictureID));
-    
-     startActivity(myIntent);
+        myIntent.setClassName("com.cs301w01.meatload",
+        "com.cs301w01.meatload.activities.EditPictureActivity");
+        myIntent.putExtra("picture", new PictureQueryGenerator(this).selectPictureByID(pictureID));
+
+        startActivity(myIntent);
     }
 
 
