@@ -10,10 +10,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.adapters.AlbumAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
 
 import android.graphics.drawable.Drawable;
@@ -171,7 +169,7 @@ public class EditPictureActivity extends Skindactivity {
      */
     private void savePicture() {
         
-        //TODO: Check for changes in any of the photo data
+        //TODO: Check for changes in any of the picture data
         
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Picture Saved.");
@@ -224,12 +222,12 @@ public class EditPictureActivity extends Skindactivity {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Delete Photo?");
+        alert.setTitle("Delete Picture?");
         alert.setMessage("Are you sure?");
 
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                pictureManager.deletePhoto();
+                pictureManager.deletePicture();
                 finish();
             }
         });

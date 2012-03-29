@@ -15,17 +15,15 @@ public class User {
     
     public static final String NO_SPECIALIST = "No Specialist";
     
-    private String name;
-    private String email;
-    private Collection<Album> albums;
-    private String specialistsName;
+    protected String name;
+    protected String email;
+    protected String role;
     
-    public User(String name, String email, Collection<Album> albums, String specialist) {
+    public User(String name, String email) {
     
         this.name = name;
         this.email = email;
-        this.albums = albums;
-        this.specialistsName = specialist;
+        this.role = role;
         
     }
 
@@ -37,14 +35,10 @@ public class User {
         return email;
     }
 
-    public Collection<Album> getAlbums() {
-        return albums;
-    }
-
-    public String getSpecialistsName() {
-        if(specialistsName.equals(""))
+    public String getRole() {
+        if(role.equals(""))
             return NO_SPECIALIST;
         else
-            return specialistsName;
+            return role;
     }
 }

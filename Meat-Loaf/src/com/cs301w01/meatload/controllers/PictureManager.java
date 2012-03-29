@@ -142,7 +142,7 @@ public class PictureManager implements FController{
     	return picture;
     }
 
-    public void deletePhoto() {
+    public void deletePicture() {
 
         PictureQueryGenerator pQ = new PictureQueryGenerator(context);
 

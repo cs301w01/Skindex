@@ -1,15 +1,16 @@
 package com.cs301w01.meatload.authentication.querygenerator;
 
 import android.content.Context;
+import android.database.Cursor;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.QueryGenerator;
 
 public class UserQueryGenerator extends QueryGenerator {
 
     //static strings used by this class
-    public static final String USERS_TABLE_NAME = "users";
-    public static final String SUBSCRIPTIONS_TABLE_NAME = "subscriptions";
-    public static final String USER_ALBUMS_TABLE_NAME = "useralbums";
+    public static final String TABLE_NAME_USERS = "users";
+    public static final String TABLE_NAME_SUBSCRIPTIONS = "subscriptions";
+    public static final String TABLE_NAME_USER_ALBUMS = "useralbums";
     public static final String SPECIALIST_ROLE = "specialist";
     public static final String PATIENT_ROLE = "patient";
     
@@ -25,7 +26,7 @@ public class UserQueryGenerator extends QueryGenerator {
     
     //sql for creating the user info table
     public static final String CREATE_USERS_TABLE =
-            "CREATE TABLE " + USERS_TABLE_NAME +" (" +
+            "CREATE TABLE " + TABLE_NAME_USERS +" (" +
             COL_ID + " INTEGER PRIMARY KEY, " +
             COL_NAME + " TEXT, " +
             COL_USERNAME + " TEXT, " +
@@ -35,22 +36,22 @@ public class UserQueryGenerator extends QueryGenerator {
 
     //sql for creating the specialist/patient subscription table
     public static final String CREATE_SUBSCRIPTIONS_TABLE = 
-            "CREATE TABLE " + SUBSCRIPTIONS_TABLE_NAME + " (" +
+            "CREATE TABLE " + TABLE_NAME_SUBSCRIPTIONS + " (" +
             COL_ID + " INTEGER PRIMARY KEY, " +
             COL_SPECIALIST_ID + " INTEGER " +
                     "FOREIGN KEY(" + COL_SPECIALIST_ID + ") REFERENCES " +
-                    USERS_TABLE_NAME + "( " + COL_ID + "), " +
+                    TABLE_NAME_USERS + "( " + COL_ID + "), " +
             COL_PATIENT_ID + " INTEGER " +
                     "FOREIGN KEY(" + COL_PATIENT_ID + ") REFERENCES " +
-                    USERS_TABLE_NAME + "( " + COL_ID + "));";
+                    TABLE_NAME_USERS + "( " + COL_ID + "));";
     
     //sql for creating the album ownership table
     public static final String CREATE_USER_ALBUMS_TABLE =
-            "CREATE TABLE " + USER_ALBUMS_TABLE_NAME + " " +
+            "CREATE TABLE " + TABLE_NAME_USER_ALBUMS + " " +
             COL_ID + " INTEGER PRIMARY KEY, " +
             COL_USER_ID + " INTEGER " +
                     "FOREIGN KEY(" + COL_USER_ID + ") REFERENCES " +
-                    USERS_TABLE_NAME + "( " + COL_ID + "), " +
+                    TABLE_NAME_USERS + "( " + COL_ID + "), " +
             COL_ALBUM_ID + " INTEGER " +
                     "FOREIGN KEY(" + COL_ALBUM_ID + ") REFERENCES " +
                     AlbumQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
@@ -96,5 +97,24 @@ public class UserQueryGenerator extends QueryGenerator {
         //TODO
 
     }
-    
+
+    /**
+     * Attempts to log a user in, if the credentials are correct, will return one result with the users basic
+     * information which can be used to retrieve other data. Otherwise returns a cursor with count == 0.
+     * @param userName
+     * @param password
+     * @return Cursor
+     */
+    public Cursor logUserIn(String userName, String password) {
+
+        
+        String query = "SELECT " +
+                        COL_ID + ", " + COL_NAME + ", " + COL_USERNAME + ", " + COL_EMAIL + ", " + COL_ROLE + " " +
+                       "FROM " + TABLE_NAME_USERS + " " +
+                       "WHERE " + COL_USERNAME + " = '" + userName + "' " +
+                       "AND " + COL_PASSWORD + " = '" + password + "'";
+        
+        return db.performRawQuery(query);
+        
+    }
 }
