@@ -17,123 +17,125 @@ import android.widget.ImageView;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.PictureGenerator;
 
 /**
-* Implements the logic for the TakePictureActivity, as well as the Take Picture dialog.
-* @author Joel Burford
-*/
+ * Implements the logic for the TakePictureActivity, as well as the Take Picture
+ * dialog.
+ * 
+ * @author Joel Burford
+ */
 public class TakePictureActivity extends Skindactivity {
 
-//TODO: can we move imgOnDisplay into the methods? It would be nice
-//if it weren't a global variable
-private Bitmap imgOnDisplay;
+	// TODO: can we move imgOnDisplay into the methods? It would be nice
+	// if it weren't a global variable
+	private Bitmap imgOnDisplay;
 
-private PictureManager pictureManager;
-private Album album;
-    private HorizontalGalleryAdapter adapter;
-    private Gallery gallery;
-    
-public void onCreate(Bundle savedInstanceState) {
-Bitmap img;////
-super.onCreate(savedInstanceState);
-setContentView(R.layout.take_picture);
+	private Album album;
+	private HorizontalGalleryAdapter adapter;
+	private Gallery gallery;
 
-Bundle b = getIntent().getExtras();
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.take_picture);
+
+		Bundle b = getIntent().getExtras();
 		album = (Album) b.getSerializable("album");
 		GalleryManager gMan = new GalleryManager(new AlbumGallery(album));
 		gMan.setContext(this);
 
-        //handle photo consistency gallery logic
-        adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
+		// handle photo consistency gallery logic
+		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
 
-        gallery = (Gallery) findViewById(R.id.gallery);
-        gallery.setAdapter(adapter);
+		gallery = (Gallery) findViewById(R.id.gallery);
+		gallery.setAdapter(adapter);
 
-        //handle photo consistency gallery logic
-        adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
+		imgOnDisplay = new PictureGenerator().generatePicture();
+		populateFields(imgOnDisplay);
+		createListeners(imgOnDisplay);
+	}
 
-        gallery = (Gallery) findViewById(R.id.gallery);
-        gallery.setAdapter(adapter);
+	protected void populateFields(Bitmap pic) {
+		ImageView image = (ImageView) findViewById(R.id.imgDisplay);
+		image.setImageBitmap(pic);
+	}
 
-        pictureManager = new PictureManager(this, album.getName());
-        pictureManager.setContext(this);
-imgOnDisplay = pictureManager.generatePicture();
-populateFields(imgOnDisplay);
-createListeners(imgOnDisplay);
-}
+	protected void createListeners(Bitmap pic) {
+		// Take Picture button listener
+		final Button takePicButton = (Button) findViewById(R.id.takePic);
+		takePicButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// Perform action on click
+				takePicture();
+			}
+		});
 
-protected void populateFields(Bitmap pic){
-     ImageView image = (ImageView) findViewById(R.id.imgDisplay);
-     image.setImageBitmap(pic);
-}
+		// Generate Picture button listener
+		final Button genPicButton = (Button) findViewById(R.id.genPic);
+		genPicButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// Perform action on click
+				imgOnDisplay = new PictureGenerator().generatePicture();
 
-protected void createListeners(Bitmap pic){
-//Take Picture button listener
-        final Button takePicButton = (Button) findViewById(R.id.takePic);
-        takePicButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-             takePicture();
-            }
-        });
-        
-//Generate Picture button listener
-        final Button genPicButton = (Button) findViewById(R.id.genPic);
-        genPicButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Perform action on click
-             imgOnDisplay = pictureManager.generatePicture();
-            
-             //used http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android
-             populateFields(imgOnDisplay);
-            }
-        });
-}
+				// used
+				// http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android
+				populateFields(imgOnDisplay);
+			}
+		});
+	}
 
-    //@Override
-    public void update(Object model) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-    
-    /**
-* Opens a dialog asking the user if they want to keep the picture they have just taken.
-* <p>
-* If yes, saves the Picture in the Viewfinder (Or current randomly generated picture)
-* @see <a href="http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog">
-http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog</a>
-*/
-    private void takePicture() {
+	// @Override
+	public void update(Object model) {
+		// To change body of implemented methods use File | Settings | File
+		// Templates.
+	}
 
-        //TODO: Add album association, and null album checking
+	/**
+	 * Opens a dialog asking the user if they want to keep the picture they have
+	 * just taken.
+	 * <p>
+	 * If yes, saves the Picture in the Viewfinder (Or current randomly
+	 * generated picture)
+	 * 
+	 * @see <a
+	 *      href="http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog">
+	 *      http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog</a>
+	 */
+	private void takePicture() {
 
-AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		// TODO: Add album association, and null album checking
 
-alert.setTitle("Confirm");
-alert.setMessage("Are you sure you want this picture?");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-public void onClick(DialogInterface dialog, int whichButton) {
+		alert.setTitle("Confirm");
+		alert.setMessage("Are you sure you want this picture?");
 
-                Picture newPic = pictureManager.takePicture(getFilesDir());
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
 
-                Intent myIntent = new Intent();
-                myIntent.setClassName("com.cs301w01.meatload",
-                        "com.cs301w01.meatload.activities.EditPictureActivity");
-                myIntent.putExtra("picture", newPic);
+				Picture newPic = new PictureManager(TakePictureActivity.this,
+						album.getName()).takePicture(getFilesDir(),
+						imgOnDisplay);
 
-                startActivity(myIntent);
+				Intent myIntent = new Intent();
+				myIntent.setClassName("com.cs301w01.meatload",
+						"com.cs301w01.meatload.activities.EditPictureActivity");
+				myIntent.putExtra("picture", newPic);
 
-                finish();
-            }
-});
+				startActivity(myIntent);
 
-alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-public void onClick(DialogInterface dialog, int whichButton) {
-// Canceled.
-}
-});
+				finish();
+			}
+		});
 
-alert.show();
-    }
-    
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// Canceled.
+					}
+				});
+
+		alert.show();
+	}
+
 }
