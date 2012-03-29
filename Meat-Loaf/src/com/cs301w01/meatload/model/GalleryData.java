@@ -39,7 +39,7 @@ public abstract class GalleryData implements Serializable {
      * Creates a title to display in the Gallery Activity based on the type
      * of Gallery
      */
-    public abstract String getTitle();
+    public abstract String getTitle(Context context);
     
     /**
      * By default, a Gallery is not an album. But if the given gallery is

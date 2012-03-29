@@ -83,6 +83,6 @@ public class GalleryManager implements FController {
 	}
 
 	public String getTitle() {
-		return gallery.getTitle();
+		return gallery.getTitle(context);
 	}
 }

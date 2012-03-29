@@ -43,7 +43,7 @@ public class TagsGallery extends GalleryData implements Serializable {
      * Creates a title to display in the Gallery Activity based on the type
      * of Gallery
      */
-    public String getTitle(){
+    public String getTitle(Context context){
     	String title = "";
     	
 		 boolean isFirst = true;
