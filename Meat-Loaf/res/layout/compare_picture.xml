@@ -4,6 +4,7 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
 
+
     <Gallery xmlns:android="http://schemas.android.com/apk/res/android"
              android:id="@+id/topCompareGallery"
              android:layout_width="fill_parent"
