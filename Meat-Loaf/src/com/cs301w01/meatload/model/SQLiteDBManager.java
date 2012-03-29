@@ -58,9 +58,6 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
 
         db.execSQL(TagQueryGenerator.CREATE_TABLE_QUERY);
         Log.d(logTag, TagQueryGenerator.TABLE_NAME + " generated.");
-        
-        db.execSQL(QueryGenerator.CREATE_TABLE_ALBUMTAGS_TABLE);
-        Log.d(logTag, QueryGenerator.TABLE_NAME_ALBUMTAGS + " generated.");
 
         Log.d(logTag, "DB generated.");
 
@@ -76,9 +73,6 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
 
         db.execSQL("DROP TABLE IF EXISTS " + TagQueryGenerator.TABLE_NAME);
         Log.d(logTag, TagQueryGenerator.TABLE_NAME + " dropped.");
-        
-        db.execSQL("DROP TABLE IF EXISTS " + QueryGenerator.TABLE_NAME_ALBUMTAGS);
-        Log.d(logTag, QueryGenerator.TABLE_NAME_ALBUMTAGS + " dropped.");
 
         Log.d(logTag, "DB generated.");
         

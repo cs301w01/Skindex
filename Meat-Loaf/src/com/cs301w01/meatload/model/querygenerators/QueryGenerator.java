@@ -20,16 +20,6 @@ public abstract class QueryGenerator {
     public static final String COL_NAME = "name";
     public static final String COL_PICTUREID = "pictureID";
     public static final String COL_ALBUMID = "albumID";
-    
-    public static final String TABLE_NAME_ALBUMTAGS = "albumTags";
-    
-    public static final String CREATE_TABLE_ALBUMTAGS_TABLE =
-        "CREATE TABLE " + TABLE_NAME_ALBUMTAGS + " (" +
-            COL_ID + " INTEGER PRIMARY KEY, " +
-            COL_ALBUMID + " INTEGER, " +
-            COL_NAME + " TEXT, " +
-            "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
-            										AlbumQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
 
 	
 	protected DBManager db;
