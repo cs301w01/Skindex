@@ -184,7 +184,7 @@ public class EditPictureActivity extends Skindactivity {
      */
     private void savePicture() {
         
-        //TODO: Check for changes in any of the photo data
+        //TODO: Check for changes in any of the picture data
         
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Picture Saved.");

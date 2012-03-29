@@ -36,15 +36,11 @@ public class MainManager implements FController {
      * @return All albums as ArrayList of HashMaps
      */
     public ArrayList<Album> getAllAlbums() {
-
-    	ArrayList<Album> albums = new ArrayList<Album>();
-
-        Album allPics = new Album("All Pictures", new PictureQueryGenerator(context).getPictureCount(), -1);
-
-    	albums.add(allPics);
-    	albums.addAll(new AlbumQueryGenerator(context).selectAllAlbums());
-
-    	return albums;
+    	return new AlbumQueryGenerator(context).selectAllAlbums();
+    }
+    
+    public int getPictureCount() {
+    	return new PictureQueryGenerator(context).getPictureCount();
     }
     
     public ArrayList<Tag> getAllTags(){
@@ -53,5 +49,19 @@ public class MainManager implements FController {
     
     public void addAlbum(String albumName, Collection<String> tags) {
     	new AlbumQueryGenerator(context).insertAlbum(albumName);
+    }
+    
+    public Album getAlbumByName(String albumName) {
+    	return new AlbumQueryGenerator(context).getAlbumByName(albumName);
+    }
+    
+    public String[] albumsToStrings(ArrayList<Album> albums) {
+    	String albumNames[] = new String[albums.size()];
+    	int i = 0;
+    	for (Album currAlbum : albums) {
+    		albumNames[i] = currAlbum.getName();
+    		i++;
+    	}
+    	return albumNames;
     }
 }

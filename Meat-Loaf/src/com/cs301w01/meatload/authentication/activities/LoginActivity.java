@@ -1,4 +1,4 @@
-package com.cs301w01.meatload.authentication;
+package com.cs301w01.meatload.authentication.activities;
 
 /**
  * Created by IntelliJ IDEA.
