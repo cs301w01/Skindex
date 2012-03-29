@@ -2,6 +2,9 @@ package com.cs301w01.meatload.authentication.querygenerator;
 
 import android.content.Context;
 import android.database.Cursor;
+import com.cs301w01.meatload.authentication.Model.Patient;
+import com.cs301w01.meatload.authentication.Model.Specialist;
+import com.cs301w01.meatload.authentication.Model.User;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.QueryGenerator;
 
@@ -62,8 +65,19 @@ public class UserQueryGenerator extends QueryGenerator {
         super(context);
     }
     
-    public void createNewUser() {
+    public void insertNewUser(User u) {
 
+        String query = "INSERT INTO " + TABLE_NAME_USERS + "( " +
+                       "";
+        
+        if(u.getClass() == Patient.class){
+            
+        } else if(u.getClass() == Specialist.class){
+
+        } else {
+
+        }
+        
         //TODO
 
     }
