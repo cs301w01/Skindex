@@ -43,10 +43,10 @@ public class EditPictureActivity extends Skindactivity {
 
 	private MainManager mainManager;
 	private PictureManager pictureManager;
-	private Picture picture;
 	private ListView tagListView;
 	private EditText pictureNameEditText;
 	private ImageView pictureView;
+	private ArrayList<Tag> pictureTags;
 
 	@Override
 	public void update(Object model) {
@@ -65,7 +65,7 @@ public class EditPictureActivity extends Skindactivity {
 		// Get picture object from Intent's extras bundle
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
-		picture = (Picture) extras.getSerializable("picture");
+		Picture picture = (Picture) extras.getSerializable("picture");
         
 		// Set up a new PictureManager using the Picture object passed via the intent 
 		pictureManager = new PictureManager(this, picture);
@@ -97,6 +97,7 @@ public class EditPictureActivity extends Skindactivity {
 	 http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
 	protected void populateTextFields() {
+		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
 		pictureView.setImageDrawable(Drawable.createFromPath(picture.getPath()));
 		
@@ -116,13 +117,13 @@ public class EditPictureActivity extends Skindactivity {
 		
 		tagListView = (ListView) findViewById(R.id.picTagList);
 		Iterator<Tag> tagIter = picture.getTags().iterator();
-		ArrayList<Tag> tagList = new ArrayList<Tag>();
+		pictureTags = new ArrayList<Tag>();
 		
 		while (tagIter.hasNext()) {
-			tagList.add(tagIter.next());
+			pictureTags.add(tagIter.next());
 		}
 		
-		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item, tagList);
+		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item, pictureTags);
 		tagListView.setAdapter(arrAdapt);
 		
 	}
@@ -219,11 +220,9 @@ public class EditPictureActivity extends Skindactivity {
 		tagListView.setAdapter(adapter);
 		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
-		ArrayList<Tag> pictureTags = (ArrayList<Tag>) picture.getTags();
-		
-		for (Tag picTag : pictureTags) {
+		for (Tag pictureTag : pictureTags) {
 			for (int i = 0; i < allTags.size(); i++) {
-				if (picTag.getName().equals(allTags.get(i).getName())) {
+				if (pictureTag.getName().equals(allTags.get(i).getName())) {
 					tagListView.setItemChecked(i, true);
 				}
 			}
@@ -291,7 +290,7 @@ public class EditPictureActivity extends Skindactivity {
 
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                pictureManager.deleteTag(picture.getTags().get(position));
+                pictureManager.deleteTag(pictureTags.get(position));
                 finish();
             }
         });
@@ -309,7 +308,7 @@ public class EditPictureActivity extends Skindactivity {
         Intent sendEmail = new Intent();
         sendEmail.setClassName("com.cs301w01.meatload", 
         		"com.cs301w01.meatload.activities.SendEmailActivity");
-        sendEmail.putExtra("picture", picture);
+        sendEmail.putExtra("picture", pictureManager.getPicture());
         
         startActivity(sendEmail);
     }
