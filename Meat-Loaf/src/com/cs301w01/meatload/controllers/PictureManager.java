@@ -99,7 +99,7 @@ public class PictureManager implements FController {
 			outStream.close();
 
 			// adds the new picture to the db and returns a picture object
-			return savePicture(fpath + fname, cal.getTime(), fname);
+			return createPicture(fpath + fname, cal.getTime(), fname);
 
 		} catch (IOException e) {
 			Log.d("ERROR", "Unable to write " + fpath + fname);
@@ -109,7 +109,7 @@ public class PictureManager implements FController {
 		// TODO: Move to EditPictureActivity after takePicture finishes.
 	}
 
-	private Picture savePicture(String fpath, Date date, String fname) {
+	private Picture createPicture(String fpath, Date date, String fname) {
 
 		Picture newPic = new Picture(albumName + ":" + date.toString(), fpath,
 				albumName, date, new ArrayList<Tag>());
@@ -120,6 +120,11 @@ public class PictureManager implements FController {
 
 		return newPic;
 	}
+	
+	public void savePicture() {
+		new PictureQueryGenerator(context).updatePictureByID(getPicture(), PictureQueryGenerator.TABLE_NAME, picID);
+		saveTags();
+	}
 
 	/**
 	 * Get this picture
@@ -128,8 +133,11 @@ public class PictureManager implements FController {
 	 */
 	public Picture getPicture() {
 		Picture newpic = new PictureQueryGenerator(context).selectPictureByID(picID);
-		tempTags = newpic.getTags();
 		return newpic;
+	}
+	
+	public void populateTempTags() {
+		tempTags = getPicture().getTags();
 	}
 	
 	public ArrayList<Tag> getTempTags() {
@@ -164,8 +172,8 @@ public class PictureManager implements FController {
 	 * @param tags
 	 *            Collection of tags to set the picture's tags to
 	 */
-	public void setTags(Collection<Tag> tags) {
-		
+	private void saveTags() {
+		new TagQueryGenerator(context).updateTags(picID, tempTags);
 	}
 
 	/**
