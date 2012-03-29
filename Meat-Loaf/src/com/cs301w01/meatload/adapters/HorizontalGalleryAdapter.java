@@ -26,12 +26,12 @@ public class HorizontalGalleryAdapter extends BaseAdapter {
     private Context mContext;
     private ArrayList<Picture> pictures;
 
-    public HorizontalGalleryAdapter(Context c, Collection<Picture> pictures) {
+    public HorizontalGalleryAdapter(Context c, Collection<Picture> pictures, int[] r_Styleable, int r_Styleable_bg) {
 
         mContext = c;
-        TypedArray attr = mContext.obtainStyledAttributes(R.styleable.GalleryActivity);
+        TypedArray attr = mContext.obtainStyledAttributes(r_Styleable);
         mGalleryItemBackground = attr.getResourceId(
-                R.styleable.GalleryActivity_android_galleryItemBackground, 0);
+                r_Styleable_bg, 0);
         this.pictures = new ArrayList<Picture>(pictures);
         attr.recycle();
     }

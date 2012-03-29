@@ -21,5 +21,16 @@ public class Specialist extends User {
         this.patients = patients;
     }
 
+    public void addPatient(Patient patient) {
+        
+        patients.add(patient);
+        
+    }
+    
+    public void removePatient(Patient patient) {
+
+        patients.remove(patient);
+
+    }
 
 }

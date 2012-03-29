@@ -46,13 +46,13 @@ Bundle b = getIntent().getExtras();
         //handle photo consistency gallery logic
         adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
 
-        gallery = (Gallery) findViewById(R.id.gallery);
+        gallery = (Gallery) findViewById(R.id.takePictureGallery);
         gallery.setAdapter(adapter);
 
         //handle photo consistency gallery logic
         adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
 
-        gallery = (Gallery) findViewById(R.id.gallery);
+        gallery = (Gallery) findViewById(R.id.takePictureGallery);
         gallery.setAdapter(adapter);
 
         pictureManager = new PictureManager(this, album.getName());

@@ -17,13 +17,11 @@ public class User {
     
     protected String name;
     protected String email;
-    protected String role;
     
     public User(String name, String email) {
     
         this.name = name;
         this.email = email;
-        this.role = role;
         
     }
 
@@ -35,10 +33,4 @@ public class User {
         return email;
     }
 
-    public String getRole() {
-        if(role.equals(""))
-            return NO_SPECIALIST;
-        else
-            return role;
-    }
 }

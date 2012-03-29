@@ -14,16 +14,23 @@ import java.util.Collection;
 public class Patient extends User {
 
     private Collection<Album> albums;
-    private String specialistID;
+    private int specialistID;
 
-    public Patient(String name, String email, Collection<Album> albums) {
+    public Patient(String name, String email, Collection<Album> albums, int specialistID) {
         super(name, email);
 
+        this.specialistID = specialistID;
         this.albums = albums;
     }
 
 
     public Collection<Album> getAlbums() {
         return albums;
+    }
+    
+    public int getSpecialistID() {
+
+        return specialistID;
+
     }
 }
