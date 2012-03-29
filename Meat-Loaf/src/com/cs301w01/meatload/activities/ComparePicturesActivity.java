@@ -65,7 +65,6 @@ public class ComparePicturesActivity extends Skindactivity {
     public void createListeners() {
 
         topGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
             
                 String pPath = galleryManager.getPhoto(view.getId()).getPath();
@@ -75,7 +74,6 @@ public class ComparePicturesActivity extends Skindactivity {
         });
 
         bottomGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
             public void onClick(View view) {
 
                 String pPath = galleryManager.getPhoto(view.getId()).getPath();

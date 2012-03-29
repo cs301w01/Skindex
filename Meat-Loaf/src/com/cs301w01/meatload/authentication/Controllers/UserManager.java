@@ -50,7 +50,10 @@ public class UserManager implements FController{
                 Collection<Album> albums = new ArrayList<Album>();
                 //TODO: get albums
 
-                u = new Patient(name, email, albums);
+                int specialistID = 0;
+                //TODO: get specialist ID
+                
+                u = new Patient(name, email, albums, specialistID);
 
                 return u;
                 
