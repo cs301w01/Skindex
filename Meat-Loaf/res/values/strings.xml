@@ -29,4 +29,7 @@
     <string name="subject">Subject :</string>
     <string name="emailMessage">Message :</string>
     <string name="pastPictures">Past Pictures:</string>
+    <string name="button_add_tag">Add Tag</string>
+    <string name="picture_name_text">Picture Name</string>
+    <string name="add_tag_hint">Enter a tag to add here</string>
 </resources>

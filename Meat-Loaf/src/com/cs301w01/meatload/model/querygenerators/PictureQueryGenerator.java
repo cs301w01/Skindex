@@ -144,7 +144,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 
            //String name, String path, String album, Date date, Collection<String> tags
            Picture p = new Picture(name, path, albumName, date, 
-        		   new TagQueryGenerator(context).selectPictureTags(id));
+        		   (ArrayList<Tag>) new TagQueryGenerator(context).selectPictureTags(id));
             p.setID(id);
             
            pictures.add(p);
@@ -199,7 +199,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 	   TagQueryGenerator tagGen = new TagQueryGenerator(this.context);
 	   Collection<Tag> tags = tagGen.selectPictureTags(c.getInt(c.getColumnIndex(COL_ID)));
 	   
-       Picture p = new Picture(pictureName, path, albumName, date, tags);
+       Picture p = new Picture(pictureName, path, albumName, date, (ArrayList<Tag>) tags);
        p.setID(pictureID);
        
 	   return p;
