@@ -14,6 +14,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Mediates between DBManager and Skindex by providing lists of Albums and Tags.
+ * 
  * @author Isaac Matichuk
  * @see SQLiteDBManager
  * @see Skindex
@@ -21,47 +22,56 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 public class MainManager implements FController {
 
 	Context context;
-	
-    public MainManager() {
-    	//dbMan = new DBManager(context);
-    }
-    
-    public void setContext(Context context){
-    	this.context = context;
-    }
-    
-    /**
-     * Creates and invokes an instance of the DBManager class to return HashMaps corresponding to
-     * the table of albums in the database.  
-     * @return All albums as ArrayList of HashMaps
-     */
-    public ArrayList<Album> getAllAlbums() {
-    	return new AlbumQueryGenerator(context).selectAllAlbums();
-    }
-    
-    public int getPictureCount() {
-    	return new PictureQueryGenerator(context).getPictureCount();
-    }
-    
-    public ArrayList<Tag> getAllTags(){
-    	return new TagQueryGenerator(context).selectAllTags();
-    }
-    
-    public void addAlbum(String albumName, Collection<String> tags) {
-    	new AlbumQueryGenerator(context).insertAlbum(albumName);
-    }
-    
-    public Album getAlbumByName(String albumName) {
-    	return new AlbumQueryGenerator(context).getAlbumByName(albumName);
-    }
-    
-    public String[] albumsToStrings(ArrayList<Album> albums) {
-    	String albumNames[] = new String[albums.size()];
-    	int i = 0;
-    	for (Album currAlbum : albums) {
-    		albumNames[i] = currAlbum.getName();
-    		i++;
-    	}
-    	return albumNames;
-    }
+
+	public MainManager() {
+		// dbMan = new DBManager(context);
+	}
+
+	public void setContext(Context context) {
+		this.context = context;
+	}
+
+	/**
+	 * Creates and invokes an instance of the DBManager class to return HashMaps
+	 * corresponding to the table of albums in the database.
+	 * 
+	 * @return All albums as ArrayList of HashMaps
+	 */
+	public ArrayList<Album> getAllAlbums() {
+		return new AlbumQueryGenerator(context).selectAllAlbums();
+	}
+
+	public int getPictureCount() {
+		return new PictureQueryGenerator(context).getPictureCount();
+	}
+
+	public ArrayList<Tag> getAllTags() {
+		return new TagQueryGenerator(context).selectAllTags();
+	}
+
+	public void addAlbum(String albumName, Collection<String> tags) {
+		new AlbumQueryGenerator(context).insertAlbum(albumName);
+	}
+
+	public Album getAlbumByName(String albumName) {
+		return new AlbumQueryGenerator(context).getAlbumByName(albumName);
+	}
+
+	/**
+	 * Takes an ArrayList of albums and returns an array containing the names of
+	 * all the albums
+	 * 
+	 * @param albums
+	 *            an ArrayList of albums to be converted
+	 * @return Returns an array of strings of all the names of the albums given
+	 */
+	public String[] albumsToStrings(ArrayList<Album> albums) {
+		String albumNames[] = new String[albums.size()];
+		int i = 0;
+		for (Album currAlbum : albums) {
+			albumNames[i] = currAlbum.getName();
+			i++;
+		}
+		return albumNames;
+	}
 }

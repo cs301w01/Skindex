@@ -62,6 +62,8 @@ public class EditPictureActivity extends Skindactivity {
 		mainManager = new MainManager();
 		mainManager.setContext(this);
 		
+		pictureView = (ImageView) findViewById(R.id.pictureView);
+		
 		// Get picture object from Intent's extras bundle
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();

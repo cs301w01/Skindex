@@ -80,10 +80,10 @@ public class TagQueryGenerator extends QueryGenerator {
 
         while (!c.isAfterLast()) {
             
-            String albumName = c.getString(c.getColumnIndex(COL_NAME));
+            String tagName = c.getString(c.getColumnIndex(COL_NAME));
             int numPictures = new Integer(c.getString(c.getColumnIndex("numPictures")));
             
-            tags.add(new Tag(albumName, numPictures));
+            tags.add(new Tag(tagName, numPictures));
 
             c.moveToNext();
         }
