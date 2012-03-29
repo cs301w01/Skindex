@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import android.widget.*;
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.adapters.VerticalGalleryAdapter;
+import com.cs301w01.meatload.adapters.GridViewGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 
 import android.content.Intent;
@@ -13,30 +13,29 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
-* Shows all pictures in a gallery as denoted by the GalleryManager object passed in to the
+* Shows all pictures in a gridview as denoted by the GalleryManager object passed in to the
 * Activity through the Intent Extras with key "manager".
 * @author Isaac Matichuk
 * @see GalleryManager
 */
 public class GalleryActivity extends Skindactivity {
 
-//private ListView pictureListView;
-//private SimpleAdapter adapter;
+    //private ListView pictureListView;
+    //private SimpleAdapter adapter;
 
-    private Gallery gallery;
-    private VerticalGalleryAdapter adapter;
+    private GridView gridview;
+    private GridViewGalleryAdapter adapter;
 
-private GalleryManager galleryManager;
+    private GalleryManager galleryManager;
 
-// private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
-// private String[] adapterCols = { "date", "id" };
+    // private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
+    // private String[] adapterCols = { "date", "id" };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,15 +44,14 @@ private GalleryManager galleryManager;
         setContentView(R.layout.gallery);
 
         Bundle b = getIntent().getExtras();
-        GalleryData gallerydata = (GalleryData) b.getSerializable("gallery");
+        GalleryData gallerydata = (GalleryData) b.getSerializable("gridview");
         galleryManager = new GalleryManager(gallerydata);
         galleryManager.setContext(this);
 
+        adapter = new GridViewGalleryAdapter(this, galleryManager.getPictureGallery());
 
-        adapter = new VerticalGalleryAdapter(this, galleryManager.getPictureGallery());
-
-        gallery = (Gallery) findViewById(R.id.viewAlbumGridView);
-        gallery.setAdapter(adapter);
+        gridview = (GridView) findViewById(R.id.viewAlbumGridView);
+        gridview.setAdapter(adapter);
                 
         populateTextFields(galleryManager.getTitle());
 
@@ -87,7 +85,7 @@ takePicture();
 }
 });
 
-        gallery.setOnItemClickListener(new OnItemClickListener() {
+        gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Picture selectedPic = adapter.getItem(position);
                 Log.d("Info For PictureListener", selectedPic.toString());
@@ -142,9 +140,9 @@ takePicture();
         Collection<Picture> albumPictures = galleryManager.getPictureGallery();
 
         //adapter = new SimpleAdapter(this, albumPictures, R.layout.list_item, adapterCols, adapterIDs);
-        adapter = new VerticalGalleryAdapter(this, albumPictures);
+        adapter = new GridViewGalleryAdapter(this, albumPictures);
 
-        gallery.setAdapter(adapter);
+        gridview.setAdapter(adapter);
 
 // pictureListView.setAdapter(adapter);
 
@@ -157,12 +155,12 @@ takePicture();
      //Launch the EditAlbumActivity with a given GalleryManager
      Intent myIntent = new Intent();
      myIntent.setClassName("com.cs301w01.meatload",
-     "com.cs301w01.meatload.activities.EditAlbumActivity");
+             "com.cs301w01.meatload.activities.EditAlbumActivity");
      Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum().getName());
     
      //NEED TO SET TAGS AS WELL!
     
-     myIntent.putExtra("gallery", aGal);
+     myIntent.putExtra("gridview", aGal);
     
      startActivity(myIntent);
 
@@ -180,7 +178,7 @@ takePicture();
         AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
     
      myIntent.setClassName("com.cs301w01.meatload",
-     "com.cs301w01.meatload.activities.TakePictureActivity");
+             "com.cs301w01.meatload.activities.TakePictureActivity");
      Log.d("Taking Picture", "ALBUM NAME:" + aGal.getAlbum().getName());
 
         myIntent.putExtra("album", aGal.getAlbum());
