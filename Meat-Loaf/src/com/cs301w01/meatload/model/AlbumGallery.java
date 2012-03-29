@@ -23,10 +23,10 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class AlbumGallery extends GalleryData implements Serializable {
     
-	Album album;
+	int albumID;
 	
 	public AlbumGallery(Album album){
-		this.album = album;
+		this.albumID = (int) album.getID();
 	}
 	
     /**
@@ -35,22 +35,22 @@ public class AlbumGallery extends GalleryData implements Serializable {
      * @return ArrayList of HashMaps representing a set of Picture objects
      */
     public Collection<Picture> getPictureGallery(Context context){
-    	return new PictureQueryGenerator(context).selectPicturesFromAlbum(album.getName());
+    	return new PictureQueryGenerator(context).selectPicturesFromAlbum(albumID);
     }
     
     /**
      * Creates a title to display in the Gallery Activity based on the type
      * of Gallery
      */
-    public String getTitle(){
-    	return album.getName();
+    public String getTitle(Context context){
+    	return new AlbumQueryGenerator(context).getAlbumByID((long) albumID).getName();
     }
     
     public boolean isAlbum() {
     	return true;
     }
     
-    public Album getAlbum() {
-    	return album;
+    public Album getAlbum(Context context) {
+    	return new AlbumQueryGenerator(context).getAlbumByID((long)albumID);
     }
 }

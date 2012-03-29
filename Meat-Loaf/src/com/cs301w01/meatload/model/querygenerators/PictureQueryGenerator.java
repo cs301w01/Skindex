@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 
@@ -218,11 +219,9 @@ public class PictureQueryGenerator extends QueryGenerator {
     * @param albumName
     * @return
     */
-   public Collection<Picture> selectPicturesFromAlbum(String albumName) {
+   public Collection<Picture> selectPicturesFromAlbum(int albumID) {
 		
 	   AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
-	   
-	   int albumID = albumGen.selectAlbumIDByName(albumName);
 	   	    
 		String query = "SELECT * FROM " + 
 						TABLE_NAME + 

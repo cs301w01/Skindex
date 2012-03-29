@@ -86,7 +86,7 @@ public class GalleryActivity extends Skindactivity {
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                editAlbum(galleryManager);
+                editAlbum();
             }
         });
 
@@ -159,10 +159,10 @@ public class GalleryActivity extends Skindactivity {
 
         gridview.setAdapter(adapter);
 
-
+        populateTextFields(galleryManager.getTitle());
     }
     
-    private void editAlbum(GalleryManager gm) {
+    private void editAlbum() {
     	
     	AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
 
@@ -170,11 +170,11 @@ public class GalleryActivity extends Skindactivity {
      Intent myIntent = new Intent();
      myIntent.setClassName("com.cs301w01.meatload",
              "com.cs301w01.meatload.activities.EditAlbumActivity");
-     Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum().getName());
+     Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum(this).getName());
     
      //NEED TO SET TAGS AS WELL!
     
-     myIntent.putExtra("gridview", aGal);
+     myIntent.putExtra("gallery", aGal);
     
      startActivity(myIntent);
 
@@ -194,9 +194,9 @@ public class GalleryActivity extends Skindactivity {
         myIntent.setClassName("com.cs301w01.meatload",
              "com.cs301w01.meatload.activities.TakePictureActivity");
 
-        Log.d("Taking Picture", "ALBUM NAME:" + aGal.getAlbum().getName());
+        Log.d("Taking Picture", "ALBUM NAME:" + aGal.getAlbum(this).getName());
 
-        myIntent.putExtra("album", aGal.getAlbum());
+        myIntent.putExtra("album", aGal.getAlbum(this));
 
         startActivity(myIntent);
 

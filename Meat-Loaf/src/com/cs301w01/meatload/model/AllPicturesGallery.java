@@ -24,7 +24,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class AllPicturesGallery extends GalleryData implements Serializable {
 	
-	public static final String ALL_PICTURES_ALBUM_NAME = "ALL PICTURES";
+	public static final String ALL_PICTURES_ALBUM_NAME = "All Pictures";
 	
 	public AllPicturesGallery(){
 		
@@ -43,7 +43,7 @@ public class AllPicturesGallery extends GalleryData implements Serializable {
      * Creates a title to display in the Gallery Activity based on the type
      * of Gallery
      */
-    public String getTitle(){
+    public String getTitle(Context context){
     	return ALL_PICTURES_ALBUM_NAME;
     }
 }
