@@ -178,8 +178,8 @@ public class ViewAlbumsActivity extends Skindactivity {
     	alert.show();
     }
     
-    private void dismissCurrentDialog(){
-    	currentDialog.dismiss();
+    public AlertDialog getCurrentDialog(){
+    	return currentDialog;
     }
 
     /** 
