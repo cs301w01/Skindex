@@ -44,6 +44,9 @@ public class ComparePicturesActivity extends Skindactivity {
         gAdapter = new HorizontalGalleryAdapter(this, galleryManager.getPictureGallery(),
                 R.styleable.ComparePicturesActivity, R.styleable.ComparePicturesActivity_android_galleryItemBackground);
 
+        topGallery = (Gallery) findViewById(R.id.topCompareGallery);
+        bottomGallery = (Gallery) findViewById(R.id.bottomCompareGallery);
+        
         //set adapter
         topGallery.setAdapter(gAdapter);
         bottomGallery.setAdapter(gAdapter);
@@ -51,9 +54,9 @@ public class ComparePicturesActivity extends Skindactivity {
         ArrayList<Picture> pictures = new ArrayList<Picture>(galleryManager.getPictureGallery());
         
         //set pictures
-        topPicture = new ImageView(this);
+        topPicture = (ImageView) findViewById(R.id.topCompareImage);
         topPicture.setImageDrawable(Drawable.createFromPath(pictures.get(0).getPath()));
-        bottomPicture = new ImageView(this);
+        bottomPicture = (ImageView) findViewById(R.id.bottomCompareImage);
         bottomPicture.setImageDrawable(Drawable.createFromPath(pictures.get(1).getPath()));
     }
 

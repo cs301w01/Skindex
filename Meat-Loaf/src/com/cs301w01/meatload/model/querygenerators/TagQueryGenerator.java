@@ -3,10 +3,13 @@ package com.cs301w01.meatload.model.querygenerators;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.util.Log;
 
 public class TagQueryGenerator extends QueryGenerator {
 	
@@ -88,6 +91,26 @@ public class TagQueryGenerator extends QueryGenerator {
     		return 0;
     	}
             return new Integer(c.getString(c.getColumnIndex("numPictures")));
+    }
+    
+    public void updateTags(int pictureID, ArrayList<Tag> tags) {
+    	ArrayList<Tag> oldTags = selectPictureTags(pictureID);
+    	for (Tag tag : tags) {
+    		if(!oldTags.contains(tag)) {
+    			addTag(pictureID, tag);
+    		}
+    	}
+    }
+    
+    public long addTag(int pictureID, Tag tag) {
+    	ContentValues cv = new ContentValues();
+        
+        //add tag info to cv
+        cv.put(COL_NAME, tag.getName());
+        cv.put(COL_PICTUREID, pictureID);
+
+        //insert picture into picture tables
+        return db.insert(TABLE_NAME, COL_ID, cv);
     }
     
     /**

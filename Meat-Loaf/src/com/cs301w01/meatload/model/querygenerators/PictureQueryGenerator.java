@@ -48,9 +48,8 @@ public class PictureQueryGenerator extends QueryGenerator {
         ContentValues cv = new ContentValues();
 
         //add picture info to cv
-        cv.put(PICTURES_COL_DATE, dateToString(p.getDate()));
-        cv.put(PICTURES_COL_PATH, p.getPath());
         cv.put(COL_NAME, p.getName());
+        cv.put(COL_ALBUMID, new AlbumQueryGenerator(this.context).selectAlbumIDByName(p.getAlbumName()));
 
         int uVal = db.update(tableName, cv, COL_ID + "=" + id, null);
 

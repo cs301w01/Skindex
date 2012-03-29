@@ -2,7 +2,6 @@ package com.cs301w01.meatload.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import com.cs301w01.meatload.model.Tag;
@@ -29,6 +28,11 @@ public class Picture implements Serializable {
 		this.path = path;
 		this.date = date;
 		this.tags = tags;
+	}
+	
+	public Picture(String name, String album) {
+		this.name = name;
+		this.albumName = album;
 	}
 
 	public int getPictureID() {
