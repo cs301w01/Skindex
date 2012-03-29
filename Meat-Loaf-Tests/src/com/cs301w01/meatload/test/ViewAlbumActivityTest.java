@@ -2,6 +2,7 @@ package com.cs301w01.meatload.test;
 
 import java.util.ArrayList;
 
+import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.Skindex;
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.controllers.MainManager;
@@ -14,7 +15,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<ViewAlbumsActivity> {
     private Instrumentation mInstrumentation;
@@ -33,13 +38,20 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
         
+        SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
+        db.resetDB();
+        
  
     }
     
     @Override
     protected void tearDown() throws Exception {
-        super.tearDown();
-
+    	
+    	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
+        db.resetDB();
+        
+        super.tearDown();    
+        
         if (mActivity != null) {
             mActivity.finish();
         }
@@ -51,6 +63,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 	public void testActivity() {
 		ArrayList<Album> origAlbs;
 		ArrayList<Album> finalAlbs;
+		int key_num = KeyEvent.KEYCODE_A;
 		
 
 		
@@ -61,33 +74,48 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		mainMan.setContext(mActivity.getApplicationContext());
 		
 		origAlbs = mainMan.getAllAlbums();
-		
-		
-
+			for(int i = 0; i < 3; i++){
+				mActivity.runOnUiThread(new Runnable() {
+					public void run(){
+						button.requestFocus();
+						button.performClick();
+					}
+				});
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					assertTrue("Sleep failed", false);
+				}
+				sendKeys(key_num + i);
+				sendKeys(key_num + i + 1);
+				sendKeys(key_num + i + 2);
+				sendKeys(KeyEvent.KEYCODE_ENTER);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+					assertTrue("Sleep failed", false);
+				}
+			}
+			finalAlbs = mainMan.getAllAlbums();
+			
+			final ListView albumListView = (ListView) mActivity.findViewById(com.cs301w01.meatload.R.id.albumListView);
+			assertNotNull(albumListView);
+			
 			mActivity.runOnUiThread(new Runnable() {
 				public void run(){
-					button.requestFocus();
-					button.performClick();
+					//albumListView.requestFocus();
+					albumListView.getRootView().focusSearch(ListView.FOCUS_DOWN).requestFocus();
+					//albumListView.focusSearch(ListView.FOCUS_DOWN).requestFocus();
+					//albumListView.performClick();
+					
+					//ArrayList<View> items= albumListView.getFocusables(1);
+					//items.get(0).requestFocus();
+					//items.get(0).performClick();
 				}
-			});
+			});		
 			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				assertTrue("Sleep failed", false);
-			}
-			
-			sendKeys(KeyEvent.KEYCODE_A);
-			sendKeys(KeyEvent.KEYCODE_B);
-			sendKeys(KeyEvent.KEYCODE_C);
-			
-			sendKeys(KeyEvent.KEYCODE_ENTER);
-			
-			
-		
-			
-		
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
@@ -95,9 +123,8 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 				assertTrue("Sleep failed", false);
 			}
 			
-		assertTrue(1==1);
+		assertTrue(finalAlbs.size() == origAlbs.size() + 3);
 		
-		//assertTrue("currentState != original + 10", mActivity.getCurrentState() == original + 11);
 	}
 
 }
