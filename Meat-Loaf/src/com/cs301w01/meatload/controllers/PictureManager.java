@@ -24,9 +24,8 @@ import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
  * Implements Controller logic for Picture objects.
  * @author Isaac Matichuk
  */
-public class PictureManager implements FController{
+public class PictureManager implements FController {
 
-	private static final long serialVersionUID = 1L;
 	private Context context;
 	private Picture picture;
     private String albumName;
@@ -144,11 +143,12 @@ public class PictureManager implements FController{
     	return picture;
     }
 
-    public void deletePhoto() {
-
+    public void deletePicture() {
         PictureQueryGenerator pQ = new PictureQueryGenerator(context);
-
         pQ.deletePictureByID(picture.getPictureID());
-
+    }
+    
+    public void setTags(Collection<Tag> tags) {
+    	// TODO: Set the picture's tags in the object
     }
 }
