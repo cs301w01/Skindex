@@ -53,5 +53,12 @@
             android:text="@string/button_take_pic" />
 
     </LinearLayout>
+    
+    <Button
+            android:id="@+id/comparePic"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:text="@string/button_compare_pic" />
 
 </RelativeLayout>
