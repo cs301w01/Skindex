@@ -98,6 +98,8 @@ public class GalleryActivity extends Skindactivity {
             }
         });
 
+        final Button comparePictureButton = (Button) findViewById(R.id.comparePic);
+        
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Picture selectedPic = adapter.getItem(position);
