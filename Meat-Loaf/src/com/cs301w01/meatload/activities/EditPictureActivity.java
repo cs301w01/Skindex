@@ -46,6 +46,7 @@ public class EditPictureActivity extends Skindactivity {
 	private EditText pictureNameEditText;
 	private ImageView pictureView;
 	private Spinner albumView;
+	private AutoCompleteTextView addTagEditText;
 
 	@Override
 	public void update(Object model) {
@@ -68,8 +69,7 @@ public class EditPictureActivity extends Skindactivity {
 		Bundle extras = intent.getExtras();
 		Picture picture = (Picture) extras.getSerializable("picture");
 
-		// Set up a new PictureManager using the Picture object passed via the
-		// intent
+		// Set up a new PictureManager using the Picture object passed via the intent
 		pictureManager = new PictureManager(this, picture);
 
 		// TODO: DELETE THESE LINES WHEN picture.getTags() is working!!!
@@ -101,11 +101,12 @@ public class EditPictureActivity extends Skindactivity {
 	 *      http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
 	protected void populateTextFields() {
+		// Picture ImageView
 		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
-		pictureView
-				.setImageDrawable(Drawable.createFromPath(picture.getPath()));
+		pictureView.setImageDrawable(Drawable.createFromPath(picture.getPath()));
 
+		// Picture Name EditText
 		pictureNameEditText = (EditText) findViewById(R.id.pictureNameEditText);
 		pictureNameEditText.setText(picture.getName());
 
@@ -113,19 +114,25 @@ public class EditPictureActivity extends Skindactivity {
 		TextView dateView = (TextView) findViewById(R.id.dateView);
 		dateView.setText(picture.getDate().toString());
 
+		// AlbumView Spinner
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
 		albumView.setAdapter(new AlbumAdapter(this, R.layout.list_item,
 				allAlbums));
 		albumView.setTag(picture.getAlbumName());
+		
+		// Add Tag field logic
+		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
+		ArrayList<Tag> allTags = mainManager.getAllTags();
+		SimpleTagAdapter simpleTagAdapter = new SimpleTagAdapter(this,
+				R.layout.simple_list_item, allTags);
+		addTagEditText.setAdapter(simpleTagAdapter);
 
+		// Tag List View
 		tagListView = (ListView) findViewById(R.id.picTagList);
 		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
-
-		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item,
-				pictureTags);
-		tagListView.setAdapter(arrAdapt);
-
+		TagAdapter tagAdapter = new TagAdapter(this, R.layout.tag_list_item, pictureTags);
+		tagListView.setAdapter(tagAdapter);
 	}
 
 	protected void createListeners() {
@@ -136,14 +143,6 @@ public class EditPictureActivity extends Skindactivity {
 				openSendEmailActivity();
 			}
 		});
-
-		// Add Tag field logic
-		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
-		final AutoCompleteTextView addTagEditText = 
-				(AutoCompleteTextView) findViewById(R.id.addTagEditText);
-		TagAdapter tagAdapter = new SimpleTagAdapter(this,
-				R.layout.tag_list_item, pictureTags);
-		addTagEditText.setAdapter(tagAdapter);
 
 		// Add Tag button logic
 		Button addTagButton = (Button) findViewById(R.id.addTagButton);
