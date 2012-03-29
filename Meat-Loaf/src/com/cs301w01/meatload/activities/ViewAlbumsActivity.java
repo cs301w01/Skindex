@@ -236,9 +236,13 @@ public class ViewAlbumsActivity extends Skindactivity {
 			}
 		});
 
+		
 		currentDialog = alert.show();
 
+	
     }
+    
+
    
     
     /**

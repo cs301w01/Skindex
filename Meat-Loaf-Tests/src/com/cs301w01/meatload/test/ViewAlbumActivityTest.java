@@ -102,21 +102,29 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			final ListView albumListView = (ListView) mActivity.findViewById(com.cs301w01.meatload.R.id.albumListView);
 			assertNotNull(albumListView);
 			
-			//mActivity.runOnUiThread(new Runnable() {
-				//public void run(){
-					//albumListView.requestFocus();
-					//albumListView.getRootView().focusSearch(ListView.FOCUS_DOWN).requestFocus();
-					//albumListView.focusSearch(ListView.FOCUS_DOWN).requestFocus();
-					//albumListView.performClick();
+		    //ListView taco = new ListView(this.getBaseContext());
+		    //taco.getChildAt(1).
+			
+			mActivity.runOnUiThread(new Runnable() {
+				public void run(){
+					albumListView.getChildAt(1).requestFocus();
+					albumListView.getChildAt(1).performClick();
+					//getChildCount()
+					/*
+					albumListView.requestFocus();
+					albumListView.getRootView().focusSearch(ListView.FOCUS_DOWN).requestFocus();
+					albumListView.focusSearch(ListView.FOCUS_DOWN).requestFocus();
+					albumListView.performClick();
 					
-					//ArrayList<View> items= albumListView.getFocusables(1);
-					//items.get(0).requestFocus();
-					//items.get(0).performClick();
-				//}
-			//});		
+					ArrayList<View> items= albumListView.getFocusables(1);
+					items.get(0).requestFocus();
+					items.get(0).performClick();
+					*/
+				}
+			});		
 			
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				assertTrue("Sleep failed", false);
