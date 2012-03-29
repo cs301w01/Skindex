@@ -29,6 +29,11 @@ public class Picture implements Serializable {
 		this.date = date;
 		this.tags = tags;
 	}
+	
+	public Picture(String name, String album) {
+		this.name = name;
+		this.albumName = album;
+	}
 
 	public int getPictureID() {
 		return this.id;
