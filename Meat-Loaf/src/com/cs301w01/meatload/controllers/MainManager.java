@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 
 import com.cs301w01.meatload.model.Album;
@@ -21,7 +23,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  * @see Skindex
  */
 public class MainManager implements FController {
-	final private int ALBUM_NAME_MAX_LENGTH = 20;
+	final private int MAX_ALBUM_NAME_LENGTH = 20;
 
 	Context context;
 
@@ -60,8 +62,8 @@ public class MainManager implements FController {
 		
 		
 		albumName = albumName.trim();
-		if(albumName.length() > ALBUM_NAME_MAX_LENGTH){
-			albumName = albumName.substring(0,ALBUM_NAME_MAX_LENGTH);
+		if(albumName.length() > MAX_ALBUM_NAME_LENGTH){
+			albumName = albumName.substring(0,MAX_ALBUM_NAME_LENGTH);
 		} else if (albumName.length() == 0){
 			//handle empty album name
 			return"";
@@ -86,6 +88,10 @@ public class MainManager implements FController {
 	public Album getAlbumByName(String albumName) {
 		return new AlbumQueryGenerator(context).getAlbumByName(albumName);
 	}
+	
+	public int getMaxAlbumName(){
+		return MAX_ALBUM_NAME_LENGTH;
+	}
 
 	/**
 	 * Takes an ArrayList of albums and returns an array containing the names of
@@ -104,4 +110,11 @@ public class MainManager implements FController {
 		}
 		return albumNames;
 	}
+	
+    public void errorDialog(String err, Activity a){
+    	AlertDialog.Builder alert = new AlertDialog.Builder(a);
+		alert.setTitle("Error");
+		alert.setMessage(err);
+		alert.show();
+    }
 }

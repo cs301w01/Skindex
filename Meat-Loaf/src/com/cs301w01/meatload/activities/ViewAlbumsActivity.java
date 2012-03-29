@@ -219,7 +219,8 @@ public class ViewAlbumsActivity extends Skindactivity {
 				newAlbumName = mainManager.addAlbum(newAlbumName, new ArrayList<String>());
 				
 				if(newAlbumName.length() == 0){
-					errorDialog("Adding album failed.");
+					errorDialog("Adding album failed.  Album names must be " + mainManager.getMaxAlbumName() + 
+							" chars, not empty, and unique.");
 				} else if (takePicture) {
                 	AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(ViewAlbumsActivity.this); 
                     switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
@@ -258,11 +259,14 @@ public class ViewAlbumsActivity extends Skindactivity {
     	startActivity(myIntent); 
     }
     
+    
+    //Pops up error dialog with given string in message
     private void errorDialog(String err){
-    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Error");
-		alert.setMessage(err);
-		alert.show();
+    	mainManager.errorDialog(err, this);
+    	//AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		//alert.setTitle("Error");
+		//alert.setMessage(err);
+		//alert.show();
     }
     
     private void openGalleryFromAlbum(String albumName) {
