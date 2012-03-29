@@ -86,7 +86,7 @@ public class GalleryActivity extends Skindactivity {
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 setResult(RESULT_OK);
-                editAlbum(galleryManager);
+                editAlbum();
             }
         });
 
@@ -162,7 +162,7 @@ public class GalleryActivity extends Skindactivity {
 
     }
     
-    private void editAlbum(GalleryManager gm) {
+    private void editAlbum() {
     	
     	AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
 
@@ -174,7 +174,7 @@ public class GalleryActivity extends Skindactivity {
     
      //NEED TO SET TAGS AS WELL!
     
-     myIntent.putExtra("gridview", aGal);
+     myIntent.putExtra("gallery", aGal);
     
      startActivity(myIntent);
 
