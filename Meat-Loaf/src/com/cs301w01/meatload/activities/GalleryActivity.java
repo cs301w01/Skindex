@@ -54,6 +54,9 @@ public class GalleryActivity extends Skindactivity {
         gridview.setAdapter(adapter);
                 
         populateTextFields(galleryManager.getTitle());
+        if(!galleryManager.isAlbum()){
+        	hideButtons();
+        }
 
         refreshScreen();
         
@@ -64,6 +67,16 @@ public class GalleryActivity extends Skindactivity {
         TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
         albumTitle.setText(title);
 
+    }
+    
+    protected void hideButtons(){
+    	 final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
+    	 editAlbumButton.setEnabled(false);
+    	 editAlbumButton.setVisibility(Button.INVISIBLE);
+    	 
+    	 final Button takePictureButton = (Button) findViewById(R.id.takePic);
+    	 takePictureButton.setEnabled(false);
+    	 takePictureButton.setVisibility(Button.INVISIBLE);
     }
     
     protected void createListeners(){
