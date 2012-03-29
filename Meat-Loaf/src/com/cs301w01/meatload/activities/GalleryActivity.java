@@ -149,6 +149,9 @@ public class GalleryActivity extends Skindactivity {
      //TODO: MERGE WITH UPDATE
 
         adapter.notifyDataSetInvalidated();
+        
+        if(!galleryManager.stillValid())
+        	finish();
 
         createListeners();
 
@@ -175,7 +178,6 @@ public class GalleryActivity extends Skindactivity {
      //NEED TO SET TAGS AS WELL!
     
      myIntent.putExtra("gallery", aGal);
-    
      startActivity(myIntent);
 
     }

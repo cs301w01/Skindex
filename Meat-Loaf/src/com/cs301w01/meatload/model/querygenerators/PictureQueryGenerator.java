@@ -149,18 +149,6 @@ public class PictureQueryGenerator extends QueryGenerator {
             
            pictures.add(p);
 
-           /*
-           String photoName = c.getString(c.getColumnIndex(COL_NAME));
-           String path = c.getString(c.getColumnIndex(PHOTOS_COL_PATH));
-           String albumName = getAlbumNameOfPicture(c.getInt(c.getColumnIndex(COL_ID)));
-           Date date = stringToDate(c.getString(c.getColumnIndex(PHOTOS_COL_DATE)));
-
-           Photo p = new Photo(photoName, path, albumName, date,
-                selectPhotoTags(c.getInt(c.getColumnIndex(COL_ID))));
-
-           photos.add(p);
-           */
-
            c.moveToNext();
         }
 
@@ -220,8 +208,6 @@ public class PictureQueryGenerator extends QueryGenerator {
     * @return
     */
    public Collection<Picture> selectPicturesFromAlbum(int albumID) {
-		
-	   AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
 	   	    
 		String query = "SELECT * FROM " + 
 						TABLE_NAME + 
@@ -265,6 +251,17 @@ public class PictureQueryGenerator extends QueryGenerator {
 
         return selectPicturesByQuery(query);
    	
+   }
+   
+   public void deletePicturesFromAlbum(int albumID) {
+	   
+	   String dQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ALBUMID  + " = '" + albumID + "'";
+
+       Log.d(TABLE_NAME, "Performing delete: " + dQuery);
+
+       //db.execSQL(dQuery);
+       
+       db.performRawQuery(dQuery);
    }
 
 }

@@ -85,4 +85,13 @@ public class GalleryManager implements FController {
 	public String getTitle() {
 		return gallery.getTitle(context);
 	}
+	
+	public void deleteAlbum(int aid) {
+		new PictureQueryGenerator(context).deletePicturesFromAlbum(aid);
+		new AlbumQueryGenerator(context).deleteAlbumByID(aid);
+	}
+	
+	public boolean stillValid() {
+		return gallery.stillValid();
+	}
 }
