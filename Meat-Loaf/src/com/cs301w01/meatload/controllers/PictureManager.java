@@ -27,20 +27,25 @@ import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 public class PictureManager implements FController {
 
 	private Context context;
+	private int picID;
 	private Picture picture;
     private String albumName;
 	private Bitmap imgOnDisplay;
 	
-	public PictureManager(Context context, String albumName) {
+	public PictureManager(String albumName) {
 		this.albumName = albumName;
 	}
 	
-    public PictureManager(Context context, Picture picture) {
-    	this.picture = picture;
+    public PictureManager(Picture picture) {
+    	this.picID = picture.getPictureID();
     }
     
-    public PictureManager(Context context) {
-    	this.picture = null;
+    public PictureManager(int picID) {
+    	this.picID = picID;
+    }
+    
+    public PictureManager() {
+    	
     }
     
 //    public PictureManager(int pid) {
@@ -157,7 +162,7 @@ public class PictureManager implements FController {
      * @return Picture associated with this PictureManager
      */
     public Picture getPicture() {
-    	return picture;
+    	return new PictureQueryGenerator(context).selectPictureByID(picID);
     }
 
     /**
@@ -166,7 +171,7 @@ public class PictureManager implements FController {
      */
     public void deletePicture() {
         PictureQueryGenerator pQ = new PictureQueryGenerator(context);
-        pQ.deletePictureByID(picture.getPictureID());
+        pQ.deletePictureByID(picID);
     }
     
     /**
