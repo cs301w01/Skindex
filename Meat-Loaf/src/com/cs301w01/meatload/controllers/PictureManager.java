@@ -111,7 +111,7 @@ public class PictureManager implements FController {
 
 	private Picture createPicture(String fpath, Date date, String fname) {
 
-		Picture newPic = new Picture(albumName + ":" + date.toString(), fpath,
+		Picture newPic = new Picture("", fpath,
 				albumName, date, new ArrayList<Tag>());
 
 		newPic.setID((int) new PictureQueryGenerator(context)

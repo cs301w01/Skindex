@@ -24,6 +24,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class MainManager implements FController {
 	final private int MAX_ALBUM_NAME_LENGTH = 20;
+	final private int MAX_TAG_NAME_LENGTH = 20;
 
 	Context context;
 
@@ -91,6 +92,10 @@ public class MainManager implements FController {
 	
 	public int getMaxAlbumName(){
 		return MAX_ALBUM_NAME_LENGTH;
+	}
+	
+	public int getMaxTagName(){
+		return MAX_TAG_NAME_LENGTH;
 	}
 
 	/**

@@ -267,10 +267,6 @@ public class ViewAlbumsActivity extends Skindactivity {
     //Pops up error dialog with given string in message
     private void errorDialog(String err){
     	mainManager.errorDialog(err, this);
-    	//AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		//alert.setTitle("Error");
-		//alert.setMessage(err);
-		//alert.show();
     }
     
     private void openGalleryFromAlbum(String albumName) {

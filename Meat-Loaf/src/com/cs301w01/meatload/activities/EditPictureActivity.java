@@ -72,16 +72,6 @@ public class EditPictureActivity extends Skindactivity {
 		// Set up a new PictureManager using the Picture object passed via the intent
 		pictureManager = new PictureManager(this, picture);
 
-		// TODO: DELETE THESE LINES WHEN picture.getTags() is working!!!
-		ArrayList<Tag> testTagList = new ArrayList<Tag>();
-		testTagList.add(new Tag("brown", 0));
-		testTagList.add(new Tag("moldy", 0));
-		testTagList.add(new Tag("bruise", 0));
-		testTagList.add(new Tag("taco sauce", 0));
-		testTagList.add(new Tag("herp", 0));
-		testTagList.add(new Tag("derp", 0));
-		// END DELETE, AND UPDATE ARGS IN FOLLOWING FUNCTION CALL
-
 		populateTextFields();
 
 		createListeners();
@@ -148,7 +138,17 @@ public class EditPictureActivity extends Skindactivity {
 		Button addTagButton = (Button) findViewById(R.id.addTagButton);
 		addTagButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				pictureManager.addTag(addTagEditText.getText().toString());
+				String tag = addTagEditText.getText().toString().trim();
+				if (tag.length() == 0){
+					//Deal with empty/whitespace tag
+					errorDialog("Tag cannot be empty.");
+					return;
+				} else if (tag.length() > mainManager.getMaxTagName()) {
+					//if tag is too long cut it to max tag length
+					tag = tag.substring(0, mainManager.getMaxTagName());
+				}
+				
+				pictureManager.addTag(tag);
 				populateTextFields();
 			}
 		});
@@ -303,4 +303,8 @@ public class EditPictureActivity extends Skindactivity {
 
 		startActivity(sendEmail);
 	}
+	
+    private void errorDialog(String err){
+    	mainManager.errorDialog(err, this);
+    }
 }
