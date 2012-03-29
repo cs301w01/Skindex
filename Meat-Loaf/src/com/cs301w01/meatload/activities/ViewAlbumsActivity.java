@@ -23,6 +23,8 @@ import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.AlbumGallery;
+import com.cs301w01.meatload.model.AllPicturesGallery;
+import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
@@ -209,10 +211,15 @@ public class ViewAlbumsActivity extends Skindactivity {
      * @param album, the album we are opening the gallery manager on
      */
     private void openGallery(Album album) {
+    	GalleryData gDat;
+    	if(album.getID() == -1)
+    		gDat = new AllPicturesGallery();
+    	else
+    		gDat = new AlbumGallery(album);
     	Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.GalleryActivity");
-    	myIntent.putExtra("gallery", new AlbumGallery(album));
+    	myIntent.putExtra("gallery", gDat);
     	
     	startActivity(myIntent); 
     }
