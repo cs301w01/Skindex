@@ -29,7 +29,6 @@ public class TakePictureActivity extends Skindactivity {
 private Bitmap imgOnDisplay;
 
 private PictureManager pictureManager;
-private GalleryManager galleryManager;
 private Album album;
     private HorizontalGalleryAdapter adapter;
     private Gallery gallery;
@@ -40,17 +39,18 @@ super.onCreate(savedInstanceState);
 setContentView(R.layout.take_picture);
 
 Bundle b = getIntent().getExtras();
-        AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
-        album = aGal.getAlbum();
+		album = (Album) b.getSerializable("album");
+		GalleryManager gMan = new GalleryManager(new AlbumGallery(album));
+		gMan.setContext(this);
 
         //handle photo consistency gallery logic
-        adapter = new HorizontalGalleryAdapter(this, aGal.getPictureGallery(this));
+        adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);
 
         //handle photo consistency gallery logic
-        adapter = new HorizontalGalleryAdapter(this, aGal.getPictureGallery(this));
+        adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
 
         gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(adapter);

@@ -37,6 +37,7 @@ public class EditAlbumActivity extends Skindactivity {
     	AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
     	album = aGal.getAlbum();
         gMan = new GalleryManager(new AlbumGallery(album));
+        gMan.setContext(this);
 
         createListeners();
         populate();

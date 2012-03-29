@@ -117,19 +117,19 @@ public class ViewAlbumsActivity extends Skindactivity {
     
     private void switchToTakePicture(Album album) {
 
+        Intent goToGallery = new Intent();
+        goToGallery.setClassName("com.cs301w01.meatload", 
+        		"com.cs301w01.meatload.activities.GalleryActivity");
+        goToGallery.putExtra("gallery", new AlbumGallery(album));
+
+        startActivity(goToGallery);
+
         Intent myIntent = new Intent();
     	myIntent.setClassName("com.cs301w01.meatload", 
     			"com.cs301w01.meatload.activities.TakePictureActivity");
     	myIntent.putExtra("album", album);
     	
     	startActivity(myIntent);
-
-        Intent goToGallery = new Intent();
-        goToGallery.setClassName("com.cs301w01.meatload", 
-        		"com.cs301w01.meatload.activities.GalleryActivity");
-        goToGallery.putExtra("album", album);
-
-        startActivity(goToGallery);
     }
 
     private void showCreateAlbumPrompt() {

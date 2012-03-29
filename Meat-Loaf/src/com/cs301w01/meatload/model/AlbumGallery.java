@@ -50,10 +50,6 @@ public class AlbumGallery extends GalleryData implements Serializable {
     	return true;
     }
     
-    public String getName(){
-    	return album.getName();
-    }
-    
     public Album getAlbum() {
     	return album;
     }

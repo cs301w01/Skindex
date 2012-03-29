@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
@@ -150,16 +151,18 @@ takePicture();
     }
     
     private void editAlbum(GalleryManager gm) {
+    	
+    	AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
 
      //Launch the EditAlbumActivity with a given GalleryManager
      Intent myIntent = new Intent();
      myIntent.setClassName("com.cs301w01.meatload",
      "com.cs301w01.meatload.activities.EditAlbumActivity");
-     Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + galleryManager.getGallery().getAlbumName());
+     Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum().getName());
     
      //NEED TO SET TAGS AS WELL!
     
-     myIntent.putExtra("gallery", galleryManager.getGallery());
+     myIntent.putExtra("gallery", aGal);
     
      startActivity(myIntent);
 
@@ -173,12 +176,14 @@ takePicture();
     private void takePicture() {
 
         Intent myIntent = new Intent();
+        
+        AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
     
      myIntent.setClassName("com.cs301w01.meatload",
      "com.cs301w01.meatload.activities.TakePictureActivity");
-     Log.d("Taking Picture", "ALBUM NAME:" + galleryManager.getGallery().getAlbumName());
+     Log.d("Taking Picture", "ALBUM NAME:" + aGal.getAlbum().getName());
 
-        myIntent.putExtra("gallery", galleryManager.getGallery());
+        myIntent.putExtra("album", aGal.getAlbum());
 
      startActivity(myIntent);
 

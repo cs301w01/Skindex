@@ -49,8 +49,4 @@ public abstract class GalleryData implements Serializable {
     public boolean isAlbum() {
     	return false;
     }
-
-	public String getAlbumName() {
-		return "NOT AN ALBUM";
-	}
 }
