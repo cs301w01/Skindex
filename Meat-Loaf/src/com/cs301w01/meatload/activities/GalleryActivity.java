@@ -99,6 +99,11 @@ public class GalleryActivity extends Skindactivity {
         });
 
         final Button comparePictureButton = (Button) findViewById(R.id.comparePic);
+        comparePictureButton.setOnClickListener(new View.OnClickListener() {			
+				public void onClick(View v) {
+					startComparePicture();
+				}
+		});
         
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
@@ -123,6 +128,17 @@ public class GalleryActivity extends Skindactivity {
     @Override
     public void update(Object model) {
 
+    }
+    
+    private void startComparePicture() {
+    	
+    	Intent myIntent = new Intent();
+		myIntent.setClassName("com.cs301w01.meatload",
+				"com.cs301w01.meatload.activities.ComparePicturesActivity");
+		myIntent.putExtra("gallery", galleryManager.getGallery());
+		
+		startActivity(myIntent);
+    	
     }
     
     /**
