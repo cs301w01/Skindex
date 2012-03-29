@@ -219,7 +219,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 				newAlbumName = mainManager.addAlbum(newAlbumName, new ArrayList<String>());
 				
 				if(newAlbumName.length() == 0){
-					//Insert code for dealing with newAlbum not added correctly
+					errorDialog("Adding album failed.");
 				} else if (takePicture) {
                 	AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(ViewAlbumsActivity.this); 
                     switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
@@ -256,6 +256,13 @@ public class ViewAlbumsActivity extends Skindactivity {
     	myIntent.putExtra("gallery", gDat);
     	
     	startActivity(myIntent); 
+    }
+    
+    private void errorDialog(String err){
+    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Error");
+		alert.setMessage(err);
+		alert.show();
     }
     
     private void openGalleryFromAlbum(String albumName) {
