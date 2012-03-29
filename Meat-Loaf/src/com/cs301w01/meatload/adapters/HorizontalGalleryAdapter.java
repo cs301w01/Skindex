@@ -18,6 +18,7 @@ import java.util.Collection;
  * Used in conjunction with a view to create a timeline of pictures built from the paths given in
  * the pictures array passed in the constructor. This adapter is used to create a gallery that scrolls
  * from horizontally.
+ * @author Derek Dowling
  */
 public class HorizontalGalleryAdapter extends BaseAdapter {
 
