@@ -1,8 +1,11 @@
 package com.cs301w01.meatload.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+
+import com.cs301w01.meatload.model.Tag;
 
 /**
  * Stores temporary values to be permanently stored in a database or used by one of the View 
@@ -20,9 +23,9 @@ public class Picture implements Serializable {
     private String path;
     private int id;
     private Date date;
-    private Collection<String> tags;
+    private Collection<Tag> tags;
     
-    public Picture(String name, String path, String album, Date date, Collection<String> tags) {
+    public Picture(String name, String path, String album, Date date, Collection<Tag> tags) {
         this.name = name;
         this.albumName = album;
         this.path = path;
@@ -30,10 +33,12 @@ public class Picture implements Serializable {
         this.tags = tags;
     }
 
-    public int getPictureID() {
+    public Picture(String name, String path, String album, Date date, ArrayList<Tag> tags) {
+    	this(name, path, album, date, (Collection<Tag>) tags);
+	}
 
+	public int getPictureID() {
         return this.id;
-
     }
 
     public void setID(int id) {
@@ -52,7 +57,7 @@ public class Picture implements Serializable {
         return date;
     }
 
-    public Collection<String> getTags() {
+    public Collection<Tag> getTags() {
         return tags;
     }
 
@@ -66,10 +71,8 @@ public class Picture implements Serializable {
                         " name = " + getName() + " date =  " + getDate().toString() +
                         " tags = ( ";
         
-                        for(String tag : getTags()) {
-
-                            output.concat(tag + ", ");
-
+                        for (Tag tag : getTags()) {
+                            output.concat(tag.getName() + ", ");
                         }
 
                         output.concat(").");

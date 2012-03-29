@@ -18,17 +18,27 @@ public class Album implements Serializable {
 	private String name;
     private int pictureCount;
     private long id;
-    private Collection<Picture> pictures;
     private Date date;
     
-    public Album(String name, int pictureCount, Collection<Picture> pictures, long id) {
-    	Calendar cal = Calendar.getInstance();
+    public Album(String name, int pictureCount, long id, Date date) {
     	this.name = name;
     	this.pictureCount = pictureCount;
-    	this.pictures = pictures;
         this.id = id;
-        this.date = cal.getTime();
+        this.date = date;
     	
+    }
+    
+    public Album(String name, int pictureCount, long id) {
+    	this.name = name;
+    	this.pictureCount = pictureCount;
+        this.id = id;
+    	
+    }
+    
+    public Album(String name){
+    	this.name = name;
+    	pictureCount = 0;
+    	id = -1;
     }
     
     public String getName() {
@@ -39,25 +49,13 @@ public class Album implements Serializable {
     	return pictureCount;
     }
     
-    public Collection<Picture> getPictures() {
-    	return pictures;
-    }
-     
-    public Collection<String> getAllAlbumTags() {
-    	
-    	Collection<String> tags = new ArrayList<String>();
-    	
-    	//TODO: get all tags that are associated with the album and pictures
-    	
-    	return tags;
-    	
-    }
-    
     public long getID() {
         return id;
     }
     
     public Date getDate(){
-    	return date;
+    	return Calendar.getInstance().getTime();
+    	
+    	//return date;
     }
 }

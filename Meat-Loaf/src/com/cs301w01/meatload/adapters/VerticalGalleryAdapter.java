@@ -56,5 +56,4 @@ public class VerticalGalleryAdapter extends BaseAdapter{
 
         return imageView;
     }
-
 }

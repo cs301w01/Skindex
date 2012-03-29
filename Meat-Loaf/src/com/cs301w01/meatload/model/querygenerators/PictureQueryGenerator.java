@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.Tag;
 
 public class PictureQueryGenerator extends QueryGenerator {
 
@@ -88,17 +89,17 @@ public class PictureQueryGenerator extends QueryGenerator {
         long pid = db.insert(TABLE_NAME, COL_ID, cv);
 
         //insert picture's tags into tags table
-        for(String tag : p.getTags()){
+        for (Tag tag : p.getTags()) {
            
             ContentValues tcv = new ContentValues();
             
-            cv.put(COL_NAME, tag);
+            cv.put(COL_NAME, tag.getName());
             cv.put(COL_PICTUREID, pid);
 
             //insert tag tuple into tags table
             db.insert(TagQueryGenerator.TABLE_NAME, COL_ID, tcv);
             
-            Log.d(TABLE_NAME, "Tag inserted: " + tag + " w/ pid: " + pid);
+            Log.d(TABLE_NAME, "Tag inserted: " + tag.getName() + " w/ pid: " + pid);
             
         }
 
@@ -142,7 +143,8 @@ public class PictureQueryGenerator extends QueryGenerator {
            String name = c.getString(c.getColumnIndex(COL_NAME));
 
            //String name, String path, String album, Date date, Collection<String> tags
-           Picture p = new Picture(name, path, albumName, date, new TagQueryGenerator(context).selectPictureTags(id));
+           Picture p = new Picture(name, path, albumName, date, 
+        		   new TagQueryGenerator(context).selectPictureTags(id));
             p.setID(id);
             
            pictures.add(p);
@@ -195,7 +197,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 	   Date date = stringToDate(c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
 	    
 	   TagQueryGenerator tagGen = new TagQueryGenerator(this.context);
-	   Collection<String> tags = tagGen.selectPictureTags(c.getInt(c.getColumnIndex(COL_ID)));
+	   Collection<Tag> tags = tagGen.selectPictureTags(c.getInt(c.getColumnIndex(COL_ID)));
 	   
        Picture p = new Picture(pictureName, path, albumName, date, tags);
        p.setID(pictureID);

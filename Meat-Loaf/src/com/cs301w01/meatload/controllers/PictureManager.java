@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
@@ -16,15 +17,15 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
  * Implements Controller logic for Picture objects.
  * @author Isaac Matichuk
  */
-public class PictureManager implements FController{
+public class PictureManager implements FController {
 
-	private static final long serialVersionUID = 1L;
 	private Context context;
 	private Picture picture;
     private String albumName;
@@ -34,8 +35,8 @@ public class PictureManager implements FController{
 		this.albumName = albumName;
 	}
 	
-    public PictureManager(Context context, Picture photo) {
-    	this.picture = photo;
+    public PictureManager(Context context, Picture picture) {
+    	this.picture = picture;
     }
     
     public PictureManager(Context context) {
@@ -108,7 +109,7 @@ public class PictureManager implements FController{
 		b = gen.nextInt(256);
 		
         for (int i = 0; i < height; i++) {
-        	if (test > 15){
+        	if (test > 15) {
         		r = gen.nextInt(256);
         		g = gen.nextInt(256);
         		b = gen.nextInt(256);
@@ -129,8 +130,8 @@ public class PictureManager implements FController{
     
     private Picture savePicture(String fpath, Date date, String fname) {
 
-        Picture newPic = new Picture(albumName+":"+date.toString(), fpath,
-                albumName, date, new ArrayList<String>());
+        Picture newPic = new Picture(albumName + ":" + date.toString(), fpath, albumName, date, 
+        		new ArrayList<Tag>());
         
         new PictureQueryGenerator(context).insertPicture(newPic);
         Log.d("SAVE", "Saving " + fpath + fname);
@@ -143,10 +144,11 @@ public class PictureManager implements FController{
     }
 
     public void deletePicture() {
-
         PictureQueryGenerator pQ = new PictureQueryGenerator(context);
-
         pQ.deletePictureByID(picture.getPictureID());
-
+    }
+    
+    public void setTags(Collection<Tag> tags) {
+    	// TODO: Set the picture's tags in the object
     }
 }
