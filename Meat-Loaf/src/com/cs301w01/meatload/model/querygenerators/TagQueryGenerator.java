@@ -25,52 +25,9 @@ public class TagQueryGenerator extends QueryGenerator {
 		super(context);
 	}
 
-	private Collection<Tag> selectTagsByQuery(String tagQuery) {
+	private ArrayList<Tag> selectTagsByQuery(String tagQuery) {
     	
-    	Cursor c = db.performRawQuery(tagQuery);
-    	Collection<Tag> tags = new ArrayList<Tag>();
-    	
-    	if (c == null) {
-    		return tags;
-    	}
-
-    	while (!c.isAfterLast()) {
-    		tags.add(new Tag(
-    				c.getString(c.getColumnIndex(COL_NAME)), 
-    				new Integer(c.getString(c.getColumnIndex("numPictures")))
-    			)
-    		);
-    		c.moveToNext();
-    	}
-
-    	return tags;
-    }
-    
-    /**
-     * Return all tags associated with a picture.
-     * @param pictureID
-     * @return Collection of Strings
-     */
-    public Collection<Tag> selectPictureTags(int pictureID) {
-        
-        String getTags = "SELECT " + COL_NAME +
-        					" FROM " + TagQueryGenerator.TABLE_NAME +
-        					" WHERE " + COL_PICTUREID + " = '" + pictureID + "'";
-        
-        return selectTagsByQuery(getTags);
-        
-    }
-    
-    public ArrayList<Tag> selectAllTags() {
-    	
-    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
-    						+ 
-    						" FROM " + TABLE_NAME + 
-    						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
-    						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
-    						" GROUP BY t." + COL_NAME;
-    	
-    	Cursor c = db.performRawQuery(tagQuery);
+		Cursor c = db.performRawQuery(tagQuery);
     	
     	ArrayList<Tag> tags = new ArrayList<Tag>();
     	
@@ -89,6 +46,48 @@ public class TagQueryGenerator extends QueryGenerator {
         }
 
         return tags;
+    }
+    
+    /**
+     * Return all tags associated with a picture.
+     * @param pictureID
+     * @return Collection of Strings
+     */
+    public ArrayList<Tag> selectPictureTags(int pictureID) {
+        
+        String getTags = "SELECT " + COL_NAME +
+        					" FROM " + TagQueryGenerator.TABLE_NAME +
+        					" WHERE " + COL_PICTUREID + " = '" + pictureID + "'";
+        
+        return selectTagsByQuery(getTags);
+        
+    }
+    
+    public ArrayList<Tag> selectAllTags() {
+    	
+    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
+    						+ 
+    						" FROM " + TABLE_NAME + 
+    						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
+    						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
+    						" GROUP BY t." + COL_NAME;
+    	
+    	return selectTagsByQuery(tagQuery);
+    }
+    
+    public int getTagPictureCount(String tagName) {
+    	String countQuery = "SELECT COUNT(*) AS numPictures" + 
+    						" FROM " + TABLE_NAME +
+    						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
+    						" P ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" +
+    						" WHERE t." + COL_NAME + " = '" + tagName + "'";
+    	
+    	Cursor c = db.performRawQuery(countQuery);
+    	
+    	if (c == null) {
+    		return 0;
+    	}
+            return new Integer(c.getString(c.getColumnIndex("numPictures")));
     }
     
     /**

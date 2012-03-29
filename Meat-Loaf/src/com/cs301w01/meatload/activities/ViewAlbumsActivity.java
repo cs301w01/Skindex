@@ -215,10 +215,12 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				String newAlbumName = input.getText().toString().trim();
-				mainManager.addAlbum(newAlbumName, new ArrayList<String>());
+				String newAlbumName = input.getText().toString();
+				newAlbumName = mainManager.addAlbum(newAlbumName, new ArrayList<String>());
 				
-                if (takePicture) {
+				if(newAlbumName.length() == 0){
+					//Insert code for dealing with newAlbum not added correctly
+				} else if (takePicture) {
                 	AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(ViewAlbumsActivity.this); 
                     switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
                 }

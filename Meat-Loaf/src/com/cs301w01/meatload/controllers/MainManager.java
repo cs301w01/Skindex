@@ -2,6 +2,7 @@ package com.cs301w01.meatload.controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import android.content.Context;
 
@@ -20,6 +21,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  * @see Skindex
  */
 public class MainManager implements FController {
+	final private int ALBUM_NAME_MAX_LENGTH = 20;
 
 	Context context;
 
@@ -49,8 +51,35 @@ public class MainManager implements FController {
 		return new TagQueryGenerator(context).selectAllTags();
 	}
 
-	public void addAlbum(String albumName, Collection<String> tags) {
+	public String addAlbum(String albumName, Collection<String> tags) {
+		
+		//TODO: BRING UP A LIST OF ALL ALBUMS TO TEST IN BELOW CODE (JOEL)
+		ArrayList<Album> testList = getAllAlbums();
+		Album testAlbum;	
+		Iterator<Album> listIter = testList.iterator();
+		
+		
+		albumName = albumName.trim();
+		if(albumName.length() > ALBUM_NAME_MAX_LENGTH){
+			albumName = albumName.substring(0,ALBUM_NAME_MAX_LENGTH);
+		} else if (albumName.length() == 0){
+			//INSERT CODE TO HANDLE EMPTY ALBUM NAME
+		}
+
+		
+		while (listIter.hasNext()){
+			testAlbum = listIter.next();
+			if (testAlbum.getName().equals(albumName)){
+				return "";
+				//Returns an empty string if name already exists
+				//Test returned result with: if (result.length() == 0)
+			}
+		}
+		
 		new AlbumQueryGenerator(context).insertAlbum(albumName);
+		
+		return albumName;
+		//length() == 0 if adding album failed, else returns name of added album truncated to max Album name # chars
 	}
 
 	public Album getAlbumByName(String albumName) {
