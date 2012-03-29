@@ -23,19 +23,15 @@ public class Picture implements Serializable {
     private String path;
     private int id;
     private Date date;
-    private Collection<Tag> tags;
+    private ArrayList<Tag> tags;
     
-    public Picture(String name, String path, String album, Date date, Collection<Tag> tags) {
+    public Picture(String name, String path, String album, Date date, ArrayList<Tag> tags) {
         this.name = name;
         this.albumName = album;
         this.path = path;
         this.date = date;
         this.tags = tags;
     }
-
-    public Picture(String name, String path, String album, Date date, ArrayList<Tag> tags) {
-    	this(name, path, album, date, (Collection<Tag>) tags);
-	}
 
 	public int getPictureID() {
         return this.id;
@@ -57,7 +53,7 @@ public class Picture implements Serializable {
         return date;
     }
 
-    public Collection<Tag> getTags() {
+    public ArrayList<Tag> getTags() {
         return tags;
     }
 
