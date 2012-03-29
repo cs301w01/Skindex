@@ -63,7 +63,8 @@ public class MainManager implements FController {
 		if(albumName.length() > ALBUM_NAME_MAX_LENGTH){
 			albumName = albumName.substring(0,ALBUM_NAME_MAX_LENGTH);
 		} else if (albumName.length() == 0){
-			//INSERT CODE TO HANDLE EMPTY ALBUM NAME
+			//handle empty album name
+			return"";
 		}
 
 		
@@ -71,7 +72,7 @@ public class MainManager implements FController {
 			testAlbum = listIter.next();
 			if (testAlbum.getName().equals(albumName)){
 				return "";
-				//Returns an empty string if name already exists
+				//handle Album Name Already Exists
 				//Test returned result with: if (result.length() == 0)
 			}
 		}
