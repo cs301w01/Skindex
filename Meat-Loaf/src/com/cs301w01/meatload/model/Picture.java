@@ -2,7 +2,6 @@ package com.cs301w01.meatload.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 
 import com.cs301w01.meatload.model.Tag;

@@ -1,7 +1,6 @@
 package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +10,7 @@ import android.util.SparseBooleanArray;
 import android.view.View;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.AlbumAdapter;
+import com.cs301w01.meatload.adapters.SimpleTagAdapter;
 import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
@@ -46,7 +46,6 @@ public class EditPictureActivity extends Skindactivity {
 	private ListView tagListView;
 	private EditText pictureNameEditText;
 	private ImageView pictureView;
-	private ArrayList<Tag> pictureTags;
 
 	@Override
 	public void update(Object model) {
@@ -118,12 +117,7 @@ public class EditPictureActivity extends Skindactivity {
 		albumView.setTag(picture.getAlbumName());
 		
 		tagListView = (ListView) findViewById(R.id.picTagList);
-		Iterator<Tag> tagIter = picture.getTags().iterator();
-		pictureTags = new ArrayList<Tag>();
-		
-		while (tagIter.hasNext()) {
-			pictureTags.add(tagIter.next());
-		}
+		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
 		
 		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item, pictureTags);
 		tagListView.setAdapter(arrAdapt);
@@ -140,8 +134,11 @@ public class EditPictureActivity extends Skindactivity {
         });
 
         // Add Tag field logic
+        ArrayList<Tag> pictureTags = pictureManager.getTempTags();
         final AutoCompleteTextView addTagEditText = 
         		(AutoCompleteTextView) findViewById(R.id.addTagEditText);
+        TagAdapter tagAdapter = new SimpleTagAdapter(this, R.layout.tag_list_item, pictureTags);
+        addTagEditText.setAdapter(tagAdapter);
         
         // Add Tag button logic
         Button addTagButton = (Button) findViewById(R.id.addTagButton);
@@ -157,7 +154,7 @@ public class EditPictureActivity extends Skindactivity {
 
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, 
 					long id) {
-				deleteTagAlert(position);
+				deleteTagAlert((Tag) parent.getItemAtPosition(position));
 				return true;
 			}
         	
@@ -222,6 +219,8 @@ public class EditPictureActivity extends Skindactivity {
 		tagListView.setAdapter(adapter);
 		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
+		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
+		
 		for (Tag pictureTag : pictureTags) {
 			for (int i = 0; i < allTags.size(); i++) {
 				if (pictureTag.getName().equals(allTags.get(i).getName())) {
@@ -284,7 +283,7 @@ public class EditPictureActivity extends Skindactivity {
 
     }
     
-    private void deleteTagAlert(final int position) {
+    private void deleteTagAlert(final Tag tag) {
     	AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("Delete Tag?");
@@ -292,7 +291,7 @@ public class EditPictureActivity extends Skindactivity {
 
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                pictureManager.deleteTag(pictureTags.get(position));
+                pictureManager.deleteTag(tag);
                 finish();
             }
         });
