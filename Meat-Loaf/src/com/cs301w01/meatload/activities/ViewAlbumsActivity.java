@@ -41,6 +41,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 	private MainManager mainManager;
 	private ListView albumListView;
 	private AlbumAdapter adapter;
+	private AlertDialog currentDialog;
 	
 //	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 //	private String[] adapterCols = { "name", "numPictures" };
@@ -177,8 +178,8 @@ public class ViewAlbumsActivity extends Skindactivity {
     	alert.show();
     }
     
-    private void doDismissDialog(){
-    	this.dismissDialog(RESULT_OK);
+    private void dismissCurrentDialog(){
+    	currentDialog.dismiss();
     }
 
     /** 
@@ -193,27 +194,22 @@ public class ViewAlbumsActivity extends Skindactivity {
     	// Alert code snippet taken from: 
     	// http://www.androidsnippets.com/prompt-user-input-with-an-alertdialog
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		
+		
 
 		alert.setTitle("New Album");
 		alert.setMessage("Enter the name of the new album");
-		
 
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		input.setOnKeyListener(new View.OnKeyListener() {
 			
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_ENTER){
-					String newAlbumName = input.getText().toString();
-					mainManager.addAlbum(newAlbumName, new ArrayList<String>());
-					
-	                if (takePicture) {
-	                	AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(ViewAlbumsActivity.this); 
-	                    switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
-	                }
-
-	                refreshScreen();
-	                doDismissDialog();
+				if(keyCode == KeyEvent.KEYCODE_ENTER)
+				{
+					Button positiveButton = currentDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+					positiveButton.requestFocus();
+					positiveButton.performClick();
 				}
 				// TODO Auto-generated method stub
 				return false;
@@ -223,7 +219,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				String newAlbumName = input.getText().toString();
+				String newAlbumName = input.getText().toString().trim();
 				mainManager.addAlbum(newAlbumName, new ArrayList<String>());
 				
                 if (takePicture) {
@@ -241,7 +237,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 			}
 		});
 
-		alert.show();
+		currentDialog = alert.show();
 
     }
    
