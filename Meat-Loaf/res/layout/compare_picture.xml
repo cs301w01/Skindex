@@ -1,32 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent">
+		<Gallery xmlns:android="http://schemas.android.com/apk/res/android"
+			 android:id="@+id/topCompareGallery"
+			 android:layout_width="fill_parent"
+			 android:layout_height="wrap_content" />
 
+		<TextView
+		    android:id="@+id/topGalleryData"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/topGalleryData"
+		    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/topCompareGallery"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-            />
+		<Gallery
+		     xmlns:android="http://schemas.android.com/apk/res/android"
+		     android:id="@+id/bottomCompareGallery"
+		     android:layout_width="fill_parent"
+		     android:layout_height="wrap_content" />
 
-    <ImageView
-            android:id="@+id/topCompareImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-
-    <Gallery xmlns:android="http://schemas.android.com/apk/res/android"
-             android:id="@+id/bottomCompareGallery"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-            />
-
-    <ImageView
-            android:id="@+id/bottomCompareImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+		<TextView
+		    android:id="@+id/bottomGalleryData"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/bottomGalleryData"
+		    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

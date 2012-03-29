@@ -33,4 +33,6 @@
     <string name="picture_name_text">Picture Name</string>
     <string name="add_tag_hint">Enter a tag to add here</string>
     <string name="button_compare_pic">Compare Pictures</string>
+    <string name="topGalleryData">Date - Name</string>
+    <string name="bottomGalleryData">Date - Name</string>
 </resources>
