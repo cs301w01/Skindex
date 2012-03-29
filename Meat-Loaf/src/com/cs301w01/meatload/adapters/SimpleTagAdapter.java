@@ -11,11 +11,23 @@ import android.widget.TextView;
 
 import com.cs301w01.meatload.model.Tag;
 
+/**
+ * Special TagAdapter used with the AutoCompleteTextView in EditPictureActivity.
+ * 
+ * Returns a TextView with the text set to the current tag's name, as part of the List passed in
+ * the constructor.
+ * @author Blake Bouchard
+ */
 public class SimpleTagAdapter extends TagAdapter {
 
+	/**
+	 * Main constructor for the SimpleTagAdapter object.
+	 * @param context Context in which the TagAdapter exists
+	 * @param textViewResourceId ID of the textview being used
+	 * @param tags List of tags to attach to the AutoCorrectTextView
+	 */
 	public SimpleTagAdapter(Context context, int textViewResourceId, List<Tag> tags) {
 		super(context, textViewResourceId, tags);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override
