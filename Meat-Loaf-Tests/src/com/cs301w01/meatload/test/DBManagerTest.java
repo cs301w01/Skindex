@@ -12,7 +12,7 @@ import com.cs301w01.meatload.model.Picture;
 
 public class DBManagerTest extends AndroidTestCase {
 	DBManager mClassToTest;
- 
+ /*
 	protected void setUp() throws Exception {
 		Context c = getContext();
 		mClassToTest = new DBManager(c);
@@ -416,5 +416,5 @@ public void testGetAlbumNameOfPicture2() {
 		mClassToTest.insertPicture(new Picture("", "", "Album 3" , new Date(), tag3));
 
 	}
-
+*/
 }
