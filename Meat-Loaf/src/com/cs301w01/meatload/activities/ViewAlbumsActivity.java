@@ -14,6 +14,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -97,7 +98,11 @@ public class ViewAlbumsActivity extends Skindactivity {
     
     public void refreshScreen() {
     	albumListView = (ListView) findViewById(R.id.albumListView);
-		ArrayList<Album> albumList = mainManager.getAllAlbums();
+    	
+    	ArrayList<Album> albumList = new ArrayList<Album>();
+    	albumList.add(new Album("All Pictures", mainManager.getPictureCount(), -1));
+    	albumList.addAll(mainManager.getAllAlbums());
+		
 		adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
 		albumListView.setAdapter(adapter);
     }
@@ -139,15 +144,15 @@ public class ViewAlbumsActivity extends Skindactivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
         alert.setTitle("New Album?");
-        alert.setMessage("Would you like to create a new album?");
+        alert.setMessage("Would you like to create a new album or choose an existing one?");
 
-        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 addAlbum(Boolean.TRUE);
             }
         });
 
-        alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        alert.setNegativeButton("Choose", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 chooseAlbumPrompt();
             }
@@ -159,6 +164,21 @@ public class ViewAlbumsActivity extends Skindactivity {
 
     private void chooseAlbumPrompt() {
         //TODO: present list of albums, make user select one, redirect to takePicture
+    	final CharSequence[] albumNames = mainManager.albumsToStrings(mainManager.getAllAlbums());
+    	
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    	builder.setTitle("Choose an Album");
+    	builder.setItems(albumNames, new DialogInterface.OnClickListener() {
+    	    public void onClick(DialogInterface dialog, int item) {
+    	    	switchToTakePicture(mainManager.getAlbumByName((String)albumNames[item]));
+    	    }
+    	});
+    	AlertDialog alert = builder.create();
+    	alert.show();
+    }
+    
+    private void doDismissDialog(){
+    	this.dismissDialog(RESULT_OK);
     }
 
     /** 
@@ -176,9 +196,29 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 		alert.setTitle("New Album");
 		alert.setMessage("Enter the name of the new album");
+		
 
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
+		input.setOnKeyListener(new View.OnKeyListener() {
+			
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_ENTER){
+					String newAlbumName = input.getText().toString();
+					mainManager.addAlbum(newAlbumName, new ArrayList<String>());
+					
+	                if (takePicture) {
+	                	AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(ViewAlbumsActivity.this); 
+	                    switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
+	                }
+
+	                refreshScreen();
+	                doDismissDialog();
+				}
+				// TODO Auto-generated method stub
+				return false;
+			}
+		});
 		alert.setView(input);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
@@ -212,7 +252,7 @@ public class ViewAlbumsActivity extends Skindactivity {
      */
     private void openGallery(Album album) {
     	GalleryData gDat;
-    	if(album.getID() == -1)
+    	if(album.getID() < 0)
     		gDat = new AllPicturesGallery();
     	else
     		gDat = new AlbumGallery(album);
