@@ -107,8 +107,9 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			
 			mActivity.runOnUiThread(new Runnable() {
 				public void run(){
-					albumListView.getChildAt(1).requestFocus();
-					albumListView.getChildAt(1).performClick();
+					albumListView.requestFocus(1);
+					//albumListView.getChildAt(1).requestFocus();
+					//albumListView.getChildAt(1).performClick();
 					//getChildCount()
 					/*
 					albumListView.requestFocus();
