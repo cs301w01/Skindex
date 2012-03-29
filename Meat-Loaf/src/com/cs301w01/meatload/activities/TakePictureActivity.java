@@ -45,9 +45,10 @@ public class TakePictureActivity extends Skindactivity {
 		gMan.setContext(this);
 
 		// handle photo consistency gallery logic
-		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery());
+		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery(), R.styleable.TakePictureActivity,
+                R.styleable.TakePictureActivity_android_takePictureItemBackground);
 
-		gallery = (Gallery) findViewById(R.id.gallery);
+		gallery = (Gallery) findViewById(R.id.takePictureGallery);
 		gallery.setAdapter(adapter);
 
 		imgOnDisplay = new PictureGenerator().generatePicture();
