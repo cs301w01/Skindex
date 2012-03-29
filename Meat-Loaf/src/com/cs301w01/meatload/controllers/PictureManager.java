@@ -17,6 +17,7 @@ import android.util.Log;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
+import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Implements Controller logic for Picture objects.
@@ -126,7 +127,13 @@ public class PictureManager implements FController {
 	 * @return Picture associated with this PictureManager
 	 */
 	public Picture getPicture() {
-		return new PictureQueryGenerator(context).selectPictureByID(picID);
+		Picture newpic = new PictureQueryGenerator(context).selectPictureByID(picID);
+		tempTags = newpic.getTags();
+		return newpic;
+	}
+	
+	public ArrayList<Tag> getTempTags() {
+		return tempTags;
 	}
 
 	/**
@@ -147,7 +154,7 @@ public class PictureManager implements FController {
 	 *            String object representing the tag to be added to this picture
 	 */
 	public void addTag(String tagName) {
-		tempTags.add(new Tag(tagName, 0));
+		tempTags.add(new Tag(tagName, new TagQueryGenerator(context).getTagPictureCount(tagName)));
 	}
 
 	/**
