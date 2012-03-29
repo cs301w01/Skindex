@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Random;
 
@@ -16,6 +17,7 @@ import android.graphics.Color;
 import android.util.Log;
 
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
@@ -108,7 +110,7 @@ public class PictureManager implements FController{
 		b = gen.nextInt(256);
 		
         for (int i = 0; i < height; i++) {
-        	if (test > 15){
+        	if (test > 15) {
         		r = gen.nextInt(256);
         		g = gen.nextInt(256);
         		b = gen.nextInt(256);
@@ -129,8 +131,8 @@ public class PictureManager implements FController{
     
     private Picture savePicture(String fpath, Date date, String fname) {
 
-        Picture newPic = new Picture(albumName+":"+date.toString(), fpath,
-                albumName, date, new ArrayList<String>());
+        Picture newPic = new Picture(albumName + ":" + date.toString(), fpath, albumName, date, 
+        		new ArrayList<Tag>());
         
         new PictureQueryGenerator(context).insertPicture(newPic);
         Log.d("SAVE", "Saving " + fpath + fname);

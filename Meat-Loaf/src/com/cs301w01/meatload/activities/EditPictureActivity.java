@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.view.View;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.AlbumAdapter;
+import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.Tag;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -88,7 +90,7 @@ public class EditPictureActivity extends Skindactivity {
 	 http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
 	protected void populateTextFields(String albumName, String date, String path, 
-			Collection<String> tags) {
+			Collection<Tag> tags) {
 		// Set pictureView to path provided by Picture object
 		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
 		pictureView.setImageDrawable(Drawable.createFromPath(path));
@@ -104,13 +106,12 @@ public class EditPictureActivity extends Skindactivity {
 		
 		// TODO: populate picTags with this pictures Tags
 		ListView tagListView = (ListView) findViewById(R.id.picTagList);
-		Iterator<String> tagIter = tags.iterator();
-		ArrayList<String> tagList = new ArrayList<String>();
-		while(tagIter.hasNext()){
+		Iterator<Tag> tagIter = tags.iterator();
+		ArrayList<Tag> tagList = new ArrayList<Tag>();
+		while (tagIter.hasNext()) {
 			tagList.add(tagIter.next());
 		}
-		ArrayAdapter<String> arrAdapt = 
-				new ArrayAdapter<String>(this, R.layout.tag_list_item, tagList);
+		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item, tagList);
 		tagListView.setAdapter(arrAdapt);
 		
 	}
@@ -187,13 +188,16 @@ public class EditPictureActivity extends Skindactivity {
     }
     
 	private void openEditTagsDialog() {
+		
+		// Set up Dialog object
 		final Dialog editTagsDialog = new Dialog(this);
 		editTagsDialog.setContentView(R.layout.edit_tags);
 		editTagsDialog.setCancelable(true);
+		ArrayList<Tag> allTags = mainManager.getAllTags();
 		
-		ArrayList<String> tags = (ArrayList<String>) picture.getTags();
-		ArrayAdapter<String> adapter = 
-				new ArrayAdapter<String>(this, R.layout.tag_list_item, tags);
+		// Populate tags
+		ArrayList<Tag> pictureTags = (ArrayList<Tag>) picture.getTags();
+		TagAdapter adapter = new TagAdapter(this, R.layout.tag_list_item, allTags);
 		
 		ListView tagListView = (ListView) findViewById(R.id.editTagsListView);
 		tagListView = (ListView) findViewById(R.id.changeAlbumListView);

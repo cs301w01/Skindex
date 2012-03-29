@@ -25,17 +25,21 @@ public class TagQueryGenerator extends QueryGenerator {
 		super(context);
 	}
 
-	private Collection<String> selectTagsByQuery(String tagQuery) {
+	private Collection<Tag> selectTagsByQuery(String tagQuery) {
     	
     	Cursor c = db.performRawQuery(tagQuery);
-    	Collection<String> tags = new ArrayList<String>();
+    	Collection<Tag> tags = new ArrayList<Tag>();
     	
     	if (c == null) {
     		return tags;
     	}
 
     	while (!c.isAfterLast()) {
-    		tags.add(c.getString(c.getColumnIndex(COL_NAME)));
+    		tags.add(new Tag(
+    				c.getString(c.getColumnIndex(COL_NAME)), 
+    				new Integer(c.getString(c.getColumnIndex("numPictures")))
+    			)
+    		);
     		c.moveToNext();
     	}
 
@@ -47,7 +51,7 @@ public class TagQueryGenerator extends QueryGenerator {
      * @param pictureID
      * @return Collection of Strings
      */
-    public Collection<String> selectPictureTags(int pictureID) {
+    public Collection<Tag> selectPictureTags(int pictureID) {
         
         String getTags = "SELECT " + COL_NAME +
         					" FROM " + TagQueryGenerator.TABLE_NAME +
@@ -94,22 +98,17 @@ public class TagQueryGenerator extends QueryGenerator {
     * @return String representation of joined Strings
     */
     public String stringJoin(Collection<String> strings, String delimiter) {
-		 
-    	String newString = "";
-    	
+		 String newString = "";
 		 boolean isFirst = true;
 		 
 		 for (String curr : strings) {
 			 newString += curr;
 			 
-			 if(isFirst) {
+			 if (isFirst) {
 				 isFirst = false;
 				 newString += delimiter;
 			 }
-			 
-		 }
-		 
+		 }	 
 		 return newString;
-    }
-    
+    }    
 }
