@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.ComparePictureGalleryAdapter;
 import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
@@ -21,14 +23,15 @@ import java.util.ArrayList;
  */
 public class ComparePicturesActivity extends Skindactivity {
 
+	//gallery related variables
     private Gallery topGallery;
     private Gallery bottomGallery;
     private ComparePictureGalleryAdapter gAdapter;
-
-    private ImageView topPicture;
-    private ImageView bottomPicture;
-    
     private GalleryManager galleryManager;
+    
+    //data strings
+    private TextView topGalleryData;
+    private TextView bottomGalleryData;
 
 
     @Override
@@ -49,17 +52,13 @@ public class ComparePicturesActivity extends Skindactivity {
         topGallery = (Gallery) findViewById(R.id.topCompareGallery);
         bottomGallery = (Gallery) findViewById(R.id.bottomCompareGallery);
         
+        topGalleryData = (TextView) findViewById(R.id.topGalleryData);
+        bottomGalleryData = (TextView) findViewById(R.id.bottomGalleryData);
+        
         //set adapter
         topGallery.setAdapter(gAdapter);
         bottomGallery.setAdapter(gAdapter);
 
-//        ArrayList<Picture> pictures = new ArrayList<Picture>(galleryManager.getPictureGallery());
-        
-//        //set pictures
-//        topPicture = (ImageView) findViewById(R.id.topCompareImage);
-//        topPicture.setImageDrawable(Drawable.createFromPath(pictures.get(0).getPath()));
-//        bottomPicture = (ImageView) findViewById(R.id.bottomCompareImage);
-//        bottomPicture.setImageDrawable(Drawable.createFromPath(pictures.get(1).getPath()));
     }
 
     //@Override
@@ -69,30 +68,11 @@ public class ComparePicturesActivity extends Skindactivity {
 
     public void createListeners() {
 
-//        topGallery.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//            
-//                String pPath = galleryManager.getPhoto(view.getId()).getPath();
-//                updateTopPicture(pPath);
-//                
-//            }
-//        });
-//
-//        bottomGallery.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View view) {
-//
-//                String pPath = galleryManager.getPhoto(view.getId()).getPath();
-//                updateBottomPicture(pPath);
-//
-//            }
-//        });
-
     	topGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
+    		
+			public void onItemSelected(AdapterView parentView, View childView, int position, long id) {
 				
-				
+				updateTopPictureData(position);
 				
 			}
 
@@ -102,6 +82,19 @@ public class ComparePicturesActivity extends Skindactivity {
 			}
 		});
     	
+    	bottomGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+    		
+			public void onItemSelected(AdapterView parentView, View childView, int position, long id) {
+				
+				updateBottomPictureData(position);
+				
+			}
+
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
     	
     }
 
@@ -137,16 +130,23 @@ public class ComparePicturesActivity extends Skindactivity {
     	
     }
     
-    public void updateTopPicture(String path) {
+    public void updateTopPictureData(int position) {
 
-        topPicture.setImageDrawable(Drawable.createFromPath(path));
-        topPicture.refreshDrawableState();
+    	Picture p = gAdapter.getItem(position);
+    	
+    	String data = "" + p.getDate().toString() + " - " + p.getName();
+    	
+    	topGalleryData.setText(data);
 
     }
 
-    public void updateBottomPicture(String path) {
-
-        bottomPicture.setImageDrawable(Drawable.createFromPath(path));
-        bottomPicture.refreshDrawableState();
+    public void updateBottomPictureData(int position) {
+    	
+    	Picture p = gAdapter.getItem(position);
+    	
+    	String data = "" + p.getDate().toString() + " - " + p.getName();
+    	
+    	bottomGalleryData.setText(data);
+        
     }
 }
