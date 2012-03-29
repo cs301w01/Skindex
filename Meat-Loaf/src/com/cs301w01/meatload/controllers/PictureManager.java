@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.util.Log;
 
 import com.cs301w01.meatload.model.Picture;
@@ -30,7 +28,8 @@ public class PictureManager implements FController {
 	private Context context;
 	private int picID;
 	private String albumName;
-	private Bitmap imgOnDisplay;
+	//private Bitmap imgOnDisplay;
+	private ArrayList<Tag> tempTags;
 
 	public PictureManager(Context context, String albumName) {
 		this.context = context;
@@ -39,11 +38,13 @@ public class PictureManager implements FController {
 
 	public PictureManager(Picture picture) {
 		this.picID = picture.getPictureID();
+		this.tempTags = picture.getTags();
 	}
 
 	public PictureManager(Context context, Picture picture) {
 		this.context = context;
 		this.picID = picture.getPictureID();
+		this.tempTags = picture.getTags();
 	}
 
 	public PictureManager(int picID) {
@@ -63,7 +64,7 @@ public class PictureManager implements FController {
 	// }
 
 	/**
-	 * sets the context for use with the model
+	 * Sets the context for use with the model
 	 */
 	public void setContext(Context context) {
 		this.context = context;
@@ -146,7 +147,7 @@ public class PictureManager implements FController {
 	 *            String object representing the tag to be added to this picture
 	 */
 	public void addTag(String tagName) {
-
+		tempTags.add(new Tag(tagName, 0));
 	}
 
 	/**
@@ -157,7 +158,7 @@ public class PictureManager implements FController {
 	 *            Collection of tags to set the picture's tags to
 	 */
 	public void setTags(Collection<Tag> tags) {
-		// TODO: Set the picture's tags in the object
+		
 	}
 
 	/**
@@ -167,7 +168,10 @@ public class PictureManager implements FController {
 	 *            Tag to be deleted.
 	 */
 	public void deleteTag(Tag tag) {
-		// TODO Auto-generated method stub
-
+		for (Tag tempTag : tempTags) {
+			if (tempTag.getName().equals(tag.getName())) {
+				tempTags.remove(tempTag);
+			}
+		}
 	}
 }
