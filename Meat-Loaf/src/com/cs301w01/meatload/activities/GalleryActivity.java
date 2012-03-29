@@ -52,7 +52,7 @@ private GalleryManager galleryManager;
 
         adapter = new VerticalGalleryAdapter(this, galleryManager.getPictureGallery());
 
-        gallery = (Gallery) findViewById(R.id.gallery);
+        gallery = (Gallery) findViewById(R.id.viewAlbumGridView);
         gallery.setAdapter(adapter);
                 
         populateTextFields(galleryManager.getTitle());

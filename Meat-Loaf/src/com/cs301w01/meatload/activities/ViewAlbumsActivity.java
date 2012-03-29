@@ -177,10 +177,6 @@ public class ViewAlbumsActivity extends Skindactivity {
     	AlertDialog alert = builder.create();
     	alert.show();
     }
-    
-    public AlertDialog getCurrentDialog(){
-    	return currentDialog;
-    }
 
     /** 
      * Prompts the user to enter an album name and pick a set of tags. When the user presses OK, 
