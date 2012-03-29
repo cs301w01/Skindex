@@ -6,6 +6,7 @@ import com.cs301w01.meatload.Skindex;
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.SQLiteDBManager;
 
 import android.app.AlertDialog;
 import android.app.Instrumentation;
@@ -31,6 +32,8 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
+        
+ 
     }
     
     @Override
@@ -40,6 +43,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
         if (mActivity != null) {
             mActivity.finish();
         }
+
     }
 
 
@@ -76,6 +80,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			
 			sendKeys(KeyEvent.KEYCODE_A);
 			sendKeys(KeyEvent.KEYCODE_B);
+			sendKeys(KeyEvent.KEYCODE_C);
 			
 			sendKeys(KeyEvent.KEYCODE_ENTER);
 			
