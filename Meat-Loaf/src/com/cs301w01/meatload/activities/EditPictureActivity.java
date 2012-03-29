@@ -1,7 +1,6 @@
 package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 
 import android.app.AlertDialog;
@@ -21,8 +20,11 @@ import com.cs301w01.meatload.model.Tag;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -41,7 +43,10 @@ public class EditPictureActivity extends Skindactivity {
 
 	private MainManager mainManager;
 	private PictureManager pictureManager;
-	private Picture picture;
+	private ListView tagListView;
+	private EditText pictureNameEditText;
+	private ImageView pictureView;
+	private ArrayList<Tag> pictureTags;
 
 	@Override
 	public void update(Object model) {
@@ -60,7 +65,7 @@ public class EditPictureActivity extends Skindactivity {
 		// Get picture object from Intent's extras bundle
 		Intent intent = getIntent();
 		Bundle extras = intent.getExtras();
-		picture = (Picture) extras.getSerializable("picture");
+		Picture picture = (Picture) extras.getSerializable("picture");
         
 		// Set up a new PictureManager using the Picture object passed via the intent 
 		pictureManager = new PictureManager(this, picture);
@@ -75,10 +80,7 @@ public class EditPictureActivity extends Skindactivity {
 		testTagList.add(new Tag("derp", 0));
 		//END DELETE, AND UPDATE ARGS IN FOLLOWING FUNCTION CALL
 		
-		populateTextFields(picture.getAlbumName(),
-                picture.getDate().toString(),
-                picture.getPath(),
-                picture.getTags());
+		populateTextFields();
 
 		createListeners();
 	}
@@ -94,29 +96,34 @@ public class EditPictureActivity extends Skindactivity {
 	 * @see <a href="http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/">
 	 http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
-	protected void populateTextFields(String albumName, String date, String path, 
-			Collection<Tag> tags) {
-		// Set pictureView to path provided by Picture object
-		ImageView pictureView = (ImageView) findViewById(R.id.pictureView);
-		pictureView.setImageDrawable(Drawable.createFromPath(path));
+	protected void populateTextFields() {
+		Picture picture = pictureManager.getPicture();
+		pictureView = (ImageView) findViewById(R.id.pictureView);
+		pictureView.setImageDrawable(Drawable.createFromPath(picture.getPath()));
+		
+		pictureNameEditText = (EditText) findViewById(R.id.pictureNameEditText);
+		pictureNameEditText.setText(picture.getName());
 		
 		// Set dateView to toString representation of Date in Picture object
 		TextView dateView = (TextView) findViewById(R.id.dateView);
-		dateView.setText(date);
+		dateView.setText(picture.getDate().toString());
 		
 		// Set albumView to string representation of Album in Picture object
 		// TODO: This spinner also needs to be populated with other albums in drop down!!
 		Spinner albumView = (Spinner) findViewById(R.id.albumView);
-		albumView.setTag(albumName);
+		ArrayList<Album> allAlbums = mainManager.getAllAlbums(); 
+		albumView.setAdapter(new AlbumAdapter(this, R.layout.list_item, allAlbums));
+		albumView.setTag(picture.getAlbumName());
 		
-		// TODO: populate picTags with this pictures Tags
-		ListView tagListView = (ListView) findViewById(R.id.picTagList);
-		Iterator<Tag> tagIter = tags.iterator();
-		ArrayList<Tag> tagList = new ArrayList<Tag>();
+		tagListView = (ListView) findViewById(R.id.picTagList);
+		Iterator<Tag> tagIter = picture.getTags().iterator();
+		pictureTags = new ArrayList<Tag>();
+		
 		while (tagIter.hasNext()) {
-			tagList.add(tagIter.next());
+			pictureTags.add(tagIter.next());
 		}
-		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item, tagList);
+		
+		TagAdapter arrAdapt = new TagAdapter(this, R.layout.tag_list_item, pictureTags);
 		tagListView.setAdapter(arrAdapt);
 		
 	}
@@ -130,14 +137,30 @@ public class EditPictureActivity extends Skindactivity {
             }
         });
 
-        // Edit Tags button logic
-        Button editTagsButton = (Button) findViewById(R.id.editTagsButton);
-        editTagsButton.setOnClickListener(new View.OnClickListener() {
+        // Add Tag field logic
+        final AutoCompleteTextView addTagEditText = 
+        		(AutoCompleteTextView) findViewById(R.id.addTagEditText);
+        
+        // Add Tag button logic
+        Button addTagButton = (Button) findViewById(R.id.addTagButton);
+        addTagButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                openEditTagsDialog();
+                pictureManager.addTag(addTagEditText.getText().toString());
+                populateTextFields();
             }
         });
+        
+        // Tag List Long Click Listener logic
+        tagListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, 
+					long id) {
+				deleteTagAlert(position);
+				return true;
+			}
+        	
+        });
+        
         // Delete Button logic
         Button deletePicButton = (Button) findViewById(R.id.deletePictureButton);
         deletePicButton.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +200,10 @@ public class EditPictureActivity extends Skindactivity {
         
     }
     
+    /**
+     * @deprecated
+     */
+	@SuppressWarnings("unused")
 	private void openEditTagsDialog() {
 		
 		// Set up Dialog object
@@ -193,11 +220,9 @@ public class EditPictureActivity extends Skindactivity {
 		tagListView.setAdapter(adapter);
 		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		
-		ArrayList<Tag> pictureTags = (ArrayList<Tag>) picture.getTags();
-		
-		for (Tag picTag : pictureTags) {
+		for (Tag pictureTag : pictureTags) {
 			for (int i = 0; i < allTags.size(); i++) {
-				if (picTag.getName().equals(allTags.get(i).getName())) {
+				if (pictureTag.getName().equals(allTags.get(i).getName())) {
 					tagListView.setItemChecked(i, true);
 				}
 			}
@@ -237,7 +262,7 @@ public class EditPictureActivity extends Skindactivity {
 
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Delete Photo?");
+        alert.setTitle("Delete Picture?");
         alert.setMessage("Are you sure?");
 
         alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -249,19 +274,41 @@ public class EditPictureActivity extends Skindactivity {
 
         alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
             public void onClick(DialogInterface dialog, int whichButton) {
-                //do nothing
+                finish();
             }
         });
 
         alert.show();
 
     }
+    
+    private void deleteTagAlert(final int position) {
+    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+        alert.setTitle("Delete Tag?");
+        alert.setMessage("Are you sure?");
+
+        alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                pictureManager.deleteTag(pictureTags.get(position));
+                finish();
+            }
+        });
+
+        alert.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finish();
+            }
+        });
+
+        alert.show();
+    }
 
     private void openSendEmailActivity() {
         Intent sendEmail = new Intent();
         sendEmail.setClassName("com.cs301w01.meatload", 
         		"com.cs301w01.meatload.activities.SendEmailActivity");
-        sendEmail.putExtra("picture", picture);
+        sendEmail.putExtra("picture", pictureManager.getPicture());
         
         startActivity(sendEmail);
     }

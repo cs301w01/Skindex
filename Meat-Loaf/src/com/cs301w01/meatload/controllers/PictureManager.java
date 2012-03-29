@@ -27,20 +27,30 @@ import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 public class PictureManager implements FController {
 
 	private Context context;
+	private int picID;
 	private Picture picture;
     private String albumName;
 	private Bitmap imgOnDisplay;
 	
-	public PictureManager(Context context, String albumName) {
+	public PictureManager(String albumName) {
 		this.albumName = albumName;
 	}
 	
-    public PictureManager(Context context, Picture picture) {
-    	this.picture = picture;
+	public PictureManager(Picture picture) {
+    	this.picID = picture.getPictureID();
+    }
+	
+	public PictureManager(Context context, Picture picture) {
+		this.context = context;
+    	this.picID = picture.getPictureID();
     }
     
-    public PictureManager(Context context) {
-    	this.picture = null;
+    public PictureManager(int picID) {
+    	this.picID = picID;
+    }
+    
+    public PictureManager() {
+    	
     }
     
 //    public PictureManager(int pid) {
@@ -89,7 +99,20 @@ public class PictureManager implements FController {
     }
     
     
-    //Generates a random bitmap
+    /**
+     * Generates a random bitmap
+     * @return Bitmap of generated picture
+     * @see <a href="http://developer.android.com/reference/android/graphics/Bitmap.html#createBitmap%28int[],%20int,%20int,%20int,%20int,%20android.graphics.Bitmap.Config%29">
+     http://developer.android.com/reference/android/graphics/Bitmap.html#createBitmap%28int[],%20int,%20int,%20int,%20int,%20android.graphics.Bitmap.Config%29</a>
+     * @see <a href="http://developer.android.com/reference/android/graphics/Color.html">
+     http://developer.android.com/reference/android/graphics/Color.html</a>
+     * @see <a href="http://developer.android.com/reference/android/widget/ImageView.html">
+     http://developer.android.com/reference/android/widget/ImageView.html</a>
+     * @see <a href="http://docs.oracle.com/javase/1.4.2/docs/api/java/util/Random.html">
+     http://docs.oracle.com/javase/1.4.2/docs/api/java/util/Random.html</a>
+     * @see <a href="http://developer.android.com/reference/android/graphics/BitmapFactory.html">
+     http://developer.android.com/reference/android/graphics/BitmapFactory.html</a>
+     */
     //Used http://developer.android.com/reference/android/graphics/Bitmap.html#createBitmap
     //%28int[],%20int,%20int,%20int,%20int,%20android.graphics.Bitmap.Config%29
     //http://developer.android.com/reference/android/graphics/Color.html
@@ -139,16 +162,45 @@ public class PictureManager implements FController {
         return newPic;
     }
     
+    /**
+     * Get this picture
+     * @return Picture associated with this PictureManager
+     */
     public Picture getPicture() {
-    	return picture;
+    	return new PictureQueryGenerator(context).selectPictureByID(picID);
     }
 
+    /**
+     * Delete the Picture associated with this PictureManager object in the database.
+     * @see PictureQueryGenerator
+     */
     public void deletePicture() {
         PictureQueryGenerator pQ = new PictureQueryGenerator(context);
-        pQ.deletePictureByID(picture.getPictureID());
+        pQ.deletePictureByID(picID);
     }
     
+    /**
+     * Adds a new tag to a picture, using a String instead of a tag object.
+     * @param tagName String object representing the tag to be added to this picture
+     */
+    public void addTag(String tagName) {
+    	
+    }
+    
+    /**
+     * Sets the tags of the picture associated with this object to the passed Collection of tags
+     * @param tags Collection of tags to set the picture's tags to
+     */
     public void setTags(Collection<Tag> tags) {
     	// TODO: Set the picture's tags in the object
     }
+
+    /**
+     * Remove a tag from the picture associated with this PictureManager object.
+     * @param tag Tag to be deleted.
+     */
+	public void deleteTag(Tag tag) {
+		// TODO Auto-generated method stub
+		
+	}
 }
