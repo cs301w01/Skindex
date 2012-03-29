@@ -6,6 +6,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
+import com.cs301w01.meatload.controllers.MainManager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -20,9 +21,10 @@ import com.cs301w01.meatload.model.Picture;
  */
 public class EditAlbumActivity extends Skindactivity {
 
+	private MainManager mainManager;
     private GalleryManager gMan;
     private Album album;
-
+    
     @Override
     public void update(Object model) {
     	
@@ -32,9 +34,14 @@ public class EditAlbumActivity extends Skindactivity {
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.edit_album);
-    	
+    	   	
     	Bundle b = getIntent().getExtras();
     	AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
+    	
+		// Set up MainManager
+		mainManager = new MainManager();
+		mainManager.setContext(this);
+    	
     	album = aGal.getAlbum(this);
         gMan = new GalleryManager(new AlbumGallery(album));
         gMan.setContext(this);
@@ -59,8 +66,9 @@ public class EditAlbumActivity extends Skindactivity {
         final Button saveAlbumButton = (Button) findViewById(R.id.save_album_button);
         saveAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                updateAlbumName();
-                finish();
+                if(updateAlbumName() > 0){
+                	finish();
+                }
             }
         });
     }
@@ -69,16 +77,31 @@ public class EditAlbumActivity extends Skindactivity {
      * Checks to see if the user has made changes to the name of the album, if so updates the 
      * album name in the DB.
      */
-    private void updateAlbumName() {
+    private int updateAlbumName() {
         final EditText albumName = (EditText) findViewById(R.id.edit_album_name);
         if (albumName.length() == 0) {
-        	return;
+        	errorDialog("Invalid album name, no changes saved.");
+        	return -1;
         }
-        String newAlbumName = albumName.getText().toString();
-        
+        String newAlbumName = albumName.getText().toString().trim();       
         String oldAlbumName = album.getName();
-        if (!oldAlbumName.equals(newAlbumName) && newAlbumName.length() > 0) {
-            gMan.changeAlbumName(newAlbumName, album);
+        
+        if (newAlbumName.length() == 0){
+        	errorDialog("Album name cannot be empty, no changes saved.");
+        	return -1;
+        } else if (newAlbumName.length() > mainManager.getMaxAlbumName()) {
+        	newAlbumName = newAlbumName.substring(0, mainManager.getMaxAlbumName());
         }
+        
+        if(oldAlbumName.equals(newAlbumName)){
+        	return 1;
+        }
+        	gMan.changeAlbumName(newAlbumName, album);
+        	return 1;
+    }
+    
+    //Pops up error dialog with given string in message
+    private void errorDialog(String err){
+    	mainManager.errorDialog(err, this);
     }
 }
