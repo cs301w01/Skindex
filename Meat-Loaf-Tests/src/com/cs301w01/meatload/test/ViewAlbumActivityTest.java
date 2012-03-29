@@ -14,6 +14,7 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.UiThreadTest;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,16 +33,15 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 	
     @Override
     protected void setUp() throws Exception {
-        super.setUp();
-
+    	super.setUp();
+        
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
         
         SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
         db.resetDB();
-        
- 
+        db.close();
     }
     
     @Override
@@ -49,6 +49,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     	
     	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
         db.resetDB();
+        db.close();
         
         super.tearDown();    
         
@@ -58,8 +59,6 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 
     }
 
-
-	
 	public void testActivity() {
 		ArrayList<Album> origAlbs;
 		ArrayList<Album> finalAlbs;
@@ -103,21 +102,21 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			final ListView albumListView = (ListView) mActivity.findViewById(com.cs301w01.meatload.R.id.albumListView);
 			assertNotNull(albumListView);
 			
-			mActivity.runOnUiThread(new Runnable() {
-				public void run(){
+			//mActivity.runOnUiThread(new Runnable() {
+				//public void run(){
 					//albumListView.requestFocus();
-					albumListView.getRootView().focusSearch(ListView.FOCUS_DOWN).requestFocus();
+					//albumListView.getRootView().focusSearch(ListView.FOCUS_DOWN).requestFocus();
 					//albumListView.focusSearch(ListView.FOCUS_DOWN).requestFocus();
 					//albumListView.performClick();
 					
 					//ArrayList<View> items= albumListView.getFocusables(1);
 					//items.get(0).requestFocus();
 					//items.get(0).performClick();
-				}
-			});		
+				//}
+			//});		
 			
 			try {
-				Thread.sleep(10000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				assertTrue("Sleep failed", false);
