@@ -19,7 +19,7 @@ import com.cs301w01.meatload.model.Tag;
  * the constructor.
  * @author Blake Bouchard
  */
-public class SimpleTagAdapter extends ArrayAdapter<Tag> {
+public class SimpleTagAdapter extends TagAdapter {
 
 	int resource;
 	String response;
@@ -27,13 +27,12 @@ public class SimpleTagAdapter extends ArrayAdapter<Tag> {
 	
 	/**
 	 * Main constructor for the SimpleTagAdapter object.
-	 * @param context Context in which the SimpleTagAdapter exists
+	 * @param context Context in which the TagAdapter exists
 	 * @param textViewResourceId ID of the textview being used
 	 * @param tags List of tags to attach to the AutoCorrectTextView
 	 */
 	public SimpleTagAdapter(Context context, int textViewResourceId, List<Tag> tags) {
 		super(context, textViewResourceId, tags);
-		this.resource = textViewResourceId;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,7 +45,7 @@ public class SimpleTagAdapter extends ArrayAdapter<Tag> {
             view = new LinearLayout(getContext());
             String inflater = Context.LAYOUT_INFLATER_SERVICE;
             LayoutInflater vi;
-            vi = (LayoutInflater )getContext().getSystemService(inflater);
+            vi = (LayoutInflater) getContext().getSystemService(inflater);
             view = vi.inflate(resource, null);
         }
         
@@ -56,7 +55,7 @@ public class SimpleTagAdapter extends ArrayAdapter<Tag> {
         // Assign the appropriate data from tag object
         tagName.setText(tag.getName());
         
-        return view;
+        return tagName;
     }
 
 }

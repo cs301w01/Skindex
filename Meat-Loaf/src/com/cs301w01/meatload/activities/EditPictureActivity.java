@@ -7,8 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.adapters.AlbumAdapter;
-import com.cs301w01.meatload.adapters.SimpleTagAdapter;
+import com.cs301w01.meatload.adapters.SimpleAlbumAdapter;
 import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
@@ -20,6 +19,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -107,15 +107,19 @@ public class EditPictureActivity extends Skindactivity {
 		// AlbumView Spinner
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
-		albumView.setAdapter(new AlbumAdapter(this, R.layout.list_item, allAlbums));
+		albumView.setAdapter(new SimpleAlbumAdapter(this, R.layout.simple_list_item, allAlbums));
 		albumView.setTag(picture.getAlbumName());
 
 		// Add Tag field logic
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
 		ArrayList<Tag> allTags = mainManager.getAllTags();
-		SimpleTagAdapter simpleTagAdapter = new SimpleTagAdapter(this, R.layout.simple_list_item, 
-				allTags);
-		addTagEditText.setAdapter(simpleTagAdapter);
+		ArrayList<String> tagStrings = new ArrayList<String>();
+		for (Tag tag : allTags) {
+			tagStrings.add(tag.getName());
+		}
+		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this, 
+				R.layout.simple_list_item, tagStrings);
+		addTagEditText.setAdapter(stringAdapter);
 
 		// Tag List View
 		tagListView = (ListView) findViewById(R.id.picTagList);
@@ -151,7 +155,6 @@ public class EditPictureActivity extends Skindactivity {
 				}
 
 				pictureManager.addTag(tag);
-				populateTextFields();
 			}
 
 		});

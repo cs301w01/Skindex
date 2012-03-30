@@ -95,7 +95,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="0.07"
-            android:hint="@string/add_tag_hint" />
+            android:hint="@string/add_tag_hint"
+            android:completionThreshold="1" />
 
         <Button
             android:id="@+id/addTagButton"
