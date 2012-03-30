@@ -35,4 +35,8 @@
     <string name="button_compare_pic">Compare Pictures</string>
     <string name="topGalleryData">Date - Name</string>
     <string name="bottomGalleryData">Date - Name</string>
+    <string name="signupButton">Sign Up</string>
+    <string name="loginButton">Login</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
 </resources>

@@ -2,6 +2,7 @@ package com.cs301w01.meatload.authentication.Model;
 
 import com.cs301w01.meatload.model.Album;
 
+import java.io.Serializable;
 import java.util.Collection;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Collection;
  * Time: 11:28 AM
  * To change this template use File | Settings | File Templates.
  */
-public class User {
+public class User implements Serializable {
     
     public static final String NO_SPECIALIST = "No Specialist";
     
