@@ -6,11 +6,10 @@ import java.util.Collection;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
-import android.widget.ImageView;
+import android.widget.*;
 
 import com.cs301w01.meatload.model.Picture;
 
@@ -43,6 +42,9 @@ public class ComparePictureGalleryAdapter extends BaseAdapter {
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
+        LinearLayout ll = new LinearLayout(mContext);
+        ll.setOrientation(LinearLayout.VERTICAL);
+
         ImageView imageView = new ImageView(mContext);
 
         imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
@@ -50,7 +52,15 @@ public class ComparePictureGalleryAdapter extends BaseAdapter {
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setBackgroundResource(mGalleryItemBackground);
 
-        return imageView;
+        ll.addView(imageView);
+
+        TextView tv = new TextView(mContext);
+        tv.setText(pictures.get(position).getDate().toString() + " - " + pictures.get(position).getName());
+        tv.setGravity(Gravity.CENTER_HORIZONTAL);
+
+        ll.addView(tv);
+
+        return ll;
     }
 
 }
