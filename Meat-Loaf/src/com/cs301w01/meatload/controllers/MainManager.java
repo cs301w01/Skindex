@@ -55,33 +55,21 @@ public class MainManager implements FController {
 	}
 
 	public String addAlbum(String albumName, Collection<String> tags) {
-		
-		//TODO: BRING UP A LIST OF ALL ALBUMS TO TEST IN BELOW CODE (JOEL)
-		ArrayList<Album> testList = getAllAlbums();
-		Album testAlbum;	
-		Iterator<Album> listIter = testList.iterator();
-		
-		
+				
 		albumName = albumName.trim();
 		if(albumName.length() > MAX_ALBUM_NAME_LENGTH){
 			albumName = albumName.substring(0,MAX_ALBUM_NAME_LENGTH);
 		} else if (albumName.length() == 0){
 			//handle empty album name
-			return"";
+			return "";
 		}
-
 		
-		while (listIter.hasNext()){
-			testAlbum = listIter.next();
-			if (testAlbum.getName().equals(albumName)){
-				return "";
-				//handle Album Name Already Exists
-				//Test returned result with: if (result.length() == 0)
-			}
+		if(albumExists(albumName)){
+			//album name already exists
+			return "";
 		}
 		
 		new AlbumQueryGenerator(context).insertAlbum(albumName);
-		
 		return albumName;
 		//length() == 0 if adding album failed, else returns name of added album truncated to max Album name # chars
 	}
@@ -121,5 +109,28 @@ public class MainManager implements FController {
 		alert.setTitle("Error");
 		alert.setMessage(err);
 		alert.show();
+    }
+    
+    
+    public boolean albumExists(String name){
+		ArrayList<Album> testList = getAllAlbums();
+		Album testAlbum;	
+		Iterator<Album> listIter = testList.iterator();
+		
+		name = name.trim();
+		
+		
+		if(name.length() > MAX_ALBUM_NAME_LENGTH){
+			name = name.substring(0,MAX_ALBUM_NAME_LENGTH);
+		}
+		
+		while (listIter.hasNext()){
+			testAlbum = listIter.next();
+			if (testAlbum.getName().equals(name)){
+				return true;
+			}
+		}
+		
+		return false;
     }
 }

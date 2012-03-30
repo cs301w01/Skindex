@@ -96,8 +96,14 @@ public class EditAlbumActivity extends Skindactivity {
         if(oldAlbumName.equals(newAlbumName)){
         	return 1;
         }
-        	gMan.changeAlbumName(newAlbumName, album);
-        	return 1;
+        
+        if(mainManager.albumExists(newAlbumName)){
+        	errorDialog("Album name already exists, no changes saved.");
+        	return -1;
+        }
+        
+        gMan.changeAlbumName(newAlbumName, album);
+        return 1;
     }
     
     //Pops up error dialog with given string in message
