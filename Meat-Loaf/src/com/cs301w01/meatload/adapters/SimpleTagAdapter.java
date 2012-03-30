@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,19 +19,23 @@ import com.cs301w01.meatload.model.Tag;
  * the constructor.
  * @author Blake Bouchard
  */
-public class SimpleTagAdapter extends TagAdapter {
+public class SimpleTagAdapter extends ArrayAdapter<Tag> {
 
+	int resource;
+	String response;
+	Context context;
+	
 	/**
 	 * Main constructor for the SimpleTagAdapter object.
-	 * @param context Context in which the TagAdapter exists
+	 * @param context Context in which the SimpleTagAdapter exists
 	 * @param textViewResourceId ID of the textview being used
 	 * @param tags List of tags to attach to the AutoCorrectTextView
 	 */
 	public SimpleTagAdapter(Context context, int textViewResourceId, List<Tag> tags) {
 		super(context, textViewResourceId, tags);
+		this.resource = textViewResourceId;
 	}
 	
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
         // Get current tag object

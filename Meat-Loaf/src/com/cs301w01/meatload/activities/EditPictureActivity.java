@@ -107,15 +107,14 @@ public class EditPictureActivity extends Skindactivity {
 		// AlbumView Spinner
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
-		albumView.setAdapter(new AlbumAdapter(this, R.layout.list_item,
-				allAlbums));
+		albumView.setAdapter(new AlbumAdapter(this, R.layout.list_item, allAlbums));
 		albumView.setTag(picture.getAlbumName());
-		
+
 		// Add Tag field logic
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
 		ArrayList<Tag> allTags = mainManager.getAllTags();
-		SimpleTagAdapter simpleTagAdapter = new SimpleTagAdapter(this,
-				R.layout.simple_list_item, allTags);
+		SimpleTagAdapter simpleTagAdapter = new SimpleTagAdapter(this, R.layout.simple_list_item, 
+				allTags);
 		addTagEditText.setAdapter(simpleTagAdapter);
 
 		// Tag List View
@@ -129,28 +128,32 @@ public class EditPictureActivity extends Skindactivity {
 		// Send Email Button logic
 		Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
 		sendEmailButton.setOnClickListener(new View.OnClickListener() {
+
 			public void onClick(View view) {
 				openSendEmailActivity();
 			}
+
 		});
 
 		// Add Tag button logic
 		Button addTagButton = (Button) findViewById(R.id.addTagButton);
 		addTagButton.setOnClickListener(new View.OnClickListener() {
+
 			public void onClick(View view) {
 				String tag = addTagEditText.getText().toString().trim();
-				if (tag.length() == 0){
-					//Deal with empty/whitespace tag
+				if (tag.length() == 0) {
+					// Deal with empty/whitespace tag
 					errorDialog("Tag cannot be empty.");
 					return;
 				} else if (tag.length() > mainManager.getMaxTagName()) {
-					//if tag is too long cut it to max tag length
+					// if tag is too long cut it to max tag length
 					tag = tag.substring(0, mainManager.getMaxTagName());
 				}
-				
+
 				pictureManager.addTag(tag);
 				populateTextFields();
 			}
+
 		});
 
 		// Tag List Long Click Listener logic
@@ -167,17 +170,21 @@ public class EditPictureActivity extends Skindactivity {
 		// Delete Button logic
 		Button deletePicButton = (Button) findViewById(R.id.deletePictureButton);
 		deletePicButton.setOnClickListener(new View.OnClickListener() {
+
 			public void onClick(View view) {
 				deletePicture();
 			}
+
 		});
 
 		// Save Picture logic
 		Button savePictureButton = (Button) findViewById(R.id.savePictureButton);
 		savePictureButton.setOnClickListener(new View.OnClickListener() {
+
 			public void onClick(View view) {
 				savePicture();
 			}
+
 		});
 	}
 
@@ -192,16 +199,18 @@ public class EditPictureActivity extends Skindactivity {
 		alert.setTitle("Picture Saved.");
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
 			public void onClick(DialogInterface dialog, int whichButton) {
-				Picture picture = new Picture(pictureNameEditText.getText().toString(),
-						((Album) albumView.getSelectedItem()).getName());
+				Picture picture = new Picture(pictureNameEditText.getText()
+						.toString(), ((Album) albumView.getSelectedItem())
+						.getName());
 				pictureManager.savePicture(picture);
 				finish();
 			}
+
 		});
 
 		alert.show();
-
 	}
 
 	/*
@@ -257,16 +266,20 @@ public class EditPictureActivity extends Skindactivity {
 		alert.setMessage("Are you sure?");
 
 		alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
 			public void onClick(DialogInterface dialog, int whichButton) {
 				pictureManager.deletePicture();
 				finish();
 			}
+
 		});
 
 		alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
 			public void onClick(DialogInterface dialog, int whichButton) {
 				dialog.dismiss();
 			}
+
 		});
 
 		alert.show();
@@ -280,16 +293,20 @@ public class EditPictureActivity extends Skindactivity {
 		alert.setMessage("Are you sure?");
 
 		alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
 			public void onClick(DialogInterface dialog, int whichButton) {
 				pictureManager.deleteTag(tag);
 				finish();
 			}
+
 		});
 
 		alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+
 			public void onClick(DialogInterface dialog, int whichButton) {
 				finish();
 			}
+
 		});
 
 		alert.show();
@@ -303,8 +320,8 @@ public class EditPictureActivity extends Skindactivity {
 
 		startActivity(sendEmail);
 	}
-	
-    private void errorDialog(String err){
-    	mainManager.errorDialog(err, this);
-    }
+
+	private void errorDialog(String err) {
+		mainManager.errorDialog(err, this);
+	}
 }
