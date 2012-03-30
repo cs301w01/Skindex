@@ -49,4 +49,8 @@ public abstract class GalleryData implements Serializable {
     public boolean isAlbum() {
     	return false;
     }
+    
+    public boolean stillValid() {
+    	return true;
+    }
 }

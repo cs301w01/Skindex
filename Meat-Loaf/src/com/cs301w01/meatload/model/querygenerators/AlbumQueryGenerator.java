@@ -82,6 +82,10 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	deleteByID(selectIDByName(name, TABLE_NAME), TABLE_NAME);
     }
     
+    public void deleteAlbumByID(int ID) {
+    	deleteByID(ID, TABLE_NAME);
+    }
+    
     public ArrayList<Album>selectAlbumsByQuery(String albumQuery){
     	Cursor c = db.performRawQuery(albumQuery);
     	

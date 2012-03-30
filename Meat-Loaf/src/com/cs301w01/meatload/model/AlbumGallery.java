@@ -53,4 +53,8 @@ public class AlbumGallery extends GalleryData implements Serializable {
     public Album getAlbum(Context context) {
     	return new AlbumQueryGenerator(context).getAlbumByID((long)albumID);
     }
+    
+    public boolean stillValid() {
+    	return true;
+    }
 }
