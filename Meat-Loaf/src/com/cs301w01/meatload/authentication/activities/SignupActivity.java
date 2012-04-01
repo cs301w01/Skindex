@@ -43,6 +43,9 @@ public class SignupActivity extends Skindactivity{
         username = (EditText) findViewById(R.id.userNameSignupEditText);
 
         createListeners();
+        
+        //JOEL IS COMMENTING THIS OUT BECAUSE IT IS BROKEN AND I DON'T FEEL LIKE DEBUGGING
+
 
     }
 
@@ -50,11 +53,12 @@ public class SignupActivity extends Skindactivity{
 
         final Button submit = (Button) findViewById(R.id.submitNewUserButton);
         submit.setOnClickListener(new View.OnClickListener() {
-            @Override
+            //@Override
             public void onClick(View view) {
                 createNewUser();
             }
         });
+
 
     }
 
