@@ -35,11 +35,9 @@ public class LoginActivity extends Skindactivity {
         passwordField = (EditText) findViewById(R.id.passwordField);
 
         createListeners();
-        
     }
 
     public void createListeners() {
-        
         final Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             //@Override
@@ -50,12 +48,11 @@ public class LoginActivity extends Skindactivity {
         
         final Button signupButton = (Button) findViewById(R.id.signupButton);
         signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+            //@Override
             public void onClick(View view) {
                 signup();
             }
         });
-        
         
     }
 
