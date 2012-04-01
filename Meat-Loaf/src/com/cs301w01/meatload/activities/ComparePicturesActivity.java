@@ -2,11 +2,13 @@ package com.cs301w01.meatload.activities;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.ComparePictureGalleryAdapter;
@@ -51,13 +53,17 @@ public class ComparePicturesActivity extends Skindactivity {
 
         topGallery = (Gallery) findViewById(R.id.topCompareGallery);
         bottomGallery = (Gallery) findViewById(R.id.bottomCompareGallery);
-        
-        topGalleryData = (TextView) findViewById(R.id.topGalleryData);
-        bottomGalleryData = (TextView) findViewById(R.id.bottomGalleryData);
-        
+
         //set adapter
         topGallery.setAdapter(gAdapter);
         bottomGallery.setAdapter(gAdapter);
+
+        //set the bottom gallery to the second picture
+        if(galleryManager.getPictureGallery().size() >= 2) {
+            bottomGallery.setSelection(1);
+        }
+
+       // createListeners();
 
     }
 
@@ -68,33 +74,6 @@ public class ComparePicturesActivity extends Skindactivity {
 
     public void createListeners() {
 
-    	topGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-    		
-			public void onItemSelected(AdapterView parentView, View childView, int position, long id) {
-				
-				updateTopPictureData(position);
-				
-			}
-
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-    	
-    	bottomGallery.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-    		
-			public void onItemSelected(AdapterView parentView, View childView, int position, long id) {
-				
-				updateBottomPictureData(position);
-				
-			}
-
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
     	
     }
 
@@ -130,23 +109,5 @@ public class ComparePicturesActivity extends Skindactivity {
     	
     }
     
-    public void updateTopPictureData(int position) {
 
-    	Picture p = gAdapter.getItem(position);
-    	
-    	String data = "" + p.getDate().toString() + " - " + p.getName();
-    	
-    	topGalleryData.setText(data);
-
-    }
-
-    public void updateBottomPictureData(int position) {
-    	
-    	Picture p = gAdapter.getItem(position);
-    	
-    	String data = "" + p.getDate().toString() + " - " + p.getName();
-    	
-    	bottomGalleryData.setText(data);
-        
-    }
 }

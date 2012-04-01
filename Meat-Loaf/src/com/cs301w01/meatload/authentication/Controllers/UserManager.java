@@ -72,4 +72,14 @@ public class UserManager implements FController{
         }
     }
 
+    public long createNewUser(User u, String userName, String password, String role) {
+
+        String hashedPW = PasswordManager.generatePassword(password);
+
+        UserQueryGenerator uQ = new UserQueryGenerator(context);
+
+        return uQ.insertNewUser(u.getName(), u.getEmail(), userName, hashedPW, role);
+
+    }
+
 }

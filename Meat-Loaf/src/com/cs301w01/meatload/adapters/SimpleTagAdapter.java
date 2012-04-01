@@ -6,6 +6,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +21,10 @@ import com.cs301w01.meatload.model.Tag;
  */
 public class SimpleTagAdapter extends TagAdapter {
 
+	int resource;
+	String response;
+	Context context;
+	
 	/**
 	 * Main constructor for the SimpleTagAdapter object.
 	 * @param context Context in which the TagAdapter exists
@@ -30,7 +35,6 @@ public class SimpleTagAdapter extends TagAdapter {
 		super(context, textViewResourceId, tags);
 	}
 	
-	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
         // Get current tag object
@@ -41,7 +45,7 @@ public class SimpleTagAdapter extends TagAdapter {
             view = new LinearLayout(getContext());
             String inflater = Context.LAYOUT_INFLATER_SERVICE;
             LayoutInflater vi;
-            vi = (LayoutInflater )getContext().getSystemService(inflater);
+            vi = (LayoutInflater) getContext().getSystemService(inflater);
             view = vi.inflate(resource, null);
         }
         
@@ -51,7 +55,7 @@ public class SimpleTagAdapter extends TagAdapter {
         // Assign the appropriate data from tag object
         tagName.setText(tag.getName());
         
-        return view;
+        return tagName;
     }
 
 }

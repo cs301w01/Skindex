@@ -15,6 +15,7 @@ public class Patient extends User {
 
     private Collection<Album> albums;
     private int specialistID;
+    public static final int NO_SPECIALIST_ID_VALUE = 0;
 
     public Patient(String name, String email, Collection<Album> albums, int specialistID) {
         super(name, email);

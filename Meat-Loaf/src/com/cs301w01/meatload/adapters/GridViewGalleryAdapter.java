@@ -3,12 +3,10 @@ package com.cs301w01.meatload.adapters;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Gallery;
-import android.widget.GridView;
-import android.widget.ImageView;
+import android.widget.*;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.model.Picture;
 
@@ -44,19 +42,38 @@ public class GridViewGalleryAdapter extends BaseAdapter{
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        ImageView imageView;
+        LinearLayout ll;
 
-        if (convertView == null) {  // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+//        if (convertView == null) {  // if it's not recycled, initialize some attributes
+//            imageView = new ImageView(mContext);
+//            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+//            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//            imageView.setPadding(8, 8, 8, 8);
+
+            ll = new LinearLayout(mContext);
+            ll.setOrientation(LinearLayout.VERTICAL);
+
+            ImageView imageView = new ImageView(mContext);
+
+            imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
+            imageView.setLayoutParams(new Gallery.LayoutParams(85, 85));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
-        } else {
-            imageView = (ImageView) convertView;
-        }
 
-        imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
+            ll.addView(imageView);
 
-        return imageView;
+            TextView tv = new TextView(mContext);
+            tv.setText(pictures.get(position).getDate().toString() + " - " + pictures.get(position).getName());
+            tv.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            ll.addView(tv);
+
+//        } else {
+//            ll = (LinearLayout) convertView;
+//            imageView = ll.get
+//        }
+
+//        imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
+
+        return ll;
     }
 }

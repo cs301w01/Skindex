@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/signupButton" />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/fullname" />
+
+        <EditText
+            android:id="@+id/fullNameEditText"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" />
+
+        </LinearLayout>
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/email" />
+
+        <EditText
+                android:id="@+id/emailEditText"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:orientation="horizontal">
+
+        <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/username" />
+
+        <EditText
+                android:id="@+id/userNameSignupEditText"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+           android:layout_height="wrap_content"
+           android:layout_width="fill_parent"
+           android:orientation="horizontal" >
+
+        <Spinner
+                android:id="@+id/roleSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/roles"
+                android:prompt="@string/rolesprompt" />
+
+           </LinearLayout>
+
+    <Button
+        android:id="@+id/submitNewUserButton"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:text="@string/signupButton" />
+
+</LinearLayout>
