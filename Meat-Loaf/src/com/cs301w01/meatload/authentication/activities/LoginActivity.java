@@ -1,6 +1,6 @@
 package com.cs301w01.meatload.authentication.activities;
 
-import android.app.AlertDialog;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,17 +14,15 @@ import com.cs301w01.meatload.authentication.Model.Specialist;
 import com.cs301w01.meatload.authentication.Model.User;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/26/12
- * Time: 2:32 PM
- * To change this template use File | Settings | File Templates.
+ * Acts as the base activity users land on. They are prompted to provide credentials in order to log in or
+ * to create a new account.
  */
 public class LoginActivity extends Skindactivity {
 
     private EditText usernameField;
     private EditText passwordField;
 
+    private static int GET_USER_REQUEST = 1;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +54,9 @@ public class LoginActivity extends Skindactivity {
         
     }
 
+    /**
+     * Handles logic of redirecting new users to the sign up page.
+     */
     private void signup() {
 
         Intent myIntent = new Intent();
@@ -65,6 +66,10 @@ public class LoginActivity extends Skindactivity {
 
     }
 
+    /**
+     * Gets the users username and passwords from the form fields, authenticates values, and finally
+     * passes the results in the form of a User object to the method that handles the login process.
+     */
     private void login() {
 
         String username = usernameField.getText().toString();
@@ -72,6 +77,34 @@ public class LoginActivity extends Skindactivity {
         
         UserManager um = new UserManager(this);
         User u = um.authenticateUser(username, pw);
+
+        handleLoginResult(u);
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+            if(requestCode == GET_USER_REQUEST) {
+                if (resultCode == Activity.RESULT_OK) {
+
+                    Bundle extras = data.getExtras();
+                    User u = (User) extras.getSerializable("user");
+
+                    handleLoginResult(u);
+
+                }
+            }
+
+    }
+
+    /**
+     * Checks to see if the user is of a certain type, if the object is null, this is handled and the user
+     * is made aware of their invalid credentials, otherwise moves them on to the corresponding activity for their
+     * role.
+     * @param u User
+     */
+    private void handleLoginResult(User u) {
 
         if(u.getClass() == Patient.class) {
 
@@ -89,18 +122,17 @@ public class LoginActivity extends Skindactivity {
                     "com.cs301w01.meatload.authentication.activities.ViewPatientsActivity");
             myIntent.putExtra("user", u);
 
-            startActivityForResult(myIntent);
+            startActivity(myIntent);
 
         } else {
 
             //TODO: Add invalid credentials alert
 
         }
-        
+
+
     }
-    
-    
-    @Override
+
     public void update(Object model) {
 
     }
