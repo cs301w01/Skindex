@@ -39,4 +39,12 @@
     <string name="loginButton">Login</string>
     <string name="username">Username:</string>
     <string name="password">Password:</string>
+    <string name="fullname">Full Name:</string>
+    <string name="email">Email Address:</string>
+    <string name="rolesprompt">Choose a Role</string>
+
+    <string-array name="roles">
+        <item>Patient</item>
+        <item>Specialist</item>
+    </string-array>
 </resources>

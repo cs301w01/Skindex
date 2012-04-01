@@ -8,6 +8,7 @@ package com.cs301w01.meatload.authentication.Controllers;
  * To change this template use File | Settings | File Templates.
  */
 public class PasswordManager {
+
     public static String generatePassword(String password) {
         //TODO
         

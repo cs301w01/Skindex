@@ -1,5 +1,6 @@
 package com.cs301w01.meatload.authentication.querygenerator;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import com.cs301w01.meatload.authentication.Model.Patient;
@@ -14,8 +15,8 @@ public class UserQueryGenerator extends QueryGenerator {
     public static final String TABLE_NAME_USERS = "users";
     public static final String TABLE_NAME_SUBSCRIPTIONS = "subscriptions";
     public static final String TABLE_NAME_USER_ALBUMS = "useralbums";
-    public static final String SPECIALIST_ROLE = "specialist";
-    public static final String PATIENT_ROLE = "patient";
+    public static final String SPECIALIST_ROLE = "Specialist";
+    public static final String PATIENT_ROLE = "Patient";
     
     //col's specific to this class
     public static final String COL_ROLE = "role";
@@ -64,21 +65,26 @@ public class UserQueryGenerator extends QueryGenerator {
     public UserQueryGenerator(Context context) {
         super(context);
     }
-    
-    public void insertNewUser(User u) {
 
-        String query = "INSERT INTO " + TABLE_NAME_USERS + "( " +
-                       "";
-        
-        if(u.getClass() == Patient.class){
-            
-        } else if(u.getClass() == Specialist.class){
+    /**
+     * Inserts a new user into the database and returns their primary key id.
+     * @param name
+     * @param email
+     * @param username
+     * @param password
+     * @param role
+     * @return long id
+     */
+    public long insertNewUser(String name, String email, String username, String password, String role) {
 
-        } else {
+        ContentValues cv = new ContentValues();
+        cv.put(COL_NAME, name);
+        cv.put(COL_EMAIL, email);
+        cv.put(COL_USERNAME, username);
+        cv.put(COL_PASSWORD, password);
+        cv.put(COL_ROLE, role);
 
-        }
-        
-        //TODO
+        return db.insert(TABLE_NAME_USERS, null, cv);
 
     }
 
