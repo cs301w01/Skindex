@@ -1,7 +1,9 @@
 package com.cs301w01.meatload.authentication.activities;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -76,6 +78,12 @@ public class SignupActivity extends Skindactivity{
             uM.createNewUser(new Specialist(fullName, uEmail, new ArrayList<Patient>()), usrName, password, UserQueryGenerator.SPECIALIST_ROLE);
         else
             uM.createNewUser(new Patient(fullName, uEmail, new ArrayList<Album>(), 0), usrName, password, UserQueryGenerator.PATIENT_ROLE);
+
+        Intent resultIntent = new Intent(this);
+        resultIntent.putExtra("user", u);
+        this.setResult(Activity.RESULT_OK);
+
+
 
     }
 

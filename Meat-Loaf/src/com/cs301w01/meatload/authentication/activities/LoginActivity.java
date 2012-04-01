@@ -25,7 +25,7 @@ public class LoginActivity extends Skindactivity {
     private EditText usernameField;
     private EditText passwordField;
 
-    @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -42,7 +42,7 @@ public class LoginActivity extends Skindactivity {
         
         final Button loginButton = (Button) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
+            //@Override
             public void onClick(View view) {
                 login();
             }
@@ -92,7 +92,7 @@ public class LoginActivity extends Skindactivity {
                     "com.cs301w01.meatload.authentication.activities.ViewPatientsActivity");
             myIntent.putExtra("user", u);
 
-            startActivity(myIntent);
+            startActivityForResult(myIntent);
 
         } else {
 
