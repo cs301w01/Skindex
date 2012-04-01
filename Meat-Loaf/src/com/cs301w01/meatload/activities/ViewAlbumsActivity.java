@@ -42,6 +42,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 	private ListView albumListView;
 	private AlbumAdapter adapter;
 	private AlertDialog currentDialog;
+	private EditText currentEditText;
 	
 //	private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 //	private String[] adapterCols = { "name", "numPictures" };
@@ -198,6 +199,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
+		currentEditText = input;
 		input.setOnKeyListener(new View.OnKeyListener() {
 			
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -267,6 +269,26 @@ public class ViewAlbumsActivity extends Skindactivity {
     //Pops up error dialog with given string in message
     private void errorDialog(String err){
     	mainManager.errorDialog(err, this);
+    }
+    
+    //Used for JUnit Testing
+    public AlertDialog getCurrentDialog(){
+    	return currentDialog;
+    }
+    
+  //THIS METHOD RESULTS IN AN ERROR WHEN CALLED FROM JUNIT, NEED TO DEBUG
+    public void setDialogEditText(String text){
+    	currentEditText.setText("text");
+    	return;
+    }
+    
+    //THIS METHOD RESULTS IN AN ERROR WHEN CALLED FROM JUNIT, NEED TO DEBUG
+    public void performDialogClick(boolean button){
+    	if (button == true){
+    		currentDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+    	} else {
+    		currentDialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
+    	}
     }
     
     private void openGalleryFromAlbum(String albumName) {
