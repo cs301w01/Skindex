@@ -56,6 +56,10 @@ public class TakePictureActivity extends Skindactivity {
 		createListeners(imgOnDisplay);
 	}
 
+    /**
+     * Populates all dynamic fields on the screen
+     * @param Bitmap - The picture to display
+     */
 	protected void populateFields(Bitmap pic) {
 		ImageView image = (ImageView) findViewById(R.id.imgDisplay);
 		image.setImageBitmap(pic);
