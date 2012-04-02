@@ -37,7 +37,6 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class ViewAlbumsActivity extends Skindactivity {
 	
-	//TODO: Can these be moved inside a method?
 	private MainManager mainManager;
 	private ListView albumListView;
 	private AlbumAdapter adapter;
