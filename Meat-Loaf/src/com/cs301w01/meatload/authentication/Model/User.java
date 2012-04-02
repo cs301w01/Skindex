@@ -12,7 +12,7 @@ import java.util.Collection;
  * Time: 11:28 AM
  * To change this template use File | Settings | File Templates.
  */
-public class User implements Serializable {
+public abstract class User implements Serializable {
     
     public static final String NO_SPECIALIST = "No Specialist";
     
