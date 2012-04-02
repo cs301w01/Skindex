@@ -1,6 +1,8 @@
 package com.cs301w01.meatload.authentication.Controllers;
 
+import android.content.Context;
 import com.cs301w01.meatload.authentication.Model.Password;
+import com.cs301w01.meatload.authentication.querygenerator.UserQueryGenerator;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,8 +19,7 @@ public class PasswordManager {
     private static int numberOfSaltBytes = 20;
     private static String hashingAlgorithm = "SHA-256";
 
-    public static Password generatePassword(String password) {
-        //TODO
+    public static Password generateNewPassword(String password) {
 
         String salt = getSalt();
 
@@ -75,7 +76,7 @@ public class PasswordManager {
      * @param salt
      * @return String encryped password combo.
      */
-    private static String generatePasswordWithSalt(String password, String salt) {
+    public static String generatePasswordWithSalt(String password, String salt) {
 
         String pwd = hash(password + salt);
 

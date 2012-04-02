@@ -2,6 +2,7 @@ package com.cs301w01.meatload.authentication.Controllers;
 
 import android.content.Context;
 import android.database.Cursor;
+import com.cs301w01.meatload.authentication.Model.Password;
 import com.cs301w01.meatload.authentication.Model.Patient;
 import com.cs301w01.meatload.authentication.Model.Specialist;
 import com.cs301w01.meatload.authentication.Model.User;
@@ -24,13 +25,20 @@ public class UserManager implements FController{
         this.context = context;
         
     }
-    
+
     public User authenticateUser(String userName, String password) {
 
-        String encryptedPwd = PasswordManager.generatePassword(password);
-        
-        Cursor c = new UserQueryGenerator(context).logUserIn(userName, encryptedPwd);
-        
+        UserQueryGenerator uQG = new UserQueryGenerator(context);
+
+        String salt = uQG.getUserSalt(userName);
+
+        if(salt == null)
+            return null;
+
+        String encryptedPwd = PasswordManager.generatePasswordWithSalt(password, salt);
+
+        Cursor c = uQG.logUserIn(userName, encryptedPwd);
+
         if(c.getCount() == 0) {
 
             return null;
@@ -38,43 +46,32 @@ public class UserManager implements FController{
         } else {
 
             //c has the following: COL_ID, COL_NAME, COL_USERNAME, COL_EMAIL, COL_ROLE
-            String id = c.getString(c.getColumnIndex(UserQueryGenerator.COL_ID));
+            int id = c.getInt(c.getColumnIndex(UserQueryGenerator.COL_ID));
             String name = c.getString(c.getColumnIndex(UserQueryGenerator.COL_NAME));
             String email = c.getString(c.getColumnIndex(UserQueryGenerator.COL_EMAIL));
             String role = c.getString(c.getColumnIndex(UserQueryGenerator.COL_ROLE));
-            
+
             User u;
-            
+
             if(role.equals(UserQueryGenerator.PATIENT_ROLE)) {
 
-                Collection<Album> albums = new ArrayList<Album>();
-                //TODO: get albums
+                return uQG.getPatientByID(id);
 
-                int specialistID = 0;
-                //TODO: get specialist ID
-                
-                u = new Patient(name, email, albums, specialistID);
-
-                return u;
-                
             } else {
 
-                Collection<Patient> patients = new ArrayList<Patient>();
+                Collection<Patient> patients = uQG.getPatientsByID(id);
 
-                //TODO: get patients
+                u = uQG.getSpecialistByID(id, patients);
 
-
-                u = new Specialist(name, email, patients);
-                        
                 return u;
 
             }
-        }
+         }
     }
 
     public long createNewUser(User u, String userName, String password, String role) {
 
-        String hashedPW = PasswordManager.generatePassword(password);
+        Password hashedPW = PasswordManager.generateNewPassword(password);
 
         UserQueryGenerator uQ = new UserQueryGenerator(context);
 
