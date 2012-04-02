@@ -48,5 +48,13 @@ public class TakePictureActivityTest extends
     public void testTEMPDELETETHIS(){
     	assertTrue(1 == 1);
     }
+    
+    public void testGeneratePic(){
+    	//hit generate button, verify picture has changed to something different
+    }
+    
+    public void testSavePic(){
+    	//hit Save, hit OK, verify pic entered into database and possibly check Intent info
+    }
 
 }

@@ -47,5 +47,17 @@ public class SendEmailActivityTest extends ActivityInstrumentationTestCase2<Send
     public void testTEMPDELETETHIS(){
     	assertTrue(1 == 1);
     }
+    
+    public void testCorrectData(){
+    	//Fill the form in with correct data, hit send, verify sent
+    }
+    
+    public void testIncorrectEmail(){
+    	//test with an invalid email (doesn't contain @ for instance) and verify that this errors
+    }
+    
+    public void testBlankData(){
+    	//leave everything blank, hit send, and verify that it errors
+    }
 	
 }

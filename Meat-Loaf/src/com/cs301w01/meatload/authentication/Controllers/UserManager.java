@@ -27,7 +27,7 @@ public class UserManager implements FController{
     
     public User authenticateUser(String userName, String password) {
 
-        String encryptedPwd = PasswordManager.generatePassword(password);
+        String encryptedPwd = PasswordManager.generatePassword(password).toString();
         
         Cursor c = new UserQueryGenerator(context).logUserIn(userName, encryptedPwd);
         
@@ -74,7 +74,7 @@ public class UserManager implements FController{
 
     public long createNewUser(User u, String userName, String password, String role) {
 
-        String hashedPW = PasswordManager.generatePassword(password);
+        String hashedPW = PasswordManager.generatePassword(password).toString();
 
         UserQueryGenerator uQ = new UserQueryGenerator(context);
 

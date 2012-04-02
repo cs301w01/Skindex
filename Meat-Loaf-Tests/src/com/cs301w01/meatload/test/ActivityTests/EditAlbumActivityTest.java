@@ -47,5 +47,27 @@ public class EditAlbumActivityTest extends ActivityInstrumentationTestCase2<Edit
     public void testTEMPDELETETHIS(){
     	assertTrue(1 == 1);
     }
+    
+    public void testChangeAlbumNameToValid(){
+    	//enter new data into the album name, hit save, verify album name changed in DB
+    }
+    
+    public void testChangeAlbumNameToEmpty(){
+    	//leave blank, hit save, verify album not saved
+    }
+    
+    public void testDelete(){
+    	//hit delete, verify album deleted
+    }
+    
+    public void testDeleteNameChanged(){
+    	//Change the text in name, hit delete, verify old album deleted
+    }
+    
+    public void testEmail(){
+    	//Yeah, I'm not really sure how to test this.
+    }
+    
+    
 
 }

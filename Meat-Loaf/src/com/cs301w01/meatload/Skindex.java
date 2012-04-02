@@ -32,8 +32,8 @@ public class Skindex extends TabActivity {
         
         SQLiteDBManager dbMan = new SQLiteDBManager(this);
         
-        //BEGIN TAB CODE////////////////////////
-        //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html
+        //TAB CODE
+        //http://developer.android.com/resources/tutorials/views/hello-tabwidget.html
         	Resources res = getResources(); // Resource object to get Drawables
         	TabHost tabHost = getTabHost();  // The activity TabHost
         	TabHost.TabSpec spec;  // Resusable TabSpec for each tab
@@ -57,35 +57,7 @@ public class Skindex extends TabActivity {
 
 
         	tabHost.setCurrentTab(0);
-        	
-        	
-        	
-        ///END TAB CODE/////////////////////////
-
-        //Current tab set to Album.  ViewGroupsActivity runs in that tab
-        
-        // TODO: Map objects created as variables to real objects in the XML R.layout.main
-        	
-        /*
-        newAlbumButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				addAlbum();
-			}
-		});
-        
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				takePicture();
-			}
-		});
-		*/
-        
-        // TODO: We should add all the other listeners here.
     }
-    
-    // TODO: use selectAllAlbums and selectAllTags to get the lists you need to populate the screen
     
     //@Override
     public void update(Object model) {

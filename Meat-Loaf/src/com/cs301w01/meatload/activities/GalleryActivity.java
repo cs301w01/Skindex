@@ -62,6 +62,10 @@ public class GalleryActivity extends Skindactivity {
         
     }
     
+    /**
+     * Populates all dynamic text fields on the screen
+     * @param String to go in Album Title
+     */
     protected void populateTextFields(String title){
 
         TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
@@ -82,6 +86,7 @@ public class GalleryActivity extends Skindactivity {
     protected void createListeners(){
         // TODO: Map objects created as variables to real objects in the XML R.layout.main
 
+    	//Set listener for clicks on "Edit Album"
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -90,6 +95,7 @@ public class GalleryActivity extends Skindactivity {
             }
         });
 
+        //Set listener for clicks on "Take Picture"
         final Button takePictureButton = (Button) findViewById(R.id.takePic);
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -98,6 +104,7 @@ public class GalleryActivity extends Skindactivity {
             }
         });
 
+        //Set listener for clicks on "Compare Pictures"
         final Button comparePictureButton = (Button) findViewById(R.id.comparePic);
         comparePictureButton.setOnClickListener(new View.OnClickListener() {			
 				public void onClick(View v) {
@@ -105,6 +112,7 @@ public class GalleryActivity extends Skindactivity {
 				}
 		});
         
+        //Set listener for clicks on a picture
         gridview.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView parent, View v, int position, long id) {
                 Picture selectedPic = adapter.getItem(position);
@@ -157,7 +165,6 @@ public class GalleryActivity extends Skindactivity {
 
         Collection<Picture> albumPictures = galleryManager.getPictureGallery();
 
-        //adapter = new SimpleAdapter(this, albumPictures, R.layout.list_item, adapterCols, adapterIDs);
         adapter = new GridViewGalleryAdapter(this, albumPictures);
 
         gridview.setAdapter(adapter);
@@ -175,7 +182,7 @@ public class GalleryActivity extends Skindactivity {
              "com.cs301w01.meatload.activities.EditAlbumActivity");
      Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum(this).getName());
     
-     //NEED TO SET TAGS AS WELL!
+     //TODO: NEED TO SET TAGS AS WELL!
     
      myIntent.putExtra("gallery", aGal);
      startActivity(myIntent);

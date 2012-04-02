@@ -162,5 +162,14 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			
 		assertTrue(finalAlbs.size() == origAlbs.size() + 3);
 	}
+	
+	public void testTakePictureChooseAlbum(){
+		//Press take picture, choose an album, verify Intent holds correct info
+	}
+	
+	public void testTakePictureNewAlbum(){
+		//Press take picture, choose new album, enter new album details, verify album added to database
+		// also maybe check intent
+	}
 
 }

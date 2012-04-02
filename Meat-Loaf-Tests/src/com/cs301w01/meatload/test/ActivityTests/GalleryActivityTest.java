@@ -47,5 +47,8 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
     public void testTEMPDELETETHIS(){
     	assertTrue(1 == 1);
     }
+    
+    //What exactly is there to test?  We could check that each button, when clicked, generates a valid Intent,
+    //but is that necessary?
 
 }

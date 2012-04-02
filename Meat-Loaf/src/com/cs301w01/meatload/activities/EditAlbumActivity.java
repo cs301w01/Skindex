@@ -50,6 +50,9 @@ public class EditAlbumActivity extends Skindactivity {
         populate();
     }
     
+    /**
+     * Populates all dynamic fields on the screen
+     */
     private void populate(){
 		EditText name = (EditText) findViewById(R.id.edit_album_name);
 		name.setText(album.getName());
@@ -76,6 +79,7 @@ public class EditAlbumActivity extends Skindactivity {
     /**
      * Checks to see if the user has made changes to the name of the album, if so updates the 
      * album name in the DB.
+     * @return int, 1 if album update successful, -1 if albumUpdate failed
      */
     private int updateAlbumName() {
         final EditText albumName = (EditText) findViewById(R.id.edit_album_name);
@@ -106,7 +110,10 @@ public class EditAlbumActivity extends Skindactivity {
         return 1;
     }
     
-    //Pops up error dialog with given string in message
+    /**
+     * Calls the mainManager, which will print the error to an AlertDialog.
+     * @param String, error message to be printed
+     */
     private void errorDialog(String err){
     	mainManager.errorDialog(err, this);
     }
