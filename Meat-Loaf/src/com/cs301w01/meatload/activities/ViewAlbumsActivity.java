@@ -69,15 +69,15 @@ public class ViewAlbumsActivity extends Skindactivity {
     }
     
     protected void createListeners() {
-        //on click listener 
+        //Create listener for clicks on Take Picture
     	final Button takePicButton = (Button) findViewById(R.id.takePic);
     	takePicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
             	takePicture();
             }
         });
         
+    	//Create listener for clicks on "New Album" button
         final Button addAlbumButton = (Button) findViewById(R.id.newAlbum);
         addAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -85,9 +85,8 @@ public class ViewAlbumsActivity extends Skindactivity {
             }
         });
         
-        // Below is the listener for a list button click. It takes the id
-        // of the clicked item and passes it to the FlogEdit activity so
-        // you can edit the selected log.
+        //Create a listener for the List item clicks.  It takes the position
+        //passes it on the openGallery() method
         
         albumListView.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -107,12 +106,10 @@ public class ViewAlbumsActivity extends Skindactivity {
 		adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
 		albumListView.setAdapter(adapter);
     }
-    
-    /* 
-     * TODO: Display a message asking if the user wants to create a new album
-     * populate the boolean with true is the user wants a new album
-     * otherwise assume the user wants to choose an album
-     * if they hit cancel, exit out of this function
+  
+    /**
+     * takePicture called when Take Picture button pressed.  Will call up Create Album
+     * dialog.
      */
     protected void takePicture() {
     	//Display prompt
@@ -123,6 +120,10 @@ public class ViewAlbumsActivity extends Skindactivity {
 
     }
     
+    /**
+     * Puts the given album into an Intent and calls the GalleryActivity 
+     * @param album
+     */
     private void switchToTakePicture(Album album) {
 
         Intent goToGallery = new Intent();
