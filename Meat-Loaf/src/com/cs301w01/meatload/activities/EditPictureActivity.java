@@ -56,12 +56,13 @@ public class EditPictureActivity extends Skindactivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.edit_picture);
 
 		// Set up MainManager
 		mainManager = new MainManager();
 		mainManager.setContext(this);
-
+		
 		pictureView = (ImageView) findViewById(R.id.pictureView);
 
 		// Get picture object from Intent's extras bundle
@@ -71,10 +72,12 @@ public class EditPictureActivity extends Skindactivity {
 
 		// Set up a new PictureManager using the Picture object passed via the intent
 		pictureManager = new PictureManager(this, picture);
+		
 
 		populateTextFields();
 
 		createListeners();
+		
 	}
 
 	@Override
