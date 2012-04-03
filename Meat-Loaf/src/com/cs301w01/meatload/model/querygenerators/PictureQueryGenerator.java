@@ -56,17 +56,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 
         return uVal;
     }
-    
-    /**
-     * Used to find the id of a picture in the pictures table for insertion into the albums and 
-     * tags tables.
-     * @param name
-     * @return
-     */
-    private int selectPictureIDByName (String name) {
-        return selectIDByName(name, TABLE_NAME);
-    }
-    
+       
     /**
      * Inserts a picture into the pictures table and corresponding tags into the tag table.
      * @param p Picture object
@@ -116,45 +106,7 @@ public class PictureQueryGenerator extends QueryGenerator {
     	
     	return new Integer(c.getString(c.getColumnIndex("numPictures")));
     }
-    
-    
-    /**
-    *
-    * @param pictureQuery
-    * @return
-    */
-   private Collection<Picture> selectPicturesByQuery(String pictureQuery) {
-       
-       Cursor c = db.performRawQuery(pictureQuery);
-       ArrayList<Picture> pictures = new ArrayList<Picture>();
-       
-       if (c == null){
-   		return pictures;
-        }
-
-        while(!c.isAfterLast()) {
-
-           AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
-           String albumName = albumGen.getAlbumNameOfPicture(c.getInt(c.getColumnIndex(COL_ID)));
-
-           int id = Integer.parseInt(c.getString(c.getColumnIndex(COL_ID)));
-           String path = c.getString(c.getColumnIndex(PICTURES_COL_PATH));
-           Date date = stringToDate(c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
-           String name = c.getString(c.getColumnIndex(COL_NAME));
-
-           //String name, String path, String album, Date date, Collection<String> tags
-           Picture p = new Picture(name, path, albumName, date, 
-        		   (ArrayList<Tag>) new TagQueryGenerator(context).selectPictureTags(id));
-            p.setID(id);
-            
-           pictures.add(p);
-
-           c.moveToNext();
-        }
-
-        return pictures;
-   }
-   
+      
    public Collection<Picture> selectAllPictures() {
    	
 	   return selectPicturesByQuery("SELECT * FROM " + 
@@ -294,5 +246,52 @@ public class PictureQueryGenerator extends QueryGenerator {
        
        db.performRawQuery(dQuery);
    }
+   
+   /**
+   *
+   * @param pictureQuery
+   * @return
+   */
+  private Collection<Picture> selectPicturesByQuery(String pictureQuery) {
+      
+      Cursor c = db.performRawQuery(pictureQuery);
+      ArrayList<Picture> pictures = new ArrayList<Picture>();
+      
+      if (c == null){
+  		return pictures;
+       }
+
+       while(!c.isAfterLast()) {
+
+          AlbumQueryGenerator albumGen = new AlbumQueryGenerator(this.context);
+          String albumName = albumGen.getAlbumNameOfPicture(c.getInt(c.getColumnIndex(COL_ID)));
+
+          int id = Integer.parseInt(c.getString(c.getColumnIndex(COL_ID)));
+          String path = c.getString(c.getColumnIndex(PICTURES_COL_PATH));
+          Date date = stringToDate(c.getString(c.getColumnIndex(PICTURES_COL_DATE)));
+          String name = c.getString(c.getColumnIndex(COL_NAME));
+
+          //String name, String path, String album, Date date, Collection<String> tags
+          Picture p = new Picture(name, path, albumName, date, 
+       		   (ArrayList<Tag>) new TagQueryGenerator(context).selectPictureTags(id));
+           p.setID(id);
+           
+          pictures.add(p);
+
+          c.moveToNext();
+       }
+
+       return pictures;
+  }
+  
+  /**
+   * Used to find the id of a picture in the pictures table for insertion into the albums and 
+   * tags tables.
+   * @param name
+   * @return
+   */
+  private int selectPictureIDByName (String name) {
+      return selectIDByName(name, TABLE_NAME);
+  }
 
 }
