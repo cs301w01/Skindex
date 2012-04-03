@@ -108,11 +108,23 @@ public class TagQueryGenerator extends QueryGenerator {
     	return (new Integer(c.getString(c.getColumnIndex("numTag"))) > 0);
     }
     
-    public void updateTags(int pictureID, ArrayList<Tag> tags) {
-    	for (Tag tag : tags) {
-    		if(!tagExists(pictureID, tag.getName())) {
-    			addTag(pictureID, tag);
+    public void addTagsToPicture(int pictureID, ArrayList<String> tagNames) {
+    	for (String tagName : tagNames) {
+    		if(!tagExists(pictureID, tagName)) {
+    			addTag(pictureID, new Tag(tagName, 0));
     		}
+    	}
+    }
+    
+    public void deleteTagsFromPicture(int pictureID, ArrayList<String> tagNames) {
+    	for (String tagName : tagNames) {
+    		String dQuery = "DELETE FROM " + TABLE_NAME + 
+    						" WHERE " + COL_NAME  + " = '" + tagName + "'" + 
+    						" AND " + COL_PICTUREID + " = '" + pictureID + "'";
+
+            Log.d(TABLE_NAME, "Performing delete: " + dQuery);
+            
+            db.performRawQuery(dQuery);
     	}
     }
     

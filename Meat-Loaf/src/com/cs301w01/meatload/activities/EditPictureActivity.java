@@ -136,7 +136,7 @@ public class EditPictureActivity extends Skindactivity {
 
 		// Tag List View
 		tagListView = (ListView) findViewById(R.id.picTagList);
-		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
+		ArrayList<Tag> pictureTags = pictureManager.getTags();
 		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
@@ -243,7 +243,7 @@ public class EditPictureActivity extends Skindactivity {
 		tagListView.setAdapter(adapter);
 		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
+		ArrayList<Tag> pictureTags = pictureManager.getTags();
 
 		for (Tag pictureTag : pictureTags) {
 			for (int i = 0; i < allTags.size(); i++) {
@@ -323,7 +323,7 @@ public class EditPictureActivity extends Skindactivity {
 		alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int whichButton) {
-				pictureManager.deleteTag(tag);
+				pictureManager.deleteTag(tag.getName());
 				populateTextFields();
 				dialog.dismiss();
 			}
