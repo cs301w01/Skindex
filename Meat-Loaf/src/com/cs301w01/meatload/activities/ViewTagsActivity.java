@@ -8,10 +8,13 @@ import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Tag;
+import com.cs301w01.meatload.model.TagsGallery;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -25,10 +28,15 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ViewTagsActivity extends Skindactivity {
 
 	private MainManager mainManager;
-	private TagAdapter adapter;
+	
+	//adapters
+	private TagAdapter allTagsAdapter;
+	private TagAdapter selectedTagsAdapter;
 	
 	//arraylist needed for second listview
 	private ArrayList<Tag> selectedTags;
+	private ArrayList<Tag> filteredAllTags;
+	private ArrayList<Tag> allTags;
 	
 	//list views
 	private ListView allTagsLV;
@@ -54,45 +62,139 @@ public class ViewTagsActivity extends Skindactivity {
         mainManager.setContext(this);
         
         selectedTags = new ArrayList<Tag>();
+		allTags = mainManager.getAllTags();
+		filteredAllTags = new ArrayList<Tag>();
+		filteredAllTags.addAll(allTags);
         
-        createListeners();
-        refreshScreen();
+        createListViews();       
+        createSearchField();       		
+		createListeners();
+        
     }
     
-    protected void createListeners() {
+    private void createSearchField() {
+    	
+    	searchField = (AutoCompleteTextView) findViewById(R.id.tagSearchEditText);
         
+    	ArrayList<String> tagStrings = new ArrayList<String>();
+        //create auto complete field
+		for (Tag tag : allTags) {
+			tagStrings.add(tag.getName());
+		}
+		
+		//create and adapter for auto complete field
+		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this,
+				R.layout.simple_list_item, tagStrings);
+		searchField.setAdapter(stringAdapter);
+		
+	}
+
+	protected void createListeners() {
+        
+    	//set listener for auto complete update, filters allTagsLV
+    	searchField.setOnItemClickListener(new OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View v, int pos,
+                    long id) {
+            	//get string of autocomplete
+            	String tagName = parent.getItemAtPosition(pos).toString();
+            	
+            	filterAllTagsListView(tagName);
+
+            }
+        });
+
+    	
         final Button viewPicturesButton = (Button) findViewById(R.id.viewSelections);
         viewPicturesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
+            	onViewPictureClick();
+            	
             }
         });
         
-        allTagsLV.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                View temp = v;
-                allTagsLV.removeView(temp);
-                selectedTagsLV.addView(temp);
-            }
-        });
+        allTagsLV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        	
+
+		public void onItemClick(AdapterView<?> adapter, View v, int pos,
+				long arg3) {
+                
+                Tag selectedTag = (Tag) adapter.getItemAtPosition(pos); 
+                
+                filteredAllTags.remove(selectedTag);
+                selectedTags.add(selectedTag);
+                
+                allTagsAdapter.notifyDataSetChanged();
+                selectedTagsAdapter.notifyDataSetChanged();
+					
+				
+        }});
         
         //tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
     }
     
+    private void onViewPictureClick() {
+
+    	ArrayList<String> tagNames = new ArrayList<String>();
+    	
+    	for(Tag tag : selectedTags) {
+    		
+    		tagNames.add(tag.getName());
+    		
+    	}
+    	
+    	TagsGallery tG = new TagsGallery(tagNames);
+    	
+    	Intent myIntent = new Intent();
+    	myIntent.setClassName("com.cs301w01.meatload", 
+		"com.cs301w01.meatload.activities.GalleryActivity");
+    	myIntent.putExtra("gallery", tG);
+    	
+    	startActivity(myIntent);
+		
+	}
+
+	private void filterAllTagsListView(String tagName) {
+    	
+    	//filter out non-matches
+    	for(int i = 0; i < filteredAllTags.size(); i++) {
+    		
+    		if(!filteredAllTags.get(i).getName().equals(tagName) 
+    				|| !filteredAllTags.get(i).getName().contains(tagName)) {
+    			
+    			filteredAllTags.remove(tag);
+    			
+    		}
+    		
+    	}
+    	
+    	allTagsAdapter.notifyDataSetChanged();
+    	
+    }
+    
     public void refreshScreen() {
     	
-    	//set top list
+    	createListViews();
+    	createListeners();
+		
+    }
+
+	private void createListViews() {
+		
+		//set top list
     	allTagsLV= (ListView) findViewById(R.id.tagListView);
-		ArrayList<Tag> tagList = mainManager.getAllTags();
-		adapter = new TagAdapter(this, R.layout.list_item, tagList);
-		allTagsLV.setAdapter(adapter);
+		allTagsAdapter = new TagAdapter(this, R.layout.list_item, filteredAllTags);
+		allTagsLV.setAdapter(allTagsAdapter);
 		
 		//create bottom list
 		selectedTagsLV = (ListView) findViewById(R.id.selectedTagsListView);
-		TagAdapter sTadapter = new TagAdapter(this, R.layout.list_item, selectedTags);
-		selectedTagsLV.setAdapter(sTadapter);
+		selectedTagsAdapter = new TagAdapter(this, R.layout.list_item, selectedTags);
+		selectedTagsLV.setAdapter(selectedTagsAdapter);
 		
 		
-    }
+	}
+    
+    
 
 }
