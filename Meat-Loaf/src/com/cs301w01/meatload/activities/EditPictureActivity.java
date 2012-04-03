@@ -96,6 +96,7 @@ public class EditPictureActivity extends Skindactivity {
 	 *      http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
 	protected void populateTextFields() {
+		
 		// Picture ImageView
 		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
@@ -134,9 +135,11 @@ public class EditPictureActivity extends Skindactivity {
 		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
+		
 	}
 
 	protected void createListeners() {
+		
 		// Send Email Button logic
 		Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
 		sendEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +227,10 @@ public class EditPictureActivity extends Skindactivity {
 		alert.show();
 	}
 
+	/**
+	 * @deprecated
+	 */
+	@SuppressWarnings("unused")
 	private void openEditTagsDialog() {
 
 		// Set up Dialog object
