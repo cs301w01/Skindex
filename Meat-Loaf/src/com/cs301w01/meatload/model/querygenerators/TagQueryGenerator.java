@@ -85,9 +85,9 @@ public class TagQueryGenerator extends QueryGenerator {
     }
     
     /**
-     * Adds a collection of tags to a Picture in the Database.
-     * @param pictureID
-     * @param tagNames
+     * Associates a collection of tags to a specific Picture in the Database.
+     * @param pictureID The ID of the Picture to update.
+     * @param tagNames A collection of tags to add.
      */
     public void addTagsToPicture(int pictureID, ArrayList<String> tagNames) {
     	for (String tagName : tagNames) {
@@ -97,6 +97,11 @@ public class TagQueryGenerator extends QueryGenerator {
     	}
     }
     
+    /**
+     * Deletes the specified tags from a Picture in the database.
+     * @param pictureID The ID of the Picture to update.
+     * @param tagNames A collection of tags to delete.
+     */
     public void deleteTagsFromPicture(int pictureID, ArrayList<String> tagNames) {
     	for (String tagName : tagNames) {
     		String dQuery = "DELETE FROM " + TABLE_NAME + 
@@ -109,6 +114,12 @@ public class TagQueryGenerator extends QueryGenerator {
     	}
     }
     
+    /**
+     * Adds a tag to specific Picture in the Database.
+     * @param pictureID The ID of Picture to add the tag too.
+     * @param tag The tag to add.
+     * @return long
+     */
     public long addTag(int pictureID, Tag tag) {
     	ContentValues cv = new ContentValues();
         
@@ -141,6 +152,7 @@ public class TagQueryGenerator extends QueryGenerator {
 		 return newString;
     }
     
+
 	private ArrayList<Tag> selectTagsByQuery(String tagQuery) {
     	
 		Cursor c = db.performRawQuery(tagQuery);
