@@ -255,7 +255,7 @@ public class PictureQueryGenerator extends QueryGenerator {
    
    public int getPicturesByTagCount(Collection<String> tags) {
 
-       String query = "SELECT p." + COL_ID + ", COUNT(*) AS numPictures" +
+       String query = "SELECT COUNT(*) AS numPictures" +
        				" FROM " +
                    TABLE_NAME + " p LEFT JOIN " +
                    TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
