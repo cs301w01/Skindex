@@ -7,7 +7,11 @@ import android.widget.TextView;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
+import com.cs301w01.meatload.controllers.PictureManager;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -114,8 +118,28 @@ public class EditAlbumActivity extends Skindactivity {
     }
     
     private void deleteAlbum() {
+    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+
+		alert.setTitle("Confirm");
+		alert.setMessage("This will delete all pictures associated with this album. Are you sure you want to delete this album?");
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				EditAlbumActivity.this.setResult(RESULT_CANCELED, null);
+				gMan.deleteAlbum((int)album.getID());
+				finish();
+			}
+		});
+
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// Canceled.
+					}
+				});
+
+		alert.show();
     	
-    	gMan.deleteAlbum((int)album.getID());
     }
     
     //Pops up error dialog with given string in message

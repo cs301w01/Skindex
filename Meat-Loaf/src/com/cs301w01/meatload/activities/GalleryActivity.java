@@ -8,6 +8,7 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.GridViewGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -116,6 +117,12 @@ public class GalleryActivity extends Skindactivity {
     }
     
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	if(resultCode == Activity.RESULT_CANCELED)
+    		finish();
+    }
+    
+    @Override
     protected void onResume() {
         super.onResume();
 
@@ -178,7 +185,7 @@ public class GalleryActivity extends Skindactivity {
      //NEED TO SET TAGS AS WELL!
     
      myIntent.putExtra("gallery", aGal);
-     startActivity(myIntent);
+     startActivityForResult(myIntent, 0);
 
     }
     
