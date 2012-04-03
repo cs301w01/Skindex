@@ -14,7 +14,7 @@
                 android:id="@+id/tagSearchLayout"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_left="@+id/allTagsTitle"
+                
                 android:orientation="horizontal" >
                 
              	<TextView
@@ -24,7 +24,7 @@
 		            android:text="@string/allTags" />
                 
                 <AutoCompleteTextView
-                    android:id="@id/tagSearchEditText"
+                    android:id="@+id/tagSearchEditText"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:completionThreshold="1" />
@@ -86,7 +86,7 @@
     </RelativeLayout>
         
         <Button
-            android:id="@+id/viewSelectections"
+            android:id="@+id/viewSelections"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/viewSelected" />

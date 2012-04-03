@@ -61,7 +61,7 @@ public class ViewTagsActivity extends Skindactivity {
     
     protected void createListeners() {
         
-        final Button viewPicturesButton = (Button) findViewById(R.id.viewSelectections);
+        final Button viewPicturesButton = (Button) findViewById(R.id.viewSelections);
         viewPicturesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
