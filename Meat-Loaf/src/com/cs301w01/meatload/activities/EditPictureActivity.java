@@ -209,22 +209,11 @@ public class EditPictureActivity extends Skindactivity {
 	 */
 	private void savePicture() {
 
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Picture Saved.");
-
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-
-			public void onClick(DialogInterface dialog, int whichButton) {
-				Picture picture = new Picture(pictureNameEditText.getText()
-						.toString(), ((Album) albumView.getSelectedItem())
-						.getName());
-				pictureManager.savePicture(picture);
-				finish();
-			}
-
-		});
-
-		alert.show();
+		Picture picture = new Picture(pictureNameEditText.getText()
+				.toString(), ((Album) albumView.getSelectedItem())
+				.getName());
+		pictureManager.savePicture(picture);
+		finish();
 	}
 
 	/**
