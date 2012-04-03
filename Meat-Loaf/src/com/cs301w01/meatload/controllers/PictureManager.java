@@ -29,7 +29,9 @@ public class PictureManager implements FController {
 	private int picID;
 	private String albumName;
 	//private Bitmap imgOnDisplay;
-	private ArrayList<Tag> tempTags;
+	private ArrayList<Tag> currentTags;
+	private ArrayList<String> addedTags;
+	private ArrayList<String> removedTags;
 
 	/**
 	 * Constructor, sets Context for db use and the current Album Name
@@ -47,7 +49,9 @@ public class PictureManager implements FController {
 	 */
 	public PictureManager(Picture picture) {
 		this.picID = picture.getPictureID();
-		this.tempTags = picture.getTags();
+		currentTags = picture.getTags();
+		addedTags = new ArrayList<String>();
+		removedTags = new ArrayList<String>();
 	}
 
 	/**
@@ -59,7 +63,9 @@ public class PictureManager implements FController {
 	public PictureManager(Context context, Picture picture) {
 		this.context = context;
 		this.picID = picture.getPictureID();
-		this.tempTags = picture.getTags();
+		currentTags = picture.getTags();
+		addedTags = new ArrayList<String>();
+		removedTags = new ArrayList<String>();
 	}
 
 	/**
@@ -149,16 +155,6 @@ public class PictureManager implements FController {
 		Picture newpic = new PictureQueryGenerator(context).selectPictureByID(picID);
 		return newpic;
 	}
-	
-	// TODO: Um, what is this?
-	public void populateTempTags() {
-		tempTags = getPicture().getTags();
-	}
-	
-	// TODO: Um, what is this?
-	public ArrayList<Tag> getTempTags() {
-		return tempTags;
-	}
 
 	/**
 	 * Delete the Picture associated with this PictureManager object in the
@@ -178,7 +174,20 @@ public class PictureManager implements FController {
 	 *            String object representing the tag to be added to this picture
 	 */
 	public void addTag(String tagName) {
-		tempTags.add(new Tag(tagName, new TagQueryGenerator(context).getTagPictureCount(tagName)));
+		if(!addedTags.contains(tagName)) {
+			boolean tagExists = false;
+			for(Tag tag : currentTags) {
+				if(tag.getName().equals(tagName)) {
+					tagExists = true;
+					break;
+				}
+			}
+			if(!tagExists) {
+				addedTags.add(tagName);
+				currentTags.add(new Tag(tagName, new TagQueryGenerator(context).getTagPictureCount(tagName)));
+			}
+			removedTags.remove(tagName);
+		}
 	}
 	
 	/**
@@ -187,12 +196,22 @@ public class PictureManager implements FController {
 	 * @param tag
 	 *            Tag to be deleted.
 	 */
-	public void deleteTag(Tag tag) {
-		for (Tag tempTag : tempTags) {
-			if (tempTag.getName().equals(tag.getName())) {
-				tempTags.remove(tempTag);
-			}
+	public void deleteTag(String tagName) {
+		if(addedTags.contains(tagName)) {
+			addedTags.remove(tagName);
 		}
+		else {
+			removedTags.add(tagName);
+		}
+			for(Tag tag : currentTags) {
+				if(tag.getName().equals(tagName)) {
+					currentTags.remove(tag);
+				}
+			}
+	}
+	
+	public ArrayList<Tag> getTags() {
+		return currentTags;
 	}
 
 	/**
@@ -203,7 +222,9 @@ public class PictureManager implements FController {
 	 *            Collection of tags to set the picture's tags to
 	 */
 	private void saveTags() {
-		new TagQueryGenerator(context).updateTags(picID, tempTags);
+		TagQueryGenerator TQG = new TagQueryGenerator(context);
+		TQG.addTagsToPicture(picID, addedTags);
+		TQG.deleteTagsFromPicture(picID, removedTags);
 	}
 	
 	private Picture createPicture(String fpath, Date date, String fname) {
