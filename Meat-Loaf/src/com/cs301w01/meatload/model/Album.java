@@ -53,9 +53,14 @@ public class Album implements Serializable {
         return id;
     }
     
-    public Date getDate(){
+    public Date getDate() {
     	return Calendar.getInstance().getTime();
     	
     	//return date;
+    }
+    
+    @Override
+    public String toString() {
+		return getName();
     }
 }

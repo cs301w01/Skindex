@@ -226,20 +226,18 @@ public class EditPictureActivity extends Skindactivity {
 
 	private void openEditTagsDialog() {
 
-		// Set up Dialog object 
+		// Set up Dialog object
 		final Dialog editTagsDialog = new Dialog(this);
 		editTagsDialog.setContentView(R.layout.edit_tags);
 		editTagsDialog.setCancelable(true);
 
-		// Populate tags list 
-		final ArrayList<Tag> allTags =
-		mainManager.getAllTags();
+		// Populate tags list
+		final ArrayList<Tag> allTags = mainManager.getAllTags();
 		TagAdapter adapter = new TagAdapter(this, R.layout.tag_list_item,
 				allTags);
 
-		// Set up ListView of all Tags 
-		final ListView tagListView = (ListView)
-		findViewById(R.id.editTagsListView);
+		// Set up ListView of all Tags
+		final ListView tagListView = (ListView) findViewById(R.id.editTagsListView);
 		tagListView.setAdapter(adapter);
 		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
