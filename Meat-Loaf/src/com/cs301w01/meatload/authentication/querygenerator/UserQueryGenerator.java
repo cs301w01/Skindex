@@ -92,7 +92,7 @@ public class UserQueryGenerator extends QueryGenerator {
         cv.put(COL_SALT, password.getSalt());
         cv.put(COL_ROLE, role);
 
-        return db.insert(TABLE_NAME_USERS, null, cv);
+        return db.insert(TABLE_NAME_USERS, COL_ID, cv);
 
     }
 

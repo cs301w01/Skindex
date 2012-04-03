@@ -55,7 +55,7 @@ public class ComparePictureGalleryAdapter extends BaseAdapter {
         ll.addView(imageView);
 
         TextView tv = new TextView(mContext);
-        tv.setText(pictures.get(position).getDate().toString() + " - " + pictures.get(position).getName());
+        tv.setText(pictures.get(position).getName());
         tv.setGravity(Gravity.CENTER_HORIZONTAL);
 
         ll.addView(tv);
