@@ -24,40 +24,20 @@ public class TagQueryGenerator extends QueryGenerator {
             "FOREIGN KEY(" + COL_PICTUREID + ") REFERENCES " +
             	PictureQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
     
+    /**
+     * Constructor, calls the super constructor and passes a Context for DB use.
+     * @param context To be used for DB operations.
+     */
     public TagQueryGenerator(Context context) {
 		super(context);
 	}
-
-	private ArrayList<Tag> selectTagsByQuery(String tagQuery) {
-    	
-		Cursor c = db.performRawQuery(tagQuery);
-    	
-    	ArrayList<Tag> tags = new ArrayList<Tag>();
-    	
-    	if (c == null) {
-    		return tags;
-    	}
-
-        while (!c.isAfterLast()) {
-            
-            String tagName = c.getString(c.getColumnIndex(COL_NAME));
-            int numPictures = getTagPictureCount(tagName);
-            
-            tags.add(new Tag(tagName, numPictures));
-
-            c.moveToNext();
-        }
-
-        return tags;
-    }
     
     /**
      * Return all tags associated with a picture.
-     * @param pictureID
-     * @return Collection of Strings
+     * @param pictureID ID of the picture to select the tags of.
+     * @return ArrayList<Tag>
      */
-    public ArrayList<Tag> selectPictureTags(int pictureID) {
-        
+    public ArrayList<Tag> selectPictureTags(int pictureID) {  
         String getTags = "SELECT " + COL_NAME +
         					" FROM " + TagQueryGenerator.TABLE_NAME +
         					" WHERE " + COL_PICTUREID + " = '" + pictureID + "'";
@@ -92,20 +72,6 @@ public class TagQueryGenerator extends QueryGenerator {
     	}
     	
     	return new Integer(c.getString(c.getColumnIndex("numPictures")));
-    }
-    
-    private boolean tagExists(int pictureID, String tagName) {
-    	String query = "SELECT COUNT(*) AS numTag" + 
-    					" FROM " + TABLE_NAME + 
-    					" WHERE " + COL_NAME + " = '" + tagName + "'" + 
-    					" AND " + COL_PICTUREID + " = '" + pictureID + "'";
-    	Cursor c = db.performRawQuery(query);
-    	
-    	if (c == null) {
-    		return false;
-    	}
-    	
-    	return (new Integer(c.getString(c.getColumnIndex("numTag"))) > 0);
     }
     
     public void addTagsToPicture(int pictureID, ArrayList<String> tagNames) {
@@ -158,5 +124,42 @@ public class TagQueryGenerator extends QueryGenerator {
 			 }
 		 }	 
 		 return newString;
-    }    
+    }
+    
+	private ArrayList<Tag> selectTagsByQuery(String tagQuery) {
+    	
+		Cursor c = db.performRawQuery(tagQuery);
+    	
+    	ArrayList<Tag> tags = new ArrayList<Tag>();
+    	
+    	if (c == null) {
+    		return tags;
+    	}
+
+        while (!c.isAfterLast()) {
+            
+            String tagName = c.getString(c.getColumnIndex(COL_NAME));
+            int numPictures = getTagPictureCount(tagName);
+            
+            tags.add(new Tag(tagName, numPictures));
+
+            c.moveToNext();
+        }
+
+        return tags;
+    }
+	
+    private boolean tagExists(int pictureID, String tagName) {
+    	String query = "SELECT COUNT(*) AS numTag" + 
+    					" FROM " + TABLE_NAME + 
+    					" WHERE " + COL_NAME + " = '" + tagName + "'" + 
+    					" AND " + COL_PICTUREID + " = '" + pictureID + "'";
+    	Cursor c = db.performRawQuery(query);
+    	
+    	if (c == null) {
+    		return false;
+    	}
+    	
+    	return (new Integer(c.getString(c.getColumnIndex("numTag"))) > 0);
+    }
 }
