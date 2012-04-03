@@ -94,10 +94,23 @@ public class TagQueryGenerator extends QueryGenerator {
     	return new Integer(c.getString(c.getColumnIndex("numPictures")));
     }
     
+    private boolean tagExists(int pictureID, String tagName) {
+    	String query = "SELECT COUNT(*) AS numTag" + 
+    					" FROM " + TABLE_NAME + 
+    					" WHERE " + COL_NAME + " = '" + tagName + "'" + 
+    					" AND " + COL_PICTUREID + " = '" + pictureID + "'";
+    	Cursor c = db.performRawQuery(query);
+    	
+    	if (c == null) {
+    		return false;
+    	}
+    	
+    	return (new Integer(c.getString(c.getColumnIndex("numTag"))) > 0);
+    }
+    
     public void updateTags(int pictureID, ArrayList<Tag> tags) {
-    	ArrayList<Tag> oldTags = selectPictureTags(pictureID);
     	for (Tag tag : tags) {
-    		if(!oldTags.contains(tag)) {
+    		if(!tagExists(pictureID, tag.getName())) {
     			addTag(pictureID, tag);
     		}
     	}
