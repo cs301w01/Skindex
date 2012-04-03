@@ -1,11 +1,17 @@
 package com.cs301w01.meatload.model;
 
+import java.io.Serializable;
+
 /**
  * Object used to store reference data for Tags.
  * @author Derek Dowling
  */
-public class Tag {
+public class Tag implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private int pictureCount;
 

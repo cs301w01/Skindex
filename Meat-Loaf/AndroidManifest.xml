@@ -17,7 +17,8 @@
        
         <activity android:name=".activities.ComparePicturesActivity"></activity>
         <activity android:name=".activities.EditAlbumActivity"></activity>
-        <activity android:name=".activities.EditPictureActivity"></activity>
+        <activity android:name=".activities.EditPictureActivity"
+            android:windowSoftInputMode="adjustPan" ></activity>"
         <activity android:name=".activities.GalleryActivity"></activity>
         <activity android:name=".activities.Skindactivity"></activity>
         <activity android:name=".activities.TakePictureActivity"></activity>

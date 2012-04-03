@@ -47,7 +47,7 @@ public class TagAdapter extends ArrayAdapter<Tag> {
         }
         
         // Get the text boxes from the list_item.xml file
-        TextView tagName = (TextView) tagListItem.findViewById(R.id.itemName);
+        TextView tagName  = (TextView) tagListItem.findViewById(R.id.itemName);
         TextView tagCount = (TextView) tagListItem.findViewById(R.id.itemValue);
  
         // Assign the appropriate data from tag object

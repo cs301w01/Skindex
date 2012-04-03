@@ -41,7 +41,7 @@ public class TagQueryGenerator extends QueryGenerator {
         while (!c.isAfterLast()) {
             
             String tagName = c.getString(c.getColumnIndex(COL_NAME));
-            int numPictures = new Integer(c.getString(c.getColumnIndex("numPictures")));
+            int numPictures = getTagPictureCount(tagName);
             
             tags.add(new Tag(tagName, numPictures));
 
@@ -90,7 +90,8 @@ public class TagQueryGenerator extends QueryGenerator {
     	if (c == null) {
     		return 0;
     	}
-            return new Integer(c.getString(c.getColumnIndex("numPictures")));
+    	
+    	return new Integer(c.getString(c.getColumnIndex("numPictures")));
     }
     
     public void updateTags(int pictureID, ArrayList<Tag> tags) {

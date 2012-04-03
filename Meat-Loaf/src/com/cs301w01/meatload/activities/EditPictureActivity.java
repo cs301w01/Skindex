@@ -131,7 +131,7 @@ public class EditPictureActivity extends Skindactivity {
 		// Tag List View
 		tagListView = (ListView) findViewById(R.id.picTagList);
 		ArrayList<Tag> pictureTags = pictureManager.getTempTags();
-		TagAdapter tagAdapter = new TagAdapter(this, R.layout.tag_list_item,
+		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
 	}
@@ -322,7 +322,7 @@ public class EditPictureActivity extends Skindactivity {
 
 			public void onClick(DialogInterface dialog, int whichButton) {
 				pictureManager.deleteTag(tag);
-				finish();
+				dialog.dismiss();
 			}
 
 		});
@@ -330,7 +330,7 @@ public class EditPictureActivity extends Skindactivity {
 		alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
 
 			public void onClick(DialogInterface dialog, int whichButton) {
-				finish();
+				dialog.dismiss();
 			}
 
 		});
