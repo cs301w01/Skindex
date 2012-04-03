@@ -63,12 +63,19 @@ public class EditAlbumActivity extends Skindactivity {
     }
 
     private void createListeners() {
-        final Button saveAlbumButton = (Button) findViewById(R.id.save_album_button);
+    	final Button saveAlbumButton = (Button) findViewById(R.id.save_album_button);
         saveAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if(updateAlbumName() > 0){
                 	finish();
                 }
+            }
+        });
+        
+        final Button deleteAlbumButton = (Button) findViewById(R.id.delete_album_button);
+        deleteAlbumButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+            	deleteAlbum();
             }
         });
     }
@@ -104,6 +111,11 @@ public class EditAlbumActivity extends Skindactivity {
         
         gMan.changeAlbumName(newAlbumName, album);
         return 1;
+    }
+    
+    private void deleteAlbum() {
+    	
+    	gMan.deleteAlbum((int)album.getID());
     }
     
     //Pops up error dialog with given string in message

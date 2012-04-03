@@ -68,20 +68,12 @@
                 android:layout_weight="1.0" >
 
         <Button
-            android:id="@+id/button_delete_album"
+            android:id="@+id/delete_album_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_weight="0.5"
             android:text="@string/delete" />
-
-        <Button
-            android:id="@+id/button_save_album"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="0.5"
-            android:text="@string/sendEmail" />
 
         <Button
             android:id="@+id/save_album_button"

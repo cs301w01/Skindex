@@ -253,6 +253,37 @@ public class PictureQueryGenerator extends QueryGenerator {
    	
    }
    
+   public int getPicturesByTagCount(Collection<String> tags) {
+
+       String query = "SELECT p." + COL_ID + ", COUNT(*) AS numPictures" +
+       				" FROM " +
+                   TABLE_NAME + " p LEFT JOIN " +
+                   TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
+                   "WHERE ";
+
+       boolean loopedOnce = false;
+
+       for (String tag : tags) {
+
+           if (loopedOnce) {
+               query += " OR ";
+               loopedOnce = true;
+           }
+
+           query += "t." + COL_NAME + " = '" + tag + "'";
+       }
+       query += " GROUP BY p." + COL_ID;
+
+       Cursor c = db.performRawQuery(query);
+       
+       if (c == null){
+   		return 0;
+        }
+
+       return Integer.parseInt(c.getString(c.getColumnIndex("numPictures")));
+  	
+  }
+   
    public void deletePicturesFromAlbum(int albumID) {
 	   
 	   String dQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ALBUMID  + " = '" + albumID + "'";

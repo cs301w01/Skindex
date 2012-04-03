@@ -74,10 +74,6 @@ public class GalleryManager implements FController {
 		new PictureQueryGenerator(context).deletePictureByID(pid);
 	}
 
-	public void deleteAlbum(String name) {
-		new AlbumQueryGenerator(context).deleteAlbumByName(name);
-	}
-
 	public boolean isAlbum() {
 		return gallery.isAlbum();
 	}
