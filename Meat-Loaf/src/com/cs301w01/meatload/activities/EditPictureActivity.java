@@ -114,8 +114,10 @@ public class EditPictureActivity extends Skindactivity {
 		// AlbumView Spinner
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
-		albumView.setAdapter(new SimpleAlbumAdapter(this,
-				R.layout.simple_list_item, allAlbums));
+		SimpleAlbumAdapter spinnerAdapter = new SimpleAlbumAdapter(this,
+				R.layout.simple_list_item, allAlbums);
+		spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
+		albumView.setAdapter(spinnerAdapter);
 		for (Album album : allAlbums) {
 			if (picture.getAlbumName().equals(album.getName())) {
 				albumView.setSelection(allAlbums.indexOf(album));
