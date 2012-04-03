@@ -96,7 +96,7 @@ public class EditPictureActivity extends Skindactivity {
 	 *      http://codehenge.net/blog/2011/05/customizing-android-listview-item-layout/</a>
 	 */
 	protected void populateTextFields() {
-		
+
 		// Picture ImageView
 		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
@@ -107,7 +107,7 @@ public class EditPictureActivity extends Skindactivity {
 		pictureNameEditText = (EditText) findViewById(R.id.pictureNameEditText);
 		pictureNameEditText.setText(picture.getName());
 
-		// Set dateView to toString representation of Date in Picture object
+		// Set dateView to String representation of Date in Picture object
 		TextView dateView = (TextView) findViewById(R.id.dateView);
 		dateView.setText(picture.getDate().toString());
 
@@ -116,7 +116,12 @@ public class EditPictureActivity extends Skindactivity {
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
 		albumView.setAdapter(new SimpleAlbumAdapter(this,
 				R.layout.simple_list_item, allAlbums));
-		albumView.setTag(picture.getAlbumName());
+		for (Album album : allAlbums) {
+			if (picture.getAlbumName().equals(album.getName())) {
+				albumView.setSelection(allAlbums.indexOf(album));
+				break;
+			}
+		}
 
 		// Add Tag field logic
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
@@ -135,11 +140,11 @@ public class EditPictureActivity extends Skindactivity {
 		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
-		
+
 	}
 
 	protected void createListeners() {
-		
+
 		// Send Email Button logic
 		Button sendEmailButton = (Button) findViewById(R.id.sendEmailButton);
 		sendEmailButton.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +171,8 @@ public class EditPictureActivity extends Skindactivity {
 				}
 
 				pictureManager.addTag(tag);
+				
+				populateTextFields();
 			}
 
 		});
@@ -209,9 +216,8 @@ public class EditPictureActivity extends Skindactivity {
 	 */
 	private void savePicture() {
 
-		Picture picture = new Picture(pictureNameEditText.getText()
-				.toString(), ((Album) albumView.getSelectedItem())
-				.getName());
+		Picture picture = new Picture(pictureNameEditText.getText().toString(),
+				((Album) albumView.getSelectedItem()).getName());
 		pictureManager.savePicture(picture);
 		finish();
 	}
@@ -318,6 +324,7 @@ public class EditPictureActivity extends Skindactivity {
 
 			public void onClick(DialogInterface dialog, int whichButton) {
 				pictureManager.deleteTag(tag);
+				populateTextFields();
 				dialog.dismiss();
 			}
 
