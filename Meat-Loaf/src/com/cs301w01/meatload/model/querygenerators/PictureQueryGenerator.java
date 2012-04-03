@@ -215,13 +215,12 @@ public class PictureQueryGenerator extends QueryGenerator {
 
             if (loopedOnce) {
                 query += " OR ";
-                loopedOnce = true;
             }
+            loopedOnce = true;
 
             query += "t." + COL_NAME + " = '" + tag + "'";
         }
-        query += " GROUP BY p." + COL_ID +
-            " ORDER BY COUNT(*), " + PICTURES_COL_DATE;
+        query += " GROUP BY p." + COL_ID;
 
         return selectPicturesByQuery(query);
    	
@@ -247,8 +246,8 @@ public class PictureQueryGenerator extends QueryGenerator {
 
            if (loopedOnce) {
                query += " OR ";
-               loopedOnce = true;
            }
+           loopedOnce = true;
 
            query += "t." + COL_NAME + " = '" + tag + "'";
        }
