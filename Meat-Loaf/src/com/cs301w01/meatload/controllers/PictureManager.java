@@ -130,6 +130,11 @@ public class PictureManager implements FController {
 		// TODO: Move to EditPictureActivity after takePicture finishes.
 	}
 	
+	/**
+	 * Takes the current Picture object, and using it's unique ID, updates
+	 * the databases to reflect the current information.
+	 * @param picture New Picture with updated information.
+	 */
 	public void savePicture(Picture picture) {
 		PictureQueryGenerator pQG = new PictureQueryGenerator(context);
 		pQG.updatePictureByID(picture, PictureQueryGenerator.TABLE_NAME, picID);
@@ -138,7 +143,6 @@ public class PictureManager implements FController {
 
 	/**
 	 * Get this picture
-	 * 
 	 * @return Picture associated with this PictureManager
 	 */
 	public Picture getPicture() {
@@ -146,10 +150,12 @@ public class PictureManager implements FController {
 		return newpic;
 	}
 	
+	// TODO: Um, what is this?
 	public void populateTempTags() {
 		tempTags = getPicture().getTags();
 	}
 	
+	// TODO: Um, what is this?
 	public ArrayList<Tag> getTempTags() {
 		return tempTags;
 	}
