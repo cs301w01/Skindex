@@ -12,6 +12,7 @@ import com.cs301w01.meatload.model.Tag;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,8 +25,20 @@ import android.widget.AdapterView.OnItemClickListener;
 public class ViewTagsActivity extends Skindactivity {
 
 	private MainManager mainManager;
-	private ListView tagListView;
 	private TagAdapter adapter;
+	
+	//arraylist needed for second listview
+	private ArrayList<Tag> selectedTags;
+	
+	//list views
+	private ListView allTagsLV;
+	private ListView selectedTagsLV;
+	
+	//auto complete view
+	private AutoCompleteTextView searchField;
+	
+	//current picture count view
+	private TextView pictureCount;
 	
     //@Override
     public void update(Object model) {
@@ -34,20 +47,32 @@ public class ViewTagsActivity extends Skindactivity {
     
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
         setContentView(R.layout.viewtags);
+        
         mainManager = new MainManager();
         mainManager.setContext(this);
         
-        refreshScreen();
+        selectedTags = new ArrayList<Tag>();
+        
         createListeners();
+        refreshScreen();
     }
     
     protected void createListeners() {
         
-        final Button searchButton = (Button) findViewById(R.id.tagSearch);
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        final Button viewPicturesButton = (Button) findViewById(R.id.viewSelectections);
+        viewPicturesButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
             	
+            }
+        });
+        
+        allTagsLV.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                View temp = v;
+                allTagsLV.removeView(temp);
+                selectedTagsLV.addView(temp);
             }
         });
         
@@ -55,10 +80,19 @@ public class ViewTagsActivity extends Skindactivity {
     }
     
     public void refreshScreen() {
-    	tagListView = (ListView) findViewById(R.id.tagListView);
+    	
+    	//set top list
+    	allTagsLV= (ListView) findViewById(R.id.tagListView);
 		ArrayList<Tag> tagList = mainManager.getAllTags();
 		adapter = new TagAdapter(this, R.layout.list_item, tagList);
-		tagListView.setAdapter(adapter);
+		allTagsLV.setAdapter(adapter);
+		
+		//create bottom list
+		selectedTagsLV = (ListView) findViewById(R.id.selectedTagsListView);
+		TagAdapter sTadapter = new TagAdapter(this, R.layout.list_item, selectedTags);
+		selectedTagsLV.setAdapter(sTadapter);
+		
+		
     }
 
 }
