@@ -32,6 +32,10 @@ public class PictureQueryGenerator extends QueryGenerator {
                 "FOREIGN KEY(" + COL_ALBUMID + ") REFERENCES " +
                 AlbumQueryGenerator.TABLE_NAME + "( " + COL_ID + "));";
 	
+	/**
+	 * Constructor, creates a PictureQueryGenerator with the given Context.
+	 * @param context To be used in Database operations.
+	 */
 	public PictureQueryGenerator(Context context) {
 		super(context);
 
@@ -41,8 +45,8 @@ public class PictureQueryGenerator extends QueryGenerator {
      * Takes a Picture object and pushes it to the database.
      * @param p 		Picture object to be pushed to database
      * @param tableName Table storing the tuple to be updated
-     * @param id 		ID value of 
-     * @return
+     * @param id 		ID value
+     * @return int
      */
     public int updatePictureByID(Picture p, String tableName, int id) {
         
@@ -59,7 +63,8 @@ public class PictureQueryGenerator extends QueryGenerator {
        
     /**
      * Inserts a picture into the pictures table and corresponding tags into the tag table.
-     * @param p Picture object
+     * @param p Picture to be inserted
+     * @return long ID of picture in database
      */
     public long insertPicture(Picture p) {
 
@@ -96,6 +101,10 @@ public class PictureQueryGenerator extends QueryGenerator {
         return pid;
     }
     
+    /**
+     * Returns the total number of pictures in the database.
+     * @return int
+     */
     public int getPictureCount() {
     	
     	Cursor c = db.performRawQuery("SELECT COUNT(*) AS numPictures FROM " + TABLE_NAME);
@@ -107,6 +116,11 @@ public class PictureQueryGenerator extends QueryGenerator {
     	return new Integer(c.getString(c.getColumnIndex("numPictures")));
     }
       
+    /**
+     * Returns a collection of Picture objects representing all pictures in the 
+     * database.
+     * @return Collection<Picture>
+     */
    public Collection<Picture> selectAllPictures() {
    	
 	   return selectPicturesByQuery("SELECT * FROM " + 
@@ -114,10 +128,13 @@ public class PictureQueryGenerator extends QueryGenerator {
    								" ORDER BY " + PICTURES_COL_DATE);
    }
    
-   /**TODO: selectPhotoByName
-    * add the getting album name to the query
-    * @param pictureID
-    * @return Picture object
+   //TODO: selectPhotoByName
+   //add the getting album name to the query
+   
+   /**
+    * Returns a Picture from the database using the provided Picture ID.
+    * @param pictureID The ID of the picture to return.
+    * @return Picture
     */
    public Picture selectPictureByID(int pictureID) {
 			
@@ -146,7 +163,12 @@ public class PictureQueryGenerator extends QueryGenerator {
 	   
    }
    
-   
+   //TODO: Will the method below also delete all corresponding tags?  If so, or if not,
+   // Specify it in the javadoc comment
+   /**
+    * Deletes a given Picture, specified by ID, from the database.
+    * @param pictureID
+    */
    public void deletePictureByID(int pictureID) {
 	   
    		deleteByID(pictureID, TABLE_NAME);
@@ -205,6 +227,12 @@ public class PictureQueryGenerator extends QueryGenerator {
    	
    }
    
+   /**
+    * Returns the number of unique Pictures that have one or more
+    * of the tags in the provided collection.
+    * @param tags
+    * @return int
+    */
    public int getPictureCountByTags(Collection<String> tags) {
 
        String query = "SELECT COUNT(*) AS numPictures" +
@@ -236,6 +264,10 @@ public class PictureQueryGenerator extends QueryGenerator {
   	
   }
    
+   /**
+    * Deletes all pictures from an Album specified by its ID.
+    * @param albumID
+    */
    public void deletePicturesFromAlbum(int albumID) {
 	   
 	   String dQuery = "DELETE FROM " + TABLE_NAME + " WHERE " + COL_ALBUMID  + " = '" + albumID + "'";
@@ -247,11 +279,6 @@ public class PictureQueryGenerator extends QueryGenerator {
        db.performRawQuery(dQuery);
    }
    
-   /**
-   *
-   * @param pictureQuery
-   * @return
-   */
   private Collection<Picture> selectPicturesByQuery(String pictureQuery) {
       
       Cursor c = db.performRawQuery(pictureQuery);
