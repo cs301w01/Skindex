@@ -46,6 +46,10 @@ public class TagQueryGenerator extends QueryGenerator {
         
     }
     
+    /**
+     * Returns a collection of all unique tags currently in the database.
+     * @return ArrayList<Tag>
+     */
     public ArrayList<Tag> selectAllTags() {
     	
     	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
@@ -58,6 +62,12 @@ public class TagQueryGenerator extends QueryGenerator {
     	return selectTagsByQuery(tagQuery);
     }
     
+    /**
+     * Returns the number of times this tag occurs in the database, ie the number
+     * of pictures that have this tag.
+     * @param tagName
+     * @return int
+     */
     public int getTagPictureCount(String tagName) {
     	String countQuery = "SELECT COUNT(*) AS numPictures" + 
     						" FROM " + TABLE_NAME +
@@ -74,6 +84,11 @@ public class TagQueryGenerator extends QueryGenerator {
     	return new Integer(c.getString(c.getColumnIndex("numPictures")));
     }
     
+    /**
+     * Adds a collection of tags to a Picture in the Database.
+     * @param pictureID
+     * @param tagNames
+     */
     public void addTagsToPicture(int pictureID, ArrayList<String> tagNames) {
     	for (String tagName : tagNames) {
     		if(!tagExists(pictureID, tagName)) {
