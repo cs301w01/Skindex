@@ -22,18 +22,23 @@ import com.cs301w01.meatload.model.Picture;
  */
 public class AlbumQueryGenerator extends QueryGenerator {
 	
-	public AlbumQueryGenerator(Context context) {
-		super(context);
-	}
-
 	//vars for albums table
     public static final String TABLE_NAME = "albums";
-    
     public static final String CREATE_TABLE_QUERY =
         "CREATE TABLE " + TABLE_NAME + " (" +
                 COL_ID + " INTEGER PRIMARY KEY, " +
                 COL_NAME + " TEXT);";
 
+	/**
+	 * Constructor, creates an AlbumQueryGenerator with the given Context
+	 * @param context Used for DB
+	 */
+	public AlbumQueryGenerator(Context context) {
+		super(context);
+	}
+	
+	
+    
     /**
      * Creates a new album in the database with an albumName and a Collection of tags.
      * <p>
@@ -74,40 +79,29 @@ public class AlbumQueryGenerator extends QueryGenerator {
         return aid;
     }
     
+    /**
+     * Returns the Album ID of the album in the database with the given Name.
+     * @param name The Album Name to find in the DB.
+     * @return int
+     */
     public int selectAlbumIDByName (String name) {
         return selectIDByName(name, TABLE_NAME);
     }
     
+    /**
+     * Deletes the album with the given name in the database.
+     * @param name Name of the album to be deleted.
+     */
     public void deleteAlbumByName(String name) {
     	deleteByID(selectIDByName(name, TABLE_NAME), TABLE_NAME);
     }
     
+    /**
+     * Deletes the album with the given ID in the database.
+     * @param ID The ID of the Album to delete.
+     */
     public void deleteAlbumByID(int ID) {
     	deleteByID(ID, TABLE_NAME);
-    }
-    
-    public ArrayList<Album>selectAlbumsByQuery(String albumQuery){
-    	Cursor c = db.performRawQuery(albumQuery);
-    	
-    	ArrayList<Album> albums = new ArrayList<Album>();
-
-    	if (c == null) {
-    		return albums;
-    	}
-
-        while(!c.isAfterLast()) {
-        	String id = c.getString(c.getColumnIndex(COL_ID));
-            String albumName = c.getString(c.getColumnIndex(COL_NAME));
-            String numPictures = c.getString(c.getColumnIndex("numPictures"));
-
-            Album a = new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
-
-            albums.add(a);
-
-            c.moveToNext();
-        }
-
-        return albums;
     }
     
     public ArrayList<Album> selectAllAlbums() {
@@ -142,6 +136,12 @@ public class AlbumQueryGenerator extends QueryGenerator {
         
     }
     
+    /**
+     * Opens the album with the old name in the database and updates the name
+     * to the new one provided.
+     * @param oldAlbumName
+     * @param newAlbumName
+     */
     public void updateAlbumName(String oldAlbumName, String newAlbumName) {
 
         int aID = selectAlbumIDByName(oldAlbumName);
@@ -159,7 +159,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
      * Returns an album object based on the name of the album.
      * 
      * @param albumName of album
-     * @return an album object
+     * @return Album
      */
     public Album getAlbumByName(String albumName) {
 
@@ -206,6 +206,11 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
     }
 
+    /**
+     * Finds an Album in the database with the given ID and returns it.
+     * @param albumId The desired Album's ID.
+     * @return Album
+     */
     public Album getAlbumByID(long albumId) {
     	
     	String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
@@ -243,5 +248,29 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
         return aName;
 
+    }
+    
+    private ArrayList<Album>selectAlbumsByQuery(String albumQuery){
+    	Cursor c = db.performRawQuery(albumQuery);
+    	
+    	ArrayList<Album> albums = new ArrayList<Album>();
+
+    	if (c == null) {
+    		return albums;
+    	}
+
+        while(!c.isAfterLast()) {
+        	String id = c.getString(c.getColumnIndex(COL_ID));
+            String albumName = c.getString(c.getColumnIndex(COL_NAME));
+            String numPictures = c.getString(c.getColumnIndex("numPictures"));
+
+            Album a = new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
+
+            albums.add(a);
+
+            c.moveToNext();
+        }
+
+        return albums;
     }
 }
