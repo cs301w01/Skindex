@@ -31,26 +31,49 @@ public class PictureManager implements FController {
 	//private Bitmap imgOnDisplay;
 	private ArrayList<Tag> tempTags;
 
+	/**
+	 * Constructor, sets Context for db use and the current Album Name
+	 * @param context Passed to database.
+	 * @param albumName Current Album Name.
+	 */
 	public PictureManager(Context context, String albumName) {
 		this.context = context;
 		this.albumName = albumName;
 	}
 
+	/**
+	 * Constructor, populates PictureManager with info from Picture in args.
+	 * @param picture
+	 */
 	public PictureManager(Picture picture) {
 		this.picID = picture.getPictureID();
 		this.tempTags = picture.getTags();
 	}
 
+	/**
+	 * Constructor, sets Context for db use and populates PictureManager with info
+	 * from Picture in args.
+	 * @param context
+	 * @param picture
+	 */
 	public PictureManager(Context context, Picture picture) {
 		this.context = context;
 		this.picID = picture.getPictureID();
 		this.tempTags = picture.getTags();
 	}
 
+	/**
+	 * Constructor, creates a PictureManager and sets the Picture ID to the supplied int.
+	 * @param picID
+	 */
 	public PictureManager(int picID) {
 		this.picID = picID;
 	}
 
+	/**
+	 * Constructor, only sets the Context.
+	 * @param context
+	 */
 	public PictureManager(Context context) {
 		this.context = context;
 	}
@@ -64,22 +87,21 @@ public class PictureManager implements FController {
 	// }
 
 	/**
-	 * Sets the context for use with the model
+	 * Sets the current PictureManager's Context.  A context is necessary if
+	 * the database is going to be used.
+	 * @param Context
 	 */
 	public void setContext(Context context) {
 		this.context = context;
 	}
 
 	/**
-	 * Takes Picture, save it to file, pass Picture object to DBManager
+	 * Saves the Bitmap provided to the file path provided and adds the appropriate
+	 * information to the DB.
 	 * 
-	 * @see <a
-	 *      href=http://stackoverflow.com/questions/649154/android-bitmap-save
-	 *      -to-location>
-	 *      http://stackoverflow.com/questions/649154/android-bitmap
-	 *      -save-to-location</a>
-	 * @param path
-	 *            File directory where the Picture is to be saved
+	 * @see <a href=http://stackoverflow.com/questions/649154/android-bitmap-save-to-location>http://stackoverflow.com/questions/649154/android-bitmap-save-to-location</a>
+	 * @param path File directory where the Picture is to be saved
+	 * @param imgOnDisplay Bitmap to save
 	 */
 	public Picture takePicture(File path, Bitmap imgOnDisplay) {
 		Calendar cal = Calendar.getInstance();
@@ -106,18 +128,6 @@ public class PictureManager implements FController {
 		}
 
 		// TODO: Move to EditPictureActivity after takePicture finishes.
-	}
-
-	private Picture createPicture(String fpath, Date date, String fname) {
-
-		Picture newPic = new Picture("", fpath,
-				albumName, date, new ArrayList<Tag>());
-
-		newPic.setID((int) new PictureQueryGenerator(context)
-				.insertPicture(newPic));
-		Log.d("SAVE", "Saving " + fpath);
-
-		return newPic;
 	}
 	
 	public void savePicture(Picture picture) {
@@ -164,18 +174,7 @@ public class PictureManager implements FController {
 	public void addTag(String tagName) {
 		tempTags.add(new Tag(tagName, new TagQueryGenerator(context).getTagPictureCount(tagName)));
 	}
-
-	/**
-	 * Sets the tags of the picture associated with this object to the passed
-	 * Collection of tags
-	 * 
-	 * @param tags
-	 *            Collection of tags to set the picture's tags to
-	 */
-	private void saveTags() {
-		new TagQueryGenerator(context).updateTags(picID, tempTags);
-	}
-
+	
 	/**
 	 * Remove a tag from the picture associated with this PictureManager object.
 	 * 
@@ -188,5 +187,28 @@ public class PictureManager implements FController {
 				tempTags.remove(tempTag);
 			}
 		}
+	}
+
+	/**
+	 * Sets the tags of the picture associated with this object to the passed
+	 * Collection of tags
+	 * 
+	 * @param tags
+	 *            Collection of tags to set the picture's tags to
+	 */
+	private void saveTags() {
+		new TagQueryGenerator(context).updateTags(picID, tempTags);
+	}
+	
+	private Picture createPicture(String fpath, Date date, String fname) {
+
+		Picture newPic = new Picture("", fpath,
+				albumName, date, new ArrayList<Tag>());
+
+		newPic.setID((int) new PictureQueryGenerator(context)
+				.insertPicture(newPic));
+		Log.d("SAVE", "Saving " + fpath);
+
+		return newPic;
 	}
 }
