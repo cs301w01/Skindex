@@ -163,8 +163,8 @@ public class PictureManager implements FController {
 	 * @see PictureQueryGenerator
 	 */
 	public void deletePicture() {
-		PictureQueryGenerator pQ = new PictureQueryGenerator(context);
-		pQ.deletePictureByID(picID);
+		new TagQueryGenerator(context).deleteAllTagsFromPicture(picID);
+		new PictureQueryGenerator(context).deletePictureByID(picID);
 	}
 
 	/**

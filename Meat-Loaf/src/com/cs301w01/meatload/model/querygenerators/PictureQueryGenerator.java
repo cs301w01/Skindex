@@ -208,25 +208,26 @@ public class PictureQueryGenerator extends QueryGenerator {
     */
    public Collection<Picture> selectPicturesByTags(Collection<String> tags) {
 
+	   if(tags.size() == 0)
+		   	return selectAllPictures();
         String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." +
                     PICTURES_COL_PATH + " AS " + PICTURES_COL_PATH + ", p." +
                     COL_ID + " AS " + COL_ID + ", p." + PICTURES_COL_DATE + " AS " +
                     PICTURES_COL_DATE + " FROM " +
                     TABLE_NAME + " p LEFT JOIN " +
-                    TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
-                    "WHERE ";
+                    TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") WHERE ";
 
-        boolean loopedOnce = false;
-
-        for (String tag : tags) {
-
-            if (loopedOnce) {
-                query += " OR ";
-            }
-            loopedOnce = true;
-
-            query += "t." + COL_NAME + " = '" + tag + "'";
-        }
+	        boolean loopedOnce = false;
+	
+	        for (String tag : tags) {
+	
+	            if (loopedOnce) {
+	                query += " OR ";
+	            }
+	            loopedOnce = true;
+	
+	            query += "t." + COL_NAME + " = '" + tag + "'";
+	        }
         query += " GROUP BY p." + COL_ID +
         		" HAVING COUNT(t." + COL_ID + ") = " + tags.size();
 
@@ -258,7 +259,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 
        //db.execSQL(dQuery);
        
-       db.performRawQuery(dQuery).close();
+       db.performRawQuery(dQuery);
    }
    
   private Collection<Picture> selectPicturesByQuery(String pictureQuery) {

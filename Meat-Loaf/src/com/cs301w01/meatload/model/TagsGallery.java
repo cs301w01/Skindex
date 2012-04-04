@@ -55,13 +55,12 @@ public class TagsGallery extends GalleryData implements Serializable {
 		 boolean isFirst = true;
 		 
 		 for (String currTag : tags) {
-			 title += currTag;
-			 
-			 if(isFirst) {
-				 isFirst = false;
+			 if(!isFirst) {
 				 title += ", ";
-			 }
+			 }	
+			 isFirst = false;
 			 
+			 title += currTag;
 		 }
 		 
 		 return title;
