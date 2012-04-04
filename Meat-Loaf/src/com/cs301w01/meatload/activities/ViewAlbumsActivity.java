@@ -7,7 +7,7 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.AlbumAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 
-import android.annotation.TargetApi;
+//import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -207,7 +207,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		currentEditText.setHint("Enter New Album Name");
 		input.setOnKeyListener(new View.OnKeyListener() {
 
-			@TargetApi(3)
+			//@TargetApi(3)
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
 					// Android Lint is angry about using getButton
@@ -301,7 +301,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 	// TODO: This method results in an error when called from JUnit, need to debug
 	// Android Lint gets angry about using the getButton method
 	// If there is a different way of doing this, we need to figure it out
-	@TargetApi(3)
+	//@TargetApi(3)
 	public void performDialogClick(boolean button) {
 		if (button == true) {
 			currentDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();

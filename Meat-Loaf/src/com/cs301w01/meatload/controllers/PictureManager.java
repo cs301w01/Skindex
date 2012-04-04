@@ -27,21 +27,10 @@ public class PictureManager implements FController {
 
 	private Context context;
 	private int picID;
-	private String albumName;
 	//private Bitmap imgOnDisplay;
 	private ArrayList<Tag> currentTags;
 	private ArrayList<String> addedTags;
 	private ArrayList<String> removedTags;
-
-	/**
-	 * Constructor, sets Context for db use and the current Album Name
-	 * @param context Passed to database.
-	 * @param albumName Current Album Name.
-	 */
-	public PictureManager(Context context, String albumName) {
-		this.context = context;
-		this.albumName = albumName;
-	}
 
 	/**
 	 * Constructor, populates PictureManager with info from Picture in args.
@@ -109,7 +98,7 @@ public class PictureManager implements FController {
 	 * @param path File directory where the Picture is to be saved
 	 * @param imgOnDisplay Bitmap to save
 	 */
-	public Picture takePicture(File path, Bitmap imgOnDisplay) {
+	public Picture takePicture(File path, Bitmap imgOnDisplay, String albumName) {
 		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-sss");
@@ -127,7 +116,7 @@ public class PictureManager implements FController {
 			outStream.close();
 
 			// adds the new picture to the db and returns a picture object
-			return createPicture(fpath + fname, cal.getTime(), fname);
+			return createPicture(fpath + fname, cal.getTime(), fname, albumName);
 
 		} catch (IOException e) {
 			Log.d("ERROR", "Unable to write " + fpath + fname);
@@ -227,7 +216,7 @@ public class PictureManager implements FController {
 		TQG.deleteTagsFromPicture(picID, removedTags);
 	}
 	
-	private Picture createPicture(String fpath, Date date, String fname) {
+	private Picture createPicture(String fpath, Date date, String fname, String albumName) {
 
 		Picture newPic = new Picture("", fpath,
 				albumName, date, new ArrayList<Tag>());

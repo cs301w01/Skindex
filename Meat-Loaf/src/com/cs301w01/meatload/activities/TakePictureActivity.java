@@ -125,8 +125,8 @@ public class TakePictureActivity extends Skindactivity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 
-				Picture newPic = new PictureManager(TakePictureActivity.this, album.getName())
-						.takePicture(getFilesDir(), imgOnDisplay);
+				Picture newPic = new PictureManager(TakePictureActivity.this)
+						.takePicture(getFilesDir(), imgOnDisplay, album.getName());
 
 				Intent myIntent = new Intent();
 				myIntent.setClassName("com.cs301w01.meatload",
