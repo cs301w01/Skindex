@@ -17,18 +17,9 @@ public class MeatTestSuite extends TestCase {
 		    
 		suite.addTestSuite(DatabaseTest.class);
 		//suite.addTestSuite(ViewAlbumActivityTest.class);
+		suite.addTestSuite(EditPictureActivityTest.class);
 		    
 		return suite;
 	}
 
-	protected void setUp() throws Exception {
-		//TODO: RESET THE DB
-		super.setUp();
-	}
-
-	protected void tearDown() throws Exception {
-		//TODO: RESET THE DB
-		super.tearDown();
-	}
-	
 }

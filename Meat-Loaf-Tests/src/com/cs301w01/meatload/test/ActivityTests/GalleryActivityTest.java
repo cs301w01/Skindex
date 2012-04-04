@@ -23,19 +23,10 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
-        
-        SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
     }
     
     @Override
     protected void tearDown() throws Exception {
-    	
-    	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
-        
         super.tearDown();    
         
         if (mActivity != null) {

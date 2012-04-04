@@ -19,23 +19,13 @@ public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewT
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
-        
-        SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
     }
     
     @Override
     protected void tearDown() throws Exception {
-    	
-    	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
-        
         super.tearDown();    
         
         if (mActivity != null) {
