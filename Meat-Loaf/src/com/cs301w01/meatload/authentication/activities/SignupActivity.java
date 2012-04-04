@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,7 @@ import com.cs301w01.meatload.authentication.Model.Specialist;
 import com.cs301w01.meatload.authentication.Model.User;
 import com.cs301w01.meatload.authentication.querygenerator.UserQueryGenerator;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
 import java.util.ArrayList;
 
@@ -66,14 +69,12 @@ public class SignupActivity extends Skindactivity{
 
     private void createNewUser() {
 
-        //TODO: Display select password alert, then confirm and compare password
-
         //create user
         String fullName = name.getText().toString();
         String uEmail = email.getText().toString();
         String uRole = String.valueOf(role.getSelectedItem());
         String usrName = username.getText().toString();
-        String password = getPassword();
+        String password = getAndConfirmPassword();
 
         User newUser;
         UserManager uM = new UserManager(this);
@@ -100,18 +101,38 @@ public class SignupActivity extends Skindactivity{
 
     }
 
-    public String getPassword() {
+    public String getAndConfirmPassword() {
 
         String pwd = "";
 
-        AlertDialog.Builder pwdBuilder = new AlertDialog.Builder(this);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        pwdBuilder.setTitle("Select A Password");
-        pwdBuilder.setMessage("Please select and confirm your password.");
+        alert.setTitle("Choose A Password");
+        alert.setMessage("Enter and confirm your password.");
 
-        pwdBuilder.show();
+        // Set an EditText view to get user input
+        final EditText input = new EditText(this);
+        input.setHint("Enter New Album Name");
+        alert.setView(input);
 
-        return pwd;
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+
+
+
+            }
+        });
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                return null;
+            }
+        });
+
+
+        alert.show();
+
+        Log.d("Alert Dialog", "Created.");
 
     }
 
