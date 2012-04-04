@@ -15,6 +15,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -201,6 +202,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		// Set an EditText view to get user input 
 		final EditText input = new EditText(this);
 		currentEditText = input;
+		currentEditText.setHint("Enter New Album Name");
 		input.setOnKeyListener(new View.OnKeyListener() {
 			
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -242,7 +244,8 @@ public class ViewAlbumsActivity extends Skindactivity {
 		
 		currentDialog = alert.show();
 
-	
+		Log.d("Alert Dialog", "Created.");
+		
     }
     
 
