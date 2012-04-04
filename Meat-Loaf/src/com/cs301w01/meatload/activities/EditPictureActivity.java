@@ -91,7 +91,6 @@ public class EditPictureActivity extends Skindactivity {
 	
 	protected void populateTags() {
 		// Add Tag field logic
-		// TODO: (Blake) Make the AutoComplete suggestions easier to see
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
 		addTagEditText.setText("");
 		
@@ -101,7 +100,7 @@ public class EditPictureActivity extends Skindactivity {
 			tagStrings.add(tag.getName());
 		}
 		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this,
-				R.layout.simple_list_item, tagStrings);
+				android.R.layout.simple_dropdown_item_1line, tagStrings);
 		addTagEditText.setAdapter(stringAdapter);
 
 		// Tag List View
