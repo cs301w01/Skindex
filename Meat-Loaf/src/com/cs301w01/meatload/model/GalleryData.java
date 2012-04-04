@@ -50,6 +50,7 @@ public abstract class GalleryData implements Serializable {
     	return false;
     }
     
+    //TODO: ISAAAAAC DEELLEEEEETT THURSE!
     public boolean stillValid() {
     	return true;
     }

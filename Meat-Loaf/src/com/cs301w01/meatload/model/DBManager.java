@@ -3,6 +3,7 @@ package com.cs301w01.meatload.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+//TODO: Someone who understands the class (DEREK) should comment this
 public interface DBManager {
 		
 	public Cursor performRawQuery(String query);
