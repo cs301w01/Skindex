@@ -136,7 +136,6 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(picture.getDate().toString());
 
 		// AlbumView Spinner
-		// TODO: (Blake) Make the Spinner text easier to see
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
 		SpinnerAlbumAdapter spinnerAdapter = new SpinnerAlbumAdapter(this,
