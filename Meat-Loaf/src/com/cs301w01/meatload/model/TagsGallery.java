@@ -40,7 +40,7 @@ public class TagsGallery extends GalleryData implements Serializable {
      * @return ArrayList of HashMaps representing a set of Picture objects
      */
     public Collection<Picture> getPictureGallery(Context context){
-    	return new PictureQueryGenerator(context).selectPicturesByTag(tags);
+    	return new PictureQueryGenerator(context).selectPicturesByTags(tags);
     }
     
     /**

@@ -206,7 +206,7 @@ public class PictureQueryGenerator extends QueryGenerator {
     * @param tags A collection of Tags represented as Strings to be used in the query
     * @return ArrayList of HashMaps representing all Pictures with the given tag
     */
-   public Collection<Picture> selectPicturesByTag(Collection<String> tags) {
+   public Collection<Picture> selectPicturesByTags(Collection<String> tags) {
 
         String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." +
                     PICTURES_COL_PATH + " AS " + PICTURES_COL_PATH + ", p." +
@@ -227,7 +227,8 @@ public class PictureQueryGenerator extends QueryGenerator {
 
             query += "t." + COL_NAME + " = '" + tag + "'";
         }
-        query += " GROUP BY p." + COL_ID;
+        query += " GROUP BY p." + COL_ID +
+        		" HAVING COUNT(t." + COL_ID + ") = " + tags.size();
 
         return selectPicturesByQuery(query);
    	
@@ -241,32 +242,7 @@ public class PictureQueryGenerator extends QueryGenerator {
     */
    public int getPictureCountByTags(Collection<String> tags) {
 
-       String query = "SELECT COUNT(*) AS numPictures" +
-       				" FROM " +
-                   TABLE_NAME + " p LEFT JOIN " +
-                   TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t." + COL_PICTUREID + ") " +
-                   "WHERE ";
-
-       boolean loopedOnce = false;
-
-       for (String tag : tags) {
-
-           if (loopedOnce) {
-               query += " OR ";
-           }
-           loopedOnce = true;
-
-           query += "t." + COL_NAME + " = '" + tag + "'";
-       }
-       query += " GROUP BY p." + COL_ID;
-
-       Cursor c = db.performRawQuery(query);
-       
-       if (c == null){
-   		return 0;
-        }
-
-       return Integer.parseInt(c.getString(c.getColumnIndex("numPictures")));
+       return selectPicturesByTags(tags).size();
   	
   }
    
