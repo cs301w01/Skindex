@@ -10,7 +10,7 @@ import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.adapters.SimpleAlbumAdapter;
+import com.cs301w01.meatload.adapters.SpinnerAlbumAdapter;
 import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
@@ -139,9 +139,9 @@ public class EditPictureActivity extends Skindactivity {
 		// TODO: (Blake) Make the Spinner text easier to see
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
-		SimpleAlbumAdapter spinnerAdapter = new SimpleAlbumAdapter(this,
-				R.layout.simple_list_item, allAlbums);
-		spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
+		SpinnerAlbumAdapter spinnerAdapter = new SpinnerAlbumAdapter(this,
+				R.layout.spinner_item, allAlbums);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		albumView.setAdapter(spinnerAdapter);
 		for (Album album : allAlbums) {
 			if (picture.getAlbumName().equals(album.getName())) {

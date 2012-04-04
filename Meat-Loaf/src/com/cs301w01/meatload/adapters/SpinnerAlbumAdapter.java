@@ -3,6 +3,7 @@ package com.cs301w01.meatload.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,16 @@ import android.widget.TextView;
 
 import com.cs301w01.meatload.model.Album;
 
-public class SimpleAlbumAdapter extends AlbumAdapter {
+/**
+ * Adapter for the Spinner Album View in EditPictureActivity that takes a 
+ * TextView as its view rather than a LinearLayout.
+ * @author Blake Bouchard
+ * @see AlbumAdapter
+ * @see EditPictureActivity
+ */
+public class SpinnerAlbumAdapter extends AlbumAdapter {
 
-	public SimpleAlbumAdapter(Context context, int textViewResourceId, List<Album> albums) {
+	public SpinnerAlbumAdapter(Context context, int textViewResourceId, List<Album> albums) {
 		super(context, textViewResourceId, albums);
 	}
 
@@ -33,6 +41,7 @@ public class SimpleAlbumAdapter extends AlbumAdapter {
         }
         
         albumListItem.setText(album.getName());
+        albumListItem.setTextColor(Color.BLACK);
         
         return albumListItem;
     }
