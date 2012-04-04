@@ -49,7 +49,8 @@ public class ComparePicturesActivity extends Skindactivity {
 
         //create adapter used by galleries
         gAdapter = new ComparePictureGalleryAdapter(this, galleryManager.getPictureGallery(),
-                R.styleable.ComparePicturesActivity, R.styleable.ComparePicturesActivity_android_galleryItemBackground);
+                R.styleable.ComparePicturesActivity, 
+                R.styleable.ComparePicturesActivity_android_galleryItemBackground);
 
         topGallery = (Gallery) findViewById(R.id.topCompareGallery);
         bottomGallery = (Gallery) findViewById(R.id.bottomCompareGallery);

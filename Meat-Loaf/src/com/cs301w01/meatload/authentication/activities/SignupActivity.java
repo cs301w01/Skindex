@@ -19,7 +19,7 @@ import com.cs301w01.meatload.model.Album;
 
 import java.util.ArrayList;
 
-// TODO: Write Javadoc for SignupActivity
+// TODO: (Derek) Write Javadoc for SignupActivity
 /**
  * 
  */

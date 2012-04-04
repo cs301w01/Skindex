@@ -45,7 +45,7 @@ public abstract class GalleryData implements Serializable {
     	return false;
     }
     
-    // TODO: Implement or get rid of stillValid() method
+    // TODO: (Isaac) Implement or get rid of stillValid method in GalleryData
     public boolean stillValid() {
     	return true;
     }

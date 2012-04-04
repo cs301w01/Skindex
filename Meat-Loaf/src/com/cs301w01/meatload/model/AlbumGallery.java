@@ -60,7 +60,7 @@ public class AlbumGallery extends GalleryData implements Serializable {
     	return new AlbumQueryGenerator(context).getAlbumByID((long)albumID);
     }
     
-    // TODO: Decide what to do with the stillValid method in AlbumGallery
+    // TODO: (Isaac) Implement or get rid of stillValid method in AlbumGallery
     /**
      * @deprecated
      */
