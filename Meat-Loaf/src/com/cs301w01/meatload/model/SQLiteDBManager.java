@@ -31,16 +31,24 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
     private Context myContext;
 
 
+    /**
+     * Constructor, creates an SQLiteDBManager with the given Context.
+     * @param context
+     */
     public SQLiteDBManager(Context context) {
         super(context, DB_NAME, null, DATABASE_VERSION);
         
         myContext = context;
-
         //uncomment if any changes have been made to tables to reset
         //resetDB();
-
     }
 
+    /**
+     * This method will be called the first time a Database is instantiated by this
+     * app on this particular phone.  Once created, unless reset or uninstalled, this
+     * method will not run again.  Android calls this method automatically.
+     * @param newDB
+     */
     @Override
     public void onCreate(SQLiteDatabase newDB) {
 
@@ -48,6 +56,10 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
 
     }
 
+    /**
+     * Creates the tables needed for the current database.
+     * @param db The database to create tables in
+     */
     private void createTables(SQLiteDatabase db) {
 
         db.execSQL(PictureQueryGenerator.CREATE_TABLE_QUERY);
@@ -63,6 +75,10 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
 
     }
 
+    /**
+     * Drops the specified tables in the given database.
+     * @param db DB to drop from
+     */
     private void dropTables(SQLiteDatabase db) {
 
         db.execSQL("DROP TABLE IF EXISTS " + PictureQueryGenerator.TABLE_NAME);
@@ -84,22 +100,23 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
     public void resetDB() {
 
         SQLiteDatabase db = this.getWritableDatabase();
-
         dropTables(db);
-        createTables(db);
-        
+        createTables(db);   
         db.close();
-        
         Log.d(logTag, "TABLES RESET.");
-
     }
 
+    /**
+     * When the version of database is increase this method will be called
+     * by Android, reseting the database with any new changes made to the tables.
+     * @param sqLiteDatabase The DB to update
+     * @param i the old version
+     * @param i1 the new version
+     */
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
         dropTables(sqLiteDatabase);
         onCreate(sqLiteDatabase);
-
     }
 
 
@@ -112,74 +129,71 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager /**im
     public Cursor performRawQuery(String query) {
         
     	SQLiteDatabase db = this.getWritableDatabase();
-
         Cursor c = db.rawQuery(query, null);
-
         Log.d(logTag, "Raw query executed: " + query);
         	
         if (c.getCount() == 0) {
-        	
         	db.close();
-        	
         	return null;
         }
         
         c.moveToFirst();
-
-        //TODO: test 
         db.close();
-        
         return c;
-
     }
 
+    //TODO: EXPLAIN WHAT THE BOOLEAN IN THE ARGS IS
+    //TODO: EXPLAIN WHAT EVERYTHING IS, GOOD LORD THE ARGUMENTS!!?!?!?
+    /**
+     * Uses the SQLiteDBManager's built in query() method to query the tables and
+     * return the results with a Cursor
+     * @param b ?????
+     * @param tableName The name of the table to query
+     * @param selectColumns The columns to select from the specified table.
+     * @param string 
+     */
 	public Cursor query(boolean b, String tableName, String[] selectColumns,
 			String string, String selectionArgs[], String object2, String object3,
 			String object4, String object5) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-
         Cursor c = db.query(b, tableName, selectColumns, string, selectionArgs,
                 object2, object3, object4, object5);
-
         Log.d(logTag, "Query Executed On " + tableName + "Selecting, " + selectColumns.toString());
-        
+  
         if (c.getCount() == 0) {
-
             db.close();
-
             return null;
         }
 
         c.moveToFirst();
-
         db.close();
-
 		return c;
 		
 	}
 
+	//TODO: COMMENT THIS METHOD!
+	/**
+	 * 
+	 */
 	public int update(String tableName, ContentValues cv, String whereClause,
 			String whereArgs[]) {
-
         SQLiteDatabase db = this.getWritableDatabase();
-
         int id = db.update(tableName, cv, whereClause, whereArgs);
-
         db.close();
-
 		return id;
 		
 	}
 
+	//TODO: COMMENT THIS METHOD!
+	/**
+	 * 
+	 */
 	public long insert(String tableName, String colId, ContentValues cv) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-
         long id = db.insert(tableName, colId, cv);
-
         db.close();
-
 		return id;
 		
 	}
