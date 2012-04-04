@@ -2,7 +2,6 @@ package com.cs301w01.meatload.authentication.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,14 +19,11 @@ import com.cs301w01.meatload.model.Album;
 
 import java.util.ArrayList;
 
+// TODO: Write Javadoc for SignupActivity
 /**
- * Created by IntelliJ IDEA.
- * User: Derek
- * Date: 3/28/12
- * Time: 4:07 PM
- * To change this template use File | Settings | File Templates.
+ * 
  */
-public class SignupActivity extends Skindactivity{
+public class SignupActivity extends Skindactivity {
 
     private EditText name;
     private EditText email;
@@ -45,9 +41,6 @@ public class SignupActivity extends Skindactivity{
         username = (EditText) findViewById(R.id.userNameSignupEditText);
 
         createListeners();
-        
-        //JOEL IS COMMENTING THIS OUT BECAUSE IT IS BROKEN AND I DON'T FEEL LIKE DEBUGGING
-
 
     }
 
@@ -66,9 +59,9 @@ public class SignupActivity extends Skindactivity{
 
     private void createNewUser() {
 
-        //TODO: Display select password alert, then confirm and compare password
+        // Display select password alert, then confirm and compare password
 
-        //create user
+        // Create user
         String fullName = name.getText().toString();
         String uEmail = email.getText().toString();
         String uRole = String.valueOf(role.getSelectedItem());

@@ -90,6 +90,8 @@ public class EditPictureActivity extends Skindactivity {
 	
 	protected void populateTags() {
 		// Add Tag field logic
+		// TODO: Change softWindowInputState so that this field doesn't get obscured by keyboard
+		// TODO: Make the AutoComplete suggestions easier to see
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
 		addTagEditText.setText("");
 		
@@ -134,6 +136,7 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(picture.getDate().toString());
 
 		// AlbumView Spinner
+		// TODO: Make the Spinner text not impossible to see
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
 		SimpleAlbumAdapter spinnerAdapter = new SimpleAlbumAdapter(this,

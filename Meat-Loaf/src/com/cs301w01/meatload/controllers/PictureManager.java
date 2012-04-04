@@ -110,6 +110,7 @@ public class PictureManager implements FController {
 	 * @param imgOnDisplay Bitmap to save
 	 */
 	public Picture takePicture(File path, Bitmap imgOnDisplay) {
+		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-sss");
 		String timestamp = sdf.format(cal.getTime());
@@ -132,8 +133,7 @@ public class PictureManager implements FController {
 			Log.d("ERROR", "Unable to write " + fpath + fname);
 			return null;
 		}
-
-		// TODO: Move to EditPictureActivity after takePicture finishes.
+		
 	}
 	
 	/**

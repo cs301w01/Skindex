@@ -63,14 +63,14 @@ public class GalleryActivity extends Skindactivity {
         
     }
     
-    protected void populateTextFields(String title){
+    protected void populateTextFields(String title) {
 
         TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
         albumTitle.setText(title);
 
     }
     
-    protected void hideButtons(){
+    protected void hideButtons() {
     	 final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
     	 editAlbumButton.setEnabled(false);
     	 editAlbumButton.setVisibility(Button.INVISIBLE);
@@ -80,7 +80,7 @@ public class GalleryActivity extends Skindactivity {
     	 takePictureButton.setVisibility(Button.INVISIBLE);
     }
     
-    protected void createListeners(){
+    protected void createListeners() {
         // TODO: Map objects created as variables to real objects in the XML R.layout.main
 
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
@@ -107,7 +107,7 @@ public class GalleryActivity extends Skindactivity {
 		});
         
         gridview.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Picture selectedPic = adapter.getItem(position);
                 Log.d("Info For PictureListener", selectedPic.toString());
                 int pictureID = selectedPic.getPictureID();
@@ -149,16 +149,17 @@ public class GalleryActivity extends Skindactivity {
     }
     
     /**
-* @see GalleryManager
-*/
+     * @see GalleryManager
+     */
     public void refreshScreen() {
     
-     //TODO: MERGE WITH UPDATE
+    	// TODO: Merge the refreshScreen method with the update method in GalleryActivity
 
         adapter.notifyDataSetInvalidated();
         
-        if(!galleryManager.stillValid())
+        if (!galleryManager.stillValid()) {
         	finish();
+        }
 
         createListeners();
 
@@ -176,24 +177,22 @@ public class GalleryActivity extends Skindactivity {
     	
     	AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
 
-     //Launch the EditAlbumActivity with a given GalleryManager
-     Intent myIntent = new Intent();
-     myIntent.setClassName("com.cs301w01.meatload",
-             "com.cs301w01.meatload.activities.EditAlbumActivity");
-     Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum(this).getName());
-    
-     //NEED TO SET TAGS AS WELL!
-    
-     myIntent.putExtra("gallery", aGal);
-     startActivityForResult(myIntent, 0);
+		// Launch the EditAlbumActivity with a given GalleryManager
+		Intent myIntent = new Intent();
+		myIntent.setClassName("com.cs301w01.meatload",
+				"com.cs301w01.meatload.activities.EditAlbumActivity");
+		Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum(this).getName());
+
+		myIntent.putExtra("gallery", aGal);
+		startActivityForResult(myIntent, 0);
 
     }
     
     /**
-* Starts a new TakePictureActivity using the Album referred to by the GalleryManager object
-* in the GalleryActivity state. Can only be used if a true album is selected.
-* @see TakePictureActivity
-*/
+	 * Starts a new TakePictureActivity using the Album referred to by the GalleryManager object
+	 * in the GalleryActivity state. Can only be used if a true album is selected.
+	 * @see TakePictureActivity
+	 */
     private void takePicture() {
 
         Intent myIntent = new Intent();
@@ -212,12 +211,12 @@ public class GalleryActivity extends Skindactivity {
     }
     
     /**
-* Starts a new EditPictureActivity using the Picture object referred to by the pictureID
-* argument.
-* <p>
-* Passes a PictureManager as part of the Intent.
-* @param pictureID The tuple ID of the picture to be opened.
-*/
+	 * Starts a new EditPictureActivity using the Picture object referred to by the pictureID
+	 * argument.
+	 * <p>
+	 * Passes a PictureManager as part of the Intent.
+	 * @param pictureID The tuple ID of the picture to be opened.
+	 */
     private void openPicture(int pictureID) {
 
         Intent myIntent = new Intent();
@@ -227,7 +226,5 @@ public class GalleryActivity extends Skindactivity {
 
         startActivity(myIntent);
     }
-
-
-
+    
 }
