@@ -13,6 +13,7 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
+import com.jayway.android.robotium.solo.Solo;
 
 import android.app.Instrumentation;
 import android.content.Context;
@@ -21,9 +22,12 @@ import android.test.ActivityInstrumentationTestCase2;
 
 public class EditPictureActivityTest extends
 		ActivityInstrumentationTestCase2<EditPictureActivity> {
-    private Instrumentation mInstrumentation;
+    
+	private Instrumentation mInstrumentation;
     private Context mContext;
     private EditPictureActivity mActivity;
+    
+    //private Solo solo;
     
 	public EditPictureActivityTest(){
 		super("com.cs301w01.meatload", EditPictureActivity.class);
@@ -33,6 +37,8 @@ public class EditPictureActivityTest extends
     protected void setUp() throws Exception {
     	super.setUp();
         
+    	//solo = new Solo(getInstrumentation(), getActivity());
+    	
     	long aid[];
     	Picture[] pics;
     	
@@ -47,19 +53,9 @@ public class EditPictureActivityTest extends
 		
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
-        mActivity = getActivity();
+        mActivity = getActivity();	
         
-        /*THIS IS ERRORING OUT IN EditPictureActivity
-        *The last two lines of onCreate() both generate a null pointer exception
-        *if not commented out.  derp.
-        *
-		*populateTextFields();
-
-		*createListeners();
-		*/
-		
         
-        /*
         //RESET THE DB
         SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
         db.resetDB();
@@ -69,8 +65,14 @@ public class EditPictureActivityTest extends
         aid = DatabaseTestingTools.populateAlbums(mActivity.getBaseContext());
         pics = DatabaseTestingTools.populatePictures(mActivity.getBaseContext());
         
-        */
+        
         //TAKE pics[0] AND PUT IT IN THE EXTRAS AS NEEDED BY EditPictureActivity
+    }
+    
+    
+    public void testDisplayBlackBox() {
+    	
+    
     }
     
     @Override

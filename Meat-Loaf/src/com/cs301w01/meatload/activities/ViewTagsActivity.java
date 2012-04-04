@@ -12,13 +12,16 @@ import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.TagsGallery;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -44,8 +47,8 @@ public class ViewTagsActivity extends Skindactivity {
 	private ListView allTagsLV;
 	private ListView selectedTagsLV;
 	
-	//auto complete view
-	private AutoCompleteTextView searchField;
+	//tag search edit text
+	private EditText searchField;
 	
 	//current picture count view
 	private TextView pictureCount;
@@ -63,50 +66,31 @@ public class ViewTagsActivity extends Skindactivity {
         mainManager = new MainManager();
         mainManager.setContext(this);
         
-        selectedTags = new ArrayList<Tag>();
-		allTags = mainManager.getAllTags();
-		filteredAllTags = new ArrayList<Tag>();
-		filteredAllTags.addAll(allTags);
-        
 		pictureCount = (TextView) findViewById(R.id.tagPicCountValue);
+		searchField = (EditText) findViewById(R.id.tagSearchEditText);
 		
-        createListViews();       
-        createSearchField();       		
+		createListViews();
 		createListeners();
+		updateSelectedTagPictureCount();
         
     }
     
-    private void createSearchField() {
-    	
-    	searchField = (AutoCompleteTextView) findViewById(R.id.tagSearchEditText);
-        
-    	ArrayList<String> tagStrings = new ArrayList<String>();
-        //create auto complete field
-		for (Tag tag : allTags) {
-			tagStrings.add(tag.getName());
-		}
-		
-		//create and adapter for auto complete field
-		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this,
-				R.layout.simple_list_item, tagStrings);
-		searchField.setAdapter(stringAdapter);
-		
-	}
+    @Override
+    protected void onResume(){
+    	super.onResume();
+    	mainManager.setContext(this);
+    }
 
 	protected void createListeners() {
         
     	//set listener for auto complete update, filters allTagsLV
-    	searchField.setOnItemClickListener(new OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View v, int pos,
-                    long id) {
-            	//get string of autocomplete
-            	String tagName = parent.getItemAtPosition(pos).toString();
-            	
-            	filterAllTagsListView(tagName);
-
-            }
-        });
+		searchField.setOnKeyListener(new View.OnKeyListener() {
+			
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				filterAllTagsListView();
+				return false;
+			}
+		});
 
     	
         final Button viewPicturesButton = (Button) findViewById(R.id.viewSelections);
@@ -146,14 +130,10 @@ public class ViewTagsActivity extends Skindactivity {
 	                Tag selectedTag = (Tag) adapter.getItemAtPosition(pos); 
 	                
 	                selectedTags.remove(selectedTag);
-	                filteredAllTags.add(selectedTag);
-	                
 	                updateSelectedTagPictureCount();
-	                
-	                allTagsAdapter.notifyDataSetChanged();
 	                selectedTagsAdapter.notifyDataSetChanged();
 						
-					
+	                filterAllTagsListView();
 	        }
 			
 		});
@@ -163,15 +143,15 @@ public class ViewTagsActivity extends Skindactivity {
     
     private void updateSelectedTagPictureCount() {
 		
-    	if(selectedTags.size() > 0) {
+    	//if(selectedTags.size() > 0) {
     	
 	    	PictureQueryGenerator pQG = new PictureQueryGenerator(this);
 	    	int pCount = pQG.getPictureCountByTags(convertTagsToStringArray(selectedTags));
 	    	
 	    	pictureCount.setText(Integer.toString(pCount));
     	
-    	} else 
-    		pictureCount.setText("0");
+    	//} else 
+    		//pictureCount.setText("0");
     	
 		
 	}
@@ -205,32 +185,41 @@ public class ViewTagsActivity extends Skindactivity {
 		
 	}
 
-	private void filterAllTagsListView(String tagName) {
-    	
+	private void filterAllTagsListView() {
+		String filterText = searchField.getText().toString();
+    	filteredAllTags = new ArrayList<Tag>();
     	//filter out non-matches
-    	for(int i = 0; i < filteredAllTags.size(); i++) {
+    	for(Tag tag : allTags) {
     		
-    		if(!filteredAllTags.get(i).getName().equals(tagName) 
-    				|| !filteredAllTags.get(i).getName().contains(tagName)) {
+    		if(tag.getName().contains(filterText)) {
+    			boolean tagSelected = false;
+    			for(Tag selectedTag : selectedTags) {
+    				if(selectedTag.getName().equals(tag.getName())) {
+    					tagSelected = true;
+    					break;
+    				}
+    			}
     			
-    			filteredAllTags.remove(tag);
+    			if(!tagSelected)
+    				filteredAllTags.add(tag);
     			
     		}
     		
     	}
     	
-    	allTagsAdapter.notifyDataSetChanged();
+    	//allTagsAdapter.notifyDataSetChanged();
+    	allTagsLV= (ListView) findViewById(R.id.tagListView);
+		allTagsAdapter = new TagAdapter(this, R.layout.list_item, filteredAllTags);
+		allTagsLV.setAdapter(allTagsAdapter);
     	
-    }
-    
-    public void refreshScreen() {
-    	
-    	createListViews();
-    	createListeners();
-		
     }
 
 	private void createListViews() {
+		
+		selectedTags = new ArrayList<Tag>();
+		allTags = mainManager.getAllTags();
+		filteredAllTags = new ArrayList<Tag>();
+		filteredAllTags.addAll(allTags);
 		
 		//set top list
     	allTagsLV= (ListView) findViewById(R.id.tagListView);

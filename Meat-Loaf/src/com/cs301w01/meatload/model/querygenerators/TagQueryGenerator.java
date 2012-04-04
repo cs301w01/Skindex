@@ -119,6 +119,20 @@ public class TagQueryGenerator extends QueryGenerator {
     }
     
     /**
+     * Deletes the specified tags from a Picture in the database.
+     * @param pictureID The ID of the Picture to update.
+     * @param tagNames A collection of tags to delete.
+     */
+    public void deleteAllTagsFromPicture(int pictureID) {
+    		String dQuery = "DELETE FROM " + TABLE_NAME + 
+    						" WHERE " + COL_PICTUREID + " = '" + pictureID + "'";
+
+            Log.d(TABLE_NAME, "Performing delete: " + dQuery);
+            
+            db.performRawQuery(dQuery);
+    }
+    
+    /**
      * Adds a tag to specific Picture in the Database.
      * @param pictureID The ID of Picture to add the tag too.
      * @param tag The tag to add.

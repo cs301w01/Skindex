@@ -53,4 +53,5 @@
     <string name="associatedPictures">Associated Pictures:</string>
     <string name="viewSelected">View Pictures</string>
     <string name="tagSearch">Tag Search:</string>
+    <string name="filterHint">Type a tag filter</string>
 </resources>

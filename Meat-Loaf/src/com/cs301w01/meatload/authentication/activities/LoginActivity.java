@@ -126,7 +126,7 @@ public class LoginActivity extends Skindactivity {
 
         } else {
 
-            //TODO: Add invalid credentials alert
+            // Add invalid credentials alert
 
         }
 

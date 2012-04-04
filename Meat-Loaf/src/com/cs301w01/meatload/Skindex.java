@@ -82,10 +82,10 @@ public class Skindex extends TabActivity {
 		});
 		*/
         
-        // TODO: We should add all the other listeners here.
+        // TODO: Add all other listeners to onCreate method in Skindex
     }
     
-    // TODO: use selectAllAlbums and selectAllTags to get the lists you need to populate the screen
+    // TODO: Use selectAllAlbums and selectAllTags to get the lists you need to populate the screen
     
     //@Override
     public void update(Object model) {

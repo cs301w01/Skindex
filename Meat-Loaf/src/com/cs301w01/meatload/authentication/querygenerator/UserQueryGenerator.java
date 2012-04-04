@@ -191,38 +191,27 @@ public class UserQueryGenerator extends QueryGenerator {
 
         Collection<Album> albums = getAlbumsByUserID(patientID);
 
-        //TODO: implement specialist id
         return new Patient(name, email, albums, 0);
 
     }
 
     public void addNewUserAlbum() {
 
-        //TODO
-
     }
 
     public void deleteUserAlbum() {
-
-        //TODO
 
     }
 
     public void addSubscription() {
 
-        //TODO
-
     }
 
     public void removeSubscription() {
-
-        //TODO
-
+    	
     }
 
     public void updateUserInfo() {
-
-        //TODO
 
     }
 

@@ -8,6 +8,7 @@ import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.SQLiteDBManager;
+import com.jayway.android.robotium.solo.Solo;
 
 import android.app.AlertDialog;
 import android.app.Instrumentation;
@@ -23,9 +24,12 @@ import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<ViewAlbumsActivity> {
-    private Instrumentation mInstrumentation;
+    
+	private Instrumentation mInstrumentation;
     private Context mContext;
     private ViewAlbumsActivity mActivity;
+    
+    private Solo solo;
     
 	public ViewAlbumActivityTest(){
 		super("com.cs301w01.meatload", ViewAlbumsActivity.class);
@@ -35,6 +39,8 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     protected void setUp() throws Exception {
     	super.setUp();
         
+    	solo = new Solo(getInstrumentation(), getActivity());
+    	
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
@@ -60,51 +66,62 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     }
 
 	public void testAddAlbumsUsingEnter() {
-		ArrayList<Album> origAlbs;
-		ArrayList<Album> finalAlbs;
-		int key_num = KeyEvent.KEYCODE_A;
-				
-		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
-		assertNotNull(button);
 		
-		MainManager mainMan = new MainManager();
-		mainMan.setContext(mActivity.getApplicationContext());
+		solo.clickOnText("New Album");
+		//solo.enterText(index, text)
+		solo.clickOnText("Ok");
+		assert(solo.searchText("New Album"));
 		
-		origAlbs = mainMan.getAllAlbums();
-			for(int i = 0; i < 3; i++){
-				mActivity.runOnUiThread(new Runnable() {
-					public void run(){
-						button.requestFocus();
-						button.performClick();
-					}
-				});
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					assertTrue("Sleep failed", false);
-				}
-				sendKeys(key_num + i);
-				sendKeys(key_num + i + 1);
-				sendKeys(key_num + i + 2);
-				sendKeys(KeyEvent.KEYCODE_ENTER);
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					assertTrue("Sleep failed", false);
-				}
-			}
-			finalAlbs = mainMan.getAllAlbums();
-			
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				assertTrue("Sleep failed", false);
-			}
-			
-		assertTrue(finalAlbs.size() == origAlbs.size() + 3);
+		//solo.clickOnButton("New Album");
+
+		
+//		ArrayList<Album> origAlbs;
+//		ArrayList<Album> finalAlbs;
+//		int key_num = KeyEvent.KEYCODE_A;
+//				
+//		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
+//		assertNotNull(button);
+//		
+//		MainManager mainMan = new MainManager();
+//		mainMan.setContext(mActivity.getApplicationContext());
+//		
+//		origAlbs = mainMan.getAllAlbums();
+//			for(int i = 0; i < 3; i++){
+//				mActivity.runOnUiThread(new Runnable() {
+//					public void run(){
+//						button.requestFocus();
+//						button.performClick();
+//					}
+//				});
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//					assertTrue("Sleep failed", false);
+//				}
+//				sendKeys(key_num + i);
+//				sendKeys(key_num + i + 1);
+//				sendKeys(key_num + i + 2);
+//				sendKeys(KeyEvent.KEYCODE_ENTER);
+//				try {
+//					Thread.sleep(500);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//					assertTrue("Sleep failed", false);
+//				}
+//			}
+//			finalAlbs = mainMan.getAllAlbums();
+//			
+//			try {
+//				Thread.sleep(500);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//				assertTrue("Sleep failed", false);
+//			}
+//			
+//		assertTrue(finalAlbs.size() == origAlbs.size() + 3);
+		
+		
 	}
 	
 	

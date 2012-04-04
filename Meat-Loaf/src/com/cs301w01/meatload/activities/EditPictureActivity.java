@@ -88,6 +88,30 @@ public class EditPictureActivity extends Skindactivity {
 		super.onResume();
 		pictureManager.setContext(this);
 	}
+	
+	protected void populateTags() {
+		// Add Tag field logic
+		// TODO: (Blake) Change softWindowInputState so that field doesn't get obscured by keyboard
+		// TODO: (Blake) Make the AutoComplete suggestions easier to see
+		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
+		addTagEditText.setText("");
+		
+		ArrayList<Tag> allTags = mainManager.getAllTags();
+		ArrayList<String> tagStrings = new ArrayList<String>();
+		for (Tag tag : allTags) {
+			tagStrings.add(tag.getName());
+		}
+		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this,
+				R.layout.simple_list_item, tagStrings);
+		addTagEditText.setAdapter(stringAdapter);
+
+		// Tag List View
+		tagListView = (ListView) findViewById(R.id.picTagList);
+		ArrayList<Tag> pictureTags = pictureManager.getTags();
+		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
+				pictureTags);
+		tagListView.setAdapter(tagAdapter);
+	}
 
 	/**
 	 * Fills the text and image fields on the screen with a current picture.
@@ -114,6 +138,7 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(picture.getDate().toString());
 
 		// AlbumView Spinner
+		// TODO: (Blake) Make the Spinner text easier to see
 		albumView = (Spinner) findViewById(R.id.albumView);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
 		SimpleAlbumAdapter spinnerAdapter = new SimpleAlbumAdapter(this,
@@ -127,24 +152,7 @@ public class EditPictureActivity extends Skindactivity {
 			}
 		}
 
-		// Add Tag field logic
-		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
-		ArrayList<Tag> allTags = mainManager.getAllTags();
-		ArrayList<String> tagStrings = new ArrayList<String>();
-		for (Tag tag : allTags) {
-			tagStrings.add(tag.getName());
-		}
-		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this,
-				R.layout.simple_list_item, tagStrings);
-		addTagEditText.setAdapter(stringAdapter);
-
-		// Tag List View
-		tagListView = (ListView) findViewById(R.id.picTagList);
-		ArrayList<Tag> pictureTags = pictureManager.getTags();
-		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
-				pictureTags);
-		tagListView.setAdapter(tagAdapter);
-
+		populateTags();
 	}
 
 	protected void createListeners() {
@@ -176,7 +184,7 @@ public class EditPictureActivity extends Skindactivity {
 
 				pictureManager.addTag(tag);
 				
-				populateTextFields();
+				populateTags();
 			}
 
 		});
@@ -328,7 +336,7 @@ public class EditPictureActivity extends Skindactivity {
 
 			public void onClick(DialogInterface dialog, int whichButton) {
 				pictureManager.deleteTag(tag.getName());
-				populateTextFields();
+				populateTags();
 				dialog.dismiss();
 			}
 

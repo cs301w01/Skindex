@@ -27,8 +27,8 @@ import com.cs301w01.meatload.model.PictureGenerator;
  */
 public class TakePictureActivity extends Skindactivity {
 
-	// TODO: can we move imgOnDisplay into the methods? It would be nice
-	// if it weren't a global variable
+	// TODO: Move imgOnDisplay into the methods? 
+	// It would be nice if it weren't a global variable
 	private Bitmap imgOnDisplay;
 
 	private Album album;
@@ -45,8 +45,9 @@ public class TakePictureActivity extends Skindactivity {
 		gMan.setContext(this);
 
 		// handle photo consistency gallery logic
-		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery(), R.styleable.TakePictureActivity,
-                R.styleable.TakePictureActivity_android_galleryItemBackground);
+		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery(),
+				R.styleable.TakePictureActivity,
+				R.styleable.TakePictureActivity_android_galleryItemBackground);
 
 		gallery = (Gallery) findViewById(R.id.takePictureGallery);
 		gallery.setAdapter(adapter);
@@ -56,10 +57,16 @@ public class TakePictureActivity extends Skindactivity {
 		createListeners(imgOnDisplay);
 	}
 
-    /**
-     * Populates all dynamic fields on the screen
-     * @param Bitmap - The picture to display
-     */
+	/**
+	 * Populates all dynamic fields on the screen.
+	 * 
+	 * @param Bitmap
+	 *            - The picture to display
+	 * @see <a href=
+	 *      "http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android"
+	 *      >
+	 *      http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android </a>
+	 */
 	protected void populateFields(Bitmap pic) {
 		ImageView image = (ImageView) findViewById(R.id.imgDisplay);
 		image.setImageBitmap(pic);
@@ -118,9 +125,8 @@ public class TakePictureActivity extends Skindactivity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 
-				Picture newPic = new PictureManager(TakePictureActivity.this,
-						album.getName()).takePicture(getFilesDir(),
-						imgOnDisplay);
+				Picture newPic = new PictureManager(TakePictureActivity.this, album.getName())
+						.takePicture(getFilesDir(), imgOnDisplay);
 
 				Intent myIntent = new Intent();
 				myIntent.setClassName("com.cs301w01.meatload",
@@ -133,12 +139,11 @@ public class TakePictureActivity extends Skindactivity {
 			}
 		});
 
-		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
-					}
-				});
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
 
 		alert.show();
 	}

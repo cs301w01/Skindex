@@ -1,16 +1,11 @@
 package com.cs301w01.meatload.model;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 
 import android.content.Context;
 
-import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.SQLiteDBManager;
-import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
-import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Mediates between the GalleryActivity and the DBManager by creating HashMaps of pictures to be
@@ -23,6 +18,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class AlbumGallery extends GalleryData implements Serializable {
     
+	private static final long serialVersionUID = 9038977214143165620L;
 	int albumID;
 	
 	public AlbumGallery(Album album){
@@ -64,7 +60,10 @@ public class AlbumGallery extends GalleryData implements Serializable {
     	return new AlbumQueryGenerator(context).getAlbumByID((long)albumID);
     }
     
-    //TODO: Deprecated, ISAAAAAC DO SOMETHING WITH THIS HOME BOY!
+    // TODO: (Isaac) Implement or get rid of stillValid method in AlbumGallery
+    /**
+     * @deprecated
+     */
     public boolean stillValid() {
     	return true;
     }
