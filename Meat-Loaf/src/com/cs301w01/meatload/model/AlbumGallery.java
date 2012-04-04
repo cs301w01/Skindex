@@ -46,14 +46,25 @@ public class AlbumGallery extends GalleryData implements Serializable {
     	return new AlbumQueryGenerator(context).getAlbumByID((long) albumID).getName();
     }
     
+    /**
+     * Returns a boolean specifying whether the current AlbumGallery represents a valid
+     * album in the database.
+     * @return boolean
+     */
     public boolean isAlbum() {
     	return true;
     }
     
+    /**
+     * Returns the Album object represented by albumID in the current AlbumGallery.
+     * @param context
+     * @return Album
+     */
     public Album getAlbum(Context context) {
     	return new AlbumQueryGenerator(context).getAlbumByID((long)albumID);
     }
     
+    //TODO: Deprecated, ISAAAAAC DO SOMETHING WITH THIS HOME BOY!
     public boolean stillValid() {
     	return true;
     }
