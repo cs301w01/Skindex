@@ -26,6 +26,10 @@ public class TagsGallery extends GalleryData implements Serializable {
     
 	ArrayList<String> tags;
 	
+	/**
+	 * Constructor, creats a TagGallery with the given list of tags.
+	 * @param tags
+	 */
 	public TagsGallery(ArrayList<String> tags){
 		this.tags = tags;
 	}
@@ -41,7 +45,9 @@ public class TagsGallery extends GalleryData implements Serializable {
     
     /**
      * Creates a title to display in the Gallery Activity based on the type
-     * of Gallery
+     * of TagsGallery.
+     * @param Context To be used in DB operations.
+     * @return String
      */
     public String getTitle(Context context){
     	String title = "";
