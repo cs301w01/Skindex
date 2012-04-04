@@ -81,7 +81,11 @@ public class TagQueryGenerator extends QueryGenerator {
     		return 0;
     	}
     	
-    	return new Integer(c.getString(c.getColumnIndex("numPictures")));
+    	int picCount = Integer.parseInt(c.getString(c.getColumnIndex("numPictures")));
+    	
+    	c.close();
+    	
+    	return picCount;
     }
     
     /**
@@ -173,6 +177,8 @@ public class TagQueryGenerator extends QueryGenerator {
             c.moveToNext();
         }
 
+        c.close();
+        
         return tags;
     }
 	
@@ -187,6 +193,14 @@ public class TagQueryGenerator extends QueryGenerator {
     		return false;
     	}
     	
-    	return (new Integer(c.getString(c.getColumnIndex("numTag"))) > 0);
+    	Integer i = new Integer(c.getString(c.getColumnIndex("numTag")));
+    	boolean exists = false;
+    	
+    	if(i > 0)
+    		exists = true;
+    	
+    	c.close();
+    	
+    	return exists;
     }
 }

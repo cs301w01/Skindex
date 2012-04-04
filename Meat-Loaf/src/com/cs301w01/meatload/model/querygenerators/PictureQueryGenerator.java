@@ -113,7 +113,12 @@ public class PictureQueryGenerator extends QueryGenerator {
     		return 0;
     	}
     	
-    	return new Integer(c.getString(c.getColumnIndex("numPictures")));
+    	int picCount = Integer.parseInt(c.getString(c.getColumnIndex("numPictures")));
+    	
+    	c.close();
+    	
+    	return picCount;
+    	
     }
       
     /**
@@ -158,6 +163,8 @@ public class PictureQueryGenerator extends QueryGenerator {
 	   
        Picture p = new Picture(pictureName, path, albumName, date, (ArrayList<Tag>) tags);
        p.setID(pictureID);
+       
+       c.close();
        
 	   return p;
 	   

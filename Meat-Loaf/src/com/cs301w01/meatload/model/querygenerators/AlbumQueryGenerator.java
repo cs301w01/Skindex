@@ -132,7 +132,11 @@ public class AlbumQueryGenerator extends QueryGenerator {
                                    " WHERE p." + COL_ID + " = " +
                                    "'" + pictureID + "'");
         
-        return c.getString(c.getColumnIndex(COL_NAME));
+        String aName = c.getString(c.getColumnIndex(COL_NAME));
+        
+        c.close();
+        
+        return aName;
         
     }
     
@@ -202,6 +206,8 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	String id = c.getString(c.getColumnIndex(COL_ID));
         String numPictures = c.getString(c.getColumnIndex("numPictures"));
 
+        c.close();
+        
         return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
 
     }
@@ -231,6 +237,8 @@ public class AlbumQueryGenerator extends QueryGenerator {
 		String albumName = c.getString(c.getColumnIndex(COL_NAME));
 		String numPictures = c.getString(c.getColumnIndex("numPictures"));
 		
+		c.close();
+		
 		return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
 
     }
@@ -246,6 +254,8 @@ public class AlbumQueryGenerator extends QueryGenerator {
                
         String aName = c.getString(c.getColumnIndex(COL_NAME));
 
+        c.close();
+        
         return aName;
 
     }
@@ -271,6 +281,8 @@ public class AlbumQueryGenerator extends QueryGenerator {
             c.moveToNext();
         }
 
+        c.close();
+        
         return albums;
     }
 }
