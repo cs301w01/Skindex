@@ -91,7 +91,6 @@ public class EditPictureActivity extends Skindactivity {
 	
 	protected void populateTags() {
 		// Add Tag field logic
-		// TODO: (Blake) Change softWindowInputState so that field doesn't get obscured by keyboard
 		// TODO: (Blake) Make the AutoComplete suggestions easier to see
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
 		addTagEditText.setText("");
