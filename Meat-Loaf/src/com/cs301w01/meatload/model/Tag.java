@@ -8,9 +8,6 @@ import java.io.Serializable;
  */
 public class Tag implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private int pictureCount;
@@ -26,14 +23,16 @@ public class Tag implements Serializable {
 	}
 
 	/**
-	 * @return The name of this tag
+	 * Returns the name of the current Tag object.
+	 * @return String
 	 */
 	public String getName() {
 		return this.name;
 	}
 
 	/**
-	 * @return The number of pictures associated with this tag
+	 * Returns the number of pictures associated with this tag.
+	 * @return int
 	 */
 	public int getPictureCount() {
 		return this.pictureCount;
