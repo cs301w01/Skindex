@@ -114,7 +114,7 @@ public class TagQueryGenerator extends QueryGenerator {
 
             Log.d(TABLE_NAME, "Performing delete: " + dQuery);
             
-            db.performRawQuery(dQuery);
+            db.performRawQuery(dQuery).close();
     	}
     }
     

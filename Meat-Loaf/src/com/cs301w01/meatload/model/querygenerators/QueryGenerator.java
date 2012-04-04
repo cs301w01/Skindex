@@ -105,7 +105,11 @@ public abstract class QueryGenerator {
         Cursor c = db.performRawQuery(select);
         
         //return id of picture
-        return c.getInt(c.getColumnIndex(COL_ID));
+        int id = c.getInt(c.getColumnIndex(COL_ID));
+        
+        c.close();
+        
+        return id;
     }
     
     /**
@@ -137,7 +141,7 @@ public abstract class QueryGenerator {
 
         //db.execSQL(dQuery);
         
-        db.performRawQuery(dQuery);
+        db.performRawQuery(dQuery).close();;
 
     }
 

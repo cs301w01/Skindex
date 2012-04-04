@@ -258,7 +258,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 
        //db.execSQL(dQuery);
        
-       db.performRawQuery(dQuery);
+       db.performRawQuery(dQuery).close();
    }
    
   private Collection<Picture> selectPicturesByQuery(String pictureQuery) {
@@ -289,6 +289,8 @@ public class PictureQueryGenerator extends QueryGenerator {
 
           c.moveToNext();
        }
+       
+       c.close();
 
        return pictures;
   }
