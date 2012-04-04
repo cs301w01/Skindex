@@ -13,7 +13,7 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
-import com.jayway.android.robotium.solo.Solo;
+//import com.jayway.android.robotium.solo.Solo;
 
 import android.app.Instrumentation;
 import android.content.Context;
@@ -57,13 +57,13 @@ public class EditPictureActivityTest extends
         
         
         //RESET THE DB
-        SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
+        //SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
+        //db.resetDB();
+        //db.close();
         
         //POPULATE DB WITH ALBUMS AND THEN PUT PHOTOS IN THOSE ALBUMS
-        aid = DatabaseTestingTools.populateAlbums(mActivity.getBaseContext());
-        pics = DatabaseTestingTools.populatePictures(mActivity.getBaseContext());
+        //aid = DatabaseTestingTools.populateAlbums(mActivity.getBaseContext());
+        //pics = DatabaseTestingTools.populatePictures(mActivity.getBaseContext());
         
         
         //TAKE pics[0] AND PUT IT IN THE EXTRAS AS NEEDED BY EditPictureActivity
@@ -78,9 +78,9 @@ public class EditPictureActivityTest extends
     @Override
     protected void tearDown() throws Exception {
     	
-    	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
+    	//SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
+        //db.resetDB();
+        //db.close();
         
         super.tearDown();    
         
