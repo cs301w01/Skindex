@@ -41,7 +41,7 @@ public class EditPictureActivityTest extends
 				"com.cs301w01.meatload.activities.ComparePicturesActivity");
         Date tempDate = Calendar.getInstance().getTime();
         Picture tempPic = new Picture("taco", "root", "Album 1",tempDate, new ArrayList<Tag>());
-        tempPic.setID(0);
+        tempPic.setID(1);
 		editPicIntent.putExtra("picture", tempPic);
 		setActivityIntent(editPicIntent);
 		

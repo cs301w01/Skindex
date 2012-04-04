@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import com.cs301w01.meatload.R;
@@ -100,6 +101,7 @@ public class EditPictureActivity extends Skindactivity {
 		// Picture ImageView
 		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
+		Log.d("testDYING",picture.getPath());
 		pictureView
 				.setImageDrawable(Drawable.createFromPath(picture.getPath()));
 
