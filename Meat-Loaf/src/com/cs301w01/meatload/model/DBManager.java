@@ -14,10 +14,6 @@ public interface DBManager {
 		
 	public Cursor performRawQuery(String query);
 
-	public Cursor query(boolean b, String tableName, String[] selectColumns,
-                        String string, String selectionArgs[], String object2, String object3,
-                        String object4, String object5);
-
 	public int update(String tableName, ContentValues cv, String whereClause,
                       String whereArgs[]);
 
