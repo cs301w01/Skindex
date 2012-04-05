@@ -36,8 +36,20 @@ public class TakePictureActivityTest extends
 
     }
     
-    public void testTEMPDELETETHIS(){
+    public void testNumberOfComparePicturesLoaded(){
     	assertTrue(1 == 1);
+    }
+    
+    public void testGeneratePic(){
+    	//ensure new photo is populated
+    }
+    
+    public void testTakePicCancel(){
+    	//press cancel in the dialog and ensure database does not change
+    }
+    
+    public void testTakePicOK(){
+    	//capture Intent and ensure picture saved validly
     }
 
 }

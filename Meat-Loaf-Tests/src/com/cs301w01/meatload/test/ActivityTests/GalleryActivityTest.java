@@ -8,7 +8,6 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class GalleryActivityTest extends ActivityInstrumentationTestCase2<GalleryActivity> {
-    private Instrumentation mInstrumentation;
     private Context mContext;
     private GalleryActivity mActivity;
     
@@ -19,10 +18,9 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
+
         mActivity = getActivity();
+        mContext = mActivity.getBaseContext();
     }
     
     @Override
@@ -35,7 +33,7 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
 
     }
     
-    public void testTEMPDELETETHIS(){
+    public void testNumberOfPhotos(){
     	assertTrue(1 == 1);
     }
 

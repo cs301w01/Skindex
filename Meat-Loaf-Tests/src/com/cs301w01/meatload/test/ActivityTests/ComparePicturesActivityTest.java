@@ -9,7 +9,6 @@ import android.test.ActivityInstrumentationTestCase2;
 
 public class ComparePicturesActivityTest extends
 		ActivityInstrumentationTestCase2<ComparePicturesActivity> {
-    private Instrumentation mInstrumentation;
     private Context mContext;
     private ComparePicturesActivity mActivity;
 
@@ -23,7 +22,7 @@ public class ComparePicturesActivityTest extends
     	super.setUp();
         
         mActivity = getActivity();
-        mContext = mInstrumentation.getContext();
+        mContext = mActivity.getBaseContext();
     }
     
     @Override
@@ -35,7 +34,9 @@ public class ComparePicturesActivityTest extends
         }
     }
     
-    public void testTemp(){
+    public void testVerifyNumberOfPicturesDisplayed(){
+    	//Verfiy that the # of pictures in the top display = the number of pics 
+    	//in the bottom display = number of pics in the album specified by the intent
     	assertTrue(1 == 1);
     }
 }
