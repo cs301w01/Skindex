@@ -18,14 +18,19 @@ public class PictureManager implements FController {
 
 	private Context context;
 	private int picID;
-	//private Bitmap imgOnDisplay;
+	
+	//This is a temporary list of tags on the picture
+	//This list will change as the user adds and removes tags
+	//No changes will take effect until the user presses save
 	private ArrayList<Tag> currentTags;
+	
+	//These two ArrayLists are temporary lists of added and removed tags, When the user presses save
+	//The system will add all the addedTags to the DB and remove all the removedTags.
 	private ArrayList<String> addedTags;
 	private ArrayList<String> removedTags;
 
 	/**
-	 * Constructor, sets Context for db use and populates PictureManager with info
-	 * from Picture in args.
+	 * Constructor, sets Context for db use and set the picture ID to the ID of the supplied picture
 	 * @param context
 	 * @param picture
 	 */
@@ -63,8 +68,8 @@ public class PictureManager implements FController {
 	}
 	
 	/**
-	 * Takes the current Picture object, and using it's unique ID, updates
-	 * the databases to reflect the current information.
+	 * Updates the database to reflect any changes that were made to the fields in the
+	 * edit picture activity
 	 * @param picture New Picture with updated information.
 	 */
 	public void savePicture(Picture picture) {
@@ -75,8 +80,8 @@ public class PictureManager implements FController {
 	}
 
 	/**
-	 * Get this picture
-	 * @return Picture associated with this PictureManager
+	 * Returns a picture object of the picture that is associated with this PictureManager
+	 * @return Picture
 	 */
 	public Picture getPicture() {
 		Picture newpic = new PictureQueryGenerator(context).selectPictureByID(picID);
@@ -95,6 +100,7 @@ public class PictureManager implements FController {
 
 	/**
 	 * Adds a new tag to a picture, using a String instead of a tag object.
+	 * Note: this change does not take effect in the database until the user presses save
 	 * 
 	 * @param tagName
 	 *            String object representing the tag to be added to this picture
@@ -118,9 +124,10 @@ public class PictureManager implements FController {
 	
 	/**
 	 * Remove a tag from the picture associated with this PictureManager object.
+	 * Note: this change does not take effect in the database until the user presses save
 	 * 
 	 * @param tag
-	 *            Tag to be deleted.
+	 *            Tag to be removed.
 	 */
 	public void deleteTag(String tagName) {
 		if(addedTags.contains(tagName)) {
@@ -136,6 +143,12 @@ public class PictureManager implements FController {
 			}
 	}
 	
+	/**
+	 * Returns the current unsaved list of tags on the current picture
+	 * this list is not necessarily consistent with what is in the database
+	 * because this includes the users current unsaved changes
+	 * @return ArrayList<Tag>
+	 */
 	public ArrayList<Tag> getTags() {
 		return currentTags;
 	}
