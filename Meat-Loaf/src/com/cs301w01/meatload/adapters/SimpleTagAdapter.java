@@ -6,10 +6,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Tag;
 
 /**
@@ -18,6 +18,7 @@ import com.cs301w01.meatload.model.Tag;
  * Returns a TextView with the text set to the current tag's name, as part of the List passed in
  * the constructor.
  * @author Blake Bouchard
+ * @see TagAdapter
  */
 public class SimpleTagAdapter extends TagAdapter {
 
@@ -36,26 +37,25 @@ public class SimpleTagAdapter extends TagAdapter {
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-        // Get current tag object
-        Tag tag = getItem(position);
- 
-        // Inflate the view
-        if (view == null) {
-            view = new LinearLayout(getContext());
-            String inflater = Context.LAYOUT_INFLATER_SERVICE;
-            LayoutInflater vi;
-            vi = (LayoutInflater) getContext().getSystemService(inflater);
-            view = vi.inflate(resource, null);
-        }
-        
-        // Get the text boxes from the list_item.xml file
-        TextView tagName = (TextView) view;
+		TextView tagNameView;
+		// Get current album object
+		Tag tag = getItem(position);
+
+		// Inflate the view
+		if (convertView == null) {
+			tagNameView = new TextView(getContext());
+			String inflater = Context.LAYOUT_INFLATER_SERVICE;
+			LayoutInflater vi;
+			vi = (LayoutInflater) getContext().getSystemService(inflater);
+			tagNameView = (TextView) vi.inflate(resource, null);
+		} else {
+			tagNameView = (TextView) convertView;
+		}
  
         // Assign the appropriate data from tag object
-        tagName.setText(tag.getName());
+		tagNameView.setText(tag.getName());
         
-        return tagName;
+        return tagNameView;
     }
 
 }

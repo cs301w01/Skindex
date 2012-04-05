@@ -37,7 +37,7 @@ public class SpinnerAlbumAdapter extends AlbumAdapter {
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
 			LayoutInflater vi;
 			vi = (LayoutInflater) getContext().getSystemService(inflater);
-			vi.inflate(resource, null);
+			albumListItem = (TextView) vi.inflate(resource, null);
 		} else {
 			albumListItem = (TextView) convertView;
 		}
