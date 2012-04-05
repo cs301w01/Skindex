@@ -70,7 +70,7 @@ public class GalleryManager implements FController {
 	/**
 	 * Finds a Picture with the given pid in the database and returns it.
 	 * @param pid ID of picture to be returned.
-	 * @return
+	 * @return Picture object
 	 */
 	public Picture getPhoto(int pid) {
 		return new PictureQueryGenerator(context).selectPictureByID(pid);
@@ -101,7 +101,6 @@ public class GalleryManager implements FController {
 	 * @param aid ID of album to delete.
 	 */
 	public void deleteAlbum(int aid) {
-		new PictureQueryGenerator(context).deletePicturesFromAlbum(aid);
 		new AlbumQueryGenerator(context).deleteAlbumByID(aid);
 	}
 

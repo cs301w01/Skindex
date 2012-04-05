@@ -19,9 +19,9 @@ public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewT
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
+    	
         mActivity = getActivity();
+        mContext = mActivity.getBaseContext();
     }
     
     @Override
@@ -34,8 +34,27 @@ public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewT
 
     }
     
-    public void testTEMPDELETETHIS(){
+    public void testBlankTag(){
+    	//display all possible tags
     	assertTrue(1 == 1);
     }
+    
+    public void testSpecificTag(){
+    	//enter AAA and ensure tag AAA is in the list of tags
+    }
+    
+    public void testGenericTag(){
+    	//enter AA and ensure all tags with AA in them appear
+    }
+    
+    public void testAddTag(){
+    	//Click on tag, ensure it is removed from top group and added to bottom
+    }
+    
+    public void testTwoTags(){
+    	//select two tags, ensure both added below and that number of photos is correct
+    }
+    
+    
 	
 }

@@ -1,6 +1,8 @@
 package com.cs301w01.meatload.model.querygenerators;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,10 +20,12 @@ public class AlbumQueryGenerator extends QueryGenerator {
 	
 	//vars for albums table
     public static final String TABLE_NAME = "albums";
+	public static final String ALBUMS_COL_DATE = "date";
     public static final String CREATE_TABLE_QUERY =
-        "CREATE TABLE " + TABLE_NAME + " (" +
-                COL_ID + " INTEGER PRIMARY KEY, " +
-                COL_NAME + " TEXT);";
+        						"CREATE TABLE " + TABLE_NAME + 
+        						" (" + COL_ID + " INTEGER PRIMARY KEY, " +
+								ALBUMS_COL_DATE + " Date, " + 
+        						COL_NAME + " TEXT);";
 
 	/**
 	 * Constructor, creates an AlbumQueryGenerator with the given Context
@@ -46,6 +50,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
         // Add album info to cv
         cv.put(COL_NAME, albumName);
+        cv.put(ALBUMS_COL_DATE, dateToString(Calendar.getInstance().getTime()));
 
         // Insert picture into picture tables
         long aid = db.insert(TABLE_NAME, COL_ID, cv);
@@ -72,21 +77,23 @@ public class AlbumQueryGenerator extends QueryGenerator {
      * @param name Name of the album to be deleted.
      */
     public void deleteAlbumByName(String name) {
-    	deleteByID(selectIDByName(name, TABLE_NAME), TABLE_NAME);
+    	deleteAlbumByID(selectIDByName(name, TABLE_NAME));
     }
     
     /**
      * Deletes the album with the given ID in the database.
      * @param ID The ID of the Album to delete.
      */
-    public void deleteAlbumByID(int ID) {
-    	deleteByID(ID, TABLE_NAME);
+    public void deleteAlbumByID(int albumID) {
+    	new PictureQueryGenerator(this.context).deletePicturesFromAlbum(albumID);
+    	deleteByID(albumID, TABLE_NAME);
     }
     
     public ArrayList<Album> selectAllAlbums() {
     	
     	String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
     						"a." + COL_NAME + " AS " + COL_NAME + ", " + 
+	    					"a." + ALBUMS_COL_DATE + " AS " + ALBUMS_COL_DATE + ", " +
     						"COUNT(p." + COL_ID + ") AS numPictures" +
     						" FROM " + TABLE_NAME + 
     						" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
@@ -133,8 +140,10 @@ public class AlbumQueryGenerator extends QueryGenerator {
                        "SET " + COL_NAME + " = '" + newAlbumName + "' " +
                        "WHERE " + COL_ID + " = '" + aID +"'";
         
-        db.performRawQuery(query).close();
+        db.performRawQuery(query);
         Log.d(TABLE_NAME, "Updated name of Album: " + query);
+        
+        setAlbumModified((long) aID);
         
     }
 
@@ -145,31 +154,10 @@ public class AlbumQueryGenerator extends QueryGenerator {
      * @return Album
      */
     public Album getAlbumByName(String albumName) {
-
-        //Collection<Picture> pictures = new ArrayList<Picture>();
-        
-        //Collection<Picture> hashPicture = new PictureQueryGenerator(context).selectPicturesFromAlbum(albumName);
-
-        /*for(Picture picture : hashPicture) {
-            
-            int id = new PictureQueryGenerator(context).selectIDByName(picture.getName(),
-                    PictureQueryGenerator.TABLE_NAME);
-            String name = picture.getName();
-            String path = picture.getPath();
-
-            Date date = picture.getDate();
-
-            Collection<String> tags = new TagQueryGenerator(context).selectPictureTags(id);
-           
-            Picture p = new Picture(name, path, albumName, date, tags);
-            p.setID(id);
-            
-            pictures.add(p);
-            
-        }*/
     	
 	    String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
 	    					"a." + COL_NAME + " AS " + COL_NAME + ", " + 
+	    					"a." + ALBUMS_COL_DATE + " AS " + ALBUMS_COL_DATE + ", " +
 							"COUNT(p." + COL_ID + ") AS numPictures" +
 							" FROM " + TABLE_NAME + 
 							" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
@@ -183,11 +171,12 @@ public class AlbumQueryGenerator extends QueryGenerator {
     		return null;
     	}
     	String id = c.getString(c.getColumnIndex(COL_ID));
+    	Date date = stringToDate(c.getString(c.getColumnIndex(ALBUMS_COL_DATE)));
         String numPictures = c.getString(c.getColumnIndex("numPictures"));
 
         c.close();
         
-        return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
+        return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id), date);
 
     }
 
@@ -200,6 +189,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
     	
     	String albumQuery = "SELECT a." + COL_ID + " AS " + COL_ID + ", " + 
 							"a." + COL_NAME + " AS " + COL_NAME + ", " + 
+	    					"a." + ALBUMS_COL_DATE + " AS " + ALBUMS_COL_DATE + ", " +
 							"COUNT(p." + COL_ID + ") AS numPictures" +
 							" FROM " + TABLE_NAME + 
 							" a LEFT OUTER JOIN " + PictureQueryGenerator.TABLE_NAME +
@@ -212,13 +202,13 @@ public class AlbumQueryGenerator extends QueryGenerator {
 		if (c == null) {
 			return null;
 		}
-		String id = c.getString(c.getColumnIndex(COL_ID));
 		String albumName = c.getString(c.getColumnIndex(COL_NAME));
+    	Date date = stringToDate(c.getString(c.getColumnIndex(ALBUMS_COL_DATE)));
 		String numPictures = c.getString(c.getColumnIndex("numPictures"));
 		
 		c.close();
 		
-		return new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
+		return new Album(albumName, Integer.parseInt(numPictures), albumId, date);
 
     }
 
@@ -239,6 +229,16 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
     }
     
+    public void setAlbumModified(long albumId) {
+    	String date = dateToString(Calendar.getInstance().getTime());
+    	String query = "UPDATE " + TABLE_NAME + " " +
+        				"SET " + ALBUMS_COL_DATE + " = '" + date + "' " +
+        				"WHERE " + COL_ID + " = '" + albumId +"'";
+
+    	db.performRawQuery(query);
+    	Log.d(TABLE_NAME, "Updated date modified of Album: " + query);
+    }
+    
     private ArrayList<Album>selectAlbumsByQuery(String albumQuery){
     	Cursor c = db.performRawQuery(albumQuery);
     	
@@ -251,9 +251,10 @@ public class AlbumQueryGenerator extends QueryGenerator {
         while(!c.isAfterLast()) {
         	String id = c.getString(c.getColumnIndex(COL_ID));
             String albumName = c.getString(c.getColumnIndex(COL_NAME));
+        	Date date = stringToDate(c.getString(c.getColumnIndex(ALBUMS_COL_DATE)));
             String numPictures = c.getString(c.getColumnIndex("numPictures"));
 
-            Album a = new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id));
+            Album a = new Album(albumName, Integer.parseInt(numPictures), Long.parseLong(id), date);
 
             albums.add(a);
 

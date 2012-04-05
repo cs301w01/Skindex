@@ -8,7 +8,6 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class SendEmailActivityTest extends ActivityInstrumentationTestCase2<SendEmailActivity> {
-    private Instrumentation mInstrumentation;
     private Context mContext;
     private SendEmailActivity mActivity;
     
@@ -19,10 +18,9 @@ public class SendEmailActivityTest extends ActivityInstrumentationTestCase2<Send
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
+
         mActivity = getActivity();
+        mContext = mActivity.getBaseContext();
     }
     
     @Override
@@ -35,8 +33,16 @@ public class SendEmailActivityTest extends ActivityInstrumentationTestCase2<Send
 
     }
     
-    public void testTEMPDELETETHIS(){
+    public void testSaveWithEmptyTextFields(){
     	assertTrue(1 == 1);
+    }
+    
+    public void testSaveVaildTextFields(){
+    	
+    }
+    
+    public void testInvalidEmail(){
+    	
     }
 	
 }

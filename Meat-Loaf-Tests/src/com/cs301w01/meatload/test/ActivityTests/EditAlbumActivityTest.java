@@ -8,7 +8,6 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class EditAlbumActivityTest extends ActivityInstrumentationTestCase2<EditAlbumActivity> {
-    private Instrumentation mInstrumentation;
     private Context mContext;
     private EditAlbumActivity mActivity;
     
@@ -20,9 +19,8 @@ public class EditAlbumActivityTest extends ActivityInstrumentationTestCase2<Edit
     protected void setUp() throws Exception {
     	super.setUp();
         
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
         mActivity = getActivity();
+        mContext = mActivity.getBaseContext();
     }
     
     @Override
@@ -35,8 +33,32 @@ public class EditAlbumActivityTest extends ActivityInstrumentationTestCase2<Edit
 
     }
     
-    public void testTEMPDELETETHIS(){
+    public void testVerifyNamePopulates(){
     	assertTrue(1 == 1);
+    }
+    
+    public void testVerifyNumPicsPopulates(){
+    	
+    }
+    
+    public void testNoChangesPressSave(){
+    	//verify album state doesn't change
+    }
+    
+    public void testChangeNamePressDelete(){
+    	//verify old album deleted
+    }
+    
+    public void testChangeNamePressSave(){
+    	//verify changes made
+    }
+    
+    public void testInvalidName(){
+    	
+    }
+    
+    public void testChangeNameToOneThatAlreadyExists(){
+    	
     }
 
 }
