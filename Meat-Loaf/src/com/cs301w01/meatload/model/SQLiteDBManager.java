@@ -154,57 +154,38 @@ public class SQLiteDBManager extends SQLiteOpenHelper implements DBManager {
 		return c;
 	}
 
-	// TODO: Write Javadoc for query method in SQLiteDBManager, specifically for "boolean b"
-	// TODO: Create more informative parameter names for query method
+	
 	/**
-	 * Uses the SQLiteDBManager's built in query() method to query the tables
-	 * and return the results with a Cursor
+	 * This method is used to update tuples in the database.
 	 * 
-	 * @param b
-	 *            ?????
-	 * @param tableName
-	 *            The name of the table to query
-	 * @param selectColumns
-	 *            The columns to select from the specified table.
-	 * @param string
-	 */
-	public Cursor query(boolean b, String tableName, String[] selectColumns, String string,
-			String selectionArgs[], String object2, String object3, String object4, 
-			String object5) {
-
-		SQLiteDatabase db = this.getWritableDatabase();
-		Cursor c = db.query(b, tableName, selectColumns, string, selectionArgs, object2, object3,
-				object4, object5);
-		Log.d(logTag, "Query Executed On " + tableName + "Selecting, " + selectColumns.toString());
-
-		if (c.getCount() == 0) {
-			db.close();
-			return null;
-		}
-
-		c.moveToFirst();
-		db.close();
-		return c;
-
-	}
-
-	// TODO: Write Javadoc for the update method in SQLiteDBManager, document parameters
-	/**
-	 * 
+	 * @param tableName name of the table you are updating a table for
+	 * @param cv ContentValue object which contains the changed values
+	 * @param whereClause the tuple column comparison for determining which rows to update
+	 * @param whereArgs[] args for the where clause
 	 */
 	public int update(String tableName, ContentValues cv, String whereClause, String whereArgs[]) {
+		
 		SQLiteDatabase db = this.getWritableDatabase();
+		
 		int id = db.update(tableName, cv, whereClause, whereArgs);
 		db.close();
+		
 		return id;
 
 	}
-
-	// TODO: Write Javadoc for the insert method in SQLiteDBManager, document parameters
+ 
 	/**
-	 * @param tableName String
-	 * @param colId String
-	 * @param cv ContentValues
+	 * This method is used to insert new tuples into a database.
+	 * 
+	 * @param tableName String name of the table inserting on
+	 * 
+	 * @param colId String representation of the primary key column id as
+	 * 			represented in the create table statement, example: "id_"
+	 * 
+	 * @param cv ContentValues a content values object hash which contains
+	 * 				a key for the column name, and a value to insert for that column
+	 * 
+	 * @return id long value of the row id that was created by the insert
 	 */
 	public long insert(String tableName, String colId, ContentValues cv) {
 
