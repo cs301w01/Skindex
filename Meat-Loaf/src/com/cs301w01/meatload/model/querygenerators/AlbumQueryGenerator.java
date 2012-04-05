@@ -140,7 +140,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
                        "SET " + COL_NAME + " = '" + newAlbumName + "' " +
                        "WHERE " + COL_ID + " = '" + aID +"'";
         
-        db.performRawQuery(query).close();
+        db.performRawQuery(query);
         Log.d(TABLE_NAME, "Updated name of Album: " + query);
         
         setAlbumModified((long) aID);
@@ -235,7 +235,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
         				"SET " + ALBUMS_COL_DATE + " = '" + date + "' " +
         				"WHERE " + COL_ID + " = '" + albumId +"'";
 
-    	db.performRawQuery(query).close();
+    	db.performRawQuery(query);
     	Log.d(TABLE_NAME, "Updated date modified of Album: " + query);
     }
     
