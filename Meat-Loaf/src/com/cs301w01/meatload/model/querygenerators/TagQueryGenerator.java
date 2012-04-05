@@ -159,13 +159,13 @@ public class TagQueryGenerator extends QueryGenerator {
 		 boolean isFirst = true;
 		 
 		 for (String curr : strings) {
-			 newString += curr;
-			 
+			 newString += curr;	 
 			 if (isFirst) {
 				 isFirst = false;
 				 newString += delimiter;
 			 }
-		 }	 
+		 }
+		 
 		 return newString;
     }
     
@@ -206,11 +206,12 @@ public class TagQueryGenerator extends QueryGenerator {
     		return false;
     	}
     	
-    	Integer i = new Integer(c.getString(c.getColumnIndex("numTag")));
+    	Integer i = Integer.valueOf(c.getString(c.getColumnIndex("numTag")));
     	boolean exists = false;
     	
-    	if(i > 0)
+    	if (i > 0) {
     		exists = true;
+    	}
     	
     	c.close();
     	
