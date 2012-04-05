@@ -139,7 +139,7 @@ public abstract class QueryGenerator {
 
         //db.execSQL(dQuery);
         
-        db.performRawQuery(dQuery);
+        db.performRawQuery(dQuery).close();
 
     }
 
