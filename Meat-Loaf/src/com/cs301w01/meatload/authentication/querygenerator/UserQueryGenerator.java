@@ -14,6 +14,13 @@ import com.cs301w01.meatload.model.querygenerators.QueryGenerator;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Handles all queries relating to the user systems including subscription, login, sign up, and
+ * any other functionality related to users.
+ * 
+ * @author Derek Dowling
+ *
+ */
 public class UserQueryGenerator extends QueryGenerator {
 
     //static strings used by this class
