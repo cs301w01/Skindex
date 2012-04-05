@@ -137,9 +137,6 @@ public class PictureQueryGenerator extends QueryGenerator {
 				+ PICTURES_COL_DATE);
 	}
 
-	// TODO: Create selectPictureByName method
-	// TODO: Add the getting album name to the query
-
 	/**
 	 * Returns a Picture from the database using the provided Picture ID.
 	 * 
