@@ -69,6 +69,10 @@ public class GalleryActivity extends Skindactivity {
 
     }
     
+    /**
+     * This method is used to hide buttons that may not be appropriate depending on how
+     * a gallery is viewed.
+     */
     protected void hideButtons() {
     	 final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
     	 editAlbumButton.setEnabled(false);
@@ -80,7 +84,6 @@ public class GalleryActivity extends Skindactivity {
     }
     
     protected void createListeners() {
-        // TODO: Map objects created as variables to real objects in the XML R.layout.main
 
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +139,9 @@ public class GalleryActivity extends Skindactivity {
     	refreshScreen();
     }
     
+    /**
+     * Used to start a new ComparePictureActivity.
+     */
     private void startComparePicture() {
     	
     	Intent myIntent = new Intent();
