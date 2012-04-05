@@ -10,7 +10,7 @@ public class MainManagerTest extends AndroidTestCase {
 	int mArg2;
  
 	protected void setUp() throws Exception {
-		mClassToTest=new MainManager();
+		//mClassToTest=new MainManager();
 		mArg1=6;
 		mArg2=3;
 		super.setUp();

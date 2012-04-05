@@ -61,8 +61,7 @@ public class EditPictureActivityTest extends
         mActivity = getActivity();	
         mContext = mActivity.getBaseContext();
         
-        mainMan = new MainManager();
-        mainMan.setContext(mContext);
+        mainMan = new MainManager(mContext);
                 
     }
     

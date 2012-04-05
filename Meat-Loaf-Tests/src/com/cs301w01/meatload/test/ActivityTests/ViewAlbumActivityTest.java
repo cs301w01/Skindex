@@ -37,8 +37,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
         
-        mainMan = new MainManager();
-    	mainMan.setContext(mActivity.getBaseContext());
+        mainMan = new MainManager(mContext);
         
     }
     

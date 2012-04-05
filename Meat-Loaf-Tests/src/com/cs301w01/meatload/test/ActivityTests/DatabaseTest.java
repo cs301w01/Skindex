@@ -32,9 +32,7 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
         mActivity = getActivity();
         mContext = mActivity.getBaseContext();
         
-		mainMan = new MainManager();
-		mainMan.setContext(mContext);
-		picMan = new PictureManager(mContext);
+		mainMan = new MainManager(mContext);
     }
     
     @Override
@@ -88,9 +86,9 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	testAlbum = mainMan.getAlbumByName("Album 1");
     	oldNumPics = testAlbum.getPictureCount();
 
-    	picMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
-    	picMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
-    	picMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
+    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
+    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
+    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
     	
     	testAlbum = mainMan.getAlbumByName("Album 1");
     	newNumPics = testAlbum.getPictureCount();
@@ -105,9 +103,9 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	
     	oldNumPics = mainMan.getPictureCount();
 
-    	picMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 2");
-    	picMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
-    	picMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
+    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 2");
+    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
+    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
     	
     	newNumPics = mainMan.getPictureCount();
     	
