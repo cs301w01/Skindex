@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.cs301w01.meatload.activities.SearchActivity;
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
 
@@ -44,6 +45,12 @@ public class Skindex extends TabActivity {
     	// Do the same for the other tabs
     	intent = new Intent().setClass(this, ViewTagsActivity.class);
     	spec = tabHost.newTabSpec("tags").setIndicator(this.getString(R.string.tab_tags),
+                       	res.getDrawable(R.drawable.tab_main))
+                       	.setContent(intent);
+    	tabHost.addTab(spec);
+
+    	intent = new Intent().setClass(this, SearchActivity.class);
+    	spec = tabHost.newTabSpec("search").setIndicator(this.getString(R.string.tab_search),
                        	res.getDrawable(R.drawable.tab_main))
                        	.setContent(intent);
     	tabHost.addTab(spec);

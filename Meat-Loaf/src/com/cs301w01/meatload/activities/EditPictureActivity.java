@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import com.cs301w01.meatload.R;
+import com.cs301w01.meatload.adapters.SimpleTagAdapter;
 import com.cs301w01.meatload.adapters.SpinnerAlbumAdapter;
 import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
@@ -90,7 +91,6 @@ public class EditPictureActivity extends Skindactivity {
 	protected void populateTags() {
 		// Add Tag field logic
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
-		addTagEditText.setText("");
 		
 		ArrayList<Tag> allTags = mainManager.getAllTags();
 		ArrayList<String> tagStrings = new ArrayList<String>();
@@ -102,9 +102,9 @@ public class EditPictureActivity extends Skindactivity {
 		addTagEditText.setAdapter(stringAdapter);
 
 		// Tag List View
-		tagListView = (ListView) findViewById(R.id.picTagList);
+		tagListView = (ListView) findViewById(R.id.tagList);
 		ArrayList<Tag> pictureTags = pictureManager.getTags();
-		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
+		SimpleTagAdapter tagAdapter = new SimpleTagAdapter(this, R.layout.simple_list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
 	}
@@ -139,6 +139,8 @@ public class EditPictureActivity extends Skindactivity {
 				R.layout.spinner_item, allAlbums);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		albumView.setAdapter(spinnerAdapter);
+		
+		// Find 
 		for (Album album : allAlbums) {
 			if (picture.getAlbumName().equals(album.getName())) {
 				albumView.setSelection(allAlbums.indexOf(album));

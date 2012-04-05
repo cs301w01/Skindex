@@ -45,4 +45,5 @@
     <string name="filterHint">Type a tag filter</string>
     <string name="modifiedLabel">Last Modified</string>
     <string name="add_tag_label">Add Tag</string>
+    <string name="tab_search">Search</string>
 </resources>

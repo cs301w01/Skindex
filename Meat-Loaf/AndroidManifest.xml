@@ -26,6 +26,7 @@
         <activity android:name=".activities.ViewAlbumsActivity"></activity>
         <activity android:name=".activities.ViewTagsActivity"></activity>
         <activity android:name=".activities.SendEmailActivity"></activity>
+        <activity android:name=".activities.SearchActivity"></activity>
 
     </application>
 </manifest> 
