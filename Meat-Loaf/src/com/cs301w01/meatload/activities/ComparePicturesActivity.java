@@ -1,23 +1,13 @@
 package com.cs301w01.meatload.activities;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Gallery;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.ComparePictureGalleryAdapter;
-import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.model.GalleryData;
-import com.cs301w01.meatload.model.Picture;
-
-import java.util.ArrayList;
 
 /**
  * Implements the logic of the Compare Pictures interface.
@@ -44,8 +34,7 @@ public class ComparePicturesActivity extends Skindactivity {
         //create gallery manager
         Bundle b = getIntent().getExtras();
         GalleryData gallerydata = (GalleryData) b.getSerializable("gallery");
-        galleryManager = new GalleryManager(gallerydata);
-        galleryManager.setContext(this);
+        galleryManager = new GalleryManager(this, gallerydata);
 
         //create adapter used by galleries
         gAdapter = new ComparePictureGalleryAdapter(this, galleryManager.getPictureGallery(),

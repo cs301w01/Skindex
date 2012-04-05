@@ -24,8 +24,7 @@ public abstract class GalleryData implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-     * Invokes the DBManager to return a set of Picture objects based on whether GalleryManager
-     * was contructed with an album name or a set of tags. 
+     * Invokes the DBManager to return a set of Picture objects based on the type of gallery
      * @return ArrayList of HashMaps representing a set of Picture objects
      */
     public abstract Collection<Picture> getPictureGallery(Context context);
@@ -43,10 +42,5 @@ public abstract class GalleryData implements Serializable {
      */
     public boolean isAlbum() {
     	return false;
-    }
-    
-    // TODO: (Isaac) Implement or get rid of stillValid method in GalleryData
-    public boolean stillValid() {
-    	return true;
     }
 }

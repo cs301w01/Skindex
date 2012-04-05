@@ -58,8 +58,7 @@ public class ViewTagsActivity extends Skindactivity {
 
 		setContentView(R.layout.viewtags);
 
-		mainManager = new MainManager();
-		mainManager.setContext(this);
+		mainManager = new MainManager(this);
 
 		pictureCount = (TextView) findViewById(R.id.tagPicCountValue);
 		searchField = (EditText) findViewById(R.id.tagSearchEditText);

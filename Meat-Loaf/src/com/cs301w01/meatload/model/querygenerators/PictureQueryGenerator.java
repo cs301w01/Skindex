@@ -305,15 +305,4 @@ public class PictureQueryGenerator extends QueryGenerator {
 		return pictures;
 	}
 
-	/**
-	 * Used to find the id of a picture in the pictures table for insertion into
-	 * the albums and tags tables.
-	 * 
-	 * @param name Name of picture whose ID is required
-	 * @return Picture ID of picture in database with the name given by param name
-	 */
-	private int selectPictureIDByName(String name) {
-		return selectIDByName(name, TABLE_NAME);
-	}
-
 }

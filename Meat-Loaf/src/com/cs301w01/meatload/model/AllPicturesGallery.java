@@ -1,17 +1,13 @@
 package com.cs301w01.meatload.model;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import android.content.Context;
 
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
-import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
-import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Mediates between the GalleryActivity and the DBManager by creating HashMaps of pictures to be
@@ -24,6 +20,10 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  */
 public class AllPicturesGallery extends GalleryData implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static final String ALL_PICTURES_ALBUM_NAME = "All Pictures";
 	
 	public AllPicturesGallery(){

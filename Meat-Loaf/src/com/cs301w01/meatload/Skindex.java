@@ -8,8 +8,6 @@ import android.widget.TabHost;
 
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
-import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.model.SQLiteDBManager;
 
 /**
  * Activity file for tabbed landing page of MoleFinder.
@@ -21,15 +19,11 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
  */
 public class Skindex extends TabActivity {
 	
-	private MainManager mainManager;
-	
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
-        
-        SQLiteDBManager dbMan = new SQLiteDBManager(this);
         
         //BEGIN TAB CODE////////////////////////
         //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html
@@ -59,24 +53,6 @@ public class Skindex extends TabActivity {
         	
         	
         ///END TAB CODE/////////////////////////
-
-        //Current tab set to Album.  ViewGroupsActivity runs in that tab
-        
-        /*
-        newAlbumButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				addAlbum();
-			}
-		});
-        
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				takePicture();
-			}
-		});
-		*/
         
     }
     

@@ -2,7 +2,6 @@ package com.cs301w01.meatload.model.querygenerators;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 
 import com.cs301w01.meatload.model.DBManager;
@@ -10,7 +9,6 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public abstract class QueryGenerator {

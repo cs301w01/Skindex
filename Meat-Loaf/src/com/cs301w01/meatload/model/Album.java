@@ -16,6 +16,7 @@ public class Album implements Serializable {
 	private String name;
     private int pictureCount;
     private long id;
+    //TODO are ablums actually having a date? because they don't right now...
     private Date date;
     
     /**

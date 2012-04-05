@@ -1,17 +1,8 @@
 package com.cs301w01.meatload.controllers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
@@ -33,26 +24,15 @@ public class PictureManager implements FController {
 	private ArrayList<String> removedTags;
 
 	/**
-	 * Constructor, populates PictureManager with info from Picture in args.
-	 * @param picture
-	 */
-	public PictureManager(Picture picture) {
-		this.picID = picture.getPictureID();
-		currentTags = picture.getTags();
-		addedTags = new ArrayList<String>();
-		removedTags = new ArrayList<String>();
-	}
-
-	/**
 	 * Constructor, sets Context for db use and populates PictureManager with info
 	 * from Picture in args.
 	 * @param context
 	 * @param picture
 	 */
 	public PictureManager(Context context, Picture picture) {
-		this.context = context;
+		setContext(context);
 		this.picID = picture.getPictureID();
-		currentTags = picture.getTags();
+		currentTags = new PictureQueryGenerator(context).selectPictureByID(picID).getTags();
 		addedTags = new ArrayList<String>();
 		removedTags = new ArrayList<String>();
 	}
@@ -61,68 +41,25 @@ public class PictureManager implements FController {
 	 * Constructor, creates a PictureManager and sets the Picture ID to the supplied int.
 	 * @param picID
 	 */
-	public PictureManager(int picID) {
+	public PictureManager(Context context, int picID) {
+		setContext(context);
 		this.picID = picID;
+		currentTags = new PictureQueryGenerator(context).selectPictureByID(picID).getTags();
+		addedTags = new ArrayList<String>();
+		removedTags = new ArrayList<String>();
 	}
-
-	/**
-	 * Constructor, only sets the Context.
-	 * @param context
-	 */
-	public PictureManager(Context context) {
-		this.context = context;
-	}
-
-	// public PictureManager(int pid) {
-	// photoID = pid;
-	// }
-
-	// public PictureManager(String albumName) {
-	// this.albumName = albumName;
-	// }
 
 	/**
 	 * Sets the current PictureManager's Context.  A context is necessary if
 	 * the database is going to be used.
+	 * The context is set upon creation of the manager object
+	 * but this context is invalidated as soon as the user leaves the screen
+	 * so every activity that stores a manager needs to update the context
+	 * on resume
 	 * @param Context
 	 */
 	public void setContext(Context context) {
 		this.context = context;
-	}
-
-	/**
-	 * Saves the Bitmap provided to the file path provided and adds the appropriate
-	 * information to the DB.
-	 * 
-	 * @see <a href=http://stackoverflow.com/questions/649154/android-bitmap-save-to-location>http://stackoverflow.com/questions/649154/android-bitmap-save-to-location</a>
-	 * @param path File directory where the Picture is to be saved
-	 * @param imgOnDisplay Bitmap to save
-	 */
-	public Picture takePicture(File path, Bitmap imgOnDisplay, String albumName) {
-		
-		Calendar cal = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-sss");
-		String timestamp = sdf.format(cal.getTime());
-		String fname = "img-" + timestamp + ".PNG";
-		String fpath = path.toString() + "/";
-
-		try {
-			OutputStream outStream = null;
-			File file = new File(path, fname);
-
-			outStream = new FileOutputStream(file);
-			imgOnDisplay.compress(Bitmap.CompressFormat.PNG, 100, outStream);
-			outStream.flush();
-			outStream.close();
-
-			// adds the new picture to the db and returns a picture object
-			return createPicture(fpath + fname, cal.getTime(), fname, albumName);
-
-		} catch (IOException e) {
-			Log.d("ERROR", "Unable to write " + fpath + fname);
-			return null;
-		}
-		
 	}
 	
 	/**
@@ -214,17 +151,5 @@ public class PictureManager implements FController {
 		TagQueryGenerator TQG = new TagQueryGenerator(context);
 		TQG.addTagsToPicture(picID, addedTags);
 		TQG.deleteTagsFromPicture(picID, removedTags);
-	}
-	
-	private Picture createPicture(String fpath, Date date, String fname, String albumName) {
-
-		Picture newPic = new Picture("", fpath,
-				albumName, date, new ArrayList<Tag>());
-
-		newPic.setID((int) new PictureQueryGenerator(context)
-				.insertPicture(newPic));
-		Log.d("SAVE", "Saving " + fpath);
-
-		return newPic;
 	}
 }

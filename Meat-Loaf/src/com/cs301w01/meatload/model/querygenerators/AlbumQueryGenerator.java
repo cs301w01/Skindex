@@ -1,18 +1,12 @@
 package com.cs301w01.meatload.model.querygenerators;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.Picture;
 
 /**
  * Creates queries dealing with albums in the database.
@@ -60,21 +54,6 @@ public class AlbumQueryGenerator extends QueryGenerator {
         //int aid = selectAlbumIDByName(albumName);
         
         Log.d(TABLE_NAME, "Album inserted: " + albumName + " w/ aid " + aid);
-
-        // Insert picture's tags into tags table
-        /*for(String tag : tags){
-           
-            ContentValues tcv = new ContentValues();
-            
-            cv.put(COL_NAME, tag);
-            cv.put(COL_ALBUMID, aid);
-
-            //insert tag tuple into tags table
-            db.insert(TABLE_NAME, COL_ID, tcv);
-            
-            Log.d(TABLE_NAME, "Tag inserted: " + tag + " w/ pid: " + aid);
-            
-        }*/
 
         return aid;
     }
@@ -243,7 +222,7 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
     }
 
-    private String getAlbumNameById(long albumId) {
+    public String getAlbumNameById(long albumId) {
         
         String query = "SELECT " + COL_NAME + " " +
                        "FROM " + TABLE_NAME + " " +

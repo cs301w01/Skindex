@@ -46,8 +46,7 @@ public class GalleryActivity extends Skindactivity {
 
         Bundle b = getIntent().getExtras();
         GalleryData gallerydata = (GalleryData) b.getSerializable("gallery");
-        galleryManager = new GalleryManager(gallerydata);
-        galleryManager.setContext(this);
+        galleryManager = new GalleryManager(this, gallerydata);
 
         adapter = new GridViewGalleryAdapter(this, galleryManager.getPictureGallery());
 
@@ -154,10 +153,6 @@ public class GalleryActivity extends Skindactivity {
     public void refreshScreen() {
 
         adapter.notifyDataSetInvalidated();
-        
-        if (!galleryManager.stillValid()) {
-        	finish();
-        }
 
         createListeners();
 

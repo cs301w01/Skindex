@@ -1,7 +1,6 @@
 package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.AlbumAdapter;
@@ -45,8 +44,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewgroups);
-		mainManager = new MainManager();
-		mainManager.setContext(this);
+		mainManager = new MainManager(this);
 
 		refreshScreen();
 		createListeners();
@@ -108,8 +106,6 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 	protected void takePicture() {
 		// Display prompt
-		boolean wantsNewAlbum = false;
-		String albumName;
 
 		showCreateAlbumPrompt();
 
@@ -142,7 +138,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		alert.setPositiveButton("Create",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int whichButton) {
-						addAlbum(Boolean.TRUE);
+						addAlbum(true);
 					}
 				});
 
@@ -301,20 +297,6 @@ public class ViewAlbumsActivity extends Skindactivity {
 		} else {
 			currentDialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
 		}
-	}
-
-	private void openGalleryFromAlbum(String albumName) {
-		openGallery(new AlbumQueryGenerator(this).getAlbumByName(albumName));
-	}
-
-	private void openGalleryFromTags(Collection<String> tags) {
-		// openGallery(new GalleryManager(tags, this).getAlbum());
-	}
-
-	private void openGalleryAllPhotos() {
-		// openGallery(new Album(GalleryManager.ALL_PICTURES_ALBUM_NAME, 0, new
-		// ArrayList<Picture>(),
-		// -1));
 	}
 
 }

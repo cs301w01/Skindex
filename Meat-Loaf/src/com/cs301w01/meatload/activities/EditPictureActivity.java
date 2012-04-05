@@ -6,7 +6,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import com.cs301w01.meatload.R;
@@ -63,8 +62,7 @@ public class EditPictureActivity extends Skindactivity {
 		setContentView(R.layout.edit_picture);
 
 		// Set up MainManager
-		mainManager = new MainManager();
-		mainManager.setContext(this);
+		mainManager = new MainManager(this);
 
 		pictureView = (ImageView) findViewById(R.id.pictureView);
 

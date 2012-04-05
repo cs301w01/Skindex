@@ -3,7 +3,6 @@ package com.cs301w01.meatload.model.querygenerators;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 
 import android.content.ContentValues;

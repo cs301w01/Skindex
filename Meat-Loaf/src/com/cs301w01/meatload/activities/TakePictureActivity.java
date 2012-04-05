@@ -5,7 +5,7 @@ import android.widget.Gallery;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
-import com.cs301w01.meatload.controllers.PictureManager;
+import com.cs301w01.meatload.controllers.MainManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -39,7 +39,7 @@ public class TakePictureActivity extends Skindactivity {
 
 		Bundle b = getIntent().getExtras();
 		album = (Album) b.getSerializable("album");
-		GalleryManager gMan = new GalleryManager(new AlbumGallery(album));
+		GalleryManager gMan = new GalleryManager(this, new AlbumGallery(album));
 		gMan.setContext(this);
 
 		// handle photo consistency gallery logic
@@ -127,7 +127,7 @@ public class TakePictureActivity extends Skindactivity {
 					return;
 				}
 				
-				Picture newPic = new PictureManager(TakePictureActivity.this)
+				Picture newPic = new MainManager(TakePictureActivity.this)
 						.takePicture(getFilesDir(), imgOnDisplay, album.getName());
 
 				Intent myIntent = new Intent();
