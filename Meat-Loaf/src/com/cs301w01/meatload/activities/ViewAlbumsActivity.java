@@ -33,7 +33,6 @@ import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
  */
 public class ViewAlbumsActivity extends Skindactivity {
 
-	// TODO: Un-field the ones that don't need to be fields
 	private MainManager mainManager;
 	private ListView albumListView;
 	private AlbumAdapter adapter;
@@ -107,12 +106,6 @@ public class ViewAlbumsActivity extends Skindactivity {
 		albumListView.setAdapter(adapter);
 	}
 
-	/*
-	 * TODO: Display a message asking if the user wants to create a new album
-	 * populate the boolean with true is the user wants a new album otherwise
-	 * assume the user wants to choose an album if they hit cancel, exit out of
-	 * this function
-	 */
 	protected void takePicture() {
 		// Display prompt
 		boolean wantsNewAlbum = false;

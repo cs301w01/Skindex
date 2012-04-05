@@ -27,8 +27,6 @@ import com.cs301w01.meatload.model.PictureGenerator;
  */
 public class TakePictureActivity extends Skindactivity {
 
-	// TODO: Move imgOnDisplay into the methods? 
-	// It would be nice if it weren't a global variable
 	private Bitmap imgOnDisplay;
 
 	private Album album;
@@ -115,16 +113,20 @@ public class TakePictureActivity extends Skindactivity {
 	 */
 	private void takePicture() {
 
-		// TODO: Add album association, and null album checking
-
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Confirm");
 		alert.setMessage("Are you sure you want this picture?");
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			
 			public void onClick(DialogInterface dialog, int whichButton) {
-
+				
+				if (album == null) {
+					dialog.dismiss();
+					return;
+				}
+				
 				Picture newPic = new PictureManager(TakePictureActivity.this)
 						.takePicture(getFilesDir(), imgOnDisplay, album.getName());
 
@@ -136,7 +138,9 @@ public class TakePictureActivity extends Skindactivity {
 				startActivity(myIntent);
 
 				finish();
+				
 			}
+			
 		});
 
 		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

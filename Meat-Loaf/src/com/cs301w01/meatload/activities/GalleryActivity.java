@@ -134,7 +134,7 @@ public class GalleryActivity extends Skindactivity {
 
     @Override
     public void update(Object model) {
-
+    	refreshScreen();
     }
     
     private void startComparePicture() {
@@ -152,8 +152,6 @@ public class GalleryActivity extends Skindactivity {
      * @see GalleryManager
      */
     public void refreshScreen() {
-    
-    	// TODO: Merge the refreshScreen method with the update method in GalleryActivity
 
         adapter.notifyDataSetInvalidated();
         

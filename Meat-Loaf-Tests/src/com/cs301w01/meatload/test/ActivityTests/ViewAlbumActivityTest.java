@@ -2,26 +2,16 @@ package com.cs301w01.meatload.test.ActivityTests;
 
 import java.util.ArrayList;
 
-import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.Skindex;
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.SQLiteDBManager;
-import com.jayway.android.robotium.solo.Solo;
 
 import android.app.AlertDialog;
 import android.app.Instrumentation;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.UiThreadTest;
 import android.view.KeyEvent;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<ViewAlbumsActivity> {
     
@@ -134,42 +124,46 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 				
 		origNumAlbs = mainMan.getAllAlbums().size();
 
-				mActivity.runOnUiThread(new Runnable() {
-					public void run(){
-						button.requestFocus();
-						button.performClick();
-					}
-				});
-				
-				try {
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					assertTrue("Sleep failed", false);
-				}
-				
-				mActivity.runOnUiThread(new Runnable() {
-					public void run(){
-						mActivity.setDialogEditText("Album 5");
-						mActivity.performDialogClick(true);
-					}
-				});
-
-				try {
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					assertTrue("Sleep failed", false);
-				}
-
-			finalNumAlbs = mainMan.getAllAlbums().size();
+		mActivity.runOnUiThread(new Runnable() {
 			
-			try {
-				Thread.sleep(SLEEP_TIME);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				assertTrue("Sleep failed", false);
+			public void run() {
+				button.requestFocus();
+				button.performClick();
 			}
+			
+		});
+		
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
+		
+		mActivity.runOnUiThread(new Runnable() {
+			
+			public void run() {
+				mActivity.setDialogEditText("Album 5");
+				mActivity.performDialogClick(true);
+			}
+			
+		});
+
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
+
+		finalNumAlbs = mainMan.getAllAlbums().size();
+		
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
 			
 		assertTrue(finalNumAlbs == origNumAlbs + 1);
 		//TODO: WHY IS THIS TEST FAILING?!?!
