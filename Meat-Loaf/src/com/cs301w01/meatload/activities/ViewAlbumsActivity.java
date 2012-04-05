@@ -282,12 +282,10 @@ public class ViewAlbumsActivity extends Skindactivity {
 		return currentDialog;
 	}
 
-	// TODO: This method results in an error when called from JUnit, need to debug
 	public void setDialogEditText(String text) {
 		currentEditText.setText(text);
 	}
 
-	// TODO: This method results in an error when called from JUnit, need to debug
 	// Android Lint gets angry about using the getButton method
 	// If there is a different way of doing this, we need to figure it out
 	//@TargetApi(3)
