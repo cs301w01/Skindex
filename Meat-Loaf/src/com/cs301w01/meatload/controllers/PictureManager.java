@@ -68,8 +68,9 @@ public class PictureManager implements FController {
 	 * @param picture New Picture with updated information.
 	 */
 	public void savePicture(Picture picture) {
+		picture.setID(picID);
 		PictureQueryGenerator pQG = new PictureQueryGenerator(context);
-		pQG.updatePictureByID(picture, PictureQueryGenerator.TABLE_NAME, picID);
+		pQG.updatePictureByID(picture);
 		saveTags();
 	}
 

@@ -42,16 +42,15 @@ public class PictureQueryGenerator extends QueryGenerator {
 
 	/**
 	 * Takes a Picture object and pushes it to the database.
+	 * Note: this function does not update the tags,
+	 * Use addTagsToPicture and deleteTagsFromPicture in tagQueryGenerator for this
 	 * 
 	 * @param p
 	 *            Picture object to be pushed to database
-	 * @param tableName
-	 *            Table storing the tuple to be updated
 	 * @param id
 	 *            ID value
-	 * @return int
 	 */
-	public int updatePictureByID(Picture p, String tableName, int id) {
+	public void updatePictureByID(Picture p) {
 
 		ContentValues cv = new ContentValues();
 		
@@ -63,11 +62,9 @@ public class PictureQueryGenerator extends QueryGenerator {
 		cv.put(COL_NAME, p.getName());
 		cv.put(COL_ALBUMID, albumID);
 
-		int uVal = db.update(tableName, cv, COL_ID + "=" + id, null);
+		db.update(TABLE_NAME, cv, COL_ID + "=" + p.getPictureID(), null);
 		
 		AQG.setAlbumModified((long)albumID);
-
-		return uVal;
 	}
 
 	/**
@@ -137,19 +134,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 	}
 
 	/**
-	 * Returns a collection of Picture objects representing all pictures in the
-	 * database.
-	 * 
-	 * @return Collection<Picture>
-	 */
-	public Collection<Picture> selectAllPictures() {
-
-		return selectPicturesByQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY "
-				+ PICTURES_COL_DATE);
-	}
-
-	/**
-	 * Returns a Picture from the database using the provided Picture ID.
+	 * Returns a Picture object from the database using the provided Picture ID.
 	 * 
 	 * @param pictureID
 	 *            The ID of the picture to return.
@@ -196,14 +181,25 @@ public class PictureQueryGenerator extends QueryGenerator {
 		AQG.setAlbumModified(getAlbumIdOfPicture(pictureID));
 
 		new TagQueryGenerator(context).deleteAllTagsFromPicture(pictureID);
+	}
+	
+	/**
+	 * Returns a collection of Picture objects representing all pictures in the
+	 * database.
+	 * 
+	 * @return Collection<Picture>
+	 */
+	public Collection<Picture> selectAllPictures() {
 
+		return selectPicturesByQuery("SELECT * FROM " + TABLE_NAME + " ORDER BY "
+				+ PICTURES_COL_DATE);
 	}
 
 	/**
 	 * Gets all Pictures from an album from database.
 	 * 
-	 * @param albumName
-	 * @return
+	 * @param albumName the name of the album
+	 * @return Collection<Picture>
 	 */
 	public Collection<Picture> selectPicturesFromAlbum(int albumID) {
 
@@ -220,8 +216,7 @@ public class PictureQueryGenerator extends QueryGenerator {
 	 * @param tags
 	 *            A collection of Tags represented as Strings to be used in the
 	 *            query
-	 * @return ArrayList of HashMaps representing all Pictures with the given
-	 *         tag
+	 * @return Collection<Picture>
 	 */
 	public Collection<Picture> selectPicturesByTags(Collection<String> tags) {
 
@@ -255,6 +250,8 @@ public class PictureQueryGenerator extends QueryGenerator {
 	 * in the provided collection.
 	 * 
 	 * @param tags
+	 * 			  A collection of Tags represented as Strings to be used in the
+	 *            query
 	 * @return int
 	 */
 	public int getPictureCountByTags(Collection<String> tags) {
@@ -278,6 +275,27 @@ public class PictureQueryGenerator extends QueryGenerator {
 		Log.d(TABLE_NAME, "Performing delete: " + deletePictureQuery);
 
 		db.performRawQuery(deletePictureQuery);
+	}
+	
+	/**
+	 * Returns the album ID of the album that the given picture belongs to
+	 * 
+	 * @param pictureID The ID of the picture in question
+	 * 
+	 * @return int
+	 */
+	public int getAlbumIdOfPicture(int pictureID) {
+		String query = "SELECT " + COL_ALBUMID + 
+						" FROM " + TABLE_NAME + 
+						" WHERE " + COL_ID + " = '" + pictureID + "'";
+		
+		Cursor c = db.performRawQuery(query);
+		
+		if(c == null) {
+			return 0;
+		}
+		
+		return Integer.parseInt(c.getString(c.getColumnIndex(COL_ALBUMID)));
 	}
 
 	private Collection<Picture> selectPicturesByQuery(String pictureQuery) {
@@ -313,20 +331,6 @@ public class PictureQueryGenerator extends QueryGenerator {
 		c.close();
 
 		return pictures;
-	}
-	
-	public int getAlbumIdOfPicture(int pictureID) {
-		String query = "SELECT " + COL_ALBUMID + 
-						" FROM " + TABLE_NAME + 
-						" WHERE " + COL_ID + " = '" + pictureID + "'";
-		
-		Cursor c = db.performRawQuery(query);
-		
-		if(c == null) {
-			return 0;
-		}
-		
-		return Integer.parseInt(c.getString(c.getColumnIndex(COL_ALBUMID)));
 	}
 
 }
