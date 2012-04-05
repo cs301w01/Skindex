@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * This class handles all the intermediate steps between the db and the GUI/activity.
+ * This class handles all the communication between the user system activities and the UserQueryGenerator.
+ * 
+ * @author Derek Dowling
  */
 public class UserManager implements FController{
 
@@ -22,16 +24,25 @@ public class UserManager implements FController{
     
     public UserManager(Context c) {
         
-        this.context = context;
+        this.context = c;
         
     }
 
+    /**
+     * This method is called by the login system. It checks to see if a user name exists, and if
+     * so, the password matches it. If not, the system returns null, and if it does, returns a
+     * user of appropriate type based on role.
+     * 
+     * @param userName
+     * @param password
+     * @return
+     */
     public User authenticateUser(String userName, String password) {
 
         UserQueryGenerator uQG = new UserQueryGenerator(context);
 
+        //using the user's username, return the corresponding salt value.
         String salt = uQG.getUserSalt(userName);
-
         if(salt == null)
             return null;
 
@@ -39,18 +50,21 @@ public class UserManager implements FController{
 
         Cursor c = uQG.logUserIn(userName, encryptedPwd);
 
+        //return null if the username does not exist
         if(c.getCount() == 0) {
 
+        	c.close();
+        	
             return null;
 
         } else {
 
             //c has the following: COL_ID, COL_NAME, COL_USERNAME, COL_EMAIL, COL_ROLE
             int id = c.getInt(c.getColumnIndex(UserQueryGenerator.COL_ID));
-            String name = c.getString(c.getColumnIndex(UserQueryGenerator.COL_NAME));
-            String email = c.getString(c.getColumnIndex(UserQueryGenerator.COL_EMAIL));
             String role = c.getString(c.getColumnIndex(UserQueryGenerator.COL_ROLE));
 
+            c.close();
+            
             User u;
 
             if(role.equals(UserQueryGenerator.PATIENT_ROLE)) {
@@ -69,6 +83,16 @@ public class UserManager implements FController{
          }
     }
 
+    /**
+     * Creates a new encrypted password through the password generator, then inserts the
+     * user into the database through the UserQueryManager.
+     * 
+     * @param u
+     * @param userName
+     * @param password
+     * @param role
+     * @return
+     */
     public long createNewUser(User u, String userName, String password, String role) {
 
         Password hashedPW = PasswordManager.generateNewPassword(password);

@@ -22,9 +22,8 @@ public class ComparePicturesActivityTest extends
     protected void setUp() throws Exception {
     	super.setUp();
         
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
         mActivity = getActivity();
+        mContext = mInstrumentation.getContext();
     }
     
     @Override

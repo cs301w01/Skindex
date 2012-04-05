@@ -84,8 +84,6 @@ public class DBManagerTest extends AndroidTestCase {
 		assertEquals(mClassToTest.selectAllAlbums().size(),oldSize);
 	}
 
-    // TODO: Implement the testAlbumNameChange() method in DBManagerTest
-    public void testAlbumNameChange() {
 
     }
 
