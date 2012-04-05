@@ -15,13 +15,10 @@ import android.widget.Button;
 
 public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<ViewAlbumsActivity> {
     
-	private Instrumentation mInstrumentation;
     private Context mContext;
     private ViewAlbumsActivity mActivity;
 	MainManager mainMan;
-    private final int SLEEP_TIME = 150;
-    
-    //private Solo solo;
+    private final int SLEEP_TIME = 500;
     
 	public ViewAlbumActivityTest(){
 		super("com.cs301w01.meatload", ViewAlbumsActivity.class);
@@ -30,12 +27,9 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
-    	//solo = new Solo(getInstrumentation(), getActivity());
-    	
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
+
         mActivity = getActivity();
+        mContext = mActivity.getBaseContext();
         
         mainMan = new MainManager(mContext);
         
@@ -99,21 +93,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 	}
 	
 	
-	//THIS TEST HAS ERRORS AND IS NOT GETTING THE VIEWS CORRECTLY
 	public void testAddAlbumsUsingDialog() {
-		
-		
-//////////////TEMP ROBO CODE
-
-//		solo.clickOnText("New Album");
-//		//solo.enterText(index, text)
-//		solo.clickOnText("Ok");
-//		assert(solo.searchText("New Album"));
-
-		//solo.clickOnButton("New Album");
-		
-///////////////TEMP ROBO CODE
-		
 		int origNumAlbs, finalNumAlbs;
 		final String name = "abc";
 		AlertDialog dialog;
@@ -165,8 +145,22 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		}
 			
 		assertTrue(finalNumAlbs == origNumAlbs + 1);
-		//TODO: WHY IS THIS TEST FAILING?!?!
-		//		THE ALBUM IS BEING ENTERED IN THE DATABASE, WHATS UP WITH THAT YO!
+	}
+	
+	public void testPressTakePictureCreateNewAlbum(){
+		
+	}
+	
+	public void testPressTakePictureChooseAlbum(){
+		
+	}
+	
+	public void testCreateAlbumWithTooLongName(){
+		
+	}
+	
+	public void testCreateBlankAlbum(){
+		
 	}
 
 }

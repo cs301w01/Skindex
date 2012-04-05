@@ -31,9 +31,7 @@ public class EditPictureActivityTest extends
     private Context mContext;
     private EditPictureActivity mActivity;
     private MainManager mainMan;
-    private final int SLEEP_TIME = 150;
-    
-    //private Solo solo;
+    private final int SLEEP_TIME = 500;
     
 	public EditPictureActivityTest(){
 		super("com.cs301w01.meatload", EditPictureActivity.class);
@@ -42,8 +40,6 @@ public class EditPictureActivityTest extends
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
-    	//solo = new Solo(getInstrumentation(), getActivity());
     	
         Date tempDate = Calendar.getInstance().getTime();
         Picture tempPic = new Picture("temp", "temp", "temp",tempDate, new ArrayList<Tag>());
@@ -98,20 +94,14 @@ public class EditPictureActivityTest extends
 		});
 		
 		try {
-			Thread.sleep(SLEEP_TIME);
+			Thread.sleep(SLEEP_TIME * 5);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 			assertTrue("Sleep failed", false);
 		}
 
-    	Picture newPic = new Picture("temp", "temp");
-    	newPic.setID(1);
-    	    	
-    	PictureManager picMan = new PictureManager(mContext, newPic);
-    	Log.d("Add Pic", "Pic Name: " + picMan.getPicture().getName());
-    	
-    	//PictureQueryGenerator picGen = new PictureQueryGenerator(mContext);
-    	//Picture newPic = picGen.selectPictureByID(1);
+    	PictureQueryGenerator picGen = new PictureQueryGenerator(mContext);
+    	Picture newPic = picGen.selectPictureByID(1);
     	
     	
     	assertTrue(newPic.getName().equals("Moley Mole"));
