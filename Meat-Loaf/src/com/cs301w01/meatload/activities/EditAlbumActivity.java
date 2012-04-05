@@ -63,6 +63,7 @@ public class EditAlbumActivity extends Skindactivity {
         saveAlbumButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 if(updateAlbumName() > 0){
+                	EditAlbumActivity.this.setResult(RESULT_OK, null);
                 	finish();
                 }
             }

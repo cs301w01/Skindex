@@ -98,6 +98,9 @@ public class TagQueryGenerator extends QueryGenerator {
     			addTag(pictureID, new Tag(tagName, 0));
     		}
     	}
+    	
+    	AlbumQueryGenerator AQG = new AlbumQueryGenerator(this.context);
+    	AQG.setAlbumModified(new PictureQueryGenerator(this.context).getAlbumIdOfPicture(pictureID));
     }
     
     /**
@@ -115,6 +118,9 @@ public class TagQueryGenerator extends QueryGenerator {
             
             db.performRawQuery(dQuery).close();
     	}
+    	
+    	AlbumQueryGenerator AQG = new AlbumQueryGenerator(this.context);
+    	AQG.setAlbumModified(new PictureQueryGenerator(this.context).getAlbumIdOfPicture(pictureID));
     }
     
     /**
@@ -132,12 +138,30 @@ public class TagQueryGenerator extends QueryGenerator {
     }
     
     /**
+     * Deletes the specified tags from a Picture in the database.
+     * @param pictureID The ID of the Picture to update.
+     * @param tagNames A collection of tags to delete.
+     */
+    public void deleteAllTagsFromAlbum(int albumID) {
+    	String deleteTagsQuery = "DELETE FROM " + TABLE_NAME + " t" +
+					" WHERE EXISTS (SELECT * FROM " + TABLE_NAME + " p" + 
+					" LEFT JOIN " + AlbumQueryGenerator.TABLE_NAME + " a" +
+					" ON (p." + COL_ALBUMID + " = a." + COL_ID + ") " + 
+					" WHERE p." + COL_ID + " = t." + COL_PICTUREID +
+					" AND a." + COL_ID + " = '" + albumID + "'";
+
+    	Log.d(TABLE_NAME, "Performing delete: " + deleteTagsQuery);
+
+    	db.performRawQuery(deleteTagsQuery);
+    }
+    
+    /**
      * Adds a tag to specific Picture in the Database.
      * @param pictureID The ID of Picture to add the tag too.
      * @param tag The tag to add.
      * @return long
      */
-    public long addTag(int pictureID, Tag tag) {
+    private long addTag(int pictureID, Tag tag) {
     	ContentValues cv = new ContentValues();
         
         //add tag info to cv

@@ -41,18 +41,7 @@ public class Album implements Serializable {
 		this.name = name;
 		this.pictureCount = pictureCount;
 		this.id = id;
-		this.date = null;
-	}
-
-	/**
-	 * Constructor, creates an Album object with a given Name
-	 * 
-	 * @param name
-	 */
-	public Album(String name) {
-		this.name = name;
-		pictureCount = 0;
-		id = -1;
+		this.date = Calendar.getInstance().getTime();
 	}
 
 	/**
@@ -88,11 +77,7 @@ public class Album implements Serializable {
 	 * @return Date
 	 */
 	public Date getDate() {
-		if (date == null) {
-			return Calendar.getInstance().getTime();
-		} else {
-			return date;
-		}
+		return date;
 	}
 
 	/**
