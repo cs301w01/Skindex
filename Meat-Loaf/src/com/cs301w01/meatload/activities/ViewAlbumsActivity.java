@@ -295,7 +295,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 	// TODO: This method results in an error when called from JUnit, need to debug
 	public void setDialogEditText(String text) {
-		currentEditText.setText("text");
+		currentEditText.setText(text);
 	}
 
 	// TODO: This method results in an error when called from JUnit, need to debug

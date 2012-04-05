@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.EditPictureActivity;
 import com.cs301w01.meatload.controllers.MainManager;
+import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
@@ -19,6 +21,9 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class EditPictureActivityTest extends
 		ActivityInstrumentationTestCase2<EditPictureActivity> {
@@ -26,6 +31,7 @@ public class EditPictureActivityTest extends
     private Context mContext;
     private EditPictureActivity mActivity;
     private MainManager mainMan;
+    private final int SLEEP_TIME = 150;
     
     //private Solo solo;
     
@@ -41,11 +47,13 @@ public class EditPictureActivityTest extends
     	
         Date tempDate = Calendar.getInstance().getTime();
         Picture tempPic = new Picture("temp", "temp", "temp",tempDate, new ArrayList<Tag>());
+        
+        // The EditPictureActivity will only use the ID of the given picture, as set below
         tempPic.setID(1);
     	
         Intent editPicIntent = new Intent();
         editPicIntent.setClassName("com.cs301w01.meatload",
-				"com.cs301w01.meatload.activities.ComparePicturesActivity");
+				"com.cs301w01.meatload.activities.EditPicturesActivity");
 
 		editPicIntent.putExtra("picture", tempPic);
 		setActivityIntent(editPicIntent);
@@ -55,6 +63,7 @@ public class EditPictureActivityTest extends
         
         mainMan = new MainManager();
         mainMan.setContext(mContext);
+                
     }
     
     
@@ -73,8 +82,61 @@ public class EditPictureActivityTest extends
 
     }
     
-    public void testTemp(){
-    	assertTrue(1==1);
+    public void testEditNameThenSave(){
+    	final Button saveButton = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.savePictureButton);
+		assertNotNull(saveButton);
+		
+    	final EditText pictureName = (EditText) mActivity.findViewById(R.id.pictureNameEditText);
+    	assertNotNull(pictureName);
+    	
+		mActivity.runOnUiThread(new Runnable() {
+			public void run(){
+		    	pictureName.requestFocus();
+		    	pictureName.setText("Moley Mole");
+		    	saveButton.requestFocus();
+		    	saveButton.performClick();
+			}
+		});
+		
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
+
+    	Picture newPic = new Picture("temp", "temp");
+    	newPic.setID(1);
+    	    	
+    	PictureManager picMan = new PictureManager(mContext, newPic);
+    	Log.d("Add Pic", "Pic Name: " + picMan.getPicture().getName());
+    	
+    	//PictureQueryGenerator picGen = new PictureQueryGenerator(mContext);
+    	//Picture newPic = picGen.selectPictureByID(1);
+    	
+    	
+    	assertTrue(newPic.getName().equals("Moley Mole"));
     }
+    
+    public void testChangeAlbumThenSave(){
+    	
+    }
+    
+    public void testAddTagsThenSave(){
+    	
+    }
+    
+    public void testDeleteTagsThenSave(){
+    	
+    }
+    
+    public void testChangeInfoThenPressBackButton(){
+    	
+    }
+    
+    public void testDeletePicture(){
+    	
+    }
+    
 
 }

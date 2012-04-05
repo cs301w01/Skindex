@@ -123,7 +123,6 @@ public class EditPictureActivity extends Skindactivity {
 		// Picture ImageView
 		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
-		Log.d("testDYING",picture.getPath());
 		pictureView
 				.setImageDrawable(Drawable.createFromPath(picture.getPath()));
 

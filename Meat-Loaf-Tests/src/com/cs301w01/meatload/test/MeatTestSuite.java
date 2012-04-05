@@ -16,7 +16,7 @@ public class MeatTestSuite extends TestCase {
 		TestSuite suite = new TestSuite();
 		    
 		suite.addTestSuite(DatabaseTest.class);
-		//suite.addTestSuite(ViewAlbumActivityTest.class);
+		suite.addTestSuite(ViewAlbumActivityTest.class);
 		suite.addTestSuite(EditPictureActivityTest.class);
 		    
 		return suite;

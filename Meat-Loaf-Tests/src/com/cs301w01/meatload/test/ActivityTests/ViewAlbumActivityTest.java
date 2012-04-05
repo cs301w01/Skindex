@@ -28,8 +28,10 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 	private Instrumentation mInstrumentation;
     private Context mContext;
     private ViewAlbumsActivity mActivity;
+	MainManager mainMan;
+    private final int SLEEP_TIME = 150;
     
-    private Solo solo;
+    //private Solo solo;
     
 	public ViewAlbumActivityTest(){
 		super("com.cs301w01.meatload", ViewAlbumsActivity.class);
@@ -39,11 +41,14 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     protected void setUp() throws Exception {
     	super.setUp();
         
-    	solo = new Solo(getInstrumentation(), getActivity());
+    	//solo = new Solo(getInstrumentation(), getActivity());
     	
         mInstrumentation = getInstrumentation();
         mContext = mInstrumentation.getContext();
         mActivity = getActivity();
+        
+        mainMan = new MainManager();
+    	mainMan.setContext(mActivity.getBaseContext());
         
     }
     
@@ -66,9 +71,6 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
 		assertNotNull(button);
 		
-		MainManager mainMan = new MainManager();
-		mainMan.setContext(mActivity.getApplicationContext());
-		
 		origAlbs = mainMan.getAllAlbums();
 			for(int i = 0; i < 3; i++){
 				mActivity.runOnUiThread(new Runnable() {
@@ -78,7 +80,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 					}
 				});
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					assertTrue("Sleep failed", false);
@@ -88,7 +90,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 				sendKeys(key_num + i + 2);
 				sendKeys(KeyEvent.KEYCODE_ENTER);
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					assertTrue("Sleep failed", false);
@@ -97,7 +99,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			finalAlbs = mainMan.getAllAlbums();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				assertTrue("Sleep failed", false);
@@ -109,7 +111,6 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 	
 	
 	//THIS TEST HAS ERRORS AND IS NOT GETTING THE VIEWS CORRECTLY
-	/*
 	public void testAddAlbumsUsingDialog() {
 		
 		
@@ -124,58 +125,55 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		
 ///////////////TEMP ROBO CODE
 		
-		ArrayList<Album> origAlbs;
-		ArrayList<Album> finalAlbs;
-		String name = "abc";
+		int origNumAlbs, finalNumAlbs;
+		final String name = "abc";
 		AlertDialog dialog;
 				
 		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
 		assertNotNull(button);
-		
-		MainManager mainMan = new MainManager();
-		mainMan.setContext(mActivity.getApplicationContext());
-		
-		origAlbs = mainMan.getAllAlbums();
-			for(int i = 0; i < 3; i++){
-				name.replace(name.charAt(0), (char) (name.charAt(0) + i));
-				name.replace(name.charAt(1), (char) (name.charAt(1) + i));
-				name.replace(name.charAt(2), (char) (name.charAt(2) + i));
 				
+		origNumAlbs = mainMan.getAllAlbums().size();
+
 				mActivity.runOnUiThread(new Runnable() {
 					public void run(){
 						button.requestFocus();
 						button.performClick();
 					}
 				});
+				
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					assertTrue("Sleep failed", false);
 				}
 				
-				//The two below calls currently error, saying that you cannot edit a View from a seperate thread
-				//mActivity.setDialogEditText(name);
-				//mActivity.performDialogClick(true);
+				mActivity.runOnUiThread(new Runnable() {
+					public void run(){
+						mActivity.setDialogEditText("Album 5");
+						mActivity.performDialogClick(true);
+					}
+				});
 
 				try {
-					Thread.sleep(500);
+					Thread.sleep(SLEEP_TIME);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 					assertTrue("Sleep failed", false);
 				}
-							}
-			finalAlbs = mainMan.getAllAlbums();
+
+			finalNumAlbs = mainMan.getAllAlbums().size();
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 				assertTrue("Sleep failed", false);
 			}
 			
-		assertTrue(finalAlbs.size() == origAlbs.size() + 3);
+		assertTrue(finalNumAlbs == origNumAlbs + 1);
+		//TODO: WHY IS THIS TEST FAILING?!?!
+		//		THE ALBUM IS BEING ENTERED IN THE DATABASE, WHATS UP WITH THAT YO!
 	}
-*/
 
 }
