@@ -18,6 +18,8 @@ import com.cs301w01.meatload.model.Tag;
  * Returns a TextView with the text set to the current tag's name, as part of the List passed in
  * the constructor.
  * @author Blake Bouchard
+ * @see <a href="http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/">
+ http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/</a>
  * @see TagAdapter
  */
 public class SimpleTagAdapter extends TagAdapter {

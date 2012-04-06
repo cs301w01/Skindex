@@ -3,16 +3,13 @@ package com.cs301w01.meatload.activities;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.SparseBooleanArray;
 import android.view.KeyEvent;
 import android.view.View;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.SimpleTagAdapter;
 import com.cs301w01.meatload.adapters.SpinnerAlbumAdapter;
-import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
@@ -67,6 +64,7 @@ public class EditPictureActivity extends Skindactivity {
 
 		// Set up MainManager
 		mainManager = new MainManager(this);
+		albumManager = new AlbumManager(this);
 
 		pictureView = (ImageView) findViewById(R.id.pictureView);
 

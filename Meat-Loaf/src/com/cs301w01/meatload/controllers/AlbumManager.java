@@ -9,6 +9,12 @@ import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
 import android.content.Context;
 
+/**
+ * Stores the Controller logic used for mediating with the AlbumQueryGenerator class.
+ * 
+ * @author Blake Bouchard
+ * @see AlbumQueryGenerator
+ */
 public class AlbumManager {
 	public Context context;
 	public int MAX_ALBUM_NAME_LENGTH = 20;

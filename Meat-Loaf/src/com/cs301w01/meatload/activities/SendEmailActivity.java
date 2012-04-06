@@ -10,8 +10,13 @@ import android.widget.EditText;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.model.Picture;
 
-import java.util.Collection;
-
+/**
+ * Activity used for sending an email along with a Picture.
+ * 
+ * @author Derek Dowling
+ * @see <a href="http://www.mkyong.com/android/how-to-send-email-in-android/">
+     	http://www.mkyong.com/android/how-to-send-email-in-android/</a>
+ */
 public class SendEmailActivity extends Skindactivity {
 
     private Button sendButton;
@@ -22,9 +27,6 @@ public class SendEmailActivity extends Skindactivity {
     private Picture picture;
 
     @Override
-    /**
-     * Adopted from: http://www.mkyong.com/android/how-to-send-email-in-android/
-     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_email);

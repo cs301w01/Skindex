@@ -7,8 +7,6 @@ import com.cs301w01.meatload.adapters.AlbumAdapter;
 import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.MainManager;
 
-//import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -60,15 +58,18 @@ public class ViewAlbumsActivity extends Skindactivity {
 	public void update(Object model) {
 		refreshScreen();
 	}
+
 	@Override
-	public void finish(){
-		if(errorDialog != null){
-			if(errorDialog.isShowing()){
+	public void finish() {
+		
+		if (errorDialog != null) {
+			if (errorDialog.isShowing()) {
 				errorDialog.dismiss();
 			}
 		}
-		if(currentDialog != null){
-			if(currentDialog.isShowing()){
+		
+		if (currentDialog != null) {
+			if (currentDialog.isShowing()) {
 				currentDialog.dismiss();
 			}
 		}
@@ -104,8 +105,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		// Below is the listener for a list button click.
 
 		albumListView.setOnItemClickListener(new OnItemClickListener() {
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				openGallery(adapter.getItem(position));
 			}
 		});
@@ -115,8 +115,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		albumListView = (ListView) findViewById(R.id.albumListView);
 
 		ArrayList<Album> albumList = new ArrayList<Album>();
-		albumList.add(new Album("All Pictures", mainManager.getPictureCount(),
-				-1));
+		albumList.add(new Album("All Pictures", mainManager.getPictureCount(), -1));
 		albumList.addAll(albumManager.getAllAlbums());
 
 		adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
@@ -131,9 +130,10 @@ public class ViewAlbumsActivity extends Skindactivity {
 	}
 
 	private void switchToTakePicture(Album album) {
-		if (testing){
+		if (testing) {
 			return;
 		}
+		
 		Intent goToGallery = new Intent();
 		goToGallery.setClassName("com.cs301w01.meatload",
 				"com.cs301w01.meatload.activities.GalleryActivity");
@@ -156,35 +156,31 @@ public class ViewAlbumsActivity extends Skindactivity {
 		alert.setTitle("New Album?");
 		alert.setMessage("Would you like to create a new album or choose an existing one?");
 
-		alert.setPositiveButton("Create",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						addAlbum(true);
-					}
-				});
+		alert.setPositiveButton("Create", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				addAlbum(true);
+			}
+		});
 
-		alert.setNegativeButton("Choose",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						chooseAlbumPrompt();
-					}
-				});
+		alert.setNegativeButton("Choose", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				chooseAlbumPrompt();
+			}
+		});
 
 		currentDialog = alert.show();
 
 	}
 
 	private void chooseAlbumPrompt() {
-		
-		final CharSequence[] albumNames = albumManager
-				.albumsToStrings(albumManager.getAllAlbums());
+
+		final CharSequence[] albumNames = albumManager.albumsToStrings(albumManager.getAllAlbums());
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choose an Album");
 		builder.setItems(albumNames, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				switchToTakePicture(albumManager
-						.getAlbumByName((String) albumNames[item]));
+				switchToTakePicture(albumManager.getAlbumByName((String) albumNames[item]));
 			}
 		});
 		currentDialog = builder.create();
@@ -216,12 +212,9 @@ public class ViewAlbumsActivity extends Skindactivity {
 		currentEditText.setHint("Enter New Album Name");
 		input.setOnKeyListener(new View.OnKeyListener() {
 
-			//@TargetApi(3)
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
 				if (keyCode == KeyEvent.KEYCODE_ENTER) {
-					// Android Lint is angry about using getButton
-					Button positiveButton = currentDialog
-							.getButton(AlertDialog.BUTTON_POSITIVE);
+					Button positiveButton = currentDialog.getButton(AlertDialog.BUTTON_POSITIVE);
 					positiveButton.requestFocus();
 					positiveButton.performClick();
 					return true;
@@ -234,30 +227,26 @@ public class ViewAlbumsActivity extends Skindactivity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String newAlbumName = input.getText().toString();
-				newAlbumName = albumManager.addAlbum(newAlbumName,
-						new ArrayList<String>());
+				newAlbumName = albumManager.addAlbum(newAlbumName, new ArrayList<String>());
 
 				if (newAlbumName.length() == 0) {
 					errorDialog("Adding album failed.  Album names must be "
-							+ albumManager.getMaxAlbumName()
-							+ " chars, not empty, and unique.");
+							+ albumManager.getMaxAlbumName() + " chars, not empty, and unique.");
 				} else if (takePicture) {
 					AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(
 							ViewAlbumsActivity.this);
-					switchToTakePicture(albumQueryGenerator
-							.getAlbumByName(newAlbumName));
+					switchToTakePicture(albumQueryGenerator.getAlbumByName(newAlbumName));
 				}
 
 				refreshScreen();
 			}
 		});
 
-		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
-					}
-				});
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
+			}
+		});
 
 		currentDialog = alert.show();
 
@@ -289,17 +278,20 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 	/**
 	 * Pops up error dialog with given string in message.
-	 * @param err String containing error message
+	 * 
+	 * @param err
+	 *            String containing error message
 	 */
 	private void errorDialog(String err) {
-	    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
-			alert.setTitle("Error");
-			alert.setMessage(err);
-			errorDialog = alert.show();
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Error");
+		alert.setMessage(err);
+		errorDialog = alert.show();
 	}
 
 	/**
 	 * Used for JUnit testing.
+	 * 
 	 * @return The current AlertDialog
 	 */
 	public AlertDialog getCurrentDialog() {
@@ -317,8 +309,8 @@ public class ViewAlbumsActivity extends Skindactivity {
 			currentDialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
 		}
 	}
-	
-	public void performListViewClick(int position){
+
+	public void performListViewClick(int position) {
 		testing = true;
 		ListView list = currentDialog.getListView();
 		list.performItemClick(null, position, list.getAdapter().getItemId(position));

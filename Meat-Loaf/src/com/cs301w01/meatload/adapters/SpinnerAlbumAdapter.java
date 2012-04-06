@@ -19,6 +19,8 @@ import com.cs301w01.meatload.model.Album;
  * @author Blake Bouchard
  * @see AlbumAdapter
  * @see EditPictureActivity
+ * @see <a href="http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/">
+ http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/</a>
  */
 public class SpinnerAlbumAdapter extends AlbumAdapter {
 

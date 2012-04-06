@@ -16,7 +16,6 @@ import android.widget.TextView;
 /**
  * Adapter for populating a ListView with album names and picture counts of those albums.
  * @author Blake Bouchard
- * @author Jose C. Gomez
  * @see <a href="http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/">
  http://www.josecgomez.com/2010/05/03/android-putting-custom-objects-in-listview/</a>
  */

@@ -5,9 +5,7 @@ import android.widget.TextView;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.GalleryManager;
-import com.cs301w01.meatload.controllers.MainManager;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,9 +15,9 @@ import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.AlbumGallery;
 
 /**
- * View Activity which uses GalleryManager to modify Albums.
+ * View Activity which uses AlbumManager to modify Albums.
  * 
- * @author Blake Bouchard
+ * @author Joel Burford
  */
 public class EditAlbumActivity extends Skindactivity {
 

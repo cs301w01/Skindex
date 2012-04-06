@@ -5,7 +5,6 @@ import android.widget.Gallery;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
-import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureCreator;
 
 import android.app.AlertDialog;
@@ -95,10 +94,9 @@ public class TakePictureActivity extends Skindactivity {
 		});
 	}
 
-	// @Override
+
 	public void update(Object model) {
-		// To change body of implemented methods use File | Settings | File
-		// Templates.
+
 	}
 
 	/**
