@@ -2,6 +2,7 @@ package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -50,10 +51,22 @@ public class EditPictureActivity extends Skindactivity {
 	private ImageView pictureView;
 	private Spinner albumView;
 	private AutoCompleteTextView addTagEditText;
+	private AlertDialog currentDialog;
 
 	@Override
 	public void update(Object model) {
 
+	}
+	
+	@Override
+	public void finish(){
+		if(currentDialog != null){
+			if(currentDialog.isShowing()){
+				currentDialog.dismiss();
+			}
+		}
+
+		super.finish();
 	}
 
 	@Override
@@ -89,7 +102,6 @@ public class EditPictureActivity extends Skindactivity {
 	}
 	
 	protected void populateTags() {
-		
 		// Add Tag field logic
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
 		
@@ -108,7 +120,6 @@ public class EditPictureActivity extends Skindactivity {
 		SimpleTagAdapter tagAdapter = new SimpleTagAdapter(this, R.layout.simple_list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
-		
 	}
 
 	/**
@@ -142,7 +153,7 @@ public class EditPictureActivity extends Skindactivity {
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		albumView.setAdapter(spinnerAdapter);
 		
-		// Find the album object in allAlbums associated with the name of the album in the picture
+		// Find 
 		for (Album album : allAlbums) {
 			if (picture.getAlbumName().equals(album.getName())) {
 				albumView.setSelection(allAlbums.indexOf(album));
@@ -361,6 +372,9 @@ public class EditPictureActivity extends Skindactivity {
 	}
 
 	private void errorDialog(String err) {
-		mainManager.errorDialog(err, this);
+	    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle("Error");
+			alert.setMessage(err);
+			currentDialog = alert.show();
 	}
 }

@@ -3,7 +3,6 @@ package com.cs301w01.meatload.controllers;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
@@ -121,7 +120,6 @@ public class PictureManager implements FController {
 			}
 			removedTags.remove(tagName);
 		}
-		Log.d("Tag Query", "Added tag " + tagName + " to picture " + picID);
 	}
 	
 	/**

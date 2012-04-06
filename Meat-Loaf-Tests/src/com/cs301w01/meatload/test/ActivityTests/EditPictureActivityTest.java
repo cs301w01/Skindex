@@ -92,18 +92,10 @@ public class EditPictureActivityTest extends
 		    	saveButton.performClick();
 			}
 		});
-		
-		try {
-			Thread.sleep(SLEEP_TIME * 5);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			assertTrue("Sleep failed", false);
-		}
+		sleep();
 
     	PictureQueryGenerator picGen = new PictureQueryGenerator(mContext);
     	Picture newPic = picGen.selectPictureByID(1);
-    	
-    	
     	assertTrue(newPic.getName().equals("Moley Mole"));
     }
     
@@ -127,5 +119,12 @@ public class EditPictureActivityTest extends
     	
     }
     
-
+    private void sleep(){
+		try {
+			Thread.sleep(SLEEP_TIME * 5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
+    }
 }

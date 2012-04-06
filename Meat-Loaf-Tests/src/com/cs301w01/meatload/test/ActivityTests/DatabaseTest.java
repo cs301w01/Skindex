@@ -2,12 +2,16 @@ package com.cs301w01.meatload.test.ActivityTests;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.AllPicturesGallery;
+import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.PictureGenerator;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
+import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
@@ -120,8 +124,49 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	assertTrue(1==1);
     }
     
+    /**
+     * Add tags to each picture.
+     */
     public void testAddTags(){
-    	assertTrue(1==1);
+    	
+    	int tagsAdded = 0;
+    	
+    	String[] tags = {"nasty zit", "scrumptious scar", "tasty rash", "succulent papule", "beautiful blister", 
+    					 "trapped fart bubble", "half picked scab", "stinky pustule", "beautiful bustule"};
+    	
+    	AllPicturesGallery aPG = new AllPicturesGallery();
+    	GalleryManager gMan = new GalleryManager(mContext, aPG);
+
+    	int tagsToAdd = 0; 
+    	
+    	for(Picture p : gMan.getPictureGallery()) {   	
+    		
+    		picMan = new PictureManager(mContext, p);  	
+    		
+    		for(int i = 0; i < tagsToAdd; i++) {      		       		
+    			
+    			picMan.addTag(tags[i]);
+    			
+    		}
+    		
+    		picMan.savePicture(p);
+    		
+    		tagsAdded += tagsToAdd;
+    	
+    	}   	
+    	
+    	aPG = new AllPicturesGallery();
+    	gMan = new GalleryManager(mContext, aPG);
+    	int insertedTagCount = 0;
+    	
+    	for(Picture p : gMan.getPictureGallery()) {
+    		
+    		insertedTagCount += p.getTags().size();
+    		
+    	}
+    	
+    	assertTrue(insertedTagCount == tagsAdded);
+    	
     }
     
     public void testDeleteTags(){

@@ -6,6 +6,7 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -23,11 +24,23 @@ public class EditAlbumActivity extends Skindactivity {
 	private MainManager mainManager;
     private GalleryManager gMan;
     private Album album;
+    private AlertDialog currentDialog;
     
     @Override
     public void update(Object model) {
     	
     }
+    
+	@Override
+	public void finish(){
+		if(currentDialog != null){
+			if(currentDialog.isShowing()){
+				currentDialog.dismiss();
+			}
+		}
+
+		super.finish();
+	}
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -137,6 +150,9 @@ public class EditAlbumActivity extends Skindactivity {
     
     //Pops up error dialog with given string in message
     private void errorDialog(String err){
-    	mainManager.errorDialog(err, this);
+        	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+    		alert.setTitle("Error");
+    		alert.setMessage(err);
+    		currentDialog = alert.show();
     }
 }

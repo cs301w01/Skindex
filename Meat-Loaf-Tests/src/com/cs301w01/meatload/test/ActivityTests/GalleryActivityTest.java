@@ -33,8 +33,9 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
 
     }
     
-    public void testNumberOfPhotos(){
+    public void testNumberOfPictures() {
     	assertTrue(1 == 1);
+    	// WELL OBVIOUSLY 1 == 1
     }
 
 }

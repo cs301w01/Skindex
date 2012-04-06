@@ -7,6 +7,7 @@ import com.cs301w01.meatload.adapters.AlbumAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 
 //import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,7 +37,9 @@ public class ViewAlbumsActivity extends Skindactivity {
 	private ListView albumListView;
 	private AlbumAdapter adapter;
 	private AlertDialog currentDialog;
+	private AlertDialog errorDialog;
 	private EditText currentEditText;
+	private boolean testing = false;
 
 	// private int[] adapterIDs = { R.id.itemName, R.id.itemValue };
 	// private String[] adapterCols = { "name", "numPictures" };
@@ -53,6 +56,21 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 	public void update(Object model) {
 		refreshScreen();
+	}
+	@Override
+	public void finish(){
+		if(errorDialog != null){
+			if(errorDialog.isShowing()){
+				errorDialog.dismiss();
+			}
+		}
+		if(currentDialog != null){
+			if(currentDialog.isShowing()){
+				currentDialog.dismiss();
+			}
+		}
+
+		super.finish();
 	}
 
 	@Override
@@ -80,9 +98,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 			}
 		});
 
-		// Below is the listener for a list button click. It takes the id
-		// of the clicked item and passes it to the FlogEdit activity so
-		// you can edit the selected log.
+		// Below is the listener for a list button click.
 
 		albumListView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -112,7 +128,9 @@ public class ViewAlbumsActivity extends Skindactivity {
 	}
 
 	private void switchToTakePicture(Album album) {
-
+		if (testing){
+			return;
+		}
 		Intent goToGallery = new Intent();
 		goToGallery.setClassName("com.cs301w01.meatload",
 				"com.cs301w01.meatload.activities.GalleryActivity");
@@ -149,7 +167,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 					}
 				});
 
-		alert.show();
+		currentDialog = alert.show();
 
 	}
 
@@ -166,9 +184,8 @@ public class ViewAlbumsActivity extends Skindactivity {
 						.getAlbumByName((String) albumNames[item]));
 			}
 		});
-		AlertDialog alert = builder.create();
-		alert.show();
-		
+		currentDialog = builder.create();
+		currentDialog.show();
 	}
 
 	/**
@@ -272,7 +289,10 @@ public class ViewAlbumsActivity extends Skindactivity {
 	 * @param err String containing error message
 	 */
 	private void errorDialog(String err) {
-		mainManager.errorDialog(err, this);
+	    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle("Error");
+			alert.setMessage(err);
+			errorDialog = alert.show();
 	}
 
 	/**
@@ -287,15 +307,18 @@ public class ViewAlbumsActivity extends Skindactivity {
 		currentEditText.setText(text);
 	}
 
-	// Android Lint gets angry about using the getButton method
-	// If there is a different way of doing this, we need to figure it out
-	//@TargetApi(3)
 	public void performDialogClick(boolean button) {
 		if (button == true) {
 			currentDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
 		} else {
 			currentDialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
 		}
+	}
+	
+	public void performListViewClick(int position){
+		testing = true;
+		ListView list = currentDialog.getListView();
+		list.performItemClick(null, position, list.getAdapter().getItemId(position));
 	}
 
 }
