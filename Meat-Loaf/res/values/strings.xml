@@ -22,7 +22,7 @@
     <string name="emailMessage">Message :</string>
     <string name="pastPictures">Past Pictures:</string>
     <string name="button_add_tag">Add Tag</string>
-    <string name="picture_name_text">Picture Name</string>
+    <string name="picture_name_text">Picture Name:</string>
     <string name="add_tag_hint">Enter a tag</string>
     <string name="button_compare_pic">Compare Pictures</string>
     <string name="signupButton">Sign Up</string>
@@ -42,7 +42,7 @@
     <string name="pictureCount">0</string>
     <string name="associatedPictures">Associated Pictures:</string>
     <string name="viewSelected">View Pictures</string>
-    <string name="filterHint">Type a tag filter</string>
+    <string name="filterHint">Search by tag name</string>
     <string name="modifiedLabel">Last Modified</string>
     <string name="tags_label">Add Tag</string>
     <string name="tab_search">Search</string>
