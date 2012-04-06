@@ -105,7 +105,7 @@ public class EditPictureActivity extends Skindactivity {
 		// Tag List View
 		tagListView = (ListView) findViewById(R.id.tagList);
 		ArrayList<Tag> pictureTags = pictureManager.getTags();
-		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
+		SimpleTagAdapter tagAdapter = new SimpleTagAdapter(this, R.layout.simple_list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
 		
