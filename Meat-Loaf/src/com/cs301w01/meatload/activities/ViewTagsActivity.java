@@ -274,5 +274,9 @@ public class ViewTagsActivity extends Skindactivity {
 		selectedTagsLV.setAdapter(selectedTagsAdapter);
 
 	}
+	
+	public void performListViewClick(int position) {
+		allTagsLV.performItemClick(null, position, allTagsLV.getAdapter().getItemId(position));
+	}
 
 }

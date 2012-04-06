@@ -75,12 +75,12 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
 		int oldNumAlbums = albumMan.getAllAlbums().size();
 		int newNumAlbums;
 
-		albumMan.addAlbum("Album 1", new ArrayList<String>());
-		albumMan.addAlbum("Album 2", new ArrayList<String>());
-		albumMan.addAlbum("Album 3", new ArrayList<String>());
-		albumMan.addAlbum("Album 4", new ArrayList<String>());
-		albumMan.addAlbum("Album 5", new ArrayList<String>());
-		albumMan.addAlbum("Album 6", new ArrayList<String>());
+		albumMan.addAlbum("Album 1");
+		albumMan.addAlbum("Album 2");
+		albumMan.addAlbum("Album 3");
+		albumMan.addAlbum("Album 4");
+		albumMan.addAlbum("Album 5");
+		albumMan.addAlbum("Album 6");
 
 		newNumAlbums = albumMan.getAllAlbums().size();
 
