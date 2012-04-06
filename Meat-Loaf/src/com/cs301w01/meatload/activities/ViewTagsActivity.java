@@ -131,7 +131,7 @@ public class ViewTagsActivity extends Skindactivity {
 
 		// tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
-	
+
 	private void refreshScreen() {
 		createListViews();
 		createListeners();
@@ -195,8 +195,9 @@ public class ViewTagsActivity extends Skindactivity {
 					}
 				}
 
-				if (!tagSelected)
+				if (!tagSelected) {
 					filteredAllTags.add(tag);
+				}
 
 			}
 
