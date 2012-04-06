@@ -54,7 +54,7 @@ public class GalleryActivity extends Skindactivity {
         gridview.setAdapter(adapter);
                 
         populateTextFields(galleryManager.getTitle());
-        if(!galleryManager.isAlbum()){
+        if (!galleryManager.isAlbum()) {
         	hideButtons();
         }
 

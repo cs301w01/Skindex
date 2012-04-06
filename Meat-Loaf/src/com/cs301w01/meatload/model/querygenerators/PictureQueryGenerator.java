@@ -12,6 +12,14 @@ import android.util.Log;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 
+/**
+ * Creates queries dealing with Pictures in the database.
+ * <p>
+ * Converts values from the database to usable data by the rest of the application. 
+ * 
+ * @author Derek Dowling
+ *
+ */
 public class PictureQueryGenerator extends QueryGenerator {
 
 	// vars for pictures table

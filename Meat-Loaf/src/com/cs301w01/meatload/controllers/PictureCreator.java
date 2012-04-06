@@ -17,6 +17,11 @@ import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
+/**
+ * Implements the Controller logic required to create a Picture in the database. 
+ * 
+ * @author Blake Bouchard
+ */
 public class PictureCreator {
 
 	private Context context;

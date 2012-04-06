@@ -14,7 +14,6 @@ public class Album implements Serializable {
 	private String name;
 	private int pictureCount;
 	private long id;
-	// TODO: Are albums actually having a date? because they don't right now...
 	private Date date;
 
 	/**
@@ -81,7 +80,7 @@ public class Album implements Serializable {
 	}
 
 	/**
-	 * Returns a formatted string representing the current Album.
+	 * Returns a formatted string representing the current Album Name.
 	 * 
 	 * @return String
 	 */

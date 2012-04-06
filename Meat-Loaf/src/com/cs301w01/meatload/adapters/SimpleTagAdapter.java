@@ -6,10 +6,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Tag;
 
 /**

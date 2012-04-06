@@ -26,6 +26,8 @@ public class SpinnerAlbumAdapter extends AlbumAdapter {
 
 	public SpinnerAlbumAdapter(Context context, int textViewResourceId, List<Album> albums) {
 		super(context, textViewResourceId, albums);
+		
+		this.resource = textViewResourceId;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {

@@ -10,6 +10,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+/**
+ * Creates queries dealing with Tags in the database.
+ * <p>
+ * Converts values from the database to usable data by the rest of the application.
+ * 
+ * @author Derek Dowling
+ *
+ */
 public class TagQueryGenerator extends QueryGenerator {
 	
 	 //vars for tags table

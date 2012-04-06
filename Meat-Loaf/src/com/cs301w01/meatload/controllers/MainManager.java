@@ -1,25 +1,11 @@
 package com.cs301w01.meatload.controllers;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 
-import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
-import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 

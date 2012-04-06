@@ -11,10 +11,12 @@ import android.util.Log;
 import com.cs301w01.meatload.model.Album;
 
 /**
- * Creates queries dealing with albums in the database.
+ * Creates queries dealing with Albums in the database.
  * <p>
  * Converts values from the database to usable data by the rest of the application.
+ * 
  * @author Derek Dowling
+ * 
  */
 public class AlbumQueryGenerator extends QueryGenerator {
 	
@@ -212,6 +214,11 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
     }
 
+    /**
+     * Gets the name of an album with the ID referenced by albumID.
+     * @param albumId AlbumID of album to get name from
+     * @return Name of album referenced by albumId
+     */
     public String getAlbumNameById(long albumId) {
         
         String query = "SELECT " + COL_NAME + " " +
@@ -229,6 +236,11 @@ public class AlbumQueryGenerator extends QueryGenerator {
 
     }
     
+    /**
+     * Updates the "Date Modified" field of the Album referenced by albumId 
+     * to the current time.
+     * @param albumId AlbumID of album to be updated
+     */
     public void setAlbumModified(long albumId) {
     	String date = dateToString(Calendar.getInstance().getTime());
     	String query = "UPDATE " + TABLE_NAME + " " +

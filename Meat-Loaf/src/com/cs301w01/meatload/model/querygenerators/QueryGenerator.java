@@ -11,6 +11,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+/**
+ * Abstract class
+ * 
+ * @author Derek Dowling
+ *
+ */
 public abstract class QueryGenerator {
 	
 	//common db vars
