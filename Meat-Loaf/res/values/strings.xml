@@ -48,4 +48,6 @@
     <string name="tab_search">Search</string>
     <string name="picture_name_hint">Enter a name for this picture</string>
     <string name="album_name">Album Name</string>
+    <string name="tags_label">Tags</string>
+    <string name="current_tags_label">Current Tags</string>
 </resources>

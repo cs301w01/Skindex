@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.View;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.SimpleTagAdapter;
@@ -165,24 +166,24 @@ public class EditPictureActivity extends Skindactivity {
 
 		});
 
+		// Catch enter key on AddTag field
+		addTagEditText.setOnKeyListener(new View.OnKeyListener() {
+			
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					addTag();
+					return true;
+				}
+				return false;
+			}
+		});
+		
 		// Add Tag button logic
 		Button addTagButton = (Button) findViewById(R.id.addTagButton);
 		addTagButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
-				String tag = addTagEditText.getText().toString().trim();
-				if (tag.length() == 0) {
-					// Deal with empty/whitespace tag
-					errorDialog("Tag cannot be empty.");
-					return;
-				} else if (tag.length() > mainManager.getMaxTagName()) {
-					// if tag is too long cut it to max tag length
-					tag = tag.substring(0, mainManager.getMaxTagName());
-				}
-
-				pictureManager.addTag(tag);
-				
-				populateTags();
+				addTag();
 			}
 
 		});
@@ -217,6 +218,28 @@ public class EditPictureActivity extends Skindactivity {
 			}
 
 		});
+	}
+
+	/**
+	 * Takes the text from the addTagEditText field and adds it to the staged "Add Tags"
+	 * in pictureManager.
+	 * @see PictureManager
+	 */
+	private void addTag() {
+		
+		String tag = addTagEditText.getText().toString().trim();
+		if (tag.length() == 0) {
+			// Return if empty/whitespace tag
+			return;
+		} else if (tag.length() > mainManager.getMaxTagName()) {
+			// if tag is too long cut it to max tag length
+			tag = tag.substring(0, mainManager.getMaxTagName());
+		}
+
+		pictureManager.addTag(tag);
+		
+		populateTags();
+		addTagEditText.setText("");
 	}
 
 	/**

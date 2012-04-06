@@ -99,27 +99,34 @@
 	        android:layout_height="fill_parent"
 	        android:layout_weight="0.50"
 	        android:orientation="vertical" >
-			
-	        <LinearLayout
-			    android:id="@+id/addTagLayout"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:orientation="vertical" >
 
-			    <AutoCompleteTextView
-			        android:id="@+id/addTagEditText"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:completionThreshold="1"
-			        android:hint="@string/add_tag_hint" />
+            <TextView
+                android:id="@+id/tagsLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/tags_label"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			    <Button
-			        android:id="@+id/addTagButton"
-			        android:layout_width="wrap_content"
-			        android:layout_height="wrap_content"
-			        android:text="@string/button_add_tag" />
-			</LinearLayout>
-	
+		    <AutoCompleteTextView
+		        android:id="@+id/addTagEditText"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:completionThreshold="1"
+		        android:hint="@string/add_tag_hint" />
+
+		    <Button
+		        android:id="@+id/addTagButton"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/button_add_tag" />
+		    		    
+		    <TextView
+		        android:id="@+id/currentTagsLabel"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/current_tags_label" />
+
 	        <ListView
 	            android:id="@+id/tagList"
 	            android:layout_width="fill_parent"
