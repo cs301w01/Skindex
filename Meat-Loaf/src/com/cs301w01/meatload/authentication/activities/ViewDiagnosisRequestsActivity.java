@@ -25,29 +25,21 @@ public class ViewDiagnosisRequestsActivity extends Skindactivity {
     	
     	diagnosisManager = new DiagnosisManager(this);
     	
-    	createListeners();
-    	
+    	createListeners();	
 	}
 	
-	@Override
 	public void update(Object model) {
-		
 		
 	}
 	
 	private void createListeners() {
-		
 		
 	}
 
 	/**
 	 * Creates a new PerformDiagnosisActivity with the appropriate information.
 	 */
-	public void viewPatientRequest() {
-		
+	public void viewPatientRequest() {	
 		diagnosisManager.getPatientRequestInfo();
-		
 	}
-	
-	
 }
