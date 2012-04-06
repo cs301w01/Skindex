@@ -6,22 +6,13 @@ import java.util.Date;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.EditPictureActivity;
-import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.controllers.PictureManager;
-import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Picture;
-import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
-import com.cs301w01.meatload.model.gallery.AlbumGallery;
-import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
-//import com.jayway.android.robotium.solo.Solo;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -30,10 +21,9 @@ public class EditPictureActivityTest extends
     
     private Context mContext;
     private EditPictureActivity mActivity;
-    private MainManager mainMan;
     private final int SLEEP_TIME = 500;
     
-	public EditPictureActivityTest(){
+	public EditPictureActivityTest() {
 		super("com.cs301w01.meatload", EditPictureActivity.class);
 	}
 	
@@ -56,8 +46,6 @@ public class EditPictureActivityTest extends
 
         mActivity = getActivity();	
         mContext = mActivity.getBaseContext();
-        
-        mainMan = new MainManager(mContext);
                 
     }
     
@@ -77,7 +65,7 @@ public class EditPictureActivityTest extends
 
     }
     
-    public void testEditNameThenSave(){
+    public void testEditNameThenSave() {
     	final Button saveButton = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.savePictureButton);
 		assertNotNull(saveButton);
 		
@@ -99,27 +87,27 @@ public class EditPictureActivityTest extends
     	assertTrue(newPic.getName().equals("Moley Mole"));
     }
     
-    public void testChangeAlbumThenSave(){
+    public void testChangeAlbumThenSave() {
     	
     }
     
-    public void testAddTagsThenSave(){
+    public void testAddTagsThenSave() {
     	
     }
     
-    public void testDeleteTagsThenSave(){
+    public void testDeleteTagsThenSave() {
     	
     }
     
-    public void testChangeInfoThenPressBackButton(){
+    public void testChangeInfoThenPressBackButton() {
     	
     }
     
-    public void testDeletePicture(){
+    public void testDeletePicture() {
     	
     }
     
-    private void sleep(){
+    private void sleep() {
 		try {
 			Thread.sleep(SLEEP_TIME * 5);
 		} catch (InterruptedException e) {
