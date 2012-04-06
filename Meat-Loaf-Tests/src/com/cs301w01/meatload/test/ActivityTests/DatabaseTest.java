@@ -15,6 +15,7 @@ import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureCreator;
 import com.cs301w01.meatload.controllers.PictureManager;
+import com.cs301w01.meatload.model.gallery.AlbumGallery;
 import com.cs301w01.meatload.model.gallery.AllPicturesGallery;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
@@ -78,18 +79,32 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	albumMan.addAlbum("Album 2", new ArrayList<String>());
     	albumMan.addAlbum("Album 3", new ArrayList<String>());
     	albumMan.addAlbum("Album 4", new ArrayList<String>());
+    	albumMan.addAlbum("Album 5", new ArrayList<String>());
+    	albumMan.addAlbum("Album 6", new ArrayList<String>());
 		
 		newNumAlbums = albumMan.getAllAlbums().size();
 		
-		assertTrue(newNumAlbums == oldNumAlbums + 4);
+		assertTrue(newNumAlbums == oldNumAlbums + 6);
     }
     
     public void testDeleteAlbum(){    	
-    	assertTrue(1==1);
+    	int oldNumAlbums = albumMan.getAllAlbums().size();
+    	int newNumAlbums;
+    	
+    	albumMan.deleteAlbum((int) albumMan.getAlbumByName("Album 5").getID());
+    	
+    	newNumAlbums = albumMan.getAllAlbums().size();
+    	
+    	assertTrue(newNumAlbums == oldNumAlbums - 1);
     }
     
     public void testUpdateAlbum(){
-    	assertTrue(1==1);
+    	int aid;
+    	Album album = albumMan.getAlbumByName("Album 6");
+    	aid = (int) album.getID();
+    	albumMan.changeAlbumName("Album 42", album);
+    	
+    	assertFalse(albumMan.albumExists("Album 6"));
     }
     
     public void testAddPicture1(){
@@ -123,18 +138,40 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 2");
     	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
     	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
     	
     	newNumPics = mainMan.getPictureCount();
     	
-    	assertTrue(newNumPics == oldNumPics + 3);
+    	assertTrue(newNumPics == oldNumPics + 4);
     }
     
     public void testDeletePicture(){
-    	assertTrue(1==1);
+    	int oldNumPics;
+    	int newNumPics;
+    	oldNumPics = mainMan.getPictureCount();
+    	
+    	AlbumGallery albGallery = new AlbumGallery(albumMan.getAlbumByName("Album 3"));
+    	ArrayList<Picture> pics = (ArrayList<Picture>)albGallery.getPictureGallery(mContext);
+    	picMan = new PictureManager(mContext, pics.get(1));
+    	picMan.deletePicture();
+    	
+    	newNumPics = mainMan.getPictureCount();
+
+    	assertTrue(newNumPics == oldNumPics - 1);
     }
     
     public void testUpdatePicture(){
-    	assertTrue(1==1);
+    	AlbumGallery albGallery = new AlbumGallery(albumMan.getAlbumByName("Album 3"));
+    	ArrayList<Picture> pics = (ArrayList<Picture>)albGallery.getPictureGallery(mContext);
+    	Picture pic = pics.get(1);
+    	picMan = new PictureManager(mContext, pic);
+    	Picture pic2 = new Picture("Groovy", pic.getPath(), pic.getAlbumName(), pic.getDate(), pic.getTags());
+    	picMan.savePicture(pic2);
+    	
+    	pics = (ArrayList<Picture>)albGallery.getPictureGallery(mContext);
+    	pic = pics.get(1);
+    	
+    	assertTrue(pic.getName().equals("Groovy"));
     }
     
     /**
@@ -237,7 +274,22 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     }
     
     public void testUpdateTags(){
-    	assertTrue(1==1);
+    	int picID;
+    	AlbumGallery albGallery = new AlbumGallery(albumMan.getAlbumByName("Album 3"));
+    	ArrayList<Picture> pics = (ArrayList<Picture>)albGallery.getPictureGallery(mContext);
+    	Picture pic = pics.get(1);
+    	picID = pic.getPictureID();
+    	int oldNumTags = pic.getTags().size();
+    	
+    	picMan = new PictureManager(mContext, picID);
+    	picMan.addTag("Taco");
+    	picMan.addTag("Fish");
+    	picMan.savePicture(pic);
+    	    	
+    	picMan = new PictureManager(mContext, picID);
+    	pic = picMan.getPicture();
+    	
+    	assertTrue(pic.getTags().size() == oldNumTags + 2);
     }
 	
 	
