@@ -24,7 +24,7 @@ import com.cs301w01.meatload.model.AlbumGallery;
 public class EditAlbumActivity extends Skindactivity {
 
 	private AlbumManager albumManager;
-	private GalleryManager gMan;
+	private GalleryManager galleryManager;
 	private Album album;
 	private AlertDialog currentDialog;
 
@@ -53,7 +53,7 @@ public class EditAlbumActivity extends Skindactivity {
 		AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
 
 		album = aGal.getAlbum(this);
-		gMan = new GalleryManager(this, new AlbumGallery(album));
+		galleryManager = new GalleryManager(this, new AlbumGallery(album));
 
 		createListeners();
 		populate();
@@ -64,7 +64,7 @@ public class EditAlbumActivity extends Skindactivity {
 		name.setText(album.getName());
 
 		TextView numView = (TextView) findViewById(R.id.text_num_pics);
-		numView.setText("" + gMan.getPictureGallery().size());
+		numView.setText("" + galleryManager.getPictureGallery().size());
 
 		TextView dateView = (TextView) findViewById(R.id.text_date);
 		dateView.setText(album.getDate().toString());
@@ -118,7 +118,7 @@ public class EditAlbumActivity extends Skindactivity {
 			return -1;
 		}
 
-		gMan.changeAlbumName(newAlbumName, album);
+		albumManager.changeAlbumName(newAlbumName, album);
 		return 1;
 	}
 
@@ -131,7 +131,7 @@ public class EditAlbumActivity extends Skindactivity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				EditAlbumActivity.this.setResult(RESULT_CANCELED, null);
-				gMan.deleteAlbum((int) album.getID());
+				albumManager.deleteAlbum((int) album.getID());
 				finish();
 			}
 		});
