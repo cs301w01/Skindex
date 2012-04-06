@@ -12,7 +12,7 @@ import android.graphics.Color;
  */
 public class PictureGenerator {
 	
-	public PictureGenerator(){
+	public PictureGenerator() {
 		
 	}
 
