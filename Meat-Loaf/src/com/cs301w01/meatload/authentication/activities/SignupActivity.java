@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +18,6 @@ import com.cs301w01.meatload.authentication.Model.Specialist;
 import com.cs301w01.meatload.authentication.Model.User;
 import com.cs301w01.meatload.authentication.querygenerator.UserQueryGenerator;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
 import java.util.ArrayList;
 
@@ -125,7 +123,7 @@ public class SignupActivity extends Skindactivity{
 
         alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                return null;
+
             }
         });
 
@@ -133,6 +131,8 @@ public class SignupActivity extends Skindactivity{
         alert.show();
 
         Log.d("Alert Dialog", "Created.");
+
+        return pwd;
 
     }
 
