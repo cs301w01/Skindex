@@ -16,6 +16,9 @@ import com.cs301w01.meatload.model.AlbumGallery;
 
 /**
  * View Activity which uses AlbumManager to modify Albums.
+ * <p>
+ * TODO: Carriage Return (Enter key) needs to be handled by the OnKeyListener of
+ * the AlbumName EditText.
  * 
  * @author Joel Burford
  */
@@ -82,7 +85,7 @@ public class EditAlbumActivity extends Skindactivity {
 		final Button deleteAlbumButton = (Button) findViewById(R.id.delete_album_button);
 		deleteAlbumButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-				deleteAlbum();
+				deleteAlbumDialog();
 			}
 		});
 	}
@@ -120,11 +123,15 @@ public class EditAlbumActivity extends Skindactivity {
 		return 1;
 	}
 
-	private void deleteAlbum() {
+	/**
+	 * Opens a dialog warning the user about deleting the pictures in the album.
+	 */
+	private void deleteAlbumDialog() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Confirm");
-		alert.setMessage("This will delete all pictures associated with this album. Are you sure you want to delete this album?");
+		alert.setMessage("This will delete all pictures associated with this album. "
+				+ "Are you sure you want to delete this album?");
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
@@ -136,7 +143,7 @@ public class EditAlbumActivity extends Skindactivity {
 
 		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				// Canceled.
+				dialog.dismiss();
 			}
 		});
 
@@ -144,7 +151,12 @@ public class EditAlbumActivity extends Skindactivity {
 
 	}
 
-	// Pops up error dialog with given string in message
+	/**
+	 * Pops up error dialog with given string in message.
+	 * 
+	 * @param err
+	 *            Error message to put into the error dialog
+	 */
 	private void errorDialog(String err) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Error");

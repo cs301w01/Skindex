@@ -37,6 +37,8 @@ import android.widget.TextView;
  * Gives the user an exploded view of the picture being edited.
  * <p>
  * Allows user to change certain metadata such as tags and album.
+ * <p>
+ * TODO: Carriage Return (Enter key) needs to be handled by Picture Name EditText.
  * 
  * @author Blake Bouchard
  */

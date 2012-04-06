@@ -1,13 +1,11 @@
 package com.cs301w01.meatload.adapters;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.model.Picture;
 
 import java.util.ArrayList;
