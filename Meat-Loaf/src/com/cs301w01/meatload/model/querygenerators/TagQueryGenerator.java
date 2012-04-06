@@ -140,12 +140,12 @@ public class TagQueryGenerator extends QueryGenerator {
      * @param tagNames A collection of tags to delete.
      */
     public void deleteAllTagsFromAlbum(int albumID) {
-    	String deleteTagsQuery = "DELETE FROM " + TABLE_NAME + " t" +
-					" WHERE EXISTS (SELECT * FROM " + TABLE_NAME + " p" + 
+    	String deleteTagsQuery = "DELETE FROM " + TABLE_NAME + "" +
+					" WHERE EXISTS (SELECT * FROM " + PictureQueryGenerator.TABLE_NAME + " p" + 
 					" LEFT JOIN " + AlbumQueryGenerator.TABLE_NAME + " a" +
 					" ON (p." + COL_ALBUMID + " = a." + COL_ID + ") " + 
-					" WHERE p." + COL_ID + " = t." + COL_PICTUREID +
-					" AND a." + COL_ID + " = '" + albumID + "'";
+					" WHERE p." + COL_ID + " = tags." + COL_PICTUREID +
+					" AND a." + COL_ID + " = '" + albumID + "')";
 
     	Log.d(TABLE_NAME, "Performing delete: " + deleteTagsQuery);
 

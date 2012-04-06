@@ -221,6 +221,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 							.getButton(AlertDialog.BUTTON_POSITIVE);
 					positiveButton.requestFocus();
 					positiveButton.performClick();
+					return true;
 				}
 				return false;
 			}

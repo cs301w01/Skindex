@@ -50,7 +50,7 @@ public class ViewTagsActivity extends Skindactivity {
 
 	// @Override
 	public void update(Object model) {
-
+		refreshScreen();
 	}
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,6 +73,7 @@ public class ViewTagsActivity extends Skindactivity {
 	protected void onResume() {
 		super.onResume();
 		mainManager.setContext(this);
+		refreshScreen();
 	}
 
 	protected void createListeners() {
@@ -129,6 +130,12 @@ public class ViewTagsActivity extends Skindactivity {
 		});
 
 		// tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+	}
+	
+	private void refreshScreen() {
+		createListViews();
+		createListeners();
+		updateSelectedTagPictureCount();
 	}
 
 	private void updateSelectedTagPictureCount() {
