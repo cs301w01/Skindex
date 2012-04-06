@@ -21,7 +21,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     private ViewAlbumsActivity mActivity;
 	private AlbumManager albumMan;
 	private MainManager mainMan;
-    private final int SLEEP_TIME = 500;
+    private final int SLEEP_TIME = 1000;
     
 	public ViewAlbumActivityTest(){
 		super("com.cs301w01.meatload", ViewAlbumsActivity.class);
