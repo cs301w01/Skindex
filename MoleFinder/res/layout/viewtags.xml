@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout 
+        android:id="@+id/allTagsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.50">          
+            
+            <LinearLayout 
+                android:id="@+id/tagSearchLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                
+                android:orientation="horizontal" >
+                
+             	<TextView
+		            android:id="@+id/allTagsTitle" 
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/allTags" />
+                
+                <EditText
+                    android:id="@+id/tagSearchEditText"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/filterHint"
+                    android:completionThreshold="1" />
+                
+            </LinearLayout>
+            
+        <ListView
+	        android:id="@+id/tagListView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_alignParentBottom="true"
+	        android:layout_below="@+id/tagSearchLayout" >
+    	</ListView>
+    
+    </RelativeLayout>
+        
+    <RelativeLayout 
+        android:id="@+id/selectedTagsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.50">
+        
+        <TextView 
+            android:id="@+id/selectedTagsText"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/selectedTags"/>
+        
+        <ListView
+	        android:id="@+id/selectedTagsListView"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:layout_above="@+id/picCountLayout"
+	        android:layout_below="@+id/selectedTagsText"
+	         >
+    	</ListView>
+
+        <RelativeLayout
+            android:id="@+id/picCountLayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true" >
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/associatedPictures"
+                android:layout_alignParentLeft="true" />
+
+            <TextView
+                android:id="@+id/tagPicCountValue"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/pictureCount"
+                android:layout_alignParentRight="true" />
+            
+        </RelativeLayout>
+    
+    </RelativeLayout>
+        
+        <Button
+            android:id="@+id/viewSelections"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/viewSelected" />
+
+</LinearLayout>

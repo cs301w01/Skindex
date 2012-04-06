@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/pictureView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/editPicDesc"
+        android:src="@drawable/icon" />
+
+    <LinearLayout
+        android:id="@+id/dateLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+	    <TextView
+	        android:id="@+id/dateLabel"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/date_label" 
+	        android:textAppearance="?android:attr/textAppearanceSmall"/>
+	
+	    <TextView
+	        android:id="@+id/dateView"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	</LinearLayout>
+    <LinearLayout
+        android:id="@+id/editFieldsLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1.0"
+        android:orientation="horizontal"
+        android:baselineAligned="false" >
+        
+	    <LinearLayout
+	        android:id="@+id/pictureNameAlbumNameLayout"
+	        android:layout_width="0dip"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.50"
+	        android:baselineAligned="false"
+	        android:orientation="vertical" >
+	
+	   		 <LinearLayout
+	   		     android:id="@+id/pictureNameLayout"
+	   		     android:layout_width="fill_parent"
+	   		     android:layout_height="wrap_content"
+	   		     android:orientation="vertical" >
+	
+				<TextView
+					android:id="@+id/pictureNameTextView"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:text="@string/picture_name_text"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+				<EditText
+					android:id="@+id/pictureNameEditText"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:inputType="text" />
+	   		 
+			</LinearLayout>
+	        
+			<LinearLayout
+			    android:id="@+id/albumLayout"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:orientation="vertical" >
+	
+				<TextView
+					android:id="@+id/albumLabel"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_gravity="center_horizontal"
+					android:text="@string/albumName"
+					android:textAppearance="?android:attr/textAppearanceMedium" />
+	       		 
+				<Spinner
+	           		android:id="@+id/albumView"
+	            	android:layout_width="fill_parent"
+	            	android:layout_height="wrap_content" />
+
+				<LinearLayout
+				    android:id="@+id/addTagLayout"
+				    android:layout_width="fill_parent"
+				    android:layout_height="wrap_content"
+				    android:orientation="vertical" >"
+
+				    <TextView
+				        android:id="@+id/tagsTextView"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:gravity="center_horizontal"
+				        android:text="@string/add_tag_label"
+				        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+				    <AutoCompleteTextView
+				        android:id="@+id/addTagEditText"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:completionThreshold="1"
+				        android:hint="@string/add_tag_hint" >
+
+				        <requestFocus />
+				    </AutoCompleteTextView>
+
+				    <Button
+				        android:id="@+id/addTagButton"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:text="@string/button_add_tag" />
+				</LinearLayout>
+	       		 
+	    	</LinearLayout>
+	    	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/tagLayout"
+	        android:layout_width="0dip"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="0.50"
+	        android:orientation="vertical" >
+	
+	        <ListView
+	            android:id="@+id/tagList"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content" >
+	        </ListView>
+	        
+	    </LinearLayout>
+	</LinearLayout>
+		
+	
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >"
+
+        <Button
+            android:id="@+id/deletePictureButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/delete" />
+                 
+        <Button
+            android:id="@+id/sendEmailButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/sendEmail" />
+        
+        <Button
+            android:id="@+id/savePictureButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/save" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -121,15 +121,7 @@ public class MainManager implements FController {
 			i++;
 		}
 		return albumNames;
-	}
-	
-    public void errorDialog(String err, Activity a){
-    	AlertDialog.Builder alert = new AlertDialog.Builder(a);
-		alert.setTitle("Error");
-		alert.setMessage(err);
-		alert.show();
-    }
-    
+	}    
     
     public boolean albumExists(String name){
 		ArrayList<Album> testList = getAllAlbums();
