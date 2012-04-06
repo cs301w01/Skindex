@@ -82,7 +82,13 @@ public class ViewTagsActivity extends Skindactivity {
 		searchField.setOnKeyListener(new View.OnKeyListener() {
 
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				filterAllTagsListView();
+				if(keyCode == KeyEvent.KEYCODE_ENTER) {
+
+                    return addTagIfExists();
+
+                }
+
+                filterAllTagsListView();
 				return false;
 			}
 		});
@@ -102,13 +108,7 @@ public class ViewTagsActivity extends Skindactivity {
 
 				Tag selectedTag = (Tag) adapter.getItemAtPosition(pos);
 
-				filteredAllTags.remove(selectedTag);
-				selectedTags.add(selectedTag);
-
-				updateSelectedTagPictureCount();
-
-				allTagsAdapter.notifyDataSetChanged();
-				selectedTagsAdapter.notifyDataSetChanged();
+				addTagToSelectedList(selectedTag);
 
 			}
 
@@ -132,7 +132,49 @@ public class ViewTagsActivity extends Skindactivity {
 		// tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 	}
 
-	private void refreshScreen() {
+    private void addTagToSelectedList(Tag tag) {
+
+        filteredAllTags.remove(tag);
+        selectedTags.add(tag);
+
+        updateSelectedTagPictureCount();
+
+        allTagsAdapter.notifyDataSetChanged();
+        selectedTagsAdapter.notifyDataSetChanged();
+
+    }
+
+    /**
+     * When enter key is press from the auto-complete field, checks to see if the current entry
+     * is a tag name, if so, adds it to the selectedTags list and returns true, if doesn't exist
+     * returns false.
+     * @return tagExists true if does exist, false if doesn't
+     */
+    private boolean addTagIfExists() {
+
+        boolean tagExists = false;
+
+        String potentialTag = searchField.getText().toString();
+
+        for (Tag tag : filteredAllTags) {
+
+            //check to see if text is an exact match
+            if (tag.getName().equals(potentialTag)) {
+
+                addTagToSelectedList(tag);
+
+                //stop parsing if match found
+                return true;
+
+            }
+
+        }
+
+        return false;
+
+    }
+
+    private void refreshScreen() {
 		createListViews();
 		createListeners();
 		updateSelectedTagPictureCount();
@@ -180,8 +222,12 @@ public class ViewTagsActivity extends Skindactivity {
 
 	}
 
+    /**
+     * Updates the list view to match the auto complete field typed.
+     */
 	private void filterAllTagsListView() {
-		String filterText = searchField.getText().toString();
+
+        String filterText = searchField.getText().toString();
 		filteredAllTags = new ArrayList<Tag>();
 		// filter out non-matches
 		for (Tag tag : allTags) {
