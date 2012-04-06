@@ -19,6 +19,13 @@ import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
+/**
+ * 
+ * 
+ * 
+ * @author dowling
+ *
+ */
 public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsActivity> {
     private Context mContext;
     private ViewAlbumsActivity mActivity;
@@ -170,7 +177,57 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     }
     
     public void testDeleteTags(){
-    	assertTrue(1==1);
+    	
+
+    	int originalTagCount = 0;
+    	
+    	//delete all tags for 3 pictures
+    	int picturesTagsToDelete = 3;
+    	
+    	//list of tag names
+    	String[] tags = {"nasty zit", "scrumptious scar", "tasty rash", "succulent papule", "beautiful blister", 
+    					 "trapped fart bubble", "half picked scab", "stinky pustule", "beautiful bustule"};
+    	
+    	AllPicturesGallery aPG = new AllPicturesGallery();
+    	GalleryManager gMan = new GalleryManager(mContext, aPG);   	
+    	ArrayList<Picture> pictures = new ArrayList<Picture>(gMan.getPictureGallery());
+    	
+    	for(Picture p : pictures) {
+    		
+    		originalTagCount += p.getTags().size();
+    		
+    	}
+    	
+    	int tagsDeleted = 0;
+    	//delete tags for first 3 pictures
+    	for(int picturesTagsDeleted = 0; picturesTagsDeleted < picturesTagsToDelete; picturesTagsDeleted++) {   	
+    		
+    		picMan = new PictureManager(mContext, pictures.get(picturesTagsDeleted));  	
+    		
+    		for(int i = 0; i < picMan.getPicture().getTags().size(); i++) {      		       		
+    			
+    			picMan.deleteTag(tags[i]);
+    			tagsDeleted++;
+    			
+    		}
+    		
+    		picMan.savePicture(picMan.getPicture());
+ 
+    	
+    	}   	
+    	
+    	aPG = new AllPicturesGallery();
+    	gMan = new GalleryManager(mContext, aPG);
+    	int newTagCount = 0;
+    	
+    	for(Picture p : gMan.getPictureGallery()) {
+    		
+    		newTagCount += p.getTags().size();
+    		
+    	}
+    	
+    	assertTrue(newTagCount == originalTagCount - tagsDeleted);
+    	
     }
     
     public void testUpdateTags(){
