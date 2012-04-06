@@ -38,7 +38,7 @@ public class Skindex extends TabActivity {
 
     	// Initialize a TabSpec for each tab and add it to the TabHost
     	spec = tabHost.newTabSpec("albums").setIndicator(this.getString(R.string.tab_albums),
-                       res.getDrawable(R.drawable.tab_main))
+                       res.getDrawable(R.drawable.tab_album))
                        .setContent(intent);
     	tabHost.addTab(spec);
 
