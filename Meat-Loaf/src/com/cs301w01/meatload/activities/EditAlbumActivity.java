@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.AlbumGallery;
+import com.cs301w01.meatload.model.gallery.AlbumGallery;
 
 /**
  * View Activity which uses AlbumManager to modify Albums.

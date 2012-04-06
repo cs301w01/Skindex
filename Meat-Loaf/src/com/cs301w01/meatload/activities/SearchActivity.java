@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.model.SearchGallery;
+import com.cs301w01.meatload.model.gallery.SearchGallery;
 
 import android.content.Intent;
 import android.os.Bundle;

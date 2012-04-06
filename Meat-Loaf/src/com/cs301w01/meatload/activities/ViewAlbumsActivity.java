@@ -20,9 +20,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.AlbumGallery;
-import com.cs301w01.meatload.model.AllPicturesGallery;
-import com.cs301w01.meatload.model.GalleryData;
+import com.cs301w01.meatload.model.gallery.AlbumGallery;
+import com.cs301w01.meatload.model.gallery.AllPicturesGallery;
+import com.cs301w01.meatload.model.gallery.GalleryData;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
 /**

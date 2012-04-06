@@ -1,9 +1,12 @@
-package com.cs301w01.meatload.model;
+package com.cs301w01.meatload.model.gallery;
 import java.io.Serializable;
 import java.util.Collection;
 
 import android.content.Context;
 
+import com.cs301w01.meatload.model.Album;
+import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 

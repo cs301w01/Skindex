@@ -6,7 +6,6 @@ import java.util.Random;
 
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.AllPicturesGallery;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.PictureGenerator;
 import com.cs301w01.meatload.model.SQLiteDBManager;
@@ -16,6 +15,7 @@ import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureCreator;
 import com.cs301w01.meatload.controllers.PictureManager;
+import com.cs301w01.meatload.model.gallery.AllPicturesGallery;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
 import android.content.Context;

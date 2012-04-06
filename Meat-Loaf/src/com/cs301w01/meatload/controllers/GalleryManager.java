@@ -4,9 +4,9 @@ import java.util.Collection;
 
 import android.content.Context;
 
-import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.gallery.GalleryData;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**

@@ -6,7 +6,7 @@ import android.widget.Gallery;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.ComparePictureGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
-import com.cs301w01.meatload.model.GalleryData;
+import com.cs301w01.meatload.model.gallery.GalleryData;
 
 /**
  * Implements the logic of the Compare Pictures interface.

@@ -7,7 +7,7 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.TagAdapter;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Tag;
-import com.cs301w01.meatload.model.TagsGallery;
+import com.cs301w01.meatload.model.gallery.TagsGallery;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 import android.content.Intent;

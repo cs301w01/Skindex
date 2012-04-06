@@ -1,4 +1,4 @@
-package com.cs301w01.meatload.model;
+package com.cs301w01.meatload.model.gallery;
 
 import java.io.Serializable;
 import java.util.ArrayList;

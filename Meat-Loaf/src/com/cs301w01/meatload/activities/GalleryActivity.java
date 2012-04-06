@@ -14,9 +14,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
-import com.cs301w01.meatload.model.AlbumGallery;
-import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.gallery.AlbumGallery;
+import com.cs301w01.meatload.model.gallery.GalleryData;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
