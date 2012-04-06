@@ -10,7 +10,7 @@
     <string name="date_label">Date Created</string>
     <string name="tagsLabel">Tags</string>
     <string name="button_edit_album">Edit Album</string>
-    <string name="album_label">Album Name</string>
+    <string name="album_label">Album</string>
     <string name="label_num_pics">Number of Pictures</string>
     <string name="sendEmail">Email</string>
     <string name="save">Save</string>

@@ -3,34 +3,14 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <ImageView
         android:id="@+id/pictureView"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="0.50"
         android:contentDescription="@string/editPicDesc"
         android:src="@drawable/icon" />
-
-    <LinearLayout
-        android:id="@+id/dateLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-        
-	    <TextView
-	        android:id="@+id/dateLabel"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/date_label" 
-	        android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-	    <TextView
-	        android:id="@+id/dateView"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-	</LinearLayout>
 
     <LinearLayout
         android:id="@+id/editFieldsLayout"
@@ -40,7 +20,6 @@
         android:orientation="horizontal"
         android:baselineAligned="false" >
         
-
 	    <LinearLayout
 	        android:id="@+id/pictureNameAlbumNameLayout"
 	        android:layout_width="0dip"
@@ -87,11 +66,32 @@
 					android:textAppearance="?android:attr/textAppearanceMedium" />
 
 				<Spinner
-	           		android:id="@+id/albumView"
+	           		android:id="@+id/albumSpinner"
 	            	android:layout_width="fill_parent"
 	            	android:layout_height="wrap_content" />
 
 	    	</LinearLayout>
+	    	
+			<LinearLayout
+		        android:id="@+id/dateLayout"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical" >
+		        
+			    <TextView
+			        android:id="@+id/dateLabel"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text="@string/date_label" 
+			        android:textAppearance="?android:attr/textAppearanceSmall"/>
+		
+			    <TextView
+			        android:id="@+id/dateView"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:textAppearance="?android:attr/textAppearanceSmall" />
+		
+			</LinearLayout>
 
 	    </LinearLayout>
 

@@ -49,7 +49,7 @@ public class EditPictureActivity extends Skindactivity {
 	private ListView tagListView;
 	private EditText pictureNameEditText;
 	private ImageView pictureView;
-	private Spinner albumView;
+	private Spinner albumSpinner;
 	private AutoCompleteTextView addTagEditText;
 
 	@Override
@@ -135,18 +135,18 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(picture.getDate().toString());
 
 		// AlbumView Spinner
-		albumView = (Spinner) findViewById(R.id.albumView);
+		albumSpinner = (Spinner) findViewById(R.id.albumSpinner);
 		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
 		SpinnerAlbumAdapter spinnerAdapter = new SpinnerAlbumAdapter(this, R.layout.spinner_item,
 				allAlbums);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		albumView.setAdapter(spinnerAdapter);
+		albumSpinner.setAdapter(spinnerAdapter);
 
 		// Find the album object in allAlbums associated with the name of the
 		// album in the picture
 		for (Album album : allAlbums) {
 			if (picture.getAlbumName().equals(album.getName())) {
-				albumView.setSelection(allAlbums.indexOf(album));
+				albumSpinner.setSelection(allAlbums.indexOf(album));
 				break;
 			}
 		}
@@ -250,71 +250,11 @@ public class EditPictureActivity extends Skindactivity {
 	private void savePicture() {
 
 		Picture picture = new Picture(pictureNameEditText.getText().toString(),
-				((Album) albumView.getSelectedItem()).getName());
+				((Album) albumSpinner.getSelectedItem()).getName());
 		pictureManager.savePicture(picture);
 		finish();
 	}
-
-	/**
-	 * @deprecated
-	 */
-	@SuppressWarnings("unused")
-	private void openEditTagsDialog() {
-
-		// Set up Dialog object
-		final Dialog editTagsDialog = new Dialog(this);
-		editTagsDialog.setContentView(R.layout.edit_tags);
-		editTagsDialog.setCancelable(true);
-
-		// Populate tags list
-		final ArrayList<Tag> allTags = mainManager.getAllTags();
-		TagAdapter adapter = new TagAdapter(this, R.layout.tag_list_item, allTags);
-
-		// Set up ListView of all Tags
-		final ListView tagListView = (ListView) findViewById(R.id.editTagsListView);
-		tagListView.setAdapter(adapter);
-		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-		ArrayList<Tag> pictureTags = pictureManager.getTags();
-
-		for (Tag pictureTag : pictureTags) {
-			for (int i = 0; i < allTags.size(); i++) {
-				if (pictureTag.getName().equals(allTags.get(i).getName())) {
-					tagListView.setItemChecked(i, true);
-				}
-			}
-		}
-
-		Button saveTagsButton = (Button) editTagsDialog.findViewById(R.id.saveTagsButton);
-		saveTagsButton.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				ArrayList<Tag> newTags = new ArrayList<Tag>();
-				SparseBooleanArray checkPositions = tagListView.getCheckedItemPositions();
-
-				for (int i = 0; i < checkPositions.size(); i++) {
-					if (checkPositions.get(i)) {
-						newTags.add(allTags.get(i));
-					}
-				}
-
-				// pictureManager.setTags(newTags);
-
-				editTagsDialog.dismiss();
-			}
-		});
-
-		Button cancelDialogButton = (Button) editTagsDialog.findViewById(R.id.cancelDialogButton);
-		cancelDialogButton.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				editTagsDialog.dismiss();
-			}
-		});
-
-		editTagsDialog.show();
-	}
-
+	
 	private void deletePicture() {
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
