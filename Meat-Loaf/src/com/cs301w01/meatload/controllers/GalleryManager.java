@@ -1,18 +1,13 @@
 package com.cs301w01.meatload.controllers;
 
 import java.util.Collection;
-import java.util.Date;
 
 import android.content.Context;
 
-import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.AllPicturesGallery;
-import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Picture;
-import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
+import com.cs301w01.meatload.model.gallery.GalleryData;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
-import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
 
 /**
  * Mediates between the GalleryActivity and the DBManager by creating HashMaps
@@ -23,7 +18,7 @@ import com.cs301w01.meatload.model.querygenerators.TagQueryGenerator;
  * 
  * @author Isaac Matichuk
  * @see SQLiteDBManager
- * @see com.cs301w01.meatload.activities.GalleryActivity
+ * @see GalleryActivity
  */
 public class GalleryManager implements FController {
 
@@ -31,32 +26,30 @@ public class GalleryManager implements FController {
 	private GalleryData gallery;
 	
 	/**
-	 * Constructor, sets current DalleryData
+	 * Constructor, sets current GalleryData and initializes the context
+	 * This GalleryData is used for querying the database for a gallery of pictures
 	 * @param gallery
 	 */
-	public GalleryManager(GalleryData gallery) {
+	public GalleryManager(Context context, GalleryData gallery) {
+		setContext(context);
 		this.gallery = gallery;
 	}
 
 	/**
-	 * Sets the current context.  Must be set before any database
-	 * calls are made or GalleryManager will error.
-	 * @param context Current context for database.
+	 * Sets the current GalleryManager's Context.  A context is necessary if
+	 * the database is going to be used.
+	 * The context is set upon creation of the manager object
+	 * but this context is invalidated as soon as the user leaves the screen
+	 * so every activity that stores a manager needs to update the context
+	 * on resume
+	 * @param Context
 	 */
 	public void setContext(Context context) {
 		this.context = context;
 	}
 	
 	/**
-	 * Stores a given photo into the database.
-	 * @param picture Picture to be stored.
-	 */
-	public void storePhoto(Picture picture) {
-		new PictureQueryGenerator(context).insertPicture(picture);
-	}
-	
-	/**
-	 * gets the gallery currently being used by this gallerymanager
+	 * gets the GalleryData object currently being used by this GalleryManager
 	 * @return GalleryData
 	 */
 	public GalleryData getGallery() {
@@ -75,7 +68,7 @@ public class GalleryManager implements FController {
 	/**
 	 * Finds a Picture with the given pid in the database and returns it.
 	 * @param pid ID of picture to be returned.
-	 * @return
+	 * @return Picture object
 	 */
 	public Picture getPhoto(int pid) {
 		return new PictureQueryGenerator(context).selectPictureByID(pid);
@@ -92,46 +85,11 @@ public class GalleryManager implements FController {
 	}
 	
 	/**
-	 * In the database changes the name of an old album to a newly provided string.
-	 * @param newAlbumName new name
-	 * @param album The old album to be modified
-	 */
-	public void changeAlbumName(String newAlbumName, Album a) {
-		AlbumQueryGenerator aG = new AlbumQueryGenerator(this.context);
-		aG.updateAlbumName(a.getName(), newAlbumName);
-	}
-
-	/**
-	 * Deletes the Picture with a given pid from the database.
-	 * @param pid ID of Picture to be deleted.
-	 */
-	public void deletePicture(int pid) {
-		new PictureQueryGenerator(context).deletePictureByID(pid);
-	}
-	
-	/**
-	 * Deletes the album specified by album id.  Will delete all associated photos.
-	 * @param aid ID of album to delete.
-	 */
-	public void deleteAlbum(int aid) {
-		new PictureQueryGenerator(context).deletePicturesFromAlbum(aid);
-		new AlbumQueryGenerator(context).deleteAlbumByID(aid);
-	}
-
-	/**
 	 * Determines whether the current Gallery Manager represents an album or is a 
 	 * collection of related Pictures that are not in the same album.
 	 * @return boolean
 	 */
 	public boolean isAlbum() {
 		return gallery.isAlbum();
-	}
-
-	/**
-	 * Deprecated, waiting for Isaac to delete.
-	 * @return
-	 */
-	public boolean stillValid() {
-		return gallery.stillValid();
 	}
 }

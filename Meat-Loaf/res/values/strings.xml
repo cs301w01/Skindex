@@ -1,29 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MoleFinder</string>
-    <string name="text1">&quot;TESTING&quot;</string>
     <string name="button_take_pic">Take Picture</string>
     <string name="button_new_album">New Album</string>
     <string name="tab_albums">Album</string>
     <string name="tab_tags">Tags</string>
     <string name="button_gen_pic">Generate Pic</string>
     <string name="editPicDesc">Exploded view of user picture</string>
-    <string name="dateLabel">Date Created</string>
-    <string name="albumLabel">Album</string>
+    <string name="date_label">Date Created</string>
     <string name="tagsLabel">Tags</string>
-    <string name="changeAlbumButton">Change...</string>
-    <string name="button_search">Search</string>
     <string name="button_edit_album">Edit Album</string>
-    <string name="button_edit_tags">Edit Tags</string>
-    <string name="button_save_album">Save Album</string>
-    <string name="button_delete_album">Delete Album</string>
-    <string name="albumName">Album Name</string>
+    <string name="album_label">Album</string>
     <string name="label_num_pics">Number of Pictures</string>
     <string name="sendEmail">Email</string>
     <string name="save">Save</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_move_album">Move to Album</string>
-    <string name="photoName">Photo Name</string>
     <string name="delete">Delete</string>
     <string name="sendTo">To :</string>
     <string name="subject">Subject :</string>
@@ -31,10 +23,8 @@
     <string name="pastPictures">Past Pictures:</string>
     <string name="button_add_tag">Add Tag</string>
     <string name="picture_name_text">Picture Name</string>
-    <string name="add_tag_hint">Enter a tag to add here</string>
+    <string name="add_tag_hint">Enter a tag</string>
     <string name="button_compare_pic">Compare Pictures</string>
-    <string name="topGalleryData">Date - Name</string>
-    <string name="bottomGalleryData">Date - Name</string>
     <string name="signupButton">Sign Up</string>
     <string name="loginButton">Login</string>
     <string name="username">Username:</string>
@@ -52,6 +42,15 @@
     <string name="pictureCount">0</string>
     <string name="associatedPictures">Associated Pictures:</string>
     <string name="viewSelected">View Pictures</string>
-    <string name="tagSearch">Tag Search:</string>
     <string name="filterHint">Type a tag filter</string>
+    <string name="modifiedLabel">Last Modified</string>
+    <string name="tags_label">Add Tag</string>
+    <string name="tab_search">Search</string>
+    <string name="picture_name_hint">Enter a name</string>
+    <string name="current_tags_label">Current Tags</string>
+    <string name="album_name">Album Name</string>
+    <string name="search_name">Name</string>
+    <string name="search_startDate">Start Date</string>
+    <string name="search_endDate">End Date</string>
+    <string name="search_name_hint">Type a name to search for</string>
 </resources>

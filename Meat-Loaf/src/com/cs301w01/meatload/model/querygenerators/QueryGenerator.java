@@ -2,7 +2,6 @@ package com.cs301w01.meatload.model.querygenerators;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 
 import com.cs301w01.meatload.model.DBManager;
@@ -10,9 +9,14 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+/**
+ * Abstract class
+ * 
+ * @author Derek Dowling
+ *
+ */
 public abstract class QueryGenerator {
 	
 	//common db vars
@@ -64,30 +68,6 @@ public abstract class QueryGenerator {
     }
     
     /**
-     * This method is used to select rows from a table where a specific id is known. Returns a 
-     * cursor that is preset to the first tuple.
-     * @param selectColumns array of columns you wish to have returned
-     * @param tableName table name
-     * @param idValue
-     * @return
-     */
-    protected Cursor selectRowByID(String[] selectColumns, String tableName, String idValue) {
-    	
-        Cursor mCursor =
-                db.query(true, tableName, selectColumns, COL_ID + " = " + idValue, 
-                		null, null, null, null, null);
-        
-        if (mCursor.getCount() == 0) {
-            return null;
-        }
-
-        mCursor.moveToFirst();
-        
-        return mCursor;
-
-    }
-    
-    /**
      * Returns the int value corresponding to the tuple ID by the tuple name.
      * @param name
      * @param tableName
@@ -113,22 +93,6 @@ public abstract class QueryGenerator {
     }
     
     /**
-     * Use this method if you want to do a "SELECT *" style query on a table for a specific ID
-     * @param tableName Name of table
-     * @param id Row in table
-     * @return
-     */
-    protected Cursor selectAllColsByID(String tableName, long id) {
-
-        //build the query
-        String selectionQuery = "SELECT * FROM " + tableName + " WHERE " + COL_ID +
-                " = '" + id + "'";
-
-        return db.performRawQuery(selectionQuery);
-
-    }
-    
-    /**
      * Removes a tuple based on its id value.
      * @param id Tuple to delete
      * @param tableName
@@ -142,6 +106,22 @@ public abstract class QueryGenerator {
         //db.execSQL(dQuery);
         
         db.performRawQuery(dQuery);
+
+    }
+    
+    /**
+     * Use this method if you want to do a "SELECT *" style query on a table for a specific ID
+     * @param tableName Name of table
+     * @param id Row in table
+     * @return
+     */
+    protected Cursor selectAllColsByID(String tableName, long id) {
+
+        //build the query
+        String selectionQuery = "SELECT * FROM " + tableName + " WHERE " + COL_ID +
+                " = '" + id + "'";
+
+        return db.performRawQuery(selectionQuery);
 
     }
 

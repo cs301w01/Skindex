@@ -14,11 +14,17 @@ import com.cs301w01.meatload.model.querygenerators.QueryGenerator;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * Handles all queries relating to the user systems including subscription, login, sign up, and
+ * any other functionality related to users.
+ * 
+ * @author Derek Dowling
+ *
+ */
 public class UserQueryGenerator extends QueryGenerator {
 
     //static strings used by this class
     public static final String TABLE_NAME_USERS = "users";
-    public static final String TABLE_NAME_SUBSCRIPTIONS = "subscriptions";
     public static final String TABLE_NAME_USER_ALBUMS = "useralbums";
     public static final String SPECIALIST_ROLE = "Specialist";
     public static final String PATIENT_ROLE = "Patient";
@@ -44,17 +50,6 @@ public class UserQueryGenerator extends QueryGenerator {
             COL_PASSWORD + " TEXT, " +
             COL_SALT + " TEXT, " +
             COL_ROLE + " TEXT );";
-
-    //sql for creating the specialist/patient subscription table
-    public static final String CREATE_SUBSCRIPTIONS_TABLE = 
-            "CREATE TABLE " + TABLE_NAME_SUBSCRIPTIONS + " (" +
-            COL_ID + " INTEGER PRIMARY KEY, " +
-            COL_SPECIALIST_ID + " INTEGER " +
-                    "FOREIGN KEY(" + COL_SPECIALIST_ID + ") REFERENCES " +
-                    TABLE_NAME_USERS + "( " + COL_ID + "), " +
-            COL_PATIENT_ID + " INTEGER " +
-                    "FOREIGN KEY(" + COL_PATIENT_ID + ") REFERENCES " +
-                    TABLE_NAME_USERS + "( " + COL_ID + "));";
     
     //sql for creating the album ownership table
     public static final String CREATE_USER_ALBUMS_TABLE =
@@ -134,43 +129,7 @@ public class UserQueryGenerator extends QueryGenerator {
         return albums;
     }
 
-    /**
-     * Gets a collection of patients that a specialist is subscribed too by id.
-     * @return
-     */
-    public Collection<Patient> getPatientsByID(int specialistId) {
-
-        String query = "SELECT " + COL_PATIENT_ID + " " +
-                       "FROM " + TABLE_NAME_SUBSCRIPTIONS + " " +
-                       "WHERE " + COL_SPECIALIST_ID + " = '" + specialistId + "'";
-
-        Cursor c = db.performRawQuery(query);
-        Collection<Patient> patients = new ArrayList<Patient>();
-
-        //return empty list if patient count is zero
-        if(c.getCount() == 0)
-            return patients;
-
-
-        //retrieve ids from cursor
-        Collection<Integer> ids = new ArrayList<Integer>();
-        while(!c.isAfterLast()) {
-
-            ids.add(c.getInt(c.getColumnIndex(COL_PATIENT_ID)));
-            c.moveToNext();
-
-        }
-
-        //now create patients
-        for(Integer id : ids) {
-
-            patients.add(getPatientByID(id));
-
-        }
-
-        return patients;
-
-    }
+    
 
     /**
      * Returns a user of type patient.
@@ -191,38 +150,19 @@ public class UserQueryGenerator extends QueryGenerator {
 
         Collection<Album> albums = getAlbumsByUserID(patientID);
 
-        //TODO: implement specialist id
         return new Patient(name, email, albums, 0);
 
     }
 
-    public void addNewUserAlbum() {
-
-        //TODO
+    public void addNewUserAlbum(Album a) {
 
     }
 
-    public void deleteUserAlbum() {
-
-        //TODO
+    public void deleteUserAlbum(int albumID) {
 
     }
 
-    public void addSubscription() {
-
-        //TODO
-
-    }
-
-    public void removeSubscription() {
-
-        //TODO
-
-    }
-
-    public void updateUserInfo() {
-
-        //TODO
+    public void updateUserInfo(User u) {
 
     }
 

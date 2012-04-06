@@ -3,14 +3,14 @@ package com.cs301w01.meatload.activities;
 import java.util.ArrayList;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.SparseBooleanArray;
+import android.view.KeyEvent;
 import android.view.View;
 import com.cs301w01.meatload.R;
-import com.cs301w01.meatload.adapters.SimpleAlbumAdapter;
-import com.cs301w01.meatload.adapters.TagAdapter;
+import com.cs301w01.meatload.adapters.SimpleTagAdapter;
+import com.cs301w01.meatload.adapters.SpinnerAlbumAdapter;
+import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.Album;
@@ -37,17 +37,20 @@ import android.widget.TextView;
  * Gives the user an exploded view of the picture being edited.
  * <p>
  * Allows user to change certain metadata such as tags and album.
+ * <p>
+ * TODO: Carriage Return (Enter key) needs to be handled by Picture Name EditText.
  * 
  * @author Blake Bouchard
  */
 public class EditPictureActivity extends Skindactivity {
 
 	private MainManager mainManager;
+	private AlbumManager albumManager;
 	private PictureManager pictureManager;
 	private ListView tagListView;
 	private EditText pictureNameEditText;
 	private ImageView pictureView;
-	private Spinner albumView;
+	private Spinner albumSpinner;
 	private AutoCompleteTextView addTagEditText;
 
 	@Override
@@ -62,8 +65,8 @@ public class EditPictureActivity extends Skindactivity {
 		setContentView(R.layout.edit_picture);
 
 		// Set up MainManager
-		mainManager = new MainManager();
-		mainManager.setContext(this);
+		mainManager = new MainManager(this);
+		albumManager = new AlbumManager(this);
 
 		pictureView = (ImageView) findViewById(R.id.pictureView);
 
@@ -87,27 +90,28 @@ public class EditPictureActivity extends Skindactivity {
 		super.onResume();
 		pictureManager.setContext(this);
 	}
-	
+
 	protected void populateTags() {
+
 		// Add Tag field logic
 		addTagEditText = (AutoCompleteTextView) findViewById(R.id.addTagEditText);
-		addTagEditText.setText("");
-		
+
 		ArrayList<Tag> allTags = mainManager.getAllTags();
 		ArrayList<String> tagStrings = new ArrayList<String>();
 		for (Tag tag : allTags) {
 			tagStrings.add(tag.getName());
 		}
 		ArrayAdapter<String> stringAdapter = new ArrayAdapter<String>(this,
-				R.layout.simple_list_item, tagStrings);
+				android.R.layout.simple_dropdown_item_1line, tagStrings);
 		addTagEditText.setAdapter(stringAdapter);
 
 		// Tag List View
-		tagListView = (ListView) findViewById(R.id.picTagList);
+		tagListView = (ListView) findViewById(R.id.tagList);
 		ArrayList<Tag> pictureTags = pictureManager.getTags();
-		TagAdapter tagAdapter = new TagAdapter(this, R.layout.list_item,
+		SimpleTagAdapter tagAdapter = new SimpleTagAdapter(this, R.layout.simple_list_item,
 				pictureTags);
 		tagListView.setAdapter(tagAdapter);
+
 	}
 
 	/**
@@ -122,8 +126,7 @@ public class EditPictureActivity extends Skindactivity {
 		// Picture ImageView
 		Picture picture = pictureManager.getPicture();
 		pictureView = (ImageView) findViewById(R.id.pictureView);
-		pictureView
-				.setImageDrawable(Drawable.createFromPath(picture.getPath()));
+		pictureView.setImageDrawable(Drawable.createFromPath(picture.getPath()));
 
 		// Picture Name EditText
 		pictureNameEditText = (EditText) findViewById(R.id.pictureNameEditText);
@@ -134,15 +137,18 @@ public class EditPictureActivity extends Skindactivity {
 		dateView.setText(picture.getDate().toString());
 
 		// AlbumView Spinner
-		albumView = (Spinner) findViewById(R.id.albumView);
-		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
-		SimpleAlbumAdapter spinnerAdapter = new SimpleAlbumAdapter(this,
-				R.layout.simple_list_item, allAlbums);
-		spinnerAdapter.setDropDownViewResource(R.layout.spinner_item);
-		albumView.setAdapter(spinnerAdapter);
+		albumSpinner = (Spinner) findViewById(R.id.albumSpinner);
+		ArrayList<Album> allAlbums = albumManager.getAllAlbums();
+		SpinnerAlbumAdapter spinnerAdapter = new SpinnerAlbumAdapter(this, R.layout.spinner_item,
+				allAlbums);
+		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		albumSpinner.setAdapter(spinnerAdapter);
+
+		// Find the album object in allAlbums associated with the name of the
+		// album in the picture
 		for (Album album : allAlbums) {
 			if (picture.getAlbumName().equals(album.getName())) {
-				albumView.setSelection(allAlbums.indexOf(album));
+				albumSpinner.setSelection(allAlbums.indexOf(album));
 				break;
 			}
 		}
@@ -162,24 +168,24 @@ public class EditPictureActivity extends Skindactivity {
 
 		});
 
+		// Catch enter key on AddTag field
+		addTagEditText.setOnKeyListener(new View.OnKeyListener() {
+
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if (keyCode == KeyEvent.KEYCODE_ENTER) {
+					addTag();
+					return true;
+				}
+				return false;
+			}
+		});
+
 		// Add Tag button logic
 		Button addTagButton = (Button) findViewById(R.id.addTagButton);
 		addTagButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
-				String tag = addTagEditText.getText().toString().trim();
-				if (tag.length() == 0) {
-					// Deal with empty/whitespace tag
-					errorDialog("Tag cannot be empty.");
-					return;
-				} else if (tag.length() > mainManager.getMaxTagName()) {
-					// if tag is too long cut it to max tag length
-					tag = tag.substring(0, mainManager.getMaxTagName());
-				}
-
-				pictureManager.addTag(tag);
-				
-				populateTags();
+				addTag();
 			}
 
 		});
@@ -187,9 +193,8 @@ public class EditPictureActivity extends Skindactivity {
 		// Tag List Long Click Listener logic
 		tagListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
-			public boolean onItemLongClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				deleteTagAlert((Tag) parent.getItemAtPosition(position));
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				deleteTagDialog((Tag) parent.getItemAtPosition(position));
 				return true;
 			}
 
@@ -200,7 +205,7 @@ public class EditPictureActivity extends Skindactivity {
 		deletePicButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
-				deletePicture();
+				deletePictureDialog();
 			}
 
 		});
@@ -217,6 +222,29 @@ public class EditPictureActivity extends Skindactivity {
 	}
 
 	/**
+	 * Takes the text from the addTagEditText field and adds it to the staged
+	 * "Add Tags" in pictureManager.
+	 * 
+	 * @see PictureManager
+	 */
+	private void addTag() {
+
+		String tag = addTagEditText.getText().toString().trim();
+		if (tag.length() == 0) {
+			// Return if empty/whitespace tag
+			return;
+		} else if (tag.length() > mainManager.getMaxTagName()) {
+			// if tag is too long cut it to max tag length
+			tag = tag.substring(0, mainManager.getMaxTagName());
+		}
+
+		pictureManager.addTag(tag);
+
+		populateTags();
+		addTagEditText.setText("");
+	}
+
+	/**
 	 * This method implements the logic that occurs when the "savePicture"
 	 * button is clicked. Checks for any changes in the pictures meta-data,
 	 * updates those, and then finished the activity.
@@ -224,76 +252,12 @@ public class EditPictureActivity extends Skindactivity {
 	private void savePicture() {
 
 		Picture picture = new Picture(pictureNameEditText.getText().toString(),
-				((Album) albumView.getSelectedItem()).getName());
+				((Album) albumSpinner.getSelectedItem()).getName());
 		pictureManager.savePicture(picture);
 		finish();
 	}
-
-	/**
-	 * @deprecated
-	 */
-	@SuppressWarnings("unused")
-	private void openEditTagsDialog() {
-
-		// Set up Dialog object
-		final Dialog editTagsDialog = new Dialog(this);
-		editTagsDialog.setContentView(R.layout.edit_tags);
-		editTagsDialog.setCancelable(true);
-
-		// Populate tags list
-		final ArrayList<Tag> allTags = mainManager.getAllTags();
-		TagAdapter adapter = new TagAdapter(this, R.layout.tag_list_item,
-				allTags);
-
-		// Set up ListView of all Tags
-		final ListView tagListView = (ListView) findViewById(R.id.editTagsListView);
-		tagListView.setAdapter(adapter);
-		tagListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-
-		ArrayList<Tag> pictureTags = pictureManager.getTags();
-
-		for (Tag pictureTag : pictureTags) {
-			for (int i = 0; i < allTags.size(); i++) {
-				if (pictureTag.getName().equals(allTags.get(i).getName())) {
-					tagListView.setItemChecked(i, true);
-				}
-			}
-		}
-
-		Button saveTagsButton = (Button) editTagsDialog
-				.findViewById(R.id.saveTagsButton);
-		saveTagsButton.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				ArrayList<Tag> newTags = new ArrayList<Tag>();
-				SparseBooleanArray checkPositions = tagListView
-						.getCheckedItemPositions();
-
-				for (int i = 0; i < checkPositions.size(); i++) {
-					if (checkPositions.get(i)) {
-						newTags.add(allTags.get(i));
-					}
-				}
-
-				// pictureManager.setTags(newTags);
-
-				editTagsDialog.dismiss();
-			}
-		});
-
-		Button cancelDialogButton = (Button) editTagsDialog
-				.findViewById(R.id.cancelDialogButton);
-		cancelDialogButton.setOnClickListener(new View.OnClickListener() {
-
-			public void onClick(View v) {
-				editTagsDialog.dismiss();
-			}
-		});
-
-		editTagsDialog.show();
-	}
-
-	private void deletePicture() {
+	
+	private void deletePictureDialog() {
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -321,7 +285,7 @@ public class EditPictureActivity extends Skindactivity {
 
 	}
 
-	private void deleteTagAlert(final Tag tag) {
+	private void deleteTagDialog(final Tag tag) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Delete Tag?");
@@ -356,8 +320,5 @@ public class EditPictureActivity extends Skindactivity {
 
 		startActivity(sendEmail);
 	}
-
-	private void errorDialog(String err) {
-		mainManager.errorDialog(err, this);
-	}
+	
 }

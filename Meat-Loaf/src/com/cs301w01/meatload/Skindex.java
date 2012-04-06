@@ -6,10 +6,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.TabHost;
 
+import com.cs301w01.meatload.activities.SearchActivity;
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
-import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.model.SQLiteDBManager;
 
 /**
  * Activity file for tabbed landing page of MoleFinder.
@@ -21,71 +20,48 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
  */
 public class Skindex extends TabActivity {
 	
-	private MainManager mainManager;
-	
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        SQLiteDBManager dbMan = new SQLiteDBManager(this);
-        
         //BEGIN TAB CODE////////////////////////
         //COPIED FROM http://developer.android.com/resources/tutorials/views/hello-tabwidget.html
-        	Resources res = getResources(); // Resource object to get Drawables
-        	TabHost tabHost = getTabHost();  // The activity TabHost
-        	TabHost.TabSpec spec;  // Resusable TabSpec for each tab
-        	Intent intent;  // Reusable Intent for each tab
+    	Resources res = getResources(); // Resource object to get Drawables
+    	TabHost tabHost = getTabHost();  // The activity TabHost
+    	TabHost.TabSpec spec;  // Resusable TabSpec for each tab
+    	Intent intent;  // Reusable Intent for each tab
 
-        	// Create an Intent to launch an Activity for the tab (to be reused)
-        	intent = new Intent().setClass(this, ViewAlbumsActivity.class);
+    	// Create an Intent to launch an Activity for the tab (to be reused)
+    	intent = new Intent().setClass(this, ViewAlbumsActivity.class);
 
-        	// Initialize a TabSpec for each tab and add it to the TabHost
-        	spec = tabHost.newTabSpec("albums").setIndicator(this.getString(R.string.tab_albums),
-                           res.getDrawable(R.drawable.tab_main))
-                           .setContent(intent);
-        	tabHost.addTab(spec);
+    	// Initialize a TabSpec for each tab and add it to the TabHost
+    	spec = tabHost.newTabSpec("albums").setIndicator(this.getString(R.string.tab_albums),
+                       res.getDrawable(R.drawable.tab_album))
+                       .setContent(intent);
+    	tabHost.addTab(spec);
 
-        	// Do the same for the other tabs
-        	intent = new Intent().setClass(this, ViewTagsActivity.class);
-        	spec = tabHost.newTabSpec("tags").setIndicator(this.getString(R.string.tab_tags),
-                           	res.getDrawable(R.drawable.tab_main))
-                           	.setContent(intent);
-        	tabHost.addTab(spec);
+    	// Do the same for the other tabs
+    	intent = new Intent().setClass(this, ViewTagsActivity.class);
+    	spec = tabHost.newTabSpec("tags").setIndicator(this.getString(R.string.tab_tags),
+                       	res.getDrawable(R.drawable.tab_main))
+                       	.setContent(intent);
+    	tabHost.addTab(spec);
 
+    	intent = new Intent().setClass(this, SearchActivity.class);
+    	spec = tabHost.newTabSpec("search").setIndicator(this.getString(R.string.tab_search),
+                       	res.getDrawable(R.drawable.tab_search))
+                       	.setContent(intent);
+    	tabHost.addTab(spec);
 
-        	tabHost.setCurrentTab(0);
+    	tabHost.setCurrentTab(0);
         	
         	
         	
         ///END TAB CODE/////////////////////////
-
-        //Current tab set to Album.  ViewGroupsActivity runs in that tab
         
-        // TODO: Map objects created as variables to real objects in the XML R.layout.main
-        	
-        /*
-        newAlbumButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				addAlbum();
-			}
-		});
-        
-        takePictureButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				setResult(RESULT_OK);
-				takePicture();
-			}
-		});
-		*/
-        
-        // TODO: We should add all the other listeners here.
     }
-    
-    // TODO: use selectAllAlbums and selectAllTags to get the lists you need to populate the screen
     
     //@Override
     public void update(Object model) {

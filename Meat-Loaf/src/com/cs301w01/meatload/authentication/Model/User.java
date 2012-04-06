@@ -1,9 +1,6 @@
 package com.cs301w01.meatload.authentication.Model;
 
-import com.cs301w01.meatload.model.Album;
-
 import java.io.Serializable;
-import java.util.Collection;
 
 /**
  * Created by IntelliJ IDEA.
@@ -14,7 +11,9 @@ import java.util.Collection;
  */
 public abstract class User implements Serializable {
     
-    public static final String NO_SPECIALIST = "No Specialist";
+	protected static final long serialVersionUID = 1L;
+
+	public static final String NO_SPECIALIST = "No Specialist";
     
     protected String name;
     protected String email;

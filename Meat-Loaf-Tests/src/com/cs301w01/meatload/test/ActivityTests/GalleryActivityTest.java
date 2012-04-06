@@ -8,7 +8,6 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class GalleryActivityTest extends ActivityInstrumentationTestCase2<GalleryActivity> {
-    private Instrumentation mInstrumentation;
     private Context mContext;
     private GalleryActivity mActivity;
     
@@ -19,23 +18,13 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
+
         mActivity = getActivity();
-        
-        SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
+        mContext = mActivity.getBaseContext();
     }
     
     @Override
     protected void tearDown() throws Exception {
-    	
-    	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
-        
         super.tearDown();    
         
         if (mActivity != null) {
@@ -44,8 +33,9 @@ public class GalleryActivityTest extends ActivityInstrumentationTestCase2<Galler
 
     }
     
-    public void testTEMPDELETETHIS(){
+    public void testNumberOfPictures() {
     	assertTrue(1 == 1);
+    	// WELL OBVIOUSLY 1 == 1
     }
 
 }

@@ -14,9 +14,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
-import com.cs301w01.meatload.model.AlbumGallery;
-import com.cs301w01.meatload.model.GalleryData;
 import com.cs301w01.meatload.model.Picture;
+import com.cs301w01.meatload.model.gallery.AlbumGallery;
+import com.cs301w01.meatload.model.gallery.GalleryData;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
 
 /**
@@ -46,8 +46,7 @@ public class GalleryActivity extends Skindactivity {
 
         Bundle b = getIntent().getExtras();
         GalleryData gallerydata = (GalleryData) b.getSerializable("gallery");
-        galleryManager = new GalleryManager(gallerydata);
-        galleryManager.setContext(this);
+        galleryManager = new GalleryManager(this, gallerydata);
 
         adapter = new GridViewGalleryAdapter(this, galleryManager.getPictureGallery());
 
@@ -55,7 +54,7 @@ public class GalleryActivity extends Skindactivity {
         gridview.setAdapter(adapter);
                 
         populateTextFields(galleryManager.getTitle());
-        if(!galleryManager.isAlbum()){
+        if (!galleryManager.isAlbum()) {
         	hideButtons();
         }
 
@@ -63,14 +62,18 @@ public class GalleryActivity extends Skindactivity {
         
     }
     
-    protected void populateTextFields(String title){
+    protected void populateTextFields(String title) {
 
         TextView albumTitle = (TextView) findViewById(R.id.albumTitle);
         albumTitle.setText(title);
 
     }
     
-    protected void hideButtons(){
+    /**
+     * This method is used to hide buttons that may not be appropriate depending on how
+     * a gallery is viewed.
+     */
+    protected void hideButtons() {
     	 final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
     	 editAlbumButton.setEnabled(false);
     	 editAlbumButton.setVisibility(Button.INVISIBLE);
@@ -80,8 +83,7 @@ public class GalleryActivity extends Skindactivity {
     	 takePictureButton.setVisibility(Button.INVISIBLE);
     }
     
-    protected void createListeners(){
-        // TODO: Map objects created as variables to real objects in the XML R.layout.main
+    protected void createListeners() {
 
         final Button editAlbumButton = (Button) findViewById(R.id.editAlbum);
         editAlbumButton.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +109,7 @@ public class GalleryActivity extends Skindactivity {
 		});
         
         gridview.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView parent, View v, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                 Picture selectedPic = adapter.getItem(position);
                 Log.d("Info For PictureListener", selectedPic.toString());
                 int pictureID = selectedPic.getPictureID();
@@ -134,9 +136,12 @@ public class GalleryActivity extends Skindactivity {
 
     @Override
     public void update(Object model) {
-
+    	refreshScreen();
     }
     
+    /**
+     * Used to start a new ComparePictureActivity.
+     */
     private void startComparePicture() {
     	
     	Intent myIntent = new Intent();
@@ -149,16 +154,11 @@ public class GalleryActivity extends Skindactivity {
     }
     
     /**
-* @see GalleryManager
-*/
+     * @see GalleryManager
+     */
     public void refreshScreen() {
-    
-     //TODO: MERGE WITH UPDATE
 
         adapter.notifyDataSetInvalidated();
-        
-        if(!galleryManager.stillValid())
-        	finish();
 
         createListeners();
 
@@ -176,24 +176,22 @@ public class GalleryActivity extends Skindactivity {
     	
     	AlbumGallery aGal = (AlbumGallery) galleryManager.getGallery();
 
-     //Launch the EditAlbumActivity with a given GalleryManager
-     Intent myIntent = new Intent();
-     myIntent.setClassName("com.cs301w01.meatload",
-             "com.cs301w01.meatload.activities.EditAlbumActivity");
-     Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum(this).getName());
-    
-     //NEED TO SET TAGS AS WELL!
-    
-     myIntent.putExtra("gallery", aGal);
-     startActivityForResult(myIntent, 0);
+		// Launch the EditAlbumActivity with a given GalleryManager
+		Intent myIntent = new Intent();
+		myIntent.setClassName("com.cs301w01.meatload",
+				"com.cs301w01.meatload.activities.EditAlbumActivity");
+		Log.d("GalleryActivity", "EDITING ALBUM, NAME:" + aGal.getAlbum(this).getName());
+
+		myIntent.putExtra("gallery", aGal);
+		startActivityForResult(myIntent, 0);
 
     }
     
     /**
-* Starts a new TakePictureActivity using the Album referred to by the GalleryManager object
-* in the GalleryActivity state. Can only be used if a true album is selected.
-* @see TakePictureActivity
-*/
+	 * Starts a new TakePictureActivity using the Album referred to by the GalleryManager object
+	 * in the GalleryActivity state. Can only be used if a true album is selected.
+	 * @see TakePictureActivity
+	 */
     private void takePicture() {
 
         Intent myIntent = new Intent();
@@ -212,12 +210,12 @@ public class GalleryActivity extends Skindactivity {
     }
     
     /**
-* Starts a new EditPictureActivity using the Picture object referred to by the pictureID
-* argument.
-* <p>
-* Passes a PictureManager as part of the Intent.
-* @param pictureID The tuple ID of the picture to be opened.
-*/
+	 * Starts a new EditPictureActivity using the Picture object referred to by the pictureID
+	 * argument.
+	 * <p>
+	 * Passes a PictureManager as part of the Intent.
+	 * @param pictureID The tuple ID of the picture to be opened.
+	 */
     private void openPicture(int pictureID) {
 
         Intent myIntent = new Intent();
@@ -227,7 +225,5 @@ public class GalleryActivity extends Skindactivity {
 
         startActivity(myIntent);
     }
-
-
-
+    
 }

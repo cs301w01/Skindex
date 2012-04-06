@@ -5,7 +5,7 @@ import android.widget.Gallery;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
-import com.cs301w01.meatload.controllers.PictureManager;
+import com.cs301w01.meatload.controllers.PictureCreator;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,9 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.PictureGenerator;
+import com.cs301w01.meatload.model.gallery.AlbumGallery;
 
 /**
  * Implements the logic for the TakePictureActivity, as well as the Take Picture
@@ -27,13 +27,12 @@ import com.cs301w01.meatload.model.PictureGenerator;
  */
 public class TakePictureActivity extends Skindactivity {
 
-	// TODO: can we move imgOnDisplay into the methods? It would be nice
-	// if it weren't a global variable
 	private Bitmap imgOnDisplay;
 
 	private Album album;
 	private HorizontalGalleryAdapter adapter;
 	private Gallery gallery;
+	private AlertDialog currentDialog;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,12 +40,13 @@ public class TakePictureActivity extends Skindactivity {
 
 		Bundle b = getIntent().getExtras();
 		album = (Album) b.getSerializable("album");
-		GalleryManager gMan = new GalleryManager(new AlbumGallery(album));
+		GalleryManager gMan = new GalleryManager(this, new AlbumGallery(album));
 		gMan.setContext(this);
 
 		// handle photo consistency gallery logic
-		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery(), R.styleable.TakePictureActivity,
-                R.styleable.TakePictureActivity_android_galleryItemBackground);
+		adapter = new HorizontalGalleryAdapter(this, gMan.getPictureGallery(),
+				R.styleable.TakePictureActivity,
+				R.styleable.TakePictureActivity_android_galleryItemBackground);
 
 		gallery = (Gallery) findViewById(R.id.takePictureGallery);
 		gallery.setAdapter(adapter);
@@ -55,11 +55,29 @@ public class TakePictureActivity extends Skindactivity {
 		populateFields(imgOnDisplay);
 		createListeners(imgOnDisplay);
 	}
+	
+	@Override
+	public void finish() {
+		
+		if (currentDialog != null) {
+			if (currentDialog.isShowing()) {
+				currentDialog.dismiss();
+			}
+		}
 
-    /**
-     * Populates all dynamic fields on the screen
-     * @param Bitmap - The picture to display
-     */
+		super.finish();
+	}
+
+	/**
+	 * Populates all dynamic fields on the screen.
+	 * 
+	 * @param Bitmap
+	 *            - The picture to display
+	 * @see <a href=
+	 *      "http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android"
+	 *      >
+	 *      http://stackoverflow.com/questions/6772024/how-to-update-or-change-images-of-imageview-dynamically-in-android </a>
+	 */
 	protected void populateFields(Bitmap pic) {
 		ImageView image = (ImageView) findViewById(R.id.imgDisplay);
 		image.setImageBitmap(pic);
@@ -89,10 +107,9 @@ public class TakePictureActivity extends Skindactivity {
 		});
 	}
 
-	// @Override
+
 	public void update(Object model) {
-		// To change body of implemented methods use File | Settings | File
-		// Templates.
+
 	}
 
 	/**
@@ -108,19 +125,22 @@ public class TakePictureActivity extends Skindactivity {
 	 */
 	private void takePicture() {
 
-		// TODO: Add album association, and null album checking
-
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Confirm");
 		alert.setMessage("Are you sure you want this picture?");
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			
 			public void onClick(DialogInterface dialog, int whichButton) {
-
-				Picture newPic = new PictureManager(TakePictureActivity.this,
-						album.getName()).takePicture(getFilesDir(),
-						imgOnDisplay);
+				
+				if (album == null) {
+					dialog.dismiss();
+					return;
+				}
+				
+				Picture newPic = new PictureCreator(TakePictureActivity.this)
+						.takePicture(getFilesDir(), imgOnDisplay, album.getName());
 
 				Intent myIntent = new Intent();
 				myIntent.setClassName("com.cs301w01.meatload",
@@ -130,17 +150,26 @@ public class TakePictureActivity extends Skindactivity {
 				startActivity(myIntent);
 
 				finish();
+				
+			}
+			
+		});
+
+		alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				// Canceled.
 			}
 		});
 
-		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-						// Canceled.
-					}
-				});
-
-		alert.show();
+		currentDialog = alert.show();
+	}
+	
+	public void performDialogClick(boolean button) {
+		if (button == true) {
+			currentDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+		} else {
+			currentDialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
+		}
 	}
 
 }

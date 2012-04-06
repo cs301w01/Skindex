@@ -3,7 +3,6 @@ package com.cs301w01.meatload.model.querygenerators;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.Tag;
 
 import android.content.ContentValues;
@@ -11,6 +10,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+/**
+ * Creates queries dealing with Tags in the database.
+ * <p>
+ * Converts values from the database to usable data by the rest of the application.
+ * 
+ * @author Derek Dowling
+ *
+ */
 public class TagQueryGenerator extends QueryGenerator {
 	
 	 //vars for tags table
@@ -52,12 +59,9 @@ public class TagQueryGenerator extends QueryGenerator {
      */
     public ArrayList<Tag> selectAllTags() {
     	
-    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
-    						+ 
-    						" FROM " + TABLE_NAME + 
-    						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
-    						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
-    						" GROUP BY t." + COL_NAME;
+    	String tagQuery = "SELECT " + COL_NAME + ", COUNT(" + COL_NAME + ") AS numPictures" + 
+    						" FROM " + TABLE_NAME +
+    						" GROUP BY " + COL_NAME;
     	
     	return selectTagsByQuery(tagQuery);
     }
@@ -99,6 +103,9 @@ public class TagQueryGenerator extends QueryGenerator {
     			addTag(pictureID, new Tag(tagName, 0));
     		}
     	}
+    	
+    	AlbumQueryGenerator AQG = new AlbumQueryGenerator(this.context);
+    	AQG.setAlbumModified(new PictureQueryGenerator(this.context).getAlbumIdOfPicture(pictureID));
     }
     
     /**
@@ -116,6 +123,9 @@ public class TagQueryGenerator extends QueryGenerator {
             
             db.performRawQuery(dQuery);
     	}
+    	
+    	AlbumQueryGenerator AQG = new AlbumQueryGenerator(this.context);
+    	AQG.setAlbumModified(new PictureQueryGenerator(this.context).getAlbumIdOfPicture(pictureID));
     }
     
     /**
@@ -133,12 +143,30 @@ public class TagQueryGenerator extends QueryGenerator {
     }
     
     /**
+     * Deletes the specified tags from a Picture in the database.
+     * @param pictureID The ID of the Picture to update.
+     * @param tagNames A collection of tags to delete.
+     */
+    public void deleteAllTagsFromAlbum(int albumID) {
+    	String deleteTagsQuery = "DELETE FROM " + TABLE_NAME + "" +
+					" WHERE EXISTS (SELECT * FROM " + PictureQueryGenerator.TABLE_NAME + " p" + 
+					" LEFT JOIN " + AlbumQueryGenerator.TABLE_NAME + " a" +
+					" ON (p." + COL_ALBUMID + " = a." + COL_ID + ") " + 
+					" WHERE p." + COL_ID + " = tags." + COL_PICTUREID +
+					" AND a." + COL_ID + " = '" + albumID + "')";
+
+    	Log.d(TABLE_NAME, "Performing delete: " + deleteTagsQuery);
+
+    	db.performRawQuery(deleteTagsQuery);
+    }
+    
+    /**
      * Adds a tag to specific Picture in the Database.
      * @param pictureID The ID of Picture to add the tag too.
      * @param tag The tag to add.
      * @return long
      */
-    public long addTag(int pictureID, Tag tag) {
+    private long addTag(int pictureID, Tag tag) {
     	ContentValues cv = new ContentValues();
         
         //add tag info to cv
@@ -160,13 +188,13 @@ public class TagQueryGenerator extends QueryGenerator {
 		 boolean isFirst = true;
 		 
 		 for (String curr : strings) {
-			 newString += curr;
-			 
+			 newString += curr;	 
 			 if (isFirst) {
 				 isFirst = false;
 				 newString += delimiter;
 			 }
-		 }	 
+		 }
+		 
 		 return newString;
     }
     
@@ -207,11 +235,12 @@ public class TagQueryGenerator extends QueryGenerator {
     		return false;
     	}
     	
-    	Integer i = new Integer(c.getString(c.getColumnIndex("numTag")));
+    	Integer i = Integer.valueOf(c.getString(c.getColumnIndex("numTag")));
     	boolean exists = false;
     	
-    	if(i > 0)
+    	if (i > 0) {
     		exists = true;
+    	}
     	
     	c.close();
     	

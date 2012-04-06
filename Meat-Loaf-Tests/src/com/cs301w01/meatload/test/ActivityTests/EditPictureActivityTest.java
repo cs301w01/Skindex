@@ -4,69 +4,49 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.EditPictureActivity;
-import com.cs301w01.meatload.controllers.MainManager;
-import com.cs301w01.meatload.model.Album;
-import com.cs301w01.meatload.model.AlbumGallery;
 import com.cs301w01.meatload.model.Picture;
-import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
-import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 import com.cs301w01.meatload.model.querygenerators.PictureQueryGenerator;
-import com.jayway.android.robotium.solo.Solo;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class EditPictureActivityTest extends
 		ActivityInstrumentationTestCase2<EditPictureActivity> {
     
-	private Instrumentation mInstrumentation;
     private Context mContext;
     private EditPictureActivity mActivity;
+    private final int SLEEP_TIME = 500;
     
-    //private Solo solo;
-    
-	public EditPictureActivityTest(){
+	public EditPictureActivityTest() {
 		super("com.cs301w01.meatload", EditPictureActivity.class);
 	}
 	
     @Override
     protected void setUp() throws Exception {
     	super.setUp();
-        
-    	//solo = new Solo(getInstrumentation(), getActivity());
     	
-    	long aid[];
-    	Picture[] pics;
+        Date tempDate = Calendar.getInstance().getTime();
+        Picture tempPic = new Picture("temp", "temp", "temp",tempDate, new ArrayList<Tag>());
+        
+        // The EditPictureActivity will only use the ID of the given picture, as set below
+        tempPic.setID(1);
     	
         Intent editPicIntent = new Intent();
         editPicIntent.setClassName("com.cs301w01.meatload",
-				"com.cs301w01.meatload.activities.ComparePicturesActivity");
-        Date tempDate = Calendar.getInstance().getTime();
-        Picture tempPic = new Picture("taco", "root", "Album 1",tempDate, new ArrayList<Tag>());
-        tempPic.setID(1);
+				"com.cs301w01.meatload.activities.EditPicturesActivity");
+
 		editPicIntent.putExtra("picture", tempPic);
 		setActivityIntent(editPicIntent);
-		
-        mInstrumentation = getInstrumentation();
-        mContext = mInstrumentation.getContext();
+
         mActivity = getActivity();	
-        
-        
-        //RESET THE DB
-        SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
-        
-        //POPULATE DB WITH ALBUMS AND THEN PUT PHOTOS IN THOSE ALBUMS
-        aid = DatabaseTestingTools.populateAlbums(mActivity.getBaseContext());
-        pics = DatabaseTestingTools.populatePictures(mActivity.getBaseContext());
-        
-        
-        //TAKE pics[0] AND PUT IT IN THE EXTRAS AS NEEDED BY EditPictureActivity
+        mContext = mActivity.getBaseContext();
+                
     }
     
     
@@ -77,11 +57,6 @@ public class EditPictureActivityTest extends
     
     @Override
     protected void tearDown() throws Exception {
-    	
-    	SQLiteDBManager db = new SQLiteDBManager(mActivity.getBaseContext());
-        db.resetDB();
-        db.close();
-        
         super.tearDown();    
         
         if (mActivity != null) {
@@ -90,14 +65,54 @@ public class EditPictureActivityTest extends
 
     }
     
-    public void testTemp(){
-    	MainManager mManage = new MainManager();
-    	mManage.setContext(mActivity.getBaseContext());
+    public void testEditNameThenSave() {
+    	final Button saveButton = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.savePictureButton);
+		assertNotNull(saveButton);
+		
+    	final EditText pictureName = (EditText) mActivity.findViewById(R.id.pictureNameEditText);
+    	assertNotNull(pictureName);
     	
-    	mManage.getPictureCount();
-    	
-    	
-    	assertTrue(7 == mManage.getPictureCount());
-    }
+		mActivity.runOnUiThread(new Runnable() {
+			public void run(){
+		    	pictureName.requestFocus();
+		    	pictureName.setText("Moley Mole");
+		    	saveButton.requestFocus();
+		    	saveButton.performClick();
+			}
+		});
+		sleep();
 
+    	PictureQueryGenerator picGen = new PictureQueryGenerator(mContext);
+    	Picture newPic = picGen.selectPictureByID(1);
+    	assertTrue(newPic.getName().equals("Moley Mole"));
+    }
+    
+    public void testChangeAlbumThenSave() {
+    	
+    }
+    
+    public void testAddTagsThenSave() {
+    	
+    }
+    
+    public void testDeleteTagsThenSave() {
+    	
+    }
+    
+    public void testChangeInfoThenPressBackButton() {
+    	
+    }
+    
+    public void testDeletePicture() {
+    	
+    }
+    
+    private void sleep() {
+		try {
+			Thread.sleep(SLEEP_TIME * 5);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
+    }
 }

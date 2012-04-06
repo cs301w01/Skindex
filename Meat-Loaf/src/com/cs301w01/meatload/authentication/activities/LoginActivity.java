@@ -16,6 +16,8 @@ import com.cs301w01.meatload.authentication.Model.User;
 /**
  * Acts as the base activity users land on. They are prompted to provide credentials in order to log in or
  * to create a new account.
+ * 
+ * @author Derek Dowling
  */
 public class LoginActivity extends Skindactivity {
 
@@ -126,7 +128,7 @@ public class LoginActivity extends Skindactivity {
 
         } else {
 
-            //TODO: Add invalid credentials alert
+            // Add invalid credentials alert
 
         }
 
