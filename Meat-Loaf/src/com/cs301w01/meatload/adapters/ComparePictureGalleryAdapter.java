@@ -48,7 +48,7 @@ public class ComparePictureGalleryAdapter extends BaseAdapter {
         ImageView imageView = new ImageView(mContext);
 
         imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
-        imageView.setLayoutParams(new Gallery.LayoutParams(300, 200));
+        imageView.setLayoutParams(new Gallery.LayoutParams(330, 330));
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         imageView.setBackgroundResource(mGalleryItemBackground);
 

@@ -52,13 +52,13 @@ public class GridViewGalleryAdapter extends BaseAdapter{
 
             ll = new LinearLayout(mContext);
             ll.setOrientation(LinearLayout.VERTICAL);
+            ll.setGravity(Gravity.CENTER_HORIZONTAL);
 
             ImageView imageView = new ImageView(mContext);
 
             imageView.setImageDrawable(Drawable.createFromPath(pictures.get(position).getPath()));
             imageView.setLayoutParams(new Gallery.LayoutParams(85, 85));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-
             ll.addView(imageView);
 
             TextView tv = new TextView(mContext);
