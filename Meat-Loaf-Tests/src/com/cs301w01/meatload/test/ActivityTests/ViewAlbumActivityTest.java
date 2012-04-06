@@ -3,6 +3,7 @@ package com.cs301w01.meatload.test.ActivityTests;
 import java.util.ArrayList;
 
 import com.cs301w01.meatload.activities.ViewAlbumsActivity;
+import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Album;
 
@@ -18,7 +19,8 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
     
     private Context mContext;
     private ViewAlbumsActivity mActivity;
-	MainManager mainMan;
+	private AlbumManager albumMan;
+	private MainManager mainMan;
     private final int SLEEP_TIME = 500;
     
 	public ViewAlbumActivityTest(){
@@ -32,8 +34,8 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
         mActivity = getActivity();
         mContext = mActivity.getBaseContext();
         
+        albumMan = new AlbumManager(mContext);
         mainMan = new MainManager(mContext);
-        
     }
     
     @Override
@@ -55,7 +57,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
 		assertNotNull(button);
 		
-		origAlbs = mainMan.getAllAlbums();
+		origAlbs = albumMan.getAllAlbums();
 			for(int i = 0; i < 3; i++){
 				mActivity.runOnUiThread(new Runnable() {
 					public void run(){
@@ -75,7 +77,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 				sendKeys(KeyEvent.KEYCODE_ENTER);
 				sleep();
 			}
-			finalAlbs = mainMan.getAllAlbums();
+			finalAlbs = albumMan.getAllAlbums();
 			
 			sleep();
 			
@@ -92,7 +94,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
 		assertNotNull(button);
 				
-		origNumAlbs = mainMan.getAllAlbums().size();
+		origNumAlbs = albumMan.getAllAlbums().size();
 
 		mActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -110,7 +112,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			}
 		});
 		sleep();
-		finalNumAlbs = mainMan.getAllAlbums().size();
+		finalNumAlbs = albumMan.getAllAlbums().size();
 		sleep();
 		assertTrue(finalNumAlbs == origNumAlbs + 1);
 	}
@@ -139,7 +141,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			}
 		});
 		sleep();
-		assertTrue(mainMan.albumExists(shortenedName));
+		assertTrue(albumMan.albumExists(shortenedName));
 	}
 	
 	public void testAddBlankAlbum(){
@@ -150,7 +152,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
 		assertNotNull(button);
 				
-		origNumAlbs = mainMan.getAllAlbums().size();
+		origNumAlbs = albumMan.getAllAlbums().size();
 
 		mActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -168,7 +170,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			}
 		});
 		sleep();
-		finalNumAlbs = mainMan.getAllAlbums().size();
+		finalNumAlbs = albumMan.getAllAlbums().size();
 		sleep();
 		assertTrue(finalNumAlbs == origNumAlbs);
 	}
@@ -183,7 +185,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		//Positive button is "Create"
 		//Negative button is "Choose"
 
-		origNumAlbs = mainMan.getAllAlbums().size();
+		origNumAlbs = albumMan.getAllAlbums().size();
 
 		mActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -207,7 +209,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 			}
 		});
 		sleep();
-		finalNumAlbs = mainMan.getAllAlbums().size();
+		finalNumAlbs = albumMan.getAllAlbums().size();
 		sleep();
 		assertTrue(finalNumAlbs == origNumAlbs + 1);
 	}

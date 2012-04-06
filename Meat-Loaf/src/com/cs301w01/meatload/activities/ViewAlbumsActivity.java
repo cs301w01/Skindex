@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.AlbumAdapter;
+import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.MainManager;
 
 //import android.annotation.TargetApi;
@@ -34,6 +35,7 @@ import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 public class ViewAlbumsActivity extends Skindactivity {
 
 	private MainManager mainManager;
+	private AlbumManager albumManager;
 	private ListView albumListView;
 	private AlbumAdapter adapter;
 	private AlertDialog currentDialog;
@@ -48,6 +50,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.viewgroups);
 		mainManager = new MainManager(this);
+		albumManager = new AlbumManager(this);
 
 		refreshScreen();
 		createListeners();
@@ -114,7 +117,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		ArrayList<Album> albumList = new ArrayList<Album>();
 		albumList.add(new Album("All Pictures", mainManager.getPictureCount(),
 				-1));
-		albumList.addAll(mainManager.getAllAlbums());
+		albumList.addAll(albumManager.getAllAlbums());
 
 		adapter = new AlbumAdapter(this, R.layout.list_item, albumList);
 		albumListView.setAdapter(adapter);
@@ -173,14 +176,14 @@ public class ViewAlbumsActivity extends Skindactivity {
 
 	private void chooseAlbumPrompt() {
 		
-		final CharSequence[] albumNames = mainManager
-				.albumsToStrings(mainManager.getAllAlbums());
+		final CharSequence[] albumNames = albumManager
+				.albumsToStrings(albumManager.getAllAlbums());
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle("Choose an Album");
 		builder.setItems(albumNames, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int item) {
-				switchToTakePicture(mainManager
+				switchToTakePicture(albumManager
 						.getAlbumByName((String) albumNames[item]));
 			}
 		});
@@ -231,12 +234,12 @@ public class ViewAlbumsActivity extends Skindactivity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String newAlbumName = input.getText().toString();
-				newAlbumName = mainManager.addAlbum(newAlbumName,
+				newAlbumName = albumManager.addAlbum(newAlbumName,
 						new ArrayList<String>());
 
 				if (newAlbumName.length() == 0) {
 					errorDialog("Adding album failed.  Album names must be "
-							+ mainManager.getMaxAlbumName()
+							+ albumManager.getMaxAlbumName()
 							+ " chars, not empty, and unique.");
 				} else if (takePicture) {
 					AlbumQueryGenerator albumQueryGenerator = new AlbumQueryGenerator(
