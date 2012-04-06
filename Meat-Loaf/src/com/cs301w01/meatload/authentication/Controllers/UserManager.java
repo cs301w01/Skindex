@@ -4,13 +4,11 @@ import android.content.Context;
 import android.database.Cursor;
 import com.cs301w01.meatload.authentication.Model.Password;
 import com.cs301w01.meatload.authentication.Model.Patient;
-import com.cs301w01.meatload.authentication.Model.Specialist;
 import com.cs301w01.meatload.authentication.Model.User;
+import com.cs301w01.meatload.authentication.querygenerator.DiagnosisQueryGenerator;
 import com.cs301w01.meatload.authentication.querygenerator.UserQueryGenerator;
 import com.cs301w01.meatload.controllers.FController;
-import com.cs301w01.meatload.model.Album;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -73,7 +71,9 @@ public class UserManager implements FController{
 
             } else {
 
-                Collection<Patient> patients = uQG.getPatientsByID(id);
+            	DiagnosisQueryGenerator dQG = new DiagnosisQueryGenerator(context);
+            	
+                Collection<Patient> patients = dQG.getPendingRequeststsBySpecialistID(id);
 
                 u = uQG.getSpecialistByID(id, patients);
 
@@ -102,5 +102,13 @@ public class UserManager implements FController{
         return uQ.insertNewUser(u.getName(), u.getEmail(), userName, hashedPW, role);
 
     }
+
+    /**
+     * This method makes an update to a user's personal identification data.
+     */
+	public void updateUserDetails() {
+		
+		
+	}
 
 }

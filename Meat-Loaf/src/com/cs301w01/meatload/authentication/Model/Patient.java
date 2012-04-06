@@ -13,7 +13,9 @@ import java.util.Collection;
  */
 public class Patient extends User {
 
-    private Collection<Album> albums;
+	private static final long serialVersionUID = 1L;
+	
+	private Collection<Album> albums;
     private int specialistID;
     public static final int NO_SPECIALIST_ID_VALUE = 0;
 

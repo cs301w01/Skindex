@@ -1,8 +1,6 @@
 package com.cs301w01.meatload.authentication.Controllers;
 
-import android.content.Context;
 import com.cs301w01.meatload.authentication.Model.Password;
-import com.cs301w01.meatload.authentication.querygenerator.UserQueryGenerator;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
