@@ -120,8 +120,9 @@ public class GalleryActivity extends Skindactivity {
     
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    	if(resultCode == Activity.RESULT_CANCELED)
+    	if (resultCode == Activity.RESULT_CANCELED) {
     		finish();
+    	}
     }
     
     @Override
