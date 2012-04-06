@@ -23,7 +23,6 @@ import com.cs301w01.meatload.model.AlbumGallery;
  */
 public class EditAlbumActivity extends Skindactivity {
 
-	private MainManager mainManager;
 	private AlbumManager albumManager;
 	private GalleryManager gMan;
 	private Album album;
@@ -52,9 +51,6 @@ public class EditAlbumActivity extends Skindactivity {
 
 		Bundle b = getIntent().getExtras();
 		AlbumGallery aGal = (AlbumGallery) b.getSerializable("gallery");
-
-		// Set up MainManager
-		mainManager = new MainManager(this);
 
 		album = aGal.getAlbum(this);
 		gMan = new GalleryManager(this, new AlbumGallery(album));
