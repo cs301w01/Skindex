@@ -11,8 +11,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -43,12 +41,12 @@ public class MainManager implements FController {
 	}
 
 	/**
-	 * Sets the current GalleryManager's Context.  A context is necessary if
-	 * the database is going to be used.
-	 * The context is set upon creation of the manager object
-	 * but this context is invalidated as soon as the user leaves the screen
-	 * so every activity that stores a manager needs to update the context
-	 * on resume
+	 * Sets the current GalleryManager's Context. A context is necessary if the
+	 * database is going to be used. The context is set upon creation of the
+	 * manager object but this context is invalidated as soon as the user leaves
+	 * the screen so every activity that stores a manager needs to update the
+	 * context on resume
+	 * 
 	 * @param Context
 	 */
 	public void setContext(Context context) {
@@ -74,34 +72,35 @@ public class MainManager implements FController {
 	}
 
 	public String addAlbum(String albumName, Collection<String> tags) {
-				
+
 		albumName = albumName.trim();
-		if(albumName.length() > MAX_ALBUM_NAME_LENGTH){
-			albumName = albumName.substring(0,MAX_ALBUM_NAME_LENGTH);
-		} else if (albumName.length() == 0){
-			//handle empty album name
+		if (albumName.length() > MAX_ALBUM_NAME_LENGTH) {
+			albumName = albumName.substring(0, MAX_ALBUM_NAME_LENGTH);
+		} else if (albumName.length() == 0) {
+			// handle empty album name
 			return "";
 		}
-		
-		if(albumExists(albumName)){
-			//album name already exists
+
+		if (albumExists(albumName)) {
+			// album name already exists
 			return "";
 		}
-		
+
 		new AlbumQueryGenerator(context).insertAlbum(albumName);
 		return albumName;
-		//length() == 0 if adding album failed, else returns name of added album truncated to max Album name # chars
+		// length() == 0 if adding album failed, else returns name of added
+		// album truncated to max Album name # chars
 	}
 
 	public Album getAlbumByName(String albumName) {
 		return new AlbumQueryGenerator(context).getAlbumByName(albumName);
 	}
-	
-	public int getMaxAlbumName(){
+
+	public int getMaxAlbumName() {
 		return MAX_ALBUM_NAME_LENGTH;
 	}
-	
-	public int getMaxTagName(){
+
+	public int getMaxTagName() {
 		return MAX_TAG_NAME_LENGTH;
 	}
 
@@ -121,40 +120,45 @@ public class MainManager implements FController {
 			i++;
 		}
 		return albumNames;
-	}    
-    
-    public boolean albumExists(String name){
+	}
+
+	public boolean albumExists(String name) {
 		ArrayList<Album> testList = getAllAlbums();
-		Album testAlbum;	
+		Album testAlbum;
 		Iterator<Album> listIter = testList.iterator();
-		
+
 		name = name.trim();
-		
-		
-		if(name.length() > MAX_ALBUM_NAME_LENGTH){
-			name = name.substring(0,MAX_ALBUM_NAME_LENGTH);
+
+		if (name.length() > MAX_ALBUM_NAME_LENGTH) {
+			name = name.substring(0, MAX_ALBUM_NAME_LENGTH);
 		}
-		
-		while (listIter.hasNext()){
+
+		while (listIter.hasNext()) {
 			testAlbum = listIter.next();
-			if (testAlbum.getName().equals(name)){
+			if (testAlbum.getName().equals(name)) {
 				return true;
 			}
 		}
-		
+
 		return false;
-    }
+	}
 
 	/**
-	 * Saves the Bitmap provided to the file path provided and adds the appropriate
-	 * information to the DB.
+	 * Saves the Bitmap provided to the file path provided and adds the
+	 * appropriate information to the DB.
 	 * 
-	 * @see <a href=http://stackoverflow.com/questions/649154/android-bitmap-save-to-location>http://stackoverflow.com/questions/649154/android-bitmap-save-to-location</a>
-	 * @param path File directory where the Picture is to be saved
-	 * @param imgOnDisplay Bitmap to save
+	 * @see <a
+	 *      href=http://stackoverflow.com/questions/649154/android-bitmap-save
+	 *      -to
+	 *      -location>http://stackoverflow.com/questions/649154/android-bitmap
+	 *      -save-to-location</a>
+	 * @param path
+	 *            File directory where the Picture is to be saved
+	 * @param imgOnDisplay
+	 *            Bitmap to save
 	 */
 	public Picture takePicture(File path, Bitmap imgOnDisplay, String albumName) {
-		
+
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy_HH-mm-sss");
 		String timestamp = sdf.format(cal.getTime());
@@ -177,13 +181,14 @@ public class MainManager implements FController {
 			Log.d("ERROR", "Unable to write " + fpath + fname);
 			return null;
 		}
-		
-	}
-	
-	private Picture createPicture(String fpath, Date date, String fname, String albumName) {
 
-		Picture newPic = new Picture("", fpath,
-				albumName, date, new ArrayList<Tag>());
+	}
+
+	private Picture createPicture(String fpath, Date date, String fname,
+			String albumName) {
+
+		Picture newPic = new Picture("", fpath, albumName, date,
+				new ArrayList<Tag>());
 
 		newPic.setID((int) new PictureQueryGenerator(context)
 				.insertPicture(newPic));
