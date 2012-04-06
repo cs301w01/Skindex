@@ -51,7 +51,7 @@ public class Skindex extends TabActivity {
 
     	intent = new Intent().setClass(this, SearchActivity.class);
     	spec = tabHost.newTabSpec("search").setIndicator(this.getString(R.string.tab_search),
-                       	res.getDrawable(R.drawable.tab_main))
+                       	res.getDrawable(R.drawable.tab_search))
                        	.setContent(intent);
     	tabHost.addTab(spec);
 
