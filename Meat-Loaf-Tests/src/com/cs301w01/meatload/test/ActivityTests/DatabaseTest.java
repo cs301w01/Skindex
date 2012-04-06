@@ -13,6 +13,7 @@ import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
+import com.cs301w01.meatload.controllers.PictureCreator;
 import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.querygenerators.AlbumQueryGenerator;
 
@@ -93,13 +94,14 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	int oldNumPics;
     	int newNumPics;
     	PictureGenerator picGen = new PictureGenerator();
+    	PictureCreator pictureCreator = new PictureCreator(mContext);
     	
     	testAlbum = mainMan.getAlbumByName("Album 1");
     	oldNumPics = testAlbum.getPictureCount();
 
-    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
-    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
-    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
     	
     	testAlbum = mainMan.getAlbumByName("Album 1");
     	newNumPics = testAlbum.getPictureCount();
@@ -111,12 +113,13 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	int oldNumPics;
     	int newNumPics;
     	PictureGenerator picGen = new PictureGenerator();
+    	PictureCreator pictureCreator = new PictureCreator(mContext);
     	
     	oldNumPics = mainMan.getPictureCount();
 
-    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 2");
-    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
-    	mainMan.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 2");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
+    	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 3");
     	
     	newNumPics = mainMan.getPictureCount();
     	

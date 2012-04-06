@@ -6,6 +6,7 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.HorizontalGalleryAdapter;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
+import com.cs301w01.meatload.controllers.PictureCreator;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -127,7 +128,7 @@ public class TakePictureActivity extends Skindactivity {
 					return;
 				}
 				
-				Picture newPic = new MainManager(TakePictureActivity.this)
+				Picture newPic = new PictureCreator(TakePictureActivity.this)
 						.takePicture(getFilesDir(), imgOnDisplay, album.getName());
 
 				Intent myIntent = new Intent();
