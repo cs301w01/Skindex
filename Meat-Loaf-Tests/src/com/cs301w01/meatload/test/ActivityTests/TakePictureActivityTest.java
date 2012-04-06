@@ -39,7 +39,8 @@ public class TakePictureActivityTest extends ActivityInstrumentationTestCase2<Ta
 	}
 
 	public void testNumberOfComparePicturesLoaded() {
-		assertTrue(1 == 1);
+		// Not implemented yet
+		fail();
 	}
 
 	public void testGeneratePic() {
@@ -63,7 +64,8 @@ public class TakePictureActivityTest extends ActivityInstrumentationTestCase2<Ta
 
 	public void testTakePicOK() {
 		// capture Intent and ensure picture saved validly
-		
+		// Not implemented yet
+		fail();
 	}
 
 }

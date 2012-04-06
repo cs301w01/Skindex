@@ -18,6 +18,7 @@ public class MeatTestSuite extends TestCase {
 		suite.addTestSuite(DatabaseTest.class);
 		suite.addTestSuite(ViewAlbumActivityTest.class);
 		suite.addTestSuite(EditPictureActivityTest.class);
+		suite.addTestSuite(TakePictureActivityTest.class);
 		    
 		return suite;
 	}
