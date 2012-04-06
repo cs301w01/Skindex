@@ -20,6 +20,7 @@ public class MeatTestSuite extends TestCase {
 		suite.addTestSuite(EditPictureActivityTest.class);
 		suite.addTestSuite(TakePictureActivityTest.class);
 		suite.addTestSuite(ViewTagsActivityTest.class);
+		suite.addTestSuite(EditAlbumActivityTest.class);
 		    
 		return suite;
 	}
