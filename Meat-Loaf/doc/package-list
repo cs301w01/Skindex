@@ -1,6 +1,11 @@
 com.cs301w01.meatload
 com.cs301w01.meatload.activities
+com.cs301w01.meatload.adapters
+com.cs301w01.meatload.authentication.Controllers
+com.cs301w01.meatload.authentication.Model
+com.cs301w01.meatload.authentication.activities
+com.cs301w01.meatload.authentication.querygenerator
 com.cs301w01.meatload.controllers
 com.cs301w01.meatload.model
-com.cs301w01.meatload.tests
-com.cs301w01.meatload.utils
+com.cs301w01.meatload.model.gallery
+com.cs301w01.meatload.model.querygenerators
