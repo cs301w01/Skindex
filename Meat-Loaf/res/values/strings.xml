@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MoleFinder</string>
+    <string name="app_name">Skindex</string>
     <string name="button_take_pic">Take Picture</string>
     <string name="button_new_album">New Album</string>
     <string name="tab_albums">Album</string>
