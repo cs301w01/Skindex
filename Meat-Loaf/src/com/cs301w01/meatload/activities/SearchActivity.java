@@ -2,6 +2,7 @@ package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.TagAdapter;
@@ -17,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,11 +26,13 @@ import android.widget.TextView;
 /**
  * Implements the logic in the Tags view of the Tab layout in Skindex.
  * 
- * @author Joel Burford
+ * @author Isaac Matichuk
  */
 public class SearchActivity extends Skindactivity {
 
 	private EditText searchNameField;
+	private DatePicker startDate;
+	private DatePicker endDate;
 
 	// @Override
 	public void update(Object model) {
@@ -39,8 +43,10 @@ public class SearchActivity extends Skindactivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.search);
-		
+
 		searchNameField = (EditText) findViewById(R.id.search_pic_name);
+		startDate = (DatePicker) findViewById(R.id.start_date);
+		endDate = (DatePicker) findViewById(R.id.end_date);
 
 		createListeners();
 
@@ -60,7 +66,9 @@ public class SearchActivity extends Skindactivity {
 
 	private void onSearchClick() {
 
-		SearchGallery sG = new SearchGallery(searchNameField.getText().toString(), null, null, new ArrayList<String>());
+		Date sDate = new Date(startDate.getYear() - 1900, startDate.getMonth(), startDate.getDayOfMonth());
+		Date eDate = new Date(endDate.getYear() - 1900, endDate.getMonth(), endDate.getDayOfMonth() + 1);
+		SearchGallery sG = new SearchGallery(searchNameField.getText().toString(), sDate, eDate, new ArrayList<String>());
 
 		Intent myIntent = new Intent();
 		myIntent.setClassName("com.cs301w01.meatload",

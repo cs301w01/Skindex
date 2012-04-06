@@ -113,7 +113,7 @@ public class TagQueryGenerator extends QueryGenerator {
 
             Log.d(TABLE_NAME, "Performing delete: " + dQuery);
             
-            db.performRawQuery(dQuery).close();
+            db.performRawQuery(dQuery);
     	}
     	
     	AlbumQueryGenerator AQG = new AlbumQueryGenerator(this.context);
@@ -131,7 +131,7 @@ public class TagQueryGenerator extends QueryGenerator {
 
             Log.d(TABLE_NAME, "Performing delete: " + dQuery);
             
-            db.performRawQuery(dQuery).close();
+            db.performRawQuery(dQuery);
     }
     
     /**
