@@ -10,7 +10,7 @@
     <string name="date_label">Date Created</string>
     <string name="tagsLabel">Tags</string>
     <string name="button_edit_album">Edit Album</string>
-    <string name="albumName">Album Name</string>
+    <string name="album_label">Album Name</string>
     <string name="label_num_pics">Number of Pictures</string>
     <string name="sendEmail">Email</string>
     <string name="save">Save</string>
@@ -23,7 +23,7 @@
     <string name="pastPictures">Past Pictures:</string>
     <string name="button_add_tag">Add Tag</string>
     <string name="picture_name_text">Picture Name</string>
-    <string name="add_tag_hint">Enter a tag to add here</string>
+    <string name="add_tag_hint">Enter a tag</string>
     <string name="button_compare_pic">Compare Pictures</string>
     <string name="signupButton">Sign Up</string>
     <string name="loginButton">Login</string>
@@ -44,6 +44,9 @@
     <string name="viewSelected">View Pictures</string>
     <string name="filterHint">Type a tag filter</string>
     <string name="modifiedLabel">Last Modified</string>
-    <string name="add_tag_label">Add Tag</string>
+    <string name="tags_label">Add Tag</string>
     <string name="tab_search">Search</string>
+    <string name="picture_name_hint">Enter a name</string>
+    <string name="current_tags_label">Current Tags</string>
+    <string name="album_name">Album Name</string>
 </resources>

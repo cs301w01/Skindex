@@ -15,7 +15,7 @@
         android:id="@+id/text_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/albumName"
+        android:text="@string/album_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
