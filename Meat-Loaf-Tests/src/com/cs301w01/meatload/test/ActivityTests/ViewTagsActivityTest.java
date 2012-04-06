@@ -2,6 +2,7 @@ package com.cs301w01.meatload.test.ActivityTests;
 
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
+import com.cs301w01.meatload.model.Tag;
 
 import android.app.Instrumentation;
 import android.content.Context;
@@ -62,10 +63,20 @@ public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewT
 	public void testAddTag() {
 		// Click on tag, ensure it is removed from top group and added to bottom
 		ListView allTagsLV = (ListView) mActivity.findViewById(R.id.tagListView);
-		// TODO: How do you click on a list item again?
+		
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.performListViewClick(0);
+			}
+		});
+		sleep();
+		
+		// TODO: Joel added ListView click code, edit it to run the test you wanted!
 		
 		ListView selectedTagsLV = (ListView) mActivity.findViewById(R.id.selectedTagsListView);
-		//assertEquals(selectedTagsLV.getItemAtPosition(0), "Fish");
+		Tag selected = (Tag) selectedTagsLV.getAdapter().getItem(0);
+		
+		assertTrue(selected.getName().equals("Fish"));
 	}
 
 	public void testTwoTags() {
