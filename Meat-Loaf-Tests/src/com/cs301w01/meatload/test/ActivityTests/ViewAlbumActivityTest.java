@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 
@@ -72,21 +73,11 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 				sendKeys(key_num + i + 1);
 				sendKeys(key_num + i + 2);
 				sendKeys(KeyEvent.KEYCODE_ENTER);
-				try {
-					Thread.sleep(SLEEP_TIME);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-					assertTrue("Sleep failed", false);
-				}
+				sleep();
 			}
 			finalAlbs = mainMan.getAllAlbums();
 			
-			try {
-				Thread.sleep(SLEEP_TIME);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-				assertTrue("Sleep failed", false);
-			}
+			sleep();
 			
 		assertTrue(finalAlbs.size() == origAlbs.size() + 3);
 		
@@ -95,7 +86,7 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 	
 	public void testAddAlbumsUsingDialog() {
 		int origNumAlbs, finalNumAlbs;
-		final String name = "abc";
+		final String name = "Album 5";
 		AlertDialog dialog;
 				
 		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
@@ -104,63 +95,173 @@ public class ViewAlbumActivityTest extends ActivityInstrumentationTestCase2<View
 		origNumAlbs = mainMan.getAllAlbums().size();
 
 		mActivity.runOnUiThread(new Runnable() {
-			
 			public void run() {
 				button.requestFocus();
 				button.performClick();
 			}
 			
 		});
-		
-		try {
-			Thread.sleep(SLEEP_TIME);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			assertTrue("Sleep failed", false);
-		}
+		sleep();
 		
 		mActivity.runOnUiThread(new Runnable() {
-			
 			public void run() {
-				mActivity.setDialogEditText("Album 5");
+				mActivity.setDialogEditText(name);
 				mActivity.performDialogClick(true);
 			}
-			
 		});
-
-		try {
-			Thread.sleep(SLEEP_TIME);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			assertTrue("Sleep failed", false);
-		}
-
+		sleep();
 		finalNumAlbs = mainMan.getAllAlbums().size();
-		
-		try {
-			Thread.sleep(SLEEP_TIME);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			assertTrue("Sleep failed", false);
-		}
-			
+		sleep();
 		assertTrue(finalNumAlbs == origNumAlbs + 1);
 	}
 	
+	public void testAddAlbumWithTooLongName(){
+		final String name = "123456789123456789123456789";
+		String shortenedName = "12345678912345678912";
+		//change name above to reflect current max album name in MainManager, by default it is 20 chars
+		AlertDialog dialog;
+				
+		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
+		assertNotNull(button);
+
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				button.requestFocus();
+				button.performClick();
+			}
+		});
+		sleep();
+		
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.setDialogEditText(name);
+				mActivity.performDialogClick(true);
+			}
+		});
+		sleep();
+		assertTrue(mainMan.albumExists(shortenedName));
+	}
+	
+	public void testAddBlankAlbum(){
+		int origNumAlbs, finalNumAlbs;
+		final String name = "";
+		AlertDialog dialog;
+				
+		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.newAlbum);
+		assertNotNull(button);
+				
+		origNumAlbs = mainMan.getAllAlbums().size();
+
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				button.requestFocus();
+				button.performClick();
+			}
+			
+		});
+		sleep();
+		
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.setDialogEditText(name);
+				mActivity.performDialogClick(true);
+			}
+		});
+		sleep();
+		finalNumAlbs = mainMan.getAllAlbums().size();
+		sleep();
+		assertTrue(finalNumAlbs == origNumAlbs);
+	}
+	
 	public void testPressTakePictureCreateNewAlbum(){
+		int origNumAlbs, finalNumAlbs;
+		final String name = "Album 6";
+		AlertDialog dialog;
+				
+		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.takePic);
+		assertNotNull(button);
+		//Positive button is "Create"
+		//Negative button is "Choose"
+
+		origNumAlbs = mainMan.getAllAlbums().size();
+
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				button.requestFocus();
+				button.performClick();
+			}
+			
+		});
+		sleep();
 		
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.performDialogClick(true);
+			}
+		});
+		sleep();
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.setDialogEditText(name);
+				mActivity.performDialogClick(true);
+			}
+		});
+		sleep();
+		finalNumAlbs = mainMan.getAllAlbums().size();
+		sleep();
+		assertTrue(finalNumAlbs == origNumAlbs + 1);
 	}
-	
+		
 	public void testPressTakePictureChooseAlbum(){
+		int origNumPics, finalNumPics;
+		final String name = "12345678912345678912";
+		AlertDialog dialog;
+				
+		final Button button = (Button) mActivity.findViewById(com.cs301w01.meatload.R.id.takePic);
+		assertNotNull(button);
+		//Positive button is "Create"
+		//Negative button is "Choose"
+		origNumPics = mainMan.getPictureCount();
+
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				button.requestFocus();
+				button.performClick();
+			}
+			
+		});
+		sleep();
 		
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.performDialogClick(false);
+			}
+		});
+		sleep();
+		
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.performListViewClick(1);
+			}
+		});
+		
+		sleep();
+		finalNumPics = mainMan.getPictureCount();
+		sleep();
+		Log.d("OLD PIC",origNumPics + "");
+		Log.d("NEW PIC", finalNumPics + "");
+		assertTrue(finalNumPics == origNumPics);
 	}
 	
-	public void testCreateAlbumWithTooLongName(){
-		
+	private void sleep(){
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
 	}
 	
-	public void testCreateBlankAlbum(){
-		
-	}
+	
 
 }
