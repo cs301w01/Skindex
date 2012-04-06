@@ -32,6 +32,7 @@ public class TakePictureActivity extends Skindactivity {
 	private Album album;
 	private HorizontalGalleryAdapter adapter;
 	private Gallery gallery;
+	private AlertDialog currentDialog;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,6 +54,18 @@ public class TakePictureActivity extends Skindactivity {
 		imgOnDisplay = new PictureGenerator().generatePicture();
 		populateFields(imgOnDisplay);
 		createListeners(imgOnDisplay);
+	}
+	
+	@Override
+	public void finish() {
+		
+		if (currentDialog != null) {
+			if (currentDialog.isShowing()) {
+				currentDialog.dismiss();
+			}
+		}
+
+		super.finish();
 	}
 
 	/**
@@ -148,7 +161,15 @@ public class TakePictureActivity extends Skindactivity {
 			}
 		});
 
-		alert.show();
+		currentDialog = alert.show();
+	}
+	
+	public void performDialogClick(boolean button) {
+		if (button == true) {
+			currentDialog.getButton(AlertDialog.BUTTON_POSITIVE).performClick();
+		} else {
+			currentDialog.getButton(AlertDialog.BUTTON_NEGATIVE).performClick();
+		}
 	}
 
 }

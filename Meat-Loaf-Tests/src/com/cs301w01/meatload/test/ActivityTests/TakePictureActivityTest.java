@@ -3,17 +3,18 @@ package com.cs301w01.meatload.test.ActivityTests;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.TakePictureActivity;
 import com.cs301w01.meatload.controllers.MainManager;
+import com.cs301w01.meatload.model.Album;
 
-import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
-import android.widget.Button;
 import android.widget.ImageView;
 
 public class TakePictureActivityTest extends ActivityInstrumentationTestCase2<TakePictureActivity> {
-	private Instrumentation mInstrumentation;
+
 	private Context mContext;
 	private TakePictureActivity mActivity;
+	private final int SLEEP_TIME = 1000;
 
 	public TakePictureActivityTest() {
 		super("com.cs301w01.meatload", TakePictureActivity.class);
@@ -22,10 +23,13 @@ public class TakePictureActivityTest extends ActivityInstrumentationTestCase2<Ta
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-
-		mInstrumentation = getInstrumentation();
-		mContext = mInstrumentation.getContext();
+		
+		Album album = new Album("album", 0, 1);
+		Intent intent = new Intent();
+		intent.putExtra("album", album);
+		setActivityIntent(intent);
 		mActivity = getActivity();
+		mContext = mActivity.getBaseContext();
 	}
 
 	@Override
@@ -53,10 +57,13 @@ public class TakePictureActivityTest extends ActivityInstrumentationTestCase2<Ta
 		// press cancel in the dialog and ensure database does not change
 		MainManager mainManager = new MainManager(mContext);
 		int initialPictureCount = mainManager.getPictureCount();
-		
-		Button cancelButton = (Button) mActivity.findViewById(R.id.cancelDialogButton);
-		cancelButton.requestFocus();
-		cancelButton.performClick();
+
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				mActivity.performDialogClick(false);
+			}
+		});
+		sleep();
 		
 		int finalPictureCount = mainManager.getPictureCount();
 		assertEquals(initialPictureCount, finalPictureCount);
@@ -66,6 +73,15 @@ public class TakePictureActivityTest extends ActivityInstrumentationTestCase2<Ta
 		// capture Intent and ensure picture saved validly
 		// Not implemented yet
 		fail();
+	}
+	
+	private void sleep() {
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
 	}
 
 }
