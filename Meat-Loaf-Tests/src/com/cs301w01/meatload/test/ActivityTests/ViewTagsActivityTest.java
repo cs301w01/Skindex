@@ -1,16 +1,19 @@
 package com.cs301w01.meatload.test.ActivityTests;
 
+import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.ViewTagsActivity;
-import com.cs301w01.meatload.model.SQLiteDBManager;
 
 import android.app.Instrumentation;
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
+import android.widget.EditText;
+import android.widget.ListView;
 
 public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewTagsActivity> {
 	private Instrumentation mInstrumentation;
 	private Context mContext;
 	private ViewTagsActivity mActivity;
+	private final int SLEEP_TIME = 500;
 
 	public ViewTagsActivityTest() {
 		super("com.cs301w01.meatload", ViewTagsActivity.class);
@@ -36,11 +39,20 @@ public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewT
 
 	public void testBlankTag() {
 		// display all possible tags
-		assertTrue(1 == 1);
 	}
 
 	public void testSpecificTag() {
-		// enter AAA and ensure tag AAA is in the list of tags
+		final EditText searchField = (EditText) mActivity.findViewById(R.id.tagSearchEditText);
+		mActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				searchField.setText("Fish");
+			}
+		});
+		sleep();
+
+		ListView allTagsLV = (ListView) mActivity.findViewById(R.id.tagListView);
+		assertEquals(allTagsLV.getChildCount(), 1);
+		assertEquals(allTagsLV.getItemAtPosition(0), "Fish");
 	}
 
 	public void testGenericTag() {
@@ -49,11 +61,25 @@ public class ViewTagsActivityTest extends ActivityInstrumentationTestCase2<ViewT
 
 	public void testAddTag() {
 		// Click on tag, ensure it is removed from top group and added to bottom
+		ListView allTagsLV = (ListView) mActivity.findViewById(R.id.tagListView);
+		// TODO: How do you click on a list item again?
+		
+		ListView selectedTagsLV = (ListView) mActivity.findViewById(R.id.selectedTagsListView);
+		assertEquals(selectedTagsLV.getItemAtPosition(0), "Fish");
 	}
 
 	public void testTwoTags() {
 		// select two tags, ensure both added below and that number of photos is
 		// correct
+	}
+
+	private void sleep() {
+		try {
+			Thread.sleep(SLEEP_TIME);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			assertTrue("Sleep failed", false);
+		}
 	}
 
 }

@@ -53,4 +53,6 @@
     <string name="search_startDate">Start Date</string>
     <string name="search_endDate">End Date</string>
     <string name="search_name_hint">Type a name to search for</string>
+    <string name="enterPassword">Enter Password</string>
+    <string name="confirmPassword">Confirm Password</string>
 </resources>
