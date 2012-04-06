@@ -209,6 +209,31 @@ public class PictureQueryGenerator extends QueryGenerator {
 		return selectPicturesByQuery(query);
 
 	}
+	
+	private String getTagsQuery(Collection<String> tags) {
+		if(tags.isEmpty())
+			return "";
+		String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." + PICTURES_COL_PATH
+						+ " AS " + PICTURES_COL_PATH + ", p." + COL_ID + " AS " + COL_ID + ", p."
+						+ PICTURES_COL_DATE + " AS " + PICTURES_COL_DATE + " FROM " + TABLE_NAME
+						+ " p LEFT JOIN " + TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t."
+						+ COL_PICTUREID + ") WHERE ";
+
+		boolean loopedOnce = false;
+		
+		for (String tag : tags) {
+		
+			if (loopedOnce) {
+				query += " OR ";
+			}
+			loopedOnce = true;
+		
+			query += "t." + COL_NAME + " = '" + tag + "'";
+		}
+		query += " GROUP BY p." + COL_ID + " HAVING COUNT(t." + COL_ID + ") = " + tags.size();
+		
+		return query;
+	}
 
 	/**
 	 * Gets all pictures with the given tags from the database.
@@ -222,27 +247,43 @@ public class PictureQueryGenerator extends QueryGenerator {
 
 		if (tags.size() == 0)
 			return selectAllPictures();
-		String query = "SELECT p." + COL_NAME + " AS " + COL_NAME + ", p." + PICTURES_COL_PATH
-				+ " AS " + PICTURES_COL_PATH + ", p." + COL_ID + " AS " + COL_ID + ", p."
-				+ PICTURES_COL_DATE + " AS " + PICTURES_COL_DATE + " FROM " + TABLE_NAME
-				+ " p LEFT JOIN " + TagQueryGenerator.TABLE_NAME + " t ON (p." + COL_ID + " = t."
-				+ COL_PICTUREID + ") WHERE ";
-
-		boolean loopedOnce = false;
-
-		for (String tag : tags) {
-
-			if (loopedOnce) {
-				query += " OR ";
-			}
-			loopedOnce = true;
-
-			query += "t." + COL_NAME + " = '" + tag + "'";
-		}
-		query += " GROUP BY p." + COL_ID + " HAVING COUNT(t." + COL_ID + ") = " + tags.size();
+		String query = getTagsQuery(tags);
 
 		return selectPicturesByQuery(query);
 
+	}
+	
+	public Collection<Picture> selectPicturesBySearch(String picName, Date startDate, Date endDate, ArrayList<String> tagNames) {
+		if(picName.equals("") && startDate == null && endDate == null && tagNames.isEmpty()) {
+			return selectAllPictures();
+		}
+		
+		String tagsQuery = getTagsQuery(tagNames);
+		String searchQuery = "SELECT * " +
+								" FROM " + TABLE_NAME +
+								" WHERE ";
+		if(!picName.equals("")) {
+			searchQuery += COL_NAME + " LIKE '%" + picName + "%' ";
+		}
+		if(startDate != null) {
+			if(!picName.equals(""))
+				searchQuery += "AND ";
+			searchQuery += PICTURES_COL_DATE + " >= '" + dateToString(startDate) + "' ";
+		}
+		if(endDate != null) {
+			if(!picName.equals("") || startDate != null)
+				searchQuery += "AND ";
+			searchQuery += PICTURES_COL_DATE + " <= '" + dateToString(endDate) + "' ";
+		}
+		String query = "";
+		if(tagNames.isEmpty())
+			query = searchQuery;
+		else if(picName.equals("") && startDate == null && endDate == null)
+			query = tagsQuery;
+		else
+			query = tagsQuery + " INTERSECT " + searchQuery;
+		
+		return selectPicturesByQuery(query);
 	}
 
 	/**

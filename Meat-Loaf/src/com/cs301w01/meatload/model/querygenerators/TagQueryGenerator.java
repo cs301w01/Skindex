@@ -51,12 +51,9 @@ public class TagQueryGenerator extends QueryGenerator {
      */
     public ArrayList<Tag> selectAllTags() {
     	
-    	String tagQuery = "SELECT t." + COL_NAME + " AS " + COL_NAME + ", COUNT(*) AS numPictures" 
-    						+ 
-    						" FROM " + TABLE_NAME + 
-    						" t LEFT JOIN " + PictureQueryGenerator.TABLE_NAME +
-    						" p ON (t." + COL_PICTUREID + " = p." + COL_ID + ")" + 
-    						" GROUP BY t." + COL_NAME;
+    	String tagQuery = "SELECT " + COL_NAME + ", COUNT(" + COL_NAME + ") AS numPictures" + 
+    						" FROM " + TABLE_NAME +
+    						" GROUP BY " + COL_NAME;
     	
     	return selectTagsByQuery(tagQuery);
     }
@@ -116,7 +113,7 @@ public class TagQueryGenerator extends QueryGenerator {
 
             Log.d(TABLE_NAME, "Performing delete: " + dQuery);
             
-            db.performRawQuery(dQuery).close();
+            db.performRawQuery(dQuery);
     	}
     	
     	AlbumQueryGenerator AQG = new AlbumQueryGenerator(this.context);

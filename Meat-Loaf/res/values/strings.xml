@@ -7,10 +7,10 @@
     <string name="tab_tags">Tags</string>
     <string name="button_gen_pic">Generate Pic</string>
     <string name="editPicDesc">Exploded view of user picture</string>
-    <string name="dateLabel">Date Created</string>
+    <string name="date_label">Date Created</string>
     <string name="tagsLabel">Tags</string>
     <string name="button_edit_album">Edit Album</string>
-    <string name="albumName">Album Name</string>
+    <string name="album_label">Album</string>
     <string name="label_num_pics">Number of Pictures</string>
     <string name="sendEmail">Email</string>
     <string name="save">Save</string>
@@ -44,4 +44,10 @@
     <string name="viewSelected">View Pictures</string>
     <string name="filterHint">Type a tag filter</string>
     <string name="modifiedLabel">Last Modified</string>
+    <string name="add_tag_label">Add Tag</string>
+    <string name="tab_search">Search</string>
+    <string name="picture_name_hint">Enter a name for this picture</string>
+    <string name="album_name">Album Name</string>
+    <string name="tags_label">Tags</string>
+    <string name="current_tags_label">Current Tags</string>
 </resources>
