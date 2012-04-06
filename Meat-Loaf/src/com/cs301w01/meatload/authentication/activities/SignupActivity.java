@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,7 +79,8 @@ public class SignupActivity extends Skindactivity {
         String uEmail = email.getText().toString();
         String uRole = String.valueOf(role.getSelectedItem());
         String usrName = username.getText().toString();
-        String password = getAndConfirmPassword();
+       // String password = getAndConfirmPassword();
+        String password = "test";
 
         User newUser;
         UserManager uM = new UserManager(this);
