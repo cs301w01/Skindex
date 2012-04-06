@@ -5,8 +5,6 @@ import android.os.Bundle;
 import com.cs301w01.meatload.activities.Skindactivity;
 import com.cs301w01.meatload.authentication.Controllers.DiagnosisManager;
 
-
-
 /**
  * This activity allows specialists to view diagnosis requests from users. It will
  * show them who a list of people who have sent requests, and how many albums are related
