@@ -10,26 +10,27 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/searchName_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/search_name"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <EditText
             android:id="@+id/search_pic_name"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:hint="@string/search_name_hint" >
 
             <requestFocus />
         </EditText>
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/startDate_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Date"
+        android:text="@string/search_startDate"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <DatePicker
@@ -38,10 +39,10 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/endDate_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="End Date"
+        android:text="@string/search_endDate"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <DatePicker
