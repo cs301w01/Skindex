@@ -11,6 +11,7 @@ import com.cs301w01.meatload.model.Picture;
 import com.cs301w01.meatload.model.PictureGenerator;
 import com.cs301w01.meatload.model.SQLiteDBManager;
 import com.cs301w01.meatload.model.Tag;
+import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.GalleryManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureCreator;
@@ -30,6 +31,7 @@ import android.test.ActivityInstrumentationTestCase2;
 public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsActivity> {
     private Context mContext;
     private ViewAlbumsActivity mActivity;
+    private AlbumManager albumMan;
     private MainManager mainMan;
     private PictureManager picMan;
     
@@ -44,6 +46,7 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
         mActivity = getActivity();
         mContext = mActivity.getBaseContext();
         
+		albumMan = new AlbumManager(mContext);
 		mainMan = new MainManager(mContext);
     }
     
@@ -63,20 +66,20 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
             db.resetDB();
             db.close();
             
-            assertTrue(mainMan.getAllAlbums().size() == 0);
+            assertTrue(albumMan.getAllAlbums().size() == 0);
     }
     
     public void testAddAlbum(){
     	
-    	int oldNumAlbums = mainMan.getAllAlbums().size();
+    	int oldNumAlbums = albumMan.getAllAlbums().size();
     	int newNumAlbums;
     	
-    	mainMan.addAlbum("Album 1", new ArrayList<String>());
-    	mainMan.addAlbum("Album 2", new ArrayList<String>());
-    	mainMan.addAlbum("Album 3", new ArrayList<String>());
-    	mainMan.addAlbum("Album 4", new ArrayList<String>());
+    	albumMan.addAlbum("Album 1", new ArrayList<String>());
+    	albumMan.addAlbum("Album 2", new ArrayList<String>());
+    	albumMan.addAlbum("Album 3", new ArrayList<String>());
+    	albumMan.addAlbum("Album 4", new ArrayList<String>());
 		
-		newNumAlbums = mainMan.getAllAlbums().size();
+		newNumAlbums = albumMan.getAllAlbums().size();
 		
 		assertTrue(newNumAlbums == oldNumAlbums + 4);
     }
@@ -96,14 +99,14 @@ public class DatabaseTest extends ActivityInstrumentationTestCase2<ViewAlbumsAct
     	PictureGenerator picGen = new PictureGenerator();
     	PictureCreator pictureCreator = new PictureCreator(mContext);
     	
-    	testAlbum = mainMan.getAlbumByName("Album 1");
+    	testAlbum = albumMan.getAlbumByName("Album 1");
     	oldNumPics = testAlbum.getPictureCount();
 
     	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
     	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
     	pictureCreator.takePicture(mContext.getFilesDir(), picGen.generatePicture(), "Album 1");
     	
-    	testAlbum = mainMan.getAlbumByName("Album 1");
+    	testAlbum = albumMan.getAlbumByName("Album 1");
     	newNumPics = testAlbum.getPictureCount();
     	
     	assertTrue(newNumPics == oldNumPics + 3);

@@ -13,6 +13,7 @@ import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.adapters.SimpleTagAdapter;
 import com.cs301w01.meatload.adapters.SpinnerAlbumAdapter;
 import com.cs301w01.meatload.adapters.TagAdapter;
+import com.cs301w01.meatload.controllers.AlbumManager;
 import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.controllers.PictureManager;
 import com.cs301w01.meatload.model.Album;
@@ -45,6 +46,7 @@ import android.widget.TextView;
 public class EditPictureActivity extends Skindactivity {
 
 	private MainManager mainManager;
+	private AlbumManager albumManager;
 	private PictureManager pictureManager;
 	private ListView tagListView;
 	private EditText pictureNameEditText;
@@ -136,7 +138,7 @@ public class EditPictureActivity extends Skindactivity {
 
 		// AlbumView Spinner
 		albumSpinner = (Spinner) findViewById(R.id.albumSpinner);
-		ArrayList<Album> allAlbums = mainManager.getAllAlbums();
+		ArrayList<Album> allAlbums = albumManager.getAllAlbums();
 		SpinnerAlbumAdapter spinnerAdapter = new SpinnerAlbumAdapter(this, R.layout.spinner_item,
 				allAlbums);
 		spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

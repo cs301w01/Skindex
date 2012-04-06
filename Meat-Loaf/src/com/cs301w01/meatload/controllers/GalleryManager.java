@@ -87,24 +87,6 @@ public class GalleryManager implements FController {
 	}
 	
 	/**
-	 * In the database changes the name of an old album to a newly provided string.
-	 * @param newAlbumName new name
-	 * @param album The old album to be modified
-	 */
-	public void changeAlbumName(String newAlbumName, Album a) {
-		AlbumQueryGenerator aG = new AlbumQueryGenerator(this.context);
-		aG.updateAlbumName(a.getName(), newAlbumName);
-	}
-	
-	/**
-	 * Deletes the album specified by album id.  Will delete all associated photos.
-	 * @param aid ID of album to delete.
-	 */
-	public void deleteAlbum(int aid) {
-		new AlbumQueryGenerator(context).deleteAlbumByID(aid);
-	}
-
-	/**
 	 * Determines whether the current Gallery Manager represents an album or is a 
 	 * collection of related Pictures that are not in the same album.
 	 * @return boolean
