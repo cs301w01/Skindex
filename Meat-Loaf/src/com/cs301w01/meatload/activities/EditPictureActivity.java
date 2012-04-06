@@ -194,7 +194,7 @@ public class EditPictureActivity extends Skindactivity {
 		tagListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-				deleteTagAlert((Tag) parent.getItemAtPosition(position));
+				deleteTagDialog((Tag) parent.getItemAtPosition(position));
 				return true;
 			}
 
@@ -205,7 +205,7 @@ public class EditPictureActivity extends Skindactivity {
 		deletePicButton.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View view) {
-				deletePicture();
+				deletePictureDialog();
 			}
 
 		});
@@ -257,7 +257,7 @@ public class EditPictureActivity extends Skindactivity {
 		finish();
 	}
 	
-	private void deletePicture() {
+	private void deletePictureDialog() {
 
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
@@ -285,7 +285,7 @@ public class EditPictureActivity extends Skindactivity {
 
 	}
 
-	private void deleteTagAlert(final Tag tag) {
+	private void deleteTagDialog(final Tag tag) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
 		alert.setTitle("Delete Tag?");
