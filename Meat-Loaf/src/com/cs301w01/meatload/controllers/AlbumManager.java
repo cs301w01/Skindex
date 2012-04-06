@@ -33,7 +33,7 @@ public class AlbumManager {
 		return new AlbumQueryGenerator(context).selectAllAlbums();
 	}
 	
-	public String addAlbum(String albumName, Collection<String> tags) {
+	public String addAlbum(String albumName) {
 
 		albumName = albumName.trim();
 		if (albumName.length() > MAX_ALBUM_NAME_LENGTH) {
@@ -106,9 +106,9 @@ public class AlbumManager {
 	 * @param newAlbumName new name
 	 * @param album The old album to be modified
 	 */
-	public void changeAlbumName(String newAlbumName, Album a) {
+	public void changeAlbumName(String newAlbumName, Album album) {
 		AlbumQueryGenerator aG = new AlbumQueryGenerator(this.context);
-		aG.updateAlbumName(a.getName(), newAlbumName);
+		aG.updateAlbumName(album.getName(), newAlbumName);
 	}
 	
 	/**

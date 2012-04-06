@@ -227,7 +227,7 @@ public class ViewAlbumsActivity extends Skindactivity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				String newAlbumName = input.getText().toString();
-				newAlbumName = albumManager.addAlbum(newAlbumName, new ArrayList<String>());
+				newAlbumName = albumManager.addAlbum(newAlbumName);
 
 				if (newAlbumName.length() == 0) {
 					errorDialog("Adding album failed.  Album names must be "

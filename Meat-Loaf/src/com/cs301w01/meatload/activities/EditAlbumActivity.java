@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import com.cs301w01.meatload.controllers.MainManager;
 import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.gallery.AlbumGallery;
 
@@ -55,6 +56,9 @@ public class EditAlbumActivity extends Skindactivity {
 
 		album = aGal.getAlbum(this);
 		galleryManager = new GalleryManager(this, new AlbumGallery(album));
+
+        albumManager = new AlbumManager(this);
+        albumManager.addAlbum(album.getName());
 
 		createListeners();
 		populate();
