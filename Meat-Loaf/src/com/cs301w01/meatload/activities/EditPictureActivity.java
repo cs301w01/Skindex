@@ -2,6 +2,7 @@ package com.cs301w01.meatload.activities;
 
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -49,10 +50,22 @@ public class EditPictureActivity extends Skindactivity {
 	private ImageView pictureView;
 	private Spinner albumView;
 	private AutoCompleteTextView addTagEditText;
+	private AlertDialog currentDialog;
 
 	@Override
 	public void update(Object model) {
 
+	}
+	
+	@Override
+	public void finish(){
+		if(currentDialog != null){
+			if(currentDialog.isShowing()){
+				currentDialog.dismiss();
+			}
+		}
+
+		super.finish();
 	}
 
 	@Override
@@ -357,6 +370,9 @@ public class EditPictureActivity extends Skindactivity {
 	}
 
 	private void errorDialog(String err) {
-		mainManager.errorDialog(err, this);
+	    	AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setTitle("Error");
+			alert.setMessage(err);
+			currentDialog = alert.show();
 	}
 }
