@@ -6,8 +6,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cs301w01.meatload.model.Album;
 import com.cs301w01.meatload.model.Tag;
 
 /**
@@ -32,8 +34,6 @@ public class SimpleTagAdapter extends TagAdapter {
 	 */
 	public SimpleTagAdapter(Context context, int textViewResourceId, List<Tag> tags) {
 		super(context, textViewResourceId, tags);
-		
-		this.resource = textViewResourceId;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -45,7 +45,8 @@ public class SimpleTagAdapter extends TagAdapter {
 		if (convertView == null) {
 			tagNameView = new TextView(getContext());
 			String inflater = Context.LAYOUT_INFLATER_SERVICE;
-			LayoutInflater vi = (LayoutInflater) getContext().getSystemService(inflater);
+			LayoutInflater vi;
+			vi = (LayoutInflater) getContext().getSystemService(inflater);
 			tagNameView = (TextView) vi.inflate(resource, null);
 		} else {
 			tagNameView = (TextView) convertView;

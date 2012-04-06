@@ -268,12 +268,12 @@ public class PictureQueryGenerator extends QueryGenerator {
 		if(startDate != null) {
 			if(!picName.equals(""))
 				searchQuery += "AND ";
-			searchQuery += PICTURES_COL_DATE + " >= '" + dateToString(startDate) + "' ";
+			searchQuery += PICTURES_COL_DATE + " > '" + dateToString(startDate) + "' ";
 		}
 		if(endDate != null) {
 			if(!picName.equals("") || startDate != null)
 				searchQuery += "AND ";
-			searchQuery += PICTURES_COL_DATE + " <= '" + dateToString(endDate) + "' ";
+			searchQuery += PICTURES_COL_DATE + " < '" + dateToString(endDate) + "' ";
 		}
 		String query = "";
 		if(tagNames.isEmpty())
