@@ -8,10 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import com.cs301w01.meatload.R;
 import com.cs301w01.meatload.activities.Skindactivity;
-import com.cs301w01.meatload.authentication.Controllers.UserManager;
-import com.cs301w01.meatload.authentication.Model.Patient;
-import com.cs301w01.meatload.authentication.Model.Specialist;
-import com.cs301w01.meatload.authentication.Model.User;
+import com.cs301w01.meatload.authentication.controllers.UserManager;
+import com.cs301w01.meatload.authentication.model.Patient;
+import com.cs301w01.meatload.authentication.model.Specialist;
+import com.cs301w01.meatload.authentication.model.User;
 
 /**
  * Acts as the base activity users land on. They are prompted to provide credentials in order to log in or

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.cs301w01.meatload.activities.Skindactivity;
-import com.cs301w01.meatload.authentication.Controllers.DiagnosisManager;
+import com.cs301w01.meatload.authentication.controllers.DiagnosisManager;
 
 /**
  * This activity allows users to view a diagnosis given from a specialist.

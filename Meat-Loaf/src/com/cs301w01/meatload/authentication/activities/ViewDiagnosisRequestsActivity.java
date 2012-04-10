@@ -3,7 +3,7 @@ package com.cs301w01.meatload.authentication.activities;
 import android.os.Bundle;
 
 import com.cs301w01.meatload.activities.Skindactivity;
-import com.cs301w01.meatload.authentication.Controllers.DiagnosisManager;
+import com.cs301w01.meatload.authentication.controllers.DiagnosisManager;
 
 /**
  * This activity allows specialists to view diagnosis requests from users. It will

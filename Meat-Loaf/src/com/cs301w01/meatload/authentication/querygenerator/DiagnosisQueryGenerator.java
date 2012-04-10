@@ -6,7 +6,7 @@ import java.util.Collection;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.cs301w01.meatload.authentication.Model.Patient;
+import com.cs301w01.meatload.authentication.model.Patient;
 import com.cs301w01.meatload.model.querygenerators.QueryGenerator;
 
 

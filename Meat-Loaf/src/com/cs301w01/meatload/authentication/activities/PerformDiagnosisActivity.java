@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 
 import com.cs301w01.meatload.activities.Skindactivity;
-import com.cs301w01.meatload.authentication.Controllers.DiagnosisManager;
+import com.cs301w01.meatload.authentication.controllers.DiagnosisManager;
 
 /**
 * This activity allows specialists to diagnose a skin condition based on the

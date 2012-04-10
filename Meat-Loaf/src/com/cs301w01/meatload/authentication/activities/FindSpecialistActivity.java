@@ -5,8 +5,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.cs301w01.meatload.activities.Skindactivity;
-import com.cs301w01.meatload.authentication.Controllers.DiagnosisManager;
-import com.cs301w01.meatload.authentication.Model.Specialist;
+import com.cs301w01.meatload.authentication.controllers.DiagnosisManager;
+import com.cs301w01.meatload.authentication.model.Specialist;
 
 /**
  * This Activity is used by "Patients" who are looking for a specialist

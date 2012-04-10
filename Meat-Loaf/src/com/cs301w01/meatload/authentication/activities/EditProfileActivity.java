@@ -3,7 +3,7 @@ package com.cs301w01.meatload.authentication.activities;
 import android.os.Bundle;
 
 import com.cs301w01.meatload.activities.Skindactivity;
-import com.cs301w01.meatload.authentication.Controllers.UserManager;
+import com.cs301w01.meatload.authentication.controllers.UserManager;
 
 /**
  * 
